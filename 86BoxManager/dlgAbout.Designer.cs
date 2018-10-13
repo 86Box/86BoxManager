@@ -118,7 +118,7 @@
             this.lblVersion1.Name = "lblVersion1";
             this.lblVersion1.Size = new System.Drawing.Size(43, 21);
             this.lblVersion1.TabIndex = 8;
-            this.lblVersion1.Text = "1.0.0";
+            this.lblVersion1.Text = "1.0.1";
             // 
             // dlgAbout
             // 

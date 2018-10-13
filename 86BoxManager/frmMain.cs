@@ -110,7 +110,7 @@ namespace _86boxManager
                     btnReset.Enabled = false;
                     btnCtrlAltDel.Enabled = false;
                 }
-                else if(vm.Status == VM.STATUS_PAUSED)
+                else if (vm.Status == VM.STATUS_PAUSED)
                 {
                     btnStart.Enabled = false;
                     btnStart.Text = "Stop";
@@ -122,10 +122,10 @@ namespace _86boxManager
                     btnReset.Enabled = true;
                     btnCtrlAltDel.Enabled = true;
                 }
-                else if(vm.Status == VM.STATUS_IN_SETTINGS)
+                else if (vm.Status == VM.STATUS_IN_SETTINGS)
                 {
                     btnStart.Enabled = false;
-                    btnStart.Text = "Start";     
+                    btnStart.Text = "Start";
                     btnEdit.Enabled = false;
                     btnDelete.Enabled = false;
                     btnReset.Enabled = false;
@@ -206,7 +206,7 @@ namespace _86boxManager
                     lstVMs.Items.Add(newLvi);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 //Ignore for now
             }
@@ -459,7 +459,7 @@ namespace _86boxManager
                     btnEdit.Enabled = true;
                     btnDelete.Enabled = true;
                     btnStart.Enabled = true;
-                   
+
                     btnConfigure.Enabled = true;
                     btnPause.Enabled = false;
                     btnReset.Enabled = false;
@@ -629,6 +629,12 @@ namespace _86boxManager
         public bool VMCheckIfExists(string name)
         {
             regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box\Virtual Machines", true);
+            if(regkey == null) //Regkey doesn't exist yet
+            {
+                regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true);
+                regkey.CreateSubKey(@"Virtual Machines");
+                return false; 
+            }
             if (regkey.GetValue(name) == null)
             {
                 regkey.Close();
@@ -639,6 +645,7 @@ namespace _86boxManager
                 regkey.Close();
                 return true;
             }
+
         }
 
         //Changes a VM's name and/or description
@@ -652,7 +659,7 @@ namespace _86boxManager
                 { //Move the actual VM files too. This will invalidate any paths inside the cfg, but the user is informed to update those manually.
                     Directory.Move(cfgpath + vm.Name, cfgpath + name);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     //Ignore for now
                 }
