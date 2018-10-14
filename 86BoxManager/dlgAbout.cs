@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace _86boxManager
@@ -26,6 +27,11 @@ namespace _86boxManager
         {
             lnkGithub2.LinkVisited = true;
             System.Diagnostics.Process.Start("https://github.com/86Box/86Box");
+        }
+
+        private void dlgAbout_Load(object sender, EventArgs e)
+        {
+            lblVersion1.Text = Application.ProductVersion.ToString().TrimEnd('.', '0');
         }
     }
 }

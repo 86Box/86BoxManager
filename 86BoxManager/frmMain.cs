@@ -216,9 +216,17 @@ namespace _86boxManager
         private void backgroundWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
             VM vm = e.Argument as VM;
-            Process p = Process.GetProcessById(vm.Pid); //Find the process associated with the VM
-            p.WaitForExit(); //Wait for it to exit
+            try
+            {
+                Process p = Process.GetProcessById(vm.Pid); //Find the process associated with the VM
+                p.WaitForExit(); //Wait for it to exit
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("An error has occurred. Please provide the following details to the developer:\n" + ex.Message + "\n" + ex.StackTrace, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             e.Result = vm;
+
         }
 
         //Update the UI once the VM's window is closed
@@ -339,10 +347,15 @@ namespace _86boxManager
                 if (vm.Status != VM.STATUS_STOPPED)
                 {
                     e.Cancel = true;
-                    DialogResult = MessageBox.Show("It appears some virtual machines are still running. It's recommended you close those first before closing 86Box Manager. Do you want to continue anyway?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    DialogResult = MessageBox.Show("It appears some virtual machines are still running. It's recommended you close those first before closing 86Box Manager. Do you want to exit 86Box Manager anyway?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (DialogResult == DialogResult.Yes)
                     {
                         e.Cancel = false;
+                        return; //We only need to display the warning once...
+                    }
+                    else if(DialogResult == DialogResult.No)
+                    {
+                        break;
                     }
                 }
             }
@@ -509,32 +522,43 @@ namespace _86boxManager
             }
             else if (vm.Status == VM.STATUS_STOPPED)
             {
-                Process p = Process.Start(exepath + "86Box.exe", "-S -P " + lstVMs.FocusedItem.SubItems[2].Text);
-                p.WaitForInputIdle();
-                vm.Status = VM.STATUS_IN_SETTINGS;
-                vm.hWnd = p.MainWindowHandle;
-                vm.Pid = p.Id;
-                lstVMs.FocusedItem.SubItems[1].Text = vm.GetStatusString();
-                lstVMs.FocusedItem.ImageIndex = 2;
-
-                BackgroundWorker bgw = new BackgroundWorker
+                try
                 {
-                    WorkerReportsProgress = false,
-                    WorkerSupportsCancellation = false
-                };
-                bgw.DoWork += new DoWorkEventHandler(backgroundWorker_DoWork);
-                bgw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backgroundWorker_RunWorkerCompleted);
-                bgw.RunWorkerAsync(vm);
+                    Process p = Process.Start(exepath + "86Box.exe", "-S -P \"" + lstVMs.FocusedItem.SubItems[2].Text + "\"");
+                    p.WaitForInputIdle();
+                    vm.Status = VM.STATUS_IN_SETTINGS;
+                    vm.hWnd = p.MainWindowHandle;
+                    vm.Pid = p.Id;
+                    lstVMs.FocusedItem.SubItems[1].Text = vm.GetStatusString();
+                    lstVMs.FocusedItem.ImageIndex = 2;
 
-                btnStart.Enabled = false;
-                btnStart.Text = "Start";
-                btnEdit.Enabled = false;
-                btnDelete.Enabled = false;
-                btnConfigure.Enabled = false;
-                btnReset.Enabled = false;
-                btnPause.Enabled = false;
-                btnPause.Text = "Pause";
-                btnCtrlAltDel.Enabled = false;
+                    BackgroundWorker bgw = new BackgroundWorker
+                    {
+                        WorkerReportsProgress = false,
+                        WorkerSupportsCancellation = false
+                    };
+                    bgw.DoWork += new DoWorkEventHandler(backgroundWorker_DoWork);
+                    bgw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backgroundWorker_RunWorkerCompleted);
+                    bgw.RunWorkerAsync(vm);
+
+                    btnStart.Enabled = false;
+                    btnStart.Text = "Start";
+                    btnEdit.Enabled = false;
+                    btnDelete.Enabled = false;
+                    btnConfigure.Enabled = false;
+                    btnReset.Enabled = false;
+                    btnPause.Enabled = false;
+                    btnPause.Text = "Pause";
+                    btnCtrlAltDel.Enabled = false;
+                }
+                catch(Exception ex)
+                {
+                    //Revert to stopped status and alert the user
+                    vm.Status = VM.STATUS_STOPPED;
+                    vm.hWnd = IntPtr.Zero;
+                    vm.Pid = -1;
+                    MessageBox.Show("This virtual machine could not be started. Please provide the following information to the developer:\n" + ex.Message + "\n" + ex.StackTrace, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
