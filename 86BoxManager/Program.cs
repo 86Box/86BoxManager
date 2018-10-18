@@ -6,6 +6,7 @@ namespace _86boxManager
 {
     static class Program
     {
+        public const bool PRERELEASE = false; //Is this a pre-release version?
         /// <summary>
         /// The main entry point for the application.
         /// </summary>

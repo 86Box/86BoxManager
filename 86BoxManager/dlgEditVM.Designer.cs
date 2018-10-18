@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnApply = new System.Windows.Forms.Button();
             this.lblName = new System.Windows.Forms.Label();
@@ -36,13 +37,14 @@
             this.txtDesc = new System.Windows.Forms.TextBox();
             this.lblPath = new System.Windows.Forms.Label();
             this.lblPath1 = new System.Windows.Forms.Label();
+            this.tipLblPath1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(397, 119);
+            this.btnCancel.Location = new System.Drawing.Point(537, 119);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 30);
             this.btnCancel.TabIndex = 0;
@@ -53,7 +55,7 @@
             // btnApply
             // 
             this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnApply.Location = new System.Drawing.Point(316, 119);
+            this.btnApply.Location = new System.Drawing.Point(456, 119);
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(75, 30);
             this.btnApply.TabIndex = 1;
@@ -81,17 +83,21 @@
             // 
             // txtName
             // 
+            this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtName.Location = new System.Drawing.Point(73, 12);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(399, 29);
+            this.txtName.Size = new System.Drawing.Size(539, 29);
             this.txtName.TabIndex = 7;
             this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
             // txtDesc
             // 
+            this.txtDesc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtDesc.Location = new System.Drawing.Point(110, 47);
             this.txtDesc.Name = "txtDesc";
-            this.txtDesc.Size = new System.Drawing.Size(362, 29);
+            this.txtDesc.Size = new System.Drawing.Size(502, 29);
             this.txtDesc.TabIndex = 8;
             // 
             // lblPath
@@ -105,12 +111,13 @@
             // 
             // lblPath1
             // 
-            this.lblPath1.AutoSize = true;
+            this.lblPath1.AutoEllipsis = true;
             this.lblPath1.Location = new System.Drawing.Point(61, 85);
+            this.lblPath1.MaximumSize = new System.Drawing.Size(551, 21);
             this.lblPath1.Name = "lblPath1";
-            this.lblPath1.Size = new System.Drawing.Size(210, 21);
+            this.lblPath1.Size = new System.Drawing.Size(551, 21);
             this.lblPath1.TabIndex = 10;
-            this.lblPath1.Text = "aaaaaaaaaaaaaaaaaaaaaaaaa";
+            this.lblPath1.Text = "<path goes here>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
             // 
             // dlgEditVM
             // 
@@ -119,7 +126,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(484, 161);
+            this.ClientSize = new System.Drawing.Size(624, 161);
             this.Controls.Add(this.lblPath1);
             this.Controls.Add(this.lblPath);
             this.Controls.Add(this.txtDesc);
@@ -154,5 +161,6 @@
         private System.Windows.Forms.TextBox txtDesc;
         private System.Windows.Forms.Label lblPath;
         private System.Windows.Forms.Label lblPath1;
+        private System.Windows.Forms.ToolTip tipLblPath1;
     }
 }

@@ -41,6 +41,7 @@ namespace _86boxManager
             {
                 btnAdd.Enabled = true;
                 lblPath1.Text = main.cfgpath + txtName.Text;
+                tipLblPath1.SetToolTip(lblPath1, main.cfgpath + txtName.Text);
             }
         }
     }
