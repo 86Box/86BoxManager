@@ -32,5 +32,7 @@ Same as for 86Box. Additionally, the following is required:
 5. Build solution
 6. 86manager.exe is now in Bin\x86\Release\
 
+Please see the wiki section for additional information for contributors.
+
 ## Support
 If you have any issues, questions, suggestions, etc., please open an issue here on GitHub, or visit the official 86Box support channels on IRC and Discord. The project maintainer, daviunic, is often idling there under the name Overdoze.
