@@ -4,6 +4,7 @@
 It's written in C# with Windows Forms using Visual Studio 2017.
 
 ## Features
+* Powerful, lightweight and completely optional
 * Create multiple isolated virtual machines
 * Give each VM a unique name and an optional description
 * Run multiple virtual machines at the same time
@@ -23,6 +24,8 @@ Same as for 86Box. Additionally, the following is required:
 3. Choose the folder where 86Box.exe is located (along with the roms folder) and a folder where your virtual machines will be located (for configs, nvr folders, etc.)
 4. Start creating new virtual machines and enjoy
 
+Please see the wiki section for additional information for end users.
+
 ## How to build
 
 1. Clone the repo
@@ -35,4 +38,4 @@ Same as for 86Box. Additionally, the following is required:
 Please see the wiki section for additional information for contributors.
 
 ## Support
-If you have any issues, questions, suggestions, etc., please open an issue here on GitHub, or visit the official 86Box support channels on IRC and Discord. The project maintainer, daviunic, is often idling there under the name Overdoze.
+If you have any issues, questions, suggestions, etc., please open an issue here on GitHub or visit the official 86Box support channels on IRC and Discord (see the main 86Box repo for links). Lead developer, daviunic, is often idling there under the name Overdoze.
