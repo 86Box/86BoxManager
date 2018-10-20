@@ -16,7 +16,7 @@ namespace _86boxManager
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool IsWindow(IntPtr hWnd); //Checks if hWnd belongs to an existing window
         [DllImport("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam); //Sends a message to the window of hWnd
+        public static extern int PostMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam); //Sends a message to the window of hWnd
 
         private static RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true); //Registry key for accessing the settings and VM list
         public string exepath = ""; //Path to 86box.exe and the romset
@@ -378,7 +378,7 @@ namespace _86boxManager
         private void VMPause()
         {
             VM vm = (VM)lstVMs.FocusedItem.Tag;
-            SendMessage(vm.hWnd, 0x8890, IntPtr.Zero, IntPtr.Zero);
+            PostMessage(vm.hWnd, 0x8890, IntPtr.Zero, IntPtr.Zero);
             vm.Status = VM.STATUS_PAUSED;
             lstVMs.FocusedItem.SubItems[1].Text = vm.GetStatusString();
             lstVMs.FocusedItem.ImageIndex = 2;
@@ -391,7 +391,7 @@ namespace _86boxManager
         private void VMResume()
         {
             VM vm = (VM)lstVMs.FocusedItem.Tag;
-            SendMessage(vm.hWnd, 0x8890, IntPtr.Zero, IntPtr.Zero);
+            PostMessage(vm.hWnd, 0x8890, IntPtr.Zero, IntPtr.Zero);
             vm.Status = VM.STATUS_RUNNING;
             lstVMs.FocusedItem.SubItems[1].Text = vm.GetStatusString();
             lstVMs.FocusedItem.ImageIndex = 1;
@@ -459,7 +459,7 @@ namespace _86boxManager
             VM vm = (VM)lstVMs.FocusedItem.Tag;
             if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
             {
-                SendMessage(vm.hWnd, 0x8893, IntPtr.Zero, IntPtr.Zero);
+                PostMessage(vm.hWnd, 0x8893, IntPtr.Zero, IntPtr.Zero);
                 vm.Status = VM.STATUS_STOPPED;
                 vm.hWnd = IntPtr.Zero;
                 lstVMs.FocusedItem.SubItems[1].Text = vm.GetStatusString();
@@ -518,7 +518,7 @@ namespace _86boxManager
             //If the VM is already running, only send the message to open the settings window. Otherwise, start the VM with the -S parameter
             if (vm.Status == VM.STATUS_RUNNING)
             {
-                SendMessage(vm.hWnd, 0x8889, IntPtr.Zero, IntPtr.Zero);
+                PostMessage(vm.hWnd, 0x8889, IntPtr.Zero, IntPtr.Zero);
             }
             else if (vm.Status == VM.STATUS_STOPPED)
             {
@@ -573,7 +573,10 @@ namespace _86boxManager
             VM vm = (VM)lstVMs.FocusedItem.Tag;
             if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
             {
-                SendMessage(vm.hWnd, 0x8894, IntPtr.Zero, IntPtr.Zero);
+                PostMessage(vm.hWnd, 0x8894, IntPtr.Zero, IntPtr.Zero);
+                vm.Status = VM.STATUS_RUNNING;
+                lstVMs.FocusedItem.SubItems[1].Text = vm.GetStatusString();
+                btnPause.Text = "Pause";
             }
         }
 
@@ -588,7 +591,10 @@ namespace _86boxManager
             VM vm = (VM)lstVMs.FocusedItem.Tag;
             if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
             {
-                SendMessage(vm.hWnd, 0x8892, IntPtr.Zero, IntPtr.Zero);
+                PostMessage(vm.hWnd, 0x8892, IntPtr.Zero, IntPtr.Zero);
+                vm.Status = VM.STATUS_RUNNING;
+                lstVMs.FocusedItem.SubItems[1].Text = vm.GetStatusString();
+                btnPause.Text = "Pause";
             }
         }
 

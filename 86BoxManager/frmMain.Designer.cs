@@ -86,7 +86,7 @@
             // 
             this.btnStart.Enabled = false;
             this.btnStart.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnStart.Location = new System.Drawing.Point(211, 12);
+            this.btnStart.Location = new System.Drawing.Point(206, 12);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(51, 30);
             this.btnStart.TabIndex = 3;
@@ -181,7 +181,7 @@
             // 
             this.btnConfigure.Enabled = false;
             this.btnConfigure.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnConfigure.Location = new System.Drawing.Point(268, 12);
+            this.btnConfigure.Location = new System.Drawing.Point(263, 12);
             this.btnConfigure.Name = "btnConfigure";
             this.btnConfigure.Size = new System.Drawing.Size(81, 30);
             this.btnConfigure.TabIndex = 8;
@@ -276,9 +276,9 @@
             // 
             this.btnPause.Enabled = false;
             this.btnPause.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnPause.Location = new System.Drawing.Point(355, 12);
+            this.btnPause.Location = new System.Drawing.Point(350, 12);
             this.btnPause.Name = "btnPause";
-            this.btnPause.Size = new System.Drawing.Size(55, 30);
+            this.btnPause.Size = new System.Drawing.Size(65, 30);
             this.btnPause.TabIndex = 9;
             this.btnPause.Text = "Pause";
             this.btnPause.UseVisualStyleBackColor = true;
@@ -288,7 +288,7 @@
             // 
             this.btnCtrlAltDel.Enabled = false;
             this.btnCtrlAltDel.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnCtrlAltDel.Location = new System.Drawing.Point(416, 12);
+            this.btnCtrlAltDel.Location = new System.Drawing.Point(421, 12);
             this.btnCtrlAltDel.Name = "btnCtrlAltDel";
             this.btnCtrlAltDel.Size = new System.Drawing.Size(65, 30);
             this.btnCtrlAltDel.TabIndex = 10;
@@ -300,7 +300,7 @@
             // 
             this.btnReset.Enabled = false;
             this.btnReset.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnReset.Location = new System.Drawing.Point(487, 12);
+            this.btnReset.Location = new System.Drawing.Point(492, 12);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(53, 30);
             this.btnReset.TabIndex = 11;
