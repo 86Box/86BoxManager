@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Management;
 using System.Windows.Forms;
 
 namespace _86boxManager
@@ -14,25 +15,25 @@ namespace _86boxManager
         static void Main()
         {
             //Check if 86box.exe is already running
-            Process[] pname = Process.GetProcessesByName("86box");
-            if (pname.Length > 0)
+            Process[] pname = Process.GetProcessesByName("86manager");
+            if (pname.Length > 1)
             {
-                MessageBox.Show("At least one instance of 86box is already running. Please close all instances of 86box and restart this program.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("86Box Manager is already running. You can only run one instance at a time.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
-                //Check if 86manager.exe is already running
-                pname = Process.GetProcessesByName("86manager");
-                if (pname.Length > 1)
+                pname = Process.GetProcessesByName("86box");
+                if (pname.Length > 0)
                 {
-                    MessageBox.Show("86Box Manager is already running. You can only run one instance at a time.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    DialogResult result = MessageBox.Show("At least one instance of 86box is already running. It's not recommended that you run 86Box.exe directly outside of Manager. Do you want to continue at your own risk?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (result == DialogResult.No)
+                    {
+                        return;
+                    }
                 }
-                else
-                {
-                    Application.EnableVisualStyles();
-                    Application.SetCompatibleTextRenderingDefault(false);
-                    Application.Run(new frmMain());
-                }
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new frmMain());
             }
         }
     }

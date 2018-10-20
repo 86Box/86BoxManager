@@ -691,7 +691,7 @@ namespace _86boxManager
                 }
                 catch (Exception ex)
                 {
-                    //Ignore for now
+                    MessageBox.Show("An error has occurred while trying to move the files for this virtual machine. Please try to move them manually.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 vm.Name = name;
                 vm.Path = cfgpath + vm.Name;
@@ -705,12 +705,12 @@ namespace _86boxManager
             regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box\Virtual Machines", true);
             using (var ms = new MemoryStream())
             {
+                regkey.DeleteValue(oldname);
                 var formatter = new BinaryFormatter();
                 formatter.Serialize(ms, vm);
                 var data = ms.ToArray();
                 regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box\Virtual Machines", true);
                 regkey.SetValue(vm.Name, data, RegistryValueKind.Binary);
-                regkey.DeleteValue(oldname);
             }
             regkey.Close();
 
