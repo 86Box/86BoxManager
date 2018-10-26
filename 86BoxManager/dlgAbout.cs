@@ -30,7 +30,7 @@ namespace _86boxManager
 
         private void dlgAbout_Load(object sender, EventArgs e)
         {
-            lblVersion1.Text = Application.ProductVersion.ToString().TrimEnd('.', '0');
+            lblVersion1.Text = Application.ProductVersion.Substring(0, Application.ProductVersion.Length - 2);
             if (Program.PRERELEASE)
             {
                 lblVersion1.Text += " Pre-release";

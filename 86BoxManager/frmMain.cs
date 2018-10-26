@@ -6,6 +6,7 @@ using Microsoft.Win32;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using IWshRuntimeLibrary;
 
 namespace _86boxManager
 {
@@ -22,6 +23,9 @@ namespace _86boxManager
         public string exepath = ""; //Path to 86box.exe and the romset
         public string cfgpath = ""; //Path to the virtual machines folder (configs, nvrs, etc.)
         private bool minimize = false; //Minimize the main window when a vm is started?
+        private bool showConsole = true;
+        private string hWndHex = "";  //Window handle of this window  
+        private const string ZEROID = "0000000000000000"; //Used for the id parameter of 86Box -H
 
         public frmMain()
         {
@@ -34,7 +38,23 @@ namespace _86boxManager
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-
+            //Convert the current window handle to a form that's expected by 86Box
+            hWndHex = string.Format("{0:X}", Handle.ToInt64());
+            hWndHex = hWndHex.PadLeft(16, '0');
+           
+            //Check if command line arguments for starting a VM are OK
+            if (Program.args.Length == 3 && Program.args[1] == "-S" && Program.args[2] != null)
+            {
+                //Find the VM with given name
+                ListViewItem lvi = lstVMs.FindItemWithText(Program.args[2], false, 0, false);
+             
+                //Then select and start it if it's found
+                if (lvi != null)
+                {
+                    lvi.Focused = true;
+                    VMStart();
+                }
+            }
         }
 
         private void btnStart_Click(object sender, EventArgs e)
@@ -170,6 +190,7 @@ namespace _86boxManager
                 }
 
                 minimize = Convert.ToBoolean(regkey.GetValue("MinimizeOnVMStart"));
+                showConsole = Convert.ToBoolean(regkey.GetValue("ShowConsole"));
             }
             catch (Exception ex) //Bad settings, retry
             {
@@ -221,7 +242,7 @@ namespace _86boxManager
                 Process p = Process.GetProcessById(vm.Pid); //Find the process associated with the VM
                 p.WaitForExit(); //Wait for it to exit
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("An error has occurred. Please provide the following details to the developer:\n" + ex.Message + "\n" + ex.StackTrace, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -279,9 +300,9 @@ namespace _86boxManager
             {
                 case VM.STATUS_RUNNING:
                     {
-                        startToolStripMenuItem.Text = "Shutdown";
+                        startToolStripMenuItem.Text = "Stop";
                         startToolStripMenuItem.Enabled = true;
-                        startToolStripMenuItem.ToolTipText = "Shutdown this virtual machine";
+                        startToolStripMenuItem.ToolTipText = "Stop this virtual machine";
                         editToolStripMenuItem.Enabled = false;
                         deleteToolStripMenuItem.Enabled = false;
                         hardResetToolStripMenuItem.Enabled = true;
@@ -322,9 +343,9 @@ namespace _86boxManager
                     break;
                 case VM.STATUS_PAUSED:
                     {
-                        startToolStripMenuItem.Enabled = true;
-                        startToolStripMenuItem.Text = "Shutdown";
-                        startToolStripMenuItem.ToolTipText = "Shutdown this virtual machine";
+                        startToolStripMenuItem.Enabled = false;
+                        startToolStripMenuItem.Text = "Stop";
+                        startToolStripMenuItem.ToolTipText = "Stop this virtual machine";
                         editToolStripMenuItem.Enabled = false;
                         deleteToolStripMenuItem.Enabled = false;
                         hardResetToolStripMenuItem.Enabled = true;
@@ -332,7 +353,7 @@ namespace _86boxManager
                         pauseToolStripMenuItem.Enabled = true;
                         pauseToolStripMenuItem.Text = "Resume";
                         pauseToolStripMenuItem.ToolTipText = "Resume this virtual machine";
-                        configureToolStripMenuItem.Enabled = true;
+                        configureToolStripMenuItem.Enabled = false;
                     }
                     break;
             };
@@ -353,7 +374,7 @@ namespace _86boxManager
                         e.Cancel = false;
                         return; //We only need to display the warning once...
                     }
-                    else if(DialogResult == DialogResult.No)
+                    else if (DialogResult == DialogResult.No)
                     {
                         break;
                     }
@@ -384,6 +405,8 @@ namespace _86boxManager
             lstVMs.FocusedItem.ImageIndex = 2;
             pauseToolStripMenuItem.Text = "Resume";
             btnPause.Text = "Resume";
+            btnStart.Enabled = false;
+            btnConfigure.Enabled = false;
             pauseToolStripMenuItem.ToolTipText = "Resume this virtual machine";
         }
 
@@ -397,6 +420,8 @@ namespace _86boxManager
             lstVMs.FocusedItem.ImageIndex = 1;
             pauseToolStripMenuItem.Text = "Pause";
             btnPause.Text = "Pause";
+            btnStart.Enabled = true;
+            btnConfigure.Enabled = true;
             pauseToolStripMenuItem.ToolTipText = "Pause this virtual machine";
         }
 
@@ -408,7 +433,16 @@ namespace _86boxManager
                 VM vm = (VM)lstVMs.FocusedItem.Tag;
                 if (vm.Status == VM.STATUS_STOPPED)
                 {
-                    Process p = Process.Start(exepath + "86Box.exe", "-P \"" + lstVMs.FocusedItem.SubItems[2].Text + "\""); //Start the process with appropriate arguments
+                    Process p = new Process();
+                    p.StartInfo.FileName = exepath + "86Box.exe";
+                    p.StartInfo.Arguments = "-P \"" + lstVMs.FocusedItem.SubItems[2].Text + "\" -H " + ZEROID + "," + hWndHex;
+                    if (!showConsole)
+                    {
+                        p.StartInfo.RedirectStandardOutput = true;
+                        p.StartInfo.UseShellExecute = false;
+                    }
+                    p.Start();
+                    // Process p = Process.Start(exepath + "86Box.exe", "-P \"" + lstVMs.FocusedItem.SubItems[2].Text + "\""); //Start the process with appropriate arguments
                     p.WaitForInputIdle(); //Wait a bit so hWnd can be obtained
 
                     if (!p.MainWindowHandle.Equals(IntPtr.Zero))
@@ -524,8 +558,17 @@ namespace _86boxManager
             {
                 try
                 {
-                    Process p = Process.Start(exepath + "86Box.exe", "-S -P \"" + lstVMs.FocusedItem.SubItems[2].Text + "\"");
+                    Process p = new Process();
+                    p.StartInfo.FileName = exepath + "86Box.exe";
+                    p.StartInfo.Arguments = "-S -P \"" + lstVMs.FocusedItem.SubItems[2].Text + "\"";
+                    if (!showConsole)
+                    {
+                        p.StartInfo.RedirectStandardOutput = true;
+                        p.StartInfo.UseShellExecute = false;
+                    }
+                    p.Start();
                     p.WaitForInputIdle();
+
                     vm.Status = VM.STATUS_IN_SETTINGS;
                     vm.hWnd = p.MainWindowHandle;
                     vm.Pid = p.Id;
@@ -551,7 +594,7 @@ namespace _86boxManager
                     btnPause.Text = "Pause";
                     btnCtrlAltDel.Enabled = false;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     //Revert to stopped status and alert the user
                     vm.Status = VM.STATUS_STOPPED;
@@ -659,11 +702,11 @@ namespace _86boxManager
         public bool VMCheckIfExists(string name)
         {
             regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box\Virtual Machines", true);
-            if(regkey == null) //Regkey doesn't exist yet
+            if (regkey == null) //Regkey doesn't exist yet
             {
                 regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true);
                 regkey.CreateSubKey(@"Virtual Machines");
-                return false; 
+                return false;
             }
             if (regkey.GetValue(name) == null)
             {
@@ -787,6 +830,141 @@ namespace _86boxManager
             {
                 VMPause();
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Process p = Process.Start(exepath + "86Box.exe", "-H " + ZEROID + "," + hWndHex); //Start the process with appropriate arguments
+        }
+
+        //This function monitors recieved window messages
+        protected override void WndProc(ref Message m)
+        {
+            // WM_SENDSTATUS (0x8895) - wparam = 1: vm paused, wparam = 0: vm resumed
+            // WM_SENDSSTATUS (0x8896) - wparam = 1: settings open, wparam = 0: settings closed
+            // only works from build 1799 onwards!!!
+            if (m.Msg == 0x8895)
+            {
+                if (m.WParam.ToInt32() == 1) //VM was paused
+                {
+                    foreach (ListViewItem lvi in lstVMs.Items)
+                    {
+                        VM vm = (VM)lvi.Tag;
+                        if (vm.hWnd.Equals(m.LParam) && vm.Status != VM.STATUS_PAUSED)
+                        {
+                            vm.Status = VM.STATUS_PAUSED;
+                            lvi.SubItems[1].Text = vm.GetStatusString();
+                            lvi.ImageIndex = 2;
+                            pauseToolStripMenuItem.Text = "Resume";
+                            btnPause.Text = "Resume";
+                            pauseToolStripMenuItem.ToolTipText = "Resume this virtual machine";
+                            btnStart.Enabled = false;
+                            btnConfigure.Enabled = false;
+                        }
+                    }
+                }
+                else if(m.WParam.ToInt32() == 0) //VM was resumed
+                {
+                    foreach (ListViewItem lvi in lstVMs.Items)
+                    {
+                        VM vm = (VM)lvi.Tag;
+                        if (vm.hWnd == m.LParam && vm.Status != VM.STATUS_RUNNING)
+                        {
+                            vm.Status = VM.STATUS_RUNNING;
+                            lvi.SubItems[1].Text = vm.GetStatusString();
+                            lvi.ImageIndex = 1;
+                            pauseToolStripMenuItem.Text = "Pause";
+                            btnPause.Text = "Pause";
+                            pauseToolStripMenuItem.ToolTipText = "Pause this virtual machine";
+                            btnStart.Enabled = true;
+                            btnConfigure.Enabled = true;
+                        }
+                    }
+                }
+            }
+            if(m.Msg == 0x8896)
+            {
+                Console.WriteLine(m.ToString());
+                if (m.WParam.ToInt32() == 1) //Settings were opened
+                {
+                    foreach (ListViewItem lvi in lstVMs.Items)
+                    {
+                        VM vm = (VM)lvi.Tag;
+                        if (vm.hWnd == m.LParam && vm.Status != VM.STATUS_IN_SETTINGS)
+                        {
+                            vm.Status = VM.STATUS_IN_SETTINGS;
+                            lvi.SubItems[1].Text = vm.GetStatusString();
+                            lvi.ImageIndex = 2;
+                            btnStart.Enabled = false;
+                            btnStart.Text = "Stop";
+                            btnEdit.Enabled = false;
+                            btnDelete.Enabled = false;
+                            btnConfigure.Enabled = false;
+                            btnReset.Enabled = false;
+                            btnPause.Enabled = false;
+                            btnPause.Text = "Pause";
+                            btnCtrlAltDel.Enabled = false;
+                        }
+                    }
+                }
+                else if(m.WParam.ToInt32() == 0) //Settings were closed
+                {
+                    foreach (ListViewItem lvi in lstVMs.Items)
+                    {
+                        VM vm = (VM)lvi.Tag;
+                        if (vm.hWnd == m.LParam & vm.Status != VM.STATUS_RUNNING)
+                        {
+                            vm.Status = VM.STATUS_RUNNING;
+                            lvi.SubItems[1].Text = vm.GetStatusString();
+                            lvi.ImageIndex = 1;
+                            btnEdit.Enabled = false;
+                            btnDelete.Enabled = false;
+                            btnStart.Enabled = true;
+                            btnStart.Text = "Stop";
+                            btnConfigure.Enabled = true;
+                            btnPause.Enabled = true;
+                            btnPause.Text = "Pause";
+                            btnCtrlAltDel.Enabled = true;
+                            btnReset.Enabled = true;
+                        }
+                    }
+                }
+            }
+            base.WndProc(ref m);
+        }
+
+        private void openFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            VMOpenFolder();
+        }
+
+        //Opens the folder containg the selected VM
+        private void VMOpenFolder()
+        {
+            try
+            {
+                VM vm = (VM)lstVMs.FocusedItem.Tag;
+                Process.Start(vm.Path);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("The folder for this virtual machine could not be opened. Make sure it still exists and that you have sufficient privileges to access it.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void createADesktopShortcutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            VM vm = (VM)lstVMs.FocusedItem.Tag;
+            WshShell shell = new WshShell();
+            string shortcutAddress = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\" + vm.Name + ".lnk";
+            IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortcutAddress);
+            shortcut.Description = vm.Desc;
+            shortcut.IconLocation = Application.StartupPath + @"\86manager.exe,0";
+            shortcut.TargetPath = Application.StartupPath + @"\86manager.exe";
+            shortcut.Arguments = "-S \"" + vm.Name + "\"";
+            shortcut.Save();
+
+            MessageBox.Show("A desktop shortcut for this virtual machine was successfully created.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

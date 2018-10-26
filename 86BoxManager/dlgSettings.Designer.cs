@@ -38,13 +38,15 @@
             this.btnBrowse1 = new System.Windows.Forms.Button();
             this.btnBrowse2 = new System.Windows.Forms.Button();
             this.cbxMinimize = new System.Windows.Forms.CheckBox();
+            this.cbxShowConsole = new System.Windows.Forms.CheckBox();
+            this.btnDefaults = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnApply
             // 
             this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnApply.Enabled = false;
-            this.btnApply.Location = new System.Drawing.Point(529, 131);
+            this.btnApply.Location = new System.Drawing.Point(529, 161);
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(75, 30);
             this.btnApply.TabIndex = 0;
@@ -56,7 +58,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(448, 131);
+            this.btnCancel.Location = new System.Drawing.Point(448, 161);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 30);
             this.btnCancel.TabIndex = 1;
@@ -68,7 +70,7 @@
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.Enabled = false;
-            this.btnOK.Location = new System.Drawing.Point(367, 131);
+            this.btnOK.Location = new System.Drawing.Point(367, 161);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 30);
             this.btnOK.TabIndex = 2;
@@ -141,6 +143,28 @@
             this.cbxMinimize.UseVisualStyleBackColor = true;
             this.cbxMinimize.CheckedChanged += new System.EventHandler(this.cbxMinimize_CheckedChanged);
             // 
+            // cbxShowConsole
+            // 
+            this.cbxShowConsole.AutoSize = true;
+            this.cbxShowConsole.Location = new System.Drawing.Point(16, 125);
+            this.cbxShowConsole.Name = "cbxShowConsole";
+            this.cbxShowConsole.Size = new System.Drawing.Size(359, 25);
+            this.cbxShowConsole.TabIndex = 10;
+            this.cbxShowConsole.Text = "Show the console window when a VM is started";
+            this.cbxShowConsole.UseVisualStyleBackColor = true;
+            this.cbxShowConsole.CheckedChanged += new System.EventHandler(this.cbxShowConsole_CheckedChanged);
+            // 
+            // btnDefaults
+            // 
+            this.btnDefaults.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnDefaults.Location = new System.Drawing.Point(12, 161);
+            this.btnDefaults.Name = "btnDefaults";
+            this.btnDefaults.Size = new System.Drawing.Size(75, 30);
+            this.btnDefaults.TabIndex = 11;
+            this.btnDefaults.Text = "Defaults";
+            this.btnDefaults.UseVisualStyleBackColor = true;
+            this.btnDefaults.Click += new System.EventHandler(this.btnDefaults_Click);
+            // 
             // dlgSettings
             // 
             this.AcceptButton = this.btnOK;
@@ -148,7 +172,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(616, 173);
+            this.ClientSize = new System.Drawing.Size(616, 203);
+            this.Controls.Add(this.btnDefaults);
+            this.Controls.Add(this.cbxShowConsole);
             this.Controls.Add(this.cbxMinimize);
             this.Controls.Add(this.btnBrowse2);
             this.Controls.Add(this.btnBrowse1);
@@ -188,5 +214,7 @@
         private System.Windows.Forms.Button btnBrowse1;
         private System.Windows.Forms.Button btnBrowse2;
         private System.Windows.Forms.CheckBox cbxMinimize;
+        private System.Windows.Forms.CheckBox cbxShowConsole;
+        private System.Windows.Forms.Button btnDefaults;
     }
 }

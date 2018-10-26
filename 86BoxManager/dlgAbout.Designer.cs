@@ -36,6 +36,8 @@
             this.lblCopyright = new System.Windows.Forms.Label();
             this.lnkGithub2 = new System.Windows.Forms.LinkLabel();
             this.lblVersion1 = new System.Windows.Forms.Label();
+            this.imgLogo = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.imgLogo)).BeginInit();
             this.SuspendLayout();
             // 
             // lblTitle
@@ -43,7 +45,7 @@
             this.lblTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lblTitle.Location = new System.Drawing.Point(103, 9);
+            this.lblTitle.Location = new System.Drawing.Point(122, 9);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(165, 30);
             this.lblTitle.TabIndex = 0;
@@ -53,7 +55,7 @@
             // 
             this.btnOK.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnOK.Location = new System.Drawing.Point(148, 228);
+            this.btnOK.Location = new System.Drawing.Point(148, 234);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 30);
             this.btnOK.TabIndex = 1;
@@ -64,7 +66,7 @@
             // lblDesc
             // 
             this.lblDesc.AutoSize = true;
-            this.lblDesc.Location = new System.Drawing.Point(12, 39);
+            this.lblDesc.Location = new System.Drawing.Point(12, 50);
             this.lblDesc.Name = "lblDesc";
             this.lblDesc.Size = new System.Drawing.Size(347, 21);
             this.lblDesc.TabIndex = 2;
@@ -73,7 +75,7 @@
             // lblVersion
             // 
             this.lblVersion.AutoSize = true;
-            this.lblVersion.Location = new System.Drawing.Point(12, 69);
+            this.lblVersion.Location = new System.Drawing.Point(12, 78);
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(65, 21);
             this.lblVersion.TabIndex = 3;
@@ -82,7 +84,7 @@
             // lnkGithub
             // 
             this.lnkGithub.AutoSize = true;
-            this.lnkGithub.Location = new System.Drawing.Point(12, 193);
+            this.lnkGithub.Location = new System.Drawing.Point(12, 201);
             this.lnkGithub.Name = "lnkGithub";
             this.lnkGithub.Size = new System.Drawing.Size(298, 21);
             this.lnkGithub.TabIndex = 5;
@@ -93,7 +95,7 @@
             // lblCopyright
             // 
             this.lblCopyright.AutoSize = true;
-            this.lblCopyright.Location = new System.Drawing.Point(12, 100);
+            this.lblCopyright.Location = new System.Drawing.Point(12, 108);
             this.lblCopyright.Name = "lblCopyright";
             this.lblCopyright.Size = new System.Drawing.Size(303, 63);
             this.lblCopyright.TabIndex = 6;
@@ -103,7 +105,7 @@
             // lnkGithub2
             // 
             this.lnkGithub2.AutoSize = true;
-            this.lnkGithub2.Location = new System.Drawing.Point(12, 172);
+            this.lnkGithub2.Location = new System.Drawing.Point(12, 180);
             this.lnkGithub2.Name = "lnkGithub2";
             this.lnkGithub2.Size = new System.Drawing.Size(236, 21);
             this.lnkGithub2.TabIndex = 7;
@@ -114,11 +116,20 @@
             // lblVersion1
             // 
             this.lblVersion1.AutoSize = true;
-            this.lblVersion1.Location = new System.Drawing.Point(72, 69);
+            this.lblVersion1.Location = new System.Drawing.Point(72, 78);
             this.lblVersion1.Name = "lblVersion1";
             this.lblVersion1.Size = new System.Drawing.Size(155, 21);
             this.lblVersion1.TabIndex = 8;
             this.lblVersion1.Text = "<version goes here>";
+            // 
+            // imgLogo
+            // 
+            this.imgLogo.Image = global::_86BoxManager.Properties.Resources._86Box;
+            this.imgLogo.Location = new System.Drawing.Point(84, 9);
+            this.imgLogo.Name = "imgLogo";
+            this.imgLogo.Size = new System.Drawing.Size(32, 32);
+            this.imgLogo.TabIndex = 9;
+            this.imgLogo.TabStop = false;
             // 
             // dlgAbout
             // 
@@ -127,7 +138,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnOK;
-            this.ClientSize = new System.Drawing.Size(371, 270);
+            this.ClientSize = new System.Drawing.Size(371, 276);
+            this.Controls.Add(this.imgLogo);
             this.Controls.Add(this.lblVersion1);
             this.Controls.Add(this.lnkGithub2);
             this.Controls.Add(this.lblCopyright);
@@ -147,6 +159,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "About 86Box Manager";
             this.Load += new System.EventHandler(this.dlgAbout_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.imgLogo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -162,5 +175,6 @@
         private System.Windows.Forms.Label lblCopyright;
         private System.Windows.Forms.LinkLabel lnkGithub2;
         private System.Windows.Forms.Label lblVersion1;
+        private System.Windows.Forms.PictureBox imgLogo;
     }
 }

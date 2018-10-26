@@ -84,6 +84,7 @@ namespace _86boxManager
                 regkey.SetValue("EXEdir", txtEXEdir.Text, RegistryValueKind.String);
                 regkey.SetValue("CFGdir", txtCFGdir.Text, RegistryValueKind.String);
                 regkey.SetValue("MinimizeOnVMStart", cbxMinimize.Checked, RegistryValueKind.DWord);
+                regkey.SetValue("ShowConsole", cbxShowConsole.Checked, RegistryValueKind.DWord);
                 regkey.Close();
                 settingsChanged = false;
             }
@@ -100,17 +101,19 @@ namespace _86boxManager
             {
                 RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box"); //Open the key as read only
                 if (regkey == null)
-                { //Key doesn't exist yet, fallback to default path
+                { //Key doesn't exist yet, fallback to defaults
                     Registry.CurrentUser.CreateSubKey(@"SOFTWARE\86Box");
-                    txtCFGdir.Text = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\86Box Virtual Machines";
+                    txtCFGdir.Text = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\86Box VMs";
                     txtEXEdir.Text = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + @"\86Box";
                     cbxMinimize.Checked = false;
+                    cbxShowConsole.Checked = true;
                 }
                 else
                 {
                     txtEXEdir.Text = regkey.GetValue("EXEdir").ToString();
                     txtCFGdir.Text = regkey.GetValue("CFGdir").ToString();
                     cbxMinimize.Checked = Convert.ToBoolean(regkey.GetValue("MinimizeOnVMStart"));
+                    cbxShowConsole.Checked = Convert.ToBoolean(regkey.GetValue("ShowConsole"));
 
                     //These two lines are needed because storing the values into the textboxes (above code) triggers textchanged event
                     settingsChanged = false;
@@ -164,6 +167,33 @@ namespace _86boxManager
         {
             settingsChanged = true;
             btnApply.Enabled = true;
+        }
+
+        private void cbxShowConsole_CheckedChanged(object sender, EventArgs e)
+        {
+            settingsChanged = true;
+            btnApply.Enabled = true;
+        }
+
+        private void btnDefaults_Click(object sender, EventArgs e)
+        {
+            ResetSettings();
+        }
+
+        //Resets the settings to their default values
+        private void ResetSettings()
+        {
+            try
+            {
+                RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE", true); //Open the key as read only
+                Registry.CurrentUser.DeleteSubKeyTree(@"86Box");
+            }
+            catch(Exception ex){/*Do nothing, key doesn't exist anyway*/}
+
+            txtCFGdir.Text = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\86Box VMs";
+            txtEXEdir.Text = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + @"\86Box";
+            cbxMinimize.Checked = false;
+            cbxShowConsole.Checked = true;
         }
     }
 }

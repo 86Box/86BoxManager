@@ -51,6 +51,8 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createADesktopShortcutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imgStatus = new System.Windows.Forms.ImageList(this.components);
             this.btnPause = new System.Windows.Forms.Button();
             this.btnCtrlAltDel = new System.Windows.Forms.Button();
@@ -199,16 +201,18 @@
             this.hardResetToolStripMenuItem,
             this.toolStripSeparator1,
             this.editToolStripMenuItem,
-            this.deleteToolStripMenuItem});
+            this.deleteToolStripMenuItem,
+            this.openFolderToolStripMenuItem,
+            this.createADesktopShortcutToolStripMenuItem});
             this.cmsVM.Name = "cmsVM";
             this.cmsVM.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.cmsVM.Size = new System.Drawing.Size(188, 164);
+            this.cmsVM.Size = new System.Drawing.Size(210, 208);
             this.cmsVM.Opening += new System.ComponentModel.CancelEventHandler(this.cmsVM_Opening);
             // 
             // startToolStripMenuItem
             // 
             this.startToolStripMenuItem.Name = "startToolStripMenuItem";
-            this.startToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.startToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.startToolStripMenuItem.Text = "Start";
             this.startToolStripMenuItem.ToolTipText = "Start this virtual machine";
             this.startToolStripMenuItem.Click += new System.EventHandler(this.startToolStripMenuItem_Click);
@@ -216,7 +220,7 @@
             // configureToolStripMenuItem
             // 
             this.configureToolStripMenuItem.Name = "configureToolStripMenuItem";
-            this.configureToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.configureToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.configureToolStripMenuItem.Text = "Configure";
             this.configureToolStripMenuItem.ToolTipText = "Open the settings window for this virtual machine";
             this.configureToolStripMenuItem.Click += new System.EventHandler(this.configureToolStripMenuItem_Click);
@@ -224,7 +228,7 @@
             // pauseToolStripMenuItem
             // 
             this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
-            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.pauseToolStripMenuItem.Text = "Pause";
             this.pauseToolStripMenuItem.ToolTipText = "Pause this virtual machine";
             this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
@@ -232,7 +236,7 @@
             // resetCTRLALTDELETEToolStripMenuItem
             // 
             this.resetCTRLALTDELETEToolStripMenuItem.Name = "resetCTRLALTDELETEToolStripMenuItem";
-            this.resetCTRLALTDELETEToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.resetCTRLALTDELETEToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.resetCTRLALTDELETEToolStripMenuItem.Text = "Send CTRL+ALT+DEL";
             this.resetCTRLALTDELETEToolStripMenuItem.ToolTipText = "Send the CTRL+ALT+DEL keystroke to this virtual machine";
             this.resetCTRLALTDELETEToolStripMenuItem.Click += new System.EventHandler(this.resetCTRLALTDELETEToolStripMenuItem_Click);
@@ -240,7 +244,7 @@
             // hardResetToolStripMenuItem
             // 
             this.hardResetToolStripMenuItem.Name = "hardResetToolStripMenuItem";
-            this.hardResetToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.hardResetToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.hardResetToolStripMenuItem.Text = "Hard reset";
             this.hardResetToolStripMenuItem.ToolTipText = "Reset this virtual machine by simulating a power cycle";
             this.hardResetToolStripMenuItem.Click += new System.EventHandler(this.hardResetToolStripMenuItem_Click);
@@ -248,12 +252,12 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(184, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(206, 6);
             // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.editToolStripMenuItem.Text = "Edit";
             this.editToolStripMenuItem.ToolTipText = "Edit the properties of this virtual machine";
             this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
@@ -261,10 +265,26 @@
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.deleteToolStripMenuItem.Text = "Remove";
             this.deleteToolStripMenuItem.ToolTipText = "Remove this virtual machine";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
+            // openFolderToolStripMenuItem
+            // 
+            this.openFolderToolStripMenuItem.Name = "openFolderToolStripMenuItem";
+            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.openFolderToolStripMenuItem.Text = "Open folder";
+            this.openFolderToolStripMenuItem.ToolTipText = "Open the folder for this virtual machine in Windows Explorer";
+            this.openFolderToolStripMenuItem.Click += new System.EventHandler(this.openFolderToolStripMenuItem_Click);
+            // 
+            // createADesktopShortcutToolStripMenuItem
+            // 
+            this.createADesktopShortcutToolStripMenuItem.Name = "createADesktopShortcutToolStripMenuItem";
+            this.createADesktopShortcutToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.createADesktopShortcutToolStripMenuItem.Text = "Create a desktop shortcut";
+            this.createADesktopShortcutToolStripMenuItem.ToolTipText = "Create a shortcut for this virtual machine on the desktop";
+            this.createADesktopShortcutToolStripMenuItem.Click += new System.EventHandler(this.createADesktopShortcutToolStripMenuItem_Click);
             // 
             // imgStatus
             // 
@@ -332,7 +352,7 @@
             this.MaximizeBox = false;
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "86box Manager";
+            this.Text = "86Box Manager";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.cmsVM.ResumeLayout(false);
@@ -366,6 +386,8 @@
         private System.Windows.Forms.Button btnPause;
         private System.Windows.Forms.Button btnCtrlAltDel;
         private System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.ToolStripMenuItem openFolderToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem createADesktopShortcutToolStripMenuItem;
     }
 }
 
