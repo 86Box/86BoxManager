@@ -9,12 +9,11 @@ It's written in C# with Windows Forms using Visual Studio 2017.
 * Give each VM a unique name and an optional description
 * Run multiple virtual machines at the same time
 * Control the VM from the Manager window using commands like Pause, Reset, etc.
-* Automatically minimize the Manager window when a VM is started
 
 ## System requirements
 Same as for 86Box. Additionally, the following is required:  
 
-* 86Box build 1748 or later (earlier builds don't support all the features the Manager expects)
+* 86Box build 1799 or later (earlier builds don't support all the features the Manager expects)
 * .NET Framework 4.0
 
 ## How to use
