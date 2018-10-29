@@ -38,7 +38,7 @@ namespace _86boxManager
 
         private void txtName_TextChanged(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtName.Text) || string.IsNullOrWhiteSpace(txtName.Text))
+            if (string.IsNullOrWhiteSpace(txtName.Text))
             {
                 btnAdd.Enabled = false;
             }
