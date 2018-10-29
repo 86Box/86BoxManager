@@ -62,7 +62,7 @@ namespace _86boxManager
         private void txtName_TextChanged(object sender, EventArgs e)
         {
             //Check for empty strings etc.
-            if (string.IsNullOrEmpty(txtName.Text) || string.IsNullOrWhiteSpace(txtName.Text))
+            if (string.IsNullOrWhiteSpace(txtName.Text))
             {
                 btnApply.Enabled = false;
             }
