@@ -55,7 +55,7 @@ namespace _86boxManager
 
         private void txt_TextChanged(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtCFGdir.Text) || string.IsNullOrWhiteSpace(txtCFGdir.Text) || string.IsNullOrEmpty(txtEXEdir.Text) || string.IsNullOrWhiteSpace(txtEXEdir.Text))
+            if (string.IsNullOrWhiteSpace(txtCFGdir.Text) || string.IsNullOrWhiteSpace(txtEXEdir.Text))
             {
                 btnApply.Enabled = false;
                 btnOK.Enabled = false;
