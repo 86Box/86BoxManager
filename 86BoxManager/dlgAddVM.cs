@@ -26,7 +26,7 @@ namespace _86boxManager
             }
             else
             {
-                main.VMAdd(txtName.Text, txtDescription.Text, cbxOpenCFG.Checked);
+                main.VMAdd(txtName.Text, txtDescription.Text, cbxOpenCFG.Checked, cbxStartVM.Checked);
                 Close();
             }
         }

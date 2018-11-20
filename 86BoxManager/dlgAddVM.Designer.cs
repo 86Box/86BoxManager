@@ -39,13 +39,14 @@
             this.lblPath1 = new System.Windows.Forms.Label();
             this.lblPath = new System.Windows.Forms.Label();
             this.tipLblPath1 = new System.Windows.Forms.ToolTip(this.components);
+            this.cbxStartVM = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // cbxOpenCFG
             // 
             this.cbxOpenCFG.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cbxOpenCFG.AutoSize = true;
-            this.cbxOpenCFG.Location = new System.Drawing.Point(16, 123);
+            this.cbxOpenCFG.Location = new System.Drawing.Point(16, 152);
             this.cbxOpenCFG.Name = "cbxOpenCFG";
             this.cbxOpenCFG.Size = new System.Drawing.Size(378, 25);
             this.cbxOpenCFG.TabIndex = 2;
@@ -56,7 +57,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(537, 119);
+            this.btnCancel.Location = new System.Drawing.Point(537, 148);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 30);
             this.btnCancel.TabIndex = 3;
@@ -67,7 +68,7 @@
             // 
             this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAdd.Enabled = false;
-            this.btnAdd.Location = new System.Drawing.Point(456, 119);
+            this.btnAdd.Location = new System.Drawing.Point(456, 148);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 30);
             this.btnAdd.TabIndex = 4;
@@ -131,6 +132,17 @@
             this.lblPath.TabIndex = 13;
             this.lblPath.Text = "Path:";
             // 
+            // cbxStartVM
+            // 
+            this.cbxStartVM.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cbxStartVM.AutoSize = true;
+            this.cbxStartVM.Location = new System.Drawing.Point(16, 121);
+            this.cbxStartVM.Name = "cbxStartVM";
+            this.cbxStartVM.Size = new System.Drawing.Size(308, 25);
+            this.cbxStartVM.TabIndex = 14;
+            this.cbxStartVM.Text = "Start this virtual machine after it\'s added";
+            this.cbxStartVM.UseVisualStyleBackColor = true;
+            // 
             // dlgAddVM
             // 
             this.AcceptButton = this.btnAdd;
@@ -138,7 +150,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(624, 161);
+            this.ClientSize = new System.Drawing.Size(624, 190);
+            this.Controls.Add(this.cbxStartVM);
             this.Controls.Add(this.lblPath);
             this.Controls.Add(this.lblPath1);
             this.Controls.Add(this.txtDescription);
@@ -175,5 +188,6 @@
         private System.Windows.Forms.Label lblPath1;
         private System.Windows.Forms.Label lblPath;
         private System.Windows.Forms.ToolTip tipLblPath1;
+        private System.Windows.Forms.CheckBox cbxStartVM;
     }
 }

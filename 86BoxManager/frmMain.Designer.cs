@@ -57,7 +57,14 @@
             this.btnPause = new System.Windows.Forms.Button();
             this.btnCtrlAltDel = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
+            this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.cmsTrayIcon = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.open86BoxManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsVM.SuspendLayout();
+            this.cmsTrayIcon.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnEdit
@@ -142,6 +149,7 @@
             this.lstVMs.UseCompatibleStateImageBehavior = false;
             this.lstVMs.View = System.Windows.Forms.View.Details;
             this.lstVMs.SelectedIndexChanged += new System.EventHandler(this.lstVMs_SelectedIndexChanged);
+            this.lstVMs.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lstVMs_KeyDown);
             this.lstVMs.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstVMs_MouseClick);
             this.lstVMs.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstVMs_MouseDoubleClick);
             // 
@@ -328,6 +336,50 @@
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
+            // trayIcon
+            // 
+            this.trayIcon.ContextMenuStrip = this.cmsTrayIcon;
+            this.trayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("trayIcon.Icon")));
+            this.trayIcon.Text = "86Box Manager";
+            this.trayIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.trayIcon_MouseDoubleClick);
+            // 
+            // cmsTrayIcon
+            // 
+            this.cmsTrayIcon.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.open86BoxManagerToolStripMenuItem,
+            this.settingsToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.exitToolStripMenuItem});
+            this.cmsTrayIcon.Name = "cmsVM";
+            this.cmsTrayIcon.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.cmsTrayIcon.Size = new System.Drawing.Size(188, 76);
+            // 
+            // open86BoxManagerToolStripMenuItem
+            // 
+            this.open86BoxManagerToolStripMenuItem.Name = "open86BoxManagerToolStripMenuItem";
+            this.open86BoxManagerToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.open86BoxManagerToolStripMenuItem.Text = "Show 86Box Manager";
+            this.open86BoxManagerToolStripMenuItem.Click += new System.EventHandler(this.open86BoxManagerToolStripMenuItem_Click);
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.settingsToolStripMenuItem.Text = "Settings";
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(184, 6);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
@@ -355,7 +407,9 @@
             this.Text = "86Box Manager";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Load += new System.EventHandler(this.frmMain_Load);
+            this.Resize += new System.EventHandler(this.frmMain_Resize);
             this.cmsVM.ResumeLayout(false);
+            this.cmsTrayIcon.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -388,6 +442,12 @@
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.ToolStripMenuItem openFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createADesktopShortcutToolStripMenuItem;
+        private System.Windows.Forms.NotifyIcon trayIcon;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ContextMenuStrip cmsTrayIcon;
+        private System.Windows.Forms.ToolStripMenuItem open86BoxManagerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
     }
 }
 

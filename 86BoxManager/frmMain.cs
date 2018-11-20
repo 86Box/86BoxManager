@@ -22,8 +22,10 @@ namespace _86boxManager
         private static RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true); //Registry key for accessing the settings and VM list
         public string exepath = ""; //Path to 86box.exe and the romset
         public string cfgpath = ""; //Path to the virtual machines folder (configs, nvrs, etc.)
-        private bool minimize = false; //Minimize the main window when a vm is started?
-        private bool showConsole = true;
+        private bool minimize = false; //Minimize the main window when a VM is started?
+        private bool showConsole = true; //Show the console window when a VM is started?
+        private bool minimizeTray = false; //Minimize the Manager window to tray icon?
+        private bool closeTray = false; //Close the Manager Window to tray icon?
         private string hWndHex = "";  //Window handle of this window  
         private const string ZEROID = "0000000000000000"; //Used for the id parameter of 86Box -H
 
@@ -191,6 +193,8 @@ namespace _86boxManager
 
                 minimize = Convert.ToBoolean(regkey.GetValue("MinimizeOnVMStart"));
                 showConsole = Convert.ToBoolean(regkey.GetValue("ShowConsole"));
+                minimizeTray = Convert.ToBoolean(regkey.GetValue("MinimizeToTray"));
+                closeTray = Convert.ToBoolean(regkey.GetValue("CloseToTray"));
             }
             catch (Exception ex) //Bad settings, retry
             {
@@ -362,21 +366,30 @@ namespace _86boxManager
         //Closing 86Box Manager before closing all the VMs can lead to weirdness if 86Box Manager is then restarted. So let's warn the user just in case and request confirmation.
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            foreach (ListViewItem item in lstVMs.Items)
+            if (e.CloseReason == CloseReason.UserClosing && closeTray)
             {
-                VM vm = (VM)item.Tag;
-                if (vm.Status != VM.STATUS_STOPPED)
+                trayIcon.Visible = true;
+                e.Cancel = true;
+                Hide();
+            }
+            else
+            {
+                foreach (ListViewItem item in lstVMs.Items)
                 {
-                    e.Cancel = true;
-                    DialogResult = MessageBox.Show("It appears some virtual machines are still running. It's recommended you close those first before closing 86Box Manager. Do you want to exit 86Box Manager anyway?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                    if (DialogResult == DialogResult.Yes)
+                    VM vm = (VM)item.Tag;
+                    if (vm.Status != VM.STATUS_STOPPED && Visible)
                     {
-                        e.Cancel = false;
-                        return; //We only need to display the warning once...
-                    }
-                    else if (DialogResult == DialogResult.No)
-                    {
-                        break;
+                        e.Cancel = true;
+                        DialogResult = MessageBox.Show("It appears some virtual machines are still running. It's recommended you close those first before closing 86Box Manager. Do you want to exit 86Box Manager anyway?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        if (DialogResult == DialogResult.Yes)
+                        {
+                            e.Cancel = false;
+                            return; //We only need to display the warning once...
+                        }
+                        else if (DialogResult == DialogResult.No)
+                        {
+                            break;
+                        }
                     }
                 }
             }
@@ -666,7 +679,7 @@ namespace _86boxManager
         }
 
         //Creates a new VM from the data recieved and adds it to the listview
-        public void VMAdd(string name, string desc, bool openCFG)
+        public void VMAdd(string name, string desc, bool openCFG, bool startVM)
         {
             VM newVM = new VM(name, desc, cfgpath + name);
             ListViewItem newLvi = new ListViewItem(newVM.Name)
@@ -691,9 +704,16 @@ namespace _86boxManager
 
             MessageBox.Show("Virtual machine \"" + newVM.Name + "\" was successfully created!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+            //Select the newly created VM
+            lstVMs.FocusedItem = newLvi; 
+
+            //Start the VM and/or open settings window if the user chose this option
+            if (startVM)
+            {
+                VMStart();
+            }
             if (openCFG)
             {
-                lstVMs.FocusedItem = newLvi; //Select the newly created VM so VMConfigure can do its thing
                 VMConfigure();
             }
         }
@@ -965,6 +985,82 @@ namespace _86boxManager
             shortcut.Save();
 
             MessageBox.Show("A desktop shortcut for this virtual machine was successfully created.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        //Starts/stops selected VM when enter is pressed
+        private void lstVMs_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                VM vm = (VM)lstVMs.FocusedItem.Tag;
+                if (vm.Status == VM.STATUS_RUNNING)
+                {
+                    VMStop();
+                }
+                else if (vm.Status == VM.STATUS_STOPPED)
+                {
+                    VMStart();
+                }
+            }
+        }
+
+        private void trayIcon_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            //Restore the window and hide the tray icon
+            Show();
+            WindowState = FormWindowState.Normal;
+            BringToFront();
+            trayIcon.Visible = false;
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in lstVMs.Items)
+            {
+                VM vm = (VM)item.Tag;
+                if (vm.Status != VM.STATUS_STOPPED)
+                {
+                    DialogResult = MessageBox.Show("It appears some virtual machines are still running. It's recommended you close those first before closing 86Box Manager. Do you want to exit 86Box Manager anyway?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (DialogResult == DialogResult.Yes)
+                    {
+                        break;
+                    }
+                    else if (DialogResult == DialogResult.No)
+                    {
+                        return;
+                    }
+                }
+            }
+            Application.Exit();
+        }
+
+        private void frmMain_Resize(object sender, EventArgs e)
+        {
+            //If the window was minimized, hide it completely and show the tray icon instead
+            if (WindowState == FormWindowState.Minimized && minimizeTray)
+            {
+                trayIcon.Visible = true;
+                Hide();
+            }
+        }
+
+        private void open86BoxManagerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Show();
+            WindowState = FormWindowState.Normal;
+            BringToFront();
+            trayIcon.Visible = false;
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Show();
+            WindowState = FormWindowState.Normal;
+            BringToFront();
+            trayIcon.Visible = false;
+            dlgSettings ds = new dlgSettings();
+            ds.ShowDialog();
+            LoadSettings();
         }
     }
 }

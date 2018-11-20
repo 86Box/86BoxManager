@@ -85,6 +85,8 @@ namespace _86boxManager
                 regkey.SetValue("CFGdir", txtCFGdir.Text, RegistryValueKind.String);
                 regkey.SetValue("MinimizeOnVMStart", cbxMinimize.Checked, RegistryValueKind.DWord);
                 regkey.SetValue("ShowConsole", cbxShowConsole.Checked, RegistryValueKind.DWord);
+                regkey.SetValue("MinimizeToTray", cbxMinimizeTray.Checked, RegistryValueKind.DWord);
+                regkey.SetValue("CloseToTray", cbxCloseTray.Checked, RegistryValueKind.DWord);
                 regkey.Close();
                 settingsChanged = false;
             }
@@ -107,6 +109,8 @@ namespace _86boxManager
                     txtEXEdir.Text = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + @"\86Box";
                     cbxMinimize.Checked = false;
                     cbxShowConsole.Checked = true;
+                    cbxMinimizeTray.Checked = false;
+                    cbxCloseTray.Checked = false;
                 }
                 else
                 {
@@ -114,6 +118,8 @@ namespace _86boxManager
                     txtCFGdir.Text = regkey.GetValue("CFGdir").ToString();
                     cbxMinimize.Checked = Convert.ToBoolean(regkey.GetValue("MinimizeOnVMStart"));
                     cbxShowConsole.Checked = Convert.ToBoolean(regkey.GetValue("ShowConsole"));
+                    cbxMinimizeTray.Checked = Convert.ToBoolean(regkey.GetValue("MinimizeToTray"));
+                    cbxCloseTray.Checked = Convert.ToBoolean(regkey.GetValue("CloseToTray"));
 
                     //These two lines are needed because storing the values into the textboxes (above code) triggers textchanged event
                     settingsChanged = false;
@@ -194,6 +200,20 @@ namespace _86boxManager
             txtEXEdir.Text = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + @"\86Box";
             cbxMinimize.Checked = false;
             cbxShowConsole.Checked = true;
+            cbxMinimizeTray.Checked = false;
+            cbxCloseTray.Checked = false;
+        }
+
+        private void cbxCloseTray_CheckedChanged(object sender, EventArgs e)
+        {
+            settingsChanged = true;
+            btnApply.Enabled = true;
+        }
+
+        private void cbxMinimizeTray_CheckedChanged(object sender, EventArgs e)
+        {
+            settingsChanged = true;
+            btnApply.Enabled = true;
         }
     }
 }
