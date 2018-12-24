@@ -63,6 +63,9 @@
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.killToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.cmsVM.SuspendLayout();
             this.cmsTrayIcon.SuspendLayout();
             this.SuspendLayout();
@@ -76,6 +79,7 @@
             this.btnEdit.Size = new System.Drawing.Size(51, 30);
             this.btnEdit.TabIndex = 1;
             this.btnEdit.Text = "Edit";
+            this.toolTip.SetToolTip(this.btnEdit, "Edit the properties of this virtual machine");
             this.btnEdit.UseVisualStyleBackColor = true;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
@@ -88,6 +92,7 @@
             this.btnDelete.Size = new System.Drawing.Size(70, 30);
             this.btnDelete.TabIndex = 2;
             this.btnDelete.Text = "Remove";
+            this.toolTip.SetToolTip(this.btnDelete, "Remove this virtual machine");
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
@@ -100,6 +105,7 @@
             this.btnStart.Size = new System.Drawing.Size(51, 30);
             this.btnStart.TabIndex = 3;
             this.btnStart.Text = "Start";
+            this.toolTip.SetToolTip(this.btnStart, "Start this virtual machine");
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
@@ -111,6 +117,7 @@
             this.btnSettings.Size = new System.Drawing.Size(67, 30);
             this.btnSettings.TabIndex = 4;
             this.btnSettings.Text = "Settings";
+            this.toolTip.SetToolTip(this.btnSettings, "Open 86Box Manager settings");
             this.btnSettings.UseVisualStyleBackColor = true;
             this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
             // 
@@ -122,6 +129,7 @@
             this.btnAbout.Size = new System.Drawing.Size(61, 30);
             this.btnAbout.TabIndex = 5;
             this.btnAbout.Text = "About";
+            this.toolTip.SetToolTip(this.btnAbout, "Open the About 86Box Manager dialog");
             this.btnAbout.UseVisualStyleBackColor = true;
             this.btnAbout.Click += new System.EventHandler(this.btnAbout_Click);
             // 
@@ -184,6 +192,7 @@
             this.btnAdd.Size = new System.Drawing.Size(45, 30);
             this.btnAdd.TabIndex = 7;
             this.btnAdd.Text = "Add";
+            this.toolTip.SetToolTip(this.btnAdd, "Add a new virtual machine");
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
@@ -196,6 +205,7 @@
             this.btnConfigure.Size = new System.Drawing.Size(81, 30);
             this.btnConfigure.TabIndex = 8;
             this.btnConfigure.Text = "Configure";
+            this.toolTip.SetToolTip(this.btnConfigure, "Open settings for this virtual machine");
             this.btnConfigure.UseVisualStyleBackColor = true;
             this.btnConfigure.Click += new System.EventHandler(this.btnConfigure_Click);
             // 
@@ -207,6 +217,8 @@
             this.pauseToolStripMenuItem,
             this.resetCTRLALTDELETEToolStripMenuItem,
             this.hardResetToolStripMenuItem,
+            this.toolStripSeparator3,
+            this.killToolStripMenuItem,
             this.toolStripSeparator1,
             this.editToolStripMenuItem,
             this.deleteToolStripMenuItem,
@@ -214,7 +226,7 @@
             this.createADesktopShortcutToolStripMenuItem});
             this.cmsVM.Name = "cmsVM";
             this.cmsVM.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.cmsVM.Size = new System.Drawing.Size(210, 208);
+            this.cmsVM.Size = new System.Drawing.Size(210, 236);
             this.cmsVM.Opening += new System.ComponentModel.CancelEventHandler(this.cmsVM_Opening);
             // 
             // startToolStripMenuItem
@@ -230,7 +242,7 @@
             this.configureToolStripMenuItem.Name = "configureToolStripMenuItem";
             this.configureToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.configureToolStripMenuItem.Text = "Configure";
-            this.configureToolStripMenuItem.ToolTipText = "Open the settings window for this virtual machine";
+            this.configureToolStripMenuItem.ToolTipText = "Open settings for this virtual machine";
             this.configureToolStripMenuItem.Click += new System.EventHandler(this.configureToolStripMenuItem_Click);
             // 
             // pauseToolStripMenuItem
@@ -282,7 +294,7 @@
             // 
             this.openFolderToolStripMenuItem.Name = "openFolderToolStripMenuItem";
             this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
-            this.openFolderToolStripMenuItem.Text = "Open folder";
+            this.openFolderToolStripMenuItem.Text = "Open folder in Explorer";
             this.openFolderToolStripMenuItem.ToolTipText = "Open the folder for this virtual machine in Windows Explorer";
             this.openFolderToolStripMenuItem.Click += new System.EventHandler(this.openFolderToolStripMenuItem_Click);
             // 
@@ -309,6 +321,7 @@
             this.btnPause.Size = new System.Drawing.Size(65, 30);
             this.btnPause.TabIndex = 9;
             this.btnPause.Text = "Pause";
+            this.toolTip.SetToolTip(this.btnPause, "Pause this virtual machine");
             this.btnPause.UseVisualStyleBackColor = true;
             this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
             // 
@@ -321,6 +334,7 @@
             this.btnCtrlAltDel.Size = new System.Drawing.Size(65, 30);
             this.btnCtrlAltDel.TabIndex = 10;
             this.btnCtrlAltDel.Text = "C+A+D";
+            this.toolTip.SetToolTip(this.btnCtrlAltDel, "Send the CTRL+ALT+DEL keystroke to this virtual machine");
             this.btnCtrlAltDel.UseVisualStyleBackColor = true;
             this.btnCtrlAltDel.Click += new System.EventHandler(this.btnCtrlAltDel_Click);
             // 
@@ -333,6 +347,7 @@
             this.btnReset.Size = new System.Drawing.Size(53, 30);
             this.btnReset.TabIndex = 11;
             this.btnReset.Text = "Reset";
+            this.toolTip.SetToolTip(this.btnReset, "Reset this virtual machine by simulating a power cycle");
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
@@ -359,6 +374,7 @@
             this.open86BoxManagerToolStripMenuItem.Name = "open86BoxManagerToolStripMenuItem";
             this.open86BoxManagerToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.open86BoxManagerToolStripMenuItem.Text = "Show 86Box Manager";
+            this.open86BoxManagerToolStripMenuItem.ToolTipText = "Restore the 86Box Manager window";
             this.open86BoxManagerToolStripMenuItem.Click += new System.EventHandler(this.open86BoxManagerToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
@@ -366,6 +382,7 @@
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
+            this.settingsToolStripMenuItem.ToolTipText = "Open 86Box Manager settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
@@ -378,7 +395,21 @@
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.ToolTipText = "Close 86Box Manager";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // killToolStripMenuItem
+            // 
+            this.killToolStripMenuItem.Name = "killToolStripMenuItem";
+            this.killToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.killToolStripMenuItem.Text = "Kill";
+            this.killToolStripMenuItem.ToolTipText = "Kill this virtual machine";
+            this.killToolStripMenuItem.Click += new System.EventHandler(this.killToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(206, 6);
             // 
             // frmMain
             // 
@@ -448,6 +479,9 @@
         private System.Windows.Forms.ToolStripMenuItem open86BoxManagerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem killToolStripMenuItem;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }
 

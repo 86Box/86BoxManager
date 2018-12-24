@@ -44,7 +44,6 @@ namespace _86boxManager
         private void btnApply_Click(object sender, EventArgs e)
         {
             SaveSettings();
-            btnApply.Enabled = false;
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -57,12 +56,11 @@ namespace _86boxManager
         {
             if (string.IsNullOrWhiteSpace(txtCFGdir.Text) || string.IsNullOrWhiteSpace(txtEXEdir.Text))
             {
-                btnApply.Enabled = false;
                 btnOK.Enabled = false;
             }
             else
             {
-                btnApply.Enabled = true;
+                //btnApply.Enabled = true;
                 settingsChanged = true;
                 btnOK.Enabled = true;
             }
@@ -90,7 +88,7 @@ namespace _86boxManager
                 regkey.Close();
                 settingsChanged = false;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("An error has occurred. Please provide the following information to the developer:\n" + ex.Message + "\n" + ex.StackTrace, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -121,14 +119,13 @@ namespace _86boxManager
                     cbxMinimizeTray.Checked = Convert.ToBoolean(regkey.GetValue("MinimizeToTray"));
                     cbxCloseTray.Checked = Convert.ToBoolean(regkey.GetValue("CloseToTray"));
 
-                    //These two lines are needed because storing the values into the textboxes (above code) triggers textchanged event
+                    //This line is needed because storing the values into the textboxes (above code) triggers textchanged event
                     settingsChanged = false;
-                    btnApply.Enabled = false;
 
                     regkey.Close();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 txtCFGdir.Text = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\86Box Virtual Machines";
                 txtEXEdir.Text = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + @"\86Box";
@@ -172,13 +169,11 @@ namespace _86boxManager
         private void cbxMinimize_CheckedChanged(object sender, EventArgs e)
         {
             settingsChanged = true;
-            btnApply.Enabled = true;
         }
 
         private void cbxShowConsole_CheckedChanged(object sender, EventArgs e)
         {
             settingsChanged = true;
-            btnApply.Enabled = true;
         }
 
         private void btnDefaults_Click(object sender, EventArgs e)
@@ -194,7 +189,7 @@ namespace _86boxManager
                 RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE", true); //Open the key as read only
                 Registry.CurrentUser.DeleteSubKeyTree(@"86Box");
             }
-            catch(Exception ex){/*Do nothing, key doesn't exist anyway*/}
+            catch (Exception ex) {/*Do nothing, key doesn't exist anyway*/}
 
             txtCFGdir.Text = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\86Box VMs";
             txtEXEdir.Text = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + @"\86Box";
@@ -207,13 +202,11 @@ namespace _86boxManager
         private void cbxCloseTray_CheckedChanged(object sender, EventArgs e)
         {
             settingsChanged = true;
-            btnApply.Enabled = true;
         }
 
         private void cbxMinimizeTray_CheckedChanged(object sender, EventArgs e)
         {
             settingsChanged = true;
-            btnApply.Enabled = true;
         }
     }
 }
