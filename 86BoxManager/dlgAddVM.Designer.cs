@@ -46,9 +46,10 @@
             // 
             this.cbxOpenCFG.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cbxOpenCFG.AutoSize = true;
-            this.cbxOpenCFG.Location = new System.Drawing.Point(16, 152);
+            this.cbxOpenCFG.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cbxOpenCFG.Location = new System.Drawing.Point(16, 151);
             this.cbxOpenCFG.Name = "cbxOpenCFG";
-            this.cbxOpenCFG.Size = new System.Drawing.Size(378, 25);
+            this.cbxOpenCFG.Size = new System.Drawing.Size(384, 26);
             this.cbxOpenCFG.TabIndex = 2;
             this.cbxOpenCFG.Text = "Open the configuration for this VM after it\'s added";
             this.cbxOpenCFG.UseVisualStyleBackColor = true;
@@ -57,6 +58,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnCancel.Location = new System.Drawing.Point(537, 148);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 30);
@@ -68,6 +70,7 @@
             // 
             this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAdd.Enabled = false;
+            this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnAdd.Location = new System.Drawing.Point(456, 148);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 30);
@@ -136,9 +139,10 @@
             // 
             this.cbxStartVM.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cbxStartVM.AutoSize = true;
-            this.cbxStartVM.Location = new System.Drawing.Point(16, 121);
+            this.cbxStartVM.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cbxStartVM.Location = new System.Drawing.Point(16, 120);
             this.cbxStartVM.Name = "cbxStartVM";
-            this.cbxStartVM.Size = new System.Drawing.Size(308, 25);
+            this.cbxStartVM.Size = new System.Drawing.Size(314, 26);
             this.cbxStartVM.TabIndex = 14;
             this.cbxStartVM.Text = "Start this virtual machine after it\'s added";
             this.cbxStartVM.UseVisualStyleBackColor = true;

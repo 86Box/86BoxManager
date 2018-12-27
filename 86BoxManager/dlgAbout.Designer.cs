@@ -55,6 +55,7 @@
             // 
             this.btnOK.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnOK.Location = new System.Drawing.Point(148, 234);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 30);

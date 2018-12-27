@@ -48,6 +48,8 @@
             this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetCTRLALTDELETEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hardResetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.killToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,8 +65,6 @@
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.killToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.cmsVM.SuspendLayout();
             this.cmsTrayIcon.SuspendLayout();
@@ -73,6 +73,7 @@
             // btnEdit
             // 
             this.btnEdit.Enabled = false;
+            this.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnEdit.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.btnEdit.Location = new System.Drawing.Point(63, 12);
             this.btnEdit.Name = "btnEdit";
@@ -86,6 +87,7 @@
             // btnDelete
             // 
             this.btnDelete.Enabled = false;
+            this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnDelete.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.btnDelete.Location = new System.Drawing.Point(120, 12);
             this.btnDelete.Name = "btnDelete";
@@ -99,6 +101,7 @@
             // btnStart
             // 
             this.btnStart.Enabled = false;
+            this.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnStart.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.btnStart.Location = new System.Drawing.Point(206, 12);
             this.btnStart.Name = "btnStart";
@@ -111,6 +114,7 @@
             // 
             // btnSettings
             // 
+            this.btnSettings.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnSettings.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.btnSettings.Location = new System.Drawing.Point(568, 12);
             this.btnSettings.Name = "btnSettings";
@@ -123,6 +127,7 @@
             // 
             // btnAbout
             // 
+            this.btnAbout.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnAbout.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.btnAbout.Location = new System.Drawing.Point(641, 12);
             this.btnAbout.Name = "btnAbout";
@@ -186,6 +191,7 @@
             // 
             // btnAdd
             // 
+            this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnAdd.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.btnAdd.Location = new System.Drawing.Point(12, 12);
             this.btnAdd.Name = "btnAdd";
@@ -199,6 +205,7 @@
             // btnConfigure
             // 
             this.btnConfigure.Enabled = false;
+            this.btnConfigure.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnConfigure.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.btnConfigure.Location = new System.Drawing.Point(263, 12);
             this.btnConfigure.Name = "btnConfigure";
@@ -269,6 +276,19 @@
             this.hardResetToolStripMenuItem.ToolTipText = "Reset this virtual machine by simulating a power cycle";
             this.hardResetToolStripMenuItem.Click += new System.EventHandler(this.hardResetToolStripMenuItem_Click);
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(206, 6);
+            // 
+            // killToolStripMenuItem
+            // 
+            this.killToolStripMenuItem.Name = "killToolStripMenuItem";
+            this.killToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.killToolStripMenuItem.Text = "Kill";
+            this.killToolStripMenuItem.ToolTipText = "Kill this virtual machine";
+            this.killToolStripMenuItem.Click += new System.EventHandler(this.killToolStripMenuItem_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -315,6 +335,7 @@
             // btnPause
             // 
             this.btnPause.Enabled = false;
+            this.btnPause.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnPause.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.btnPause.Location = new System.Drawing.Point(350, 12);
             this.btnPause.Name = "btnPause";
@@ -328,6 +349,7 @@
             // btnCtrlAltDel
             // 
             this.btnCtrlAltDel.Enabled = false;
+            this.btnCtrlAltDel.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnCtrlAltDel.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.btnCtrlAltDel.Location = new System.Drawing.Point(421, 12);
             this.btnCtrlAltDel.Name = "btnCtrlAltDel";
@@ -341,6 +363,7 @@
             // btnReset
             // 
             this.btnReset.Enabled = false;
+            this.btnReset.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnReset.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.btnReset.Location = new System.Drawing.Point(492, 12);
             this.btnReset.Name = "btnReset";
@@ -397,19 +420,6 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.ToolTipText = "Close 86Box Manager";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
-            // killToolStripMenuItem
-            // 
-            this.killToolStripMenuItem.Name = "killToolStripMenuItem";
-            this.killToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
-            this.killToolStripMenuItem.Text = "Kill";
-            this.killToolStripMenuItem.ToolTipText = "Kill this virtual machine";
-            this.killToolStripMenuItem.Click += new System.EventHandler(this.killToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(206, 6);
             // 
             // frmMain
             // 

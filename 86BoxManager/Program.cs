@@ -8,7 +8,7 @@ namespace _86boxManager
 {
     static class Program
     {
-        public const bool PRERELEASE = false; //Is this a pre-release version?
+        public const bool PRERELEASE = true; //Is this a pre-release version?
         public static string[] args = Environment.GetCommandLineArgs(); //Get command line arguments
 
         private enum ShowWindowEnum

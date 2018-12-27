@@ -305,7 +305,7 @@ namespace _86boxManager
             {
                 if (lstVMs.FocusedItem.Bounds.Contains(e.Location))
                 {
-                    cmsVM.Show(Cursor.Position);
+                    cmsVM.Show(lstVMs.FocusedItem.Position);
                 }
             }
         }

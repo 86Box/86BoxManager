@@ -44,6 +44,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnCancel.Location = new System.Drawing.Point(537, 119);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 30);
@@ -56,6 +57,7 @@
             // 
             this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnApply.Enabled = false;
+            this.btnApply.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnApply.Location = new System.Drawing.Point(456, 119);
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(75, 30);
@@ -118,7 +120,7 @@
             this.lblPath1.Name = "lblPath1";
             this.lblPath1.Size = new System.Drawing.Size(551, 21);
             this.lblPath1.TabIndex = 10;
-            this.lblPath1.Text = "<path goes here>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            this.lblPath1.Text = "<path goes here>";
             // 
             // dlgEditVM
             // 

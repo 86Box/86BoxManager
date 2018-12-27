@@ -47,6 +47,7 @@
             // btnApply
             // 
             this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnApply.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnApply.Location = new System.Drawing.Point(567, 164);
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(75, 30);
@@ -59,6 +60,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnCancel.Location = new System.Drawing.Point(486, 164);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 30);
@@ -71,6 +73,7 @@
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.Enabled = false;
+            this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnOK.Location = new System.Drawing.Point(405, 164);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 30);
@@ -115,6 +118,7 @@
             // 
             // btnBrowse1
             // 
+            this.btnBrowse1.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnBrowse1.Location = new System.Drawing.Point(557, 12);
             this.btnBrowse1.Name = "btnBrowse1";
             this.btnBrowse1.Size = new System.Drawing.Size(85, 30);
@@ -125,6 +129,7 @@
             // 
             // btnBrowse2
             // 
+            this.btnBrowse2.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnBrowse2.Location = new System.Drawing.Point(557, 48);
             this.btnBrowse2.Name = "btnBrowse2";
             this.btnBrowse2.Size = new System.Drawing.Size(85, 30);
@@ -136,9 +141,10 @@
             // cbxMinimize
             // 
             this.cbxMinimize.AutoSize = true;
+            this.cbxMinimize.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cbxMinimize.Location = new System.Drawing.Point(16, 94);
             this.cbxMinimize.Name = "cbxMinimize";
-            this.cbxMinimize.Size = new System.Drawing.Size(355, 25);
+            this.cbxMinimize.Size = new System.Drawing.Size(361, 26);
             this.cbxMinimize.TabIndex = 9;
             this.cbxMinimize.Text = "Minimize 86Box Manager when a VM is started";
             this.cbxMinimize.UseVisualStyleBackColor = true;
@@ -147,9 +153,10 @@
             // cbxShowConsole
             // 
             this.cbxShowConsole.AutoSize = true;
+            this.cbxShowConsole.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cbxShowConsole.Location = new System.Drawing.Point(377, 94);
             this.cbxShowConsole.Name = "cbxShowConsole";
-            this.cbxShowConsole.Size = new System.Drawing.Size(269, 25);
+            this.cbxShowConsole.Size = new System.Drawing.Size(275, 26);
             this.cbxShowConsole.TabIndex = 10;
             this.cbxShowConsole.Text = "Show the console window for VMs";
             this.cbxShowConsole.UseVisualStyleBackColor = true;
@@ -158,6 +165,7 @@
             // btnDefaults
             // 
             this.btnDefaults.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnDefaults.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnDefaults.Location = new System.Drawing.Point(12, 164);
             this.btnDefaults.Name = "btnDefaults";
             this.btnDefaults.Size = new System.Drawing.Size(75, 30);
@@ -169,9 +177,10 @@
             // cbxMinimizeTray
             // 
             this.cbxMinimizeTray.AutoSize = true;
+            this.cbxMinimizeTray.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cbxMinimizeTray.Location = new System.Drawing.Point(16, 125);
             this.cbxMinimizeTray.Name = "cbxMinimizeTray";
-            this.cbxMinimizeTray.Size = new System.Drawing.Size(288, 25);
+            this.cbxMinimizeTray.Size = new System.Drawing.Size(294, 26);
             this.cbxMinimizeTray.TabIndex = 12;
             this.cbxMinimizeTray.Text = "Minimize 86Box Manager to tray icon";
             this.cbxMinimizeTray.UseVisualStyleBackColor = true;
@@ -180,9 +189,10 @@
             // cbxCloseTray
             // 
             this.cbxCloseTray.AutoSize = true;
+            this.cbxCloseTray.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cbxCloseTray.Location = new System.Drawing.Point(377, 125);
             this.cbxCloseTray.Name = "cbxCloseTray";
-            this.cbxCloseTray.Size = new System.Drawing.Size(262, 25);
+            this.cbxCloseTray.Size = new System.Drawing.Size(268, 26);
             this.cbxCloseTray.TabIndex = 13;
             this.cbxCloseTray.Text = "Close 86Box Manager to tray icon";
             this.cbxCloseTray.UseVisualStyleBackColor = true;
