@@ -44,6 +44,7 @@ namespace _86boxManager
         private void btnApply_Click(object sender, EventArgs e)
         {
             SaveSettings();
+            btnApply.Enabled = false;
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -60,8 +61,7 @@ namespace _86boxManager
             }
             else
             {
-                //btnApply.Enabled = true;
-                settingsChanged = true;
+                settingsChanged = CheckForChanges(); //true;
                 btnOK.Enabled = true;
             }
         }
@@ -168,12 +168,12 @@ namespace _86boxManager
 
         private void cbxMinimize_CheckedChanged(object sender, EventArgs e)
         {
-            settingsChanged = true;
+            settingsChanged = CheckForChanges();//true;
         }
 
         private void cbxShowConsole_CheckedChanged(object sender, EventArgs e)
         {
-            settingsChanged = true;
+            settingsChanged = CheckForChanges();//true;
         }
 
         private void btnDefaults_Click(object sender, EventArgs e)
@@ -201,12 +201,27 @@ namespace _86boxManager
 
         private void cbxCloseTray_CheckedChanged(object sender, EventArgs e)
         {
-            settingsChanged = true;
+            settingsChanged = CheckForChanges();//true;
         }
 
         private void cbxMinimizeTray_CheckedChanged(object sender, EventArgs e)
         {
-            settingsChanged = true;
+            settingsChanged = CheckForChanges();//true;
+        }
+
+        //Checks if all controls match the currently saved settings to determine if any changes were made
+        private bool CheckForChanges()
+        {
+            RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box");
+
+            btnApply.Enabled = (txtEXEdir.Text != regkey.GetValue("EXEdir").ToString() || 
+                txtCFGdir.Text != regkey.GetValue("CFGdir").ToString() ||
+            cbxMinimize.Checked != Convert.ToBoolean(regkey.GetValue("MinimizeOnVMStart")) ||
+            cbxShowConsole.Checked != Convert.ToBoolean(regkey.GetValue("ShowConsole")) ||
+            cbxMinimizeTray.Checked != Convert.ToBoolean(regkey.GetValue("MinimizeToTray")) ||
+            cbxCloseTray.Checked != Convert.ToBoolean(regkey.GetValue("CloseToTray")));
+
+            return btnApply.Enabled;
         }
     }
 }

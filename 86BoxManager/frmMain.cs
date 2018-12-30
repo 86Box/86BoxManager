@@ -251,7 +251,7 @@ namespace _86boxManager
         }
 
         //Wait for the associated window of a VM to close
-        private void backgroundWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             VM vm = e.Argument as VM;
             try
@@ -264,7 +264,6 @@ namespace _86boxManager
                 MessageBox.Show("An error has occurred. Please provide the following details to the developer:\n" + ex.Message + "\n" + ex.StackTrace, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             e.Result = vm;
-
         }
 
         //Update the UI once the VM's window is closed
@@ -1090,8 +1089,8 @@ namespace _86boxManager
                 {
                     return;
                 }
-                Application.Exit();
             }
+            Application.Exit();
         }
 
         //Handles things when WindowState changes
@@ -1130,13 +1129,26 @@ namespace _86boxManager
 
         private void killToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //Ask the user to confirm and kill the VM's process
+            VMKill();
+        }
+
+        //Kills the process associated with the selected VM
+        private void VMKill()
+        {
+            //Ask the user to confirm
             DialogResult = MessageBox.Show("Killing a virtual machine can cause data loss. Only do this if 86Box.exe process gets stuck. Do you wish to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if(DialogResult == DialogResult.Yes)
+            if (DialogResult == DialogResult.Yes)
             {
                 VM vm = (VM)lstVMs.FocusedItem.Tag;
                 Process p = Process.GetProcessById(vm.Pid);
-                p.Kill();
+                try
+                {
+                    p.Kill();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Could not kill 86Box.exe. The process may have already ended on its own or access was denied.", "Could not kill process", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
 
                 //We need to cleanup afterwards to make sure the VM is put back into a valid state
                 vm.Status = VM.STATUS_STOPPED;
