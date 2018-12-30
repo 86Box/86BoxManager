@@ -41,12 +41,23 @@ namespace _86boxManager
             if (string.IsNullOrWhiteSpace(txtName.Text))
             {
                 btnAdd.Enabled = false;
+                tipTxtName.Active = false;
             }
             else
             {
-                btnAdd.Enabled = true;
-                lblPath1.Text = main.cfgpath + txtName.Text;
-                tipLblPath1.SetToolTip(lblPath1, main.cfgpath + txtName.Text);
+                if (txtName.Text.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+                {
+                    btnAdd.Enabled = false;
+                    lblPath1.Text = "Invalid path";
+                    tipTxtName.Active = true;
+                    tipTxtName.Show("You cannot use the following characters in the name: \\ / : * ? \" < > |", txtName, 20000);
+                }
+                else
+                {
+                    btnAdd.Enabled = true;
+                    lblPath1.Text = main.cfgpath + txtName.Text;
+                    tipLblPath1.SetToolTip(lblPath1, main.cfgpath + txtName.Text);
+                }
             }
         }
     }

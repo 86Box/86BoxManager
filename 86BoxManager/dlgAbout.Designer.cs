@@ -37,7 +37,9 @@
             this.lnkGithub2 = new System.Windows.Forms.LinkLabel();
             this.lblVersion1 = new System.Windows.Forms.Label();
             this.imgLogo = new System.Windows.Forms.PictureBox();
+            this.pnlBottom = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.imgLogo)).BeginInit();
+            this.pnlBottom.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblTitle
@@ -56,11 +58,11 @@
             this.btnOK.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnOK.Location = new System.Drawing.Point(148, 234);
+            this.btnOK.Location = new System.Drawing.Point(148, 12);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 30);
             this.btnOK.TabIndex = 1;
-            this.btnOK.Text = "OK";
+            this.btnOK.Text = "Close";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
@@ -132,6 +134,16 @@
             this.imgLogo.TabIndex = 9;
             this.imgLogo.TabStop = false;
             // 
+            // pnlBottom
+            // 
+            this.pnlBottom.BackColor = System.Drawing.SystemColors.Control;
+            this.pnlBottom.Controls.Add(this.btnOK);
+            this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlBottom.Location = new System.Drawing.Point(0, 237);
+            this.pnlBottom.Name = "pnlBottom";
+            this.pnlBottom.Size = new System.Drawing.Size(371, 54);
+            this.pnlBottom.TabIndex = 15;
+            // 
             // dlgAbout
             // 
             this.AcceptButton = this.btnOK;
@@ -139,7 +151,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnOK;
-            this.ClientSize = new System.Drawing.Size(371, 276);
+            this.ClientSize = new System.Drawing.Size(371, 291);
+            this.Controls.Add(this.pnlBottom);
             this.Controls.Add(this.imgLogo);
             this.Controls.Add(this.lblVersion1);
             this.Controls.Add(this.lnkGithub2);
@@ -147,7 +160,6 @@
             this.Controls.Add(this.lnkGithub);
             this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.lblDesc);
-            this.Controls.Add(this.btnOK);
             this.Controls.Add(this.lblTitle);
             this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -161,6 +173,7 @@
             this.Text = "About 86Box Manager";
             this.Load += new System.EventHandler(this.dlgAbout_Load);
             ((System.ComponentModel.ISupportInitialize)(this.imgLogo)).EndInit();
+            this.pnlBottom.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -177,5 +190,6 @@
         private System.Windows.Forms.LinkLabel lnkGithub2;
         private System.Windows.Forms.Label lblVersion1;
         private System.Windows.Forms.PictureBox imgLogo;
+        private System.Windows.Forms.Panel pnlBottom;
     }
 }

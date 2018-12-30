@@ -40,6 +40,9 @@
             this.lblPath = new System.Windows.Forms.Label();
             this.tipLblPath1 = new System.Windows.Forms.ToolTip(this.components);
             this.cbxStartVM = new System.Windows.Forms.CheckBox();
+            this.pnlBottom = new System.Windows.Forms.Panel();
+            this.tipTxtName = new System.Windows.Forms.ToolTip(this.components);
+            this.pnlBottom.SuspendLayout();
             this.SuspendLayout();
             // 
             // cbxOpenCFG
@@ -47,11 +50,11 @@
             this.cbxOpenCFG.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cbxOpenCFG.AutoSize = true;
             this.cbxOpenCFG.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cbxOpenCFG.Location = new System.Drawing.Point(16, 151);
+            this.cbxOpenCFG.Location = new System.Drawing.Point(263, 123);
             this.cbxOpenCFG.Name = "cbxOpenCFG";
-            this.cbxOpenCFG.Size = new System.Drawing.Size(384, 26);
+            this.cbxOpenCFG.Size = new System.Drawing.Size(278, 26);
             this.cbxOpenCFG.TabIndex = 2;
-            this.cbxOpenCFG.Text = "Open the configuration for this VM after it\'s added";
+            this.cbxOpenCFG.Text = "Configure this virtual machine now";
             this.cbxOpenCFG.UseVisualStyleBackColor = true;
             // 
             // btnCancel
@@ -59,7 +62,7 @@
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnCancel.Location = new System.Drawing.Point(537, 148);
+            this.btnCancel.Location = new System.Drawing.Point(537, 12);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 30);
             this.btnCancel.TabIndex = 3;
@@ -71,7 +74,7 @@
             this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAdd.Enabled = false;
             this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnAdd.Location = new System.Drawing.Point(456, 148);
+            this.btnAdd.Location = new System.Drawing.Point(456, 12);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 30);
             this.btnAdd.TabIndex = 4;
@@ -140,12 +143,32 @@
             this.cbxStartVM.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cbxStartVM.AutoSize = true;
             this.cbxStartVM.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cbxStartVM.Location = new System.Drawing.Point(16, 120);
+            this.cbxStartVM.Location = new System.Drawing.Point(16, 123);
             this.cbxStartVM.Name = "cbxStartVM";
-            this.cbxStartVM.Size = new System.Drawing.Size(314, 26);
+            this.cbxStartVM.Size = new System.Drawing.Size(241, 26);
             this.cbxStartVM.TabIndex = 14;
-            this.cbxStartVM.Text = "Start this virtual machine after it\'s added";
+            this.cbxStartVM.Text = "Start this virtual machine now";
             this.cbxStartVM.UseVisualStyleBackColor = true;
+            // 
+            // pnlBottom
+            // 
+            this.pnlBottom.BackColor = System.Drawing.SystemColors.Control;
+            this.pnlBottom.Controls.Add(this.btnCancel);
+            this.pnlBottom.Controls.Add(this.btnAdd);
+            this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlBottom.Location = new System.Drawing.Point(0, 164);
+            this.pnlBottom.Name = "pnlBottom";
+            this.pnlBottom.Size = new System.Drawing.Size(624, 54);
+            this.pnlBottom.TabIndex = 15;
+            // 
+            // tipTxtName
+            // 
+            this.tipTxtName.Active = false;
+            this.tipTxtName.AutomaticDelay = 0;
+            this.tipTxtName.IsBalloon = true;
+            this.tipTxtName.ShowAlways = true;
+            this.tipTxtName.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Error;
+            this.tipTxtName.ToolTipTitle = "Name contains invalid characters";
             // 
             // dlgAddVM
             // 
@@ -154,17 +177,16 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(624, 190);
+            this.ClientSize = new System.Drawing.Size(624, 218);
+            this.Controls.Add(this.pnlBottom);
             this.Controls.Add(this.cbxStartVM);
+            this.Controls.Add(this.cbxOpenCFG);
             this.Controls.Add(this.lblPath);
             this.Controls.Add(this.lblPath1);
             this.Controls.Add(this.txtDescription);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.lblDesc);
             this.Controls.Add(this.lblName);
-            this.Controls.Add(this.btnAdd);
-            this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.cbxOpenCFG);
             this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -176,6 +198,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Add a virtual machine";
             this.Load += new System.EventHandler(this.dlgAddVM_Load);
+            this.pnlBottom.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -193,5 +216,7 @@
         private System.Windows.Forms.Label lblPath;
         private System.Windows.Forms.ToolTip tipLblPath1;
         private System.Windows.Forms.CheckBox cbxStartVM;
+        private System.Windows.Forms.Panel pnlBottom;
+        private System.Windows.Forms.ToolTip tipTxtName;
     }
 }

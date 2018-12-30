@@ -42,13 +42,15 @@
             this.btnDefaults = new System.Windows.Forms.Button();
             this.cbxMinimizeTray = new System.Windows.Forms.CheckBox();
             this.cbxCloseTray = new System.Windows.Forms.CheckBox();
+            this.pnlBottom = new System.Windows.Forms.Panel();
+            this.pnlBottom.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnApply
             // 
             this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnApply.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnApply.Location = new System.Drawing.Point(567, 164);
+            this.btnApply.Location = new System.Drawing.Point(567, 12);
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(75, 30);
             this.btnApply.TabIndex = 0;
@@ -61,7 +63,7 @@
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnCancel.Location = new System.Drawing.Point(486, 164);
+            this.btnCancel.Location = new System.Drawing.Point(486, 12);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 30);
             this.btnCancel.TabIndex = 1;
@@ -74,7 +76,7 @@
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.Enabled = false;
             this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnOK.Location = new System.Drawing.Point(405, 164);
+            this.btnOK.Location = new System.Drawing.Point(405, 12);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 30);
             this.btnOK.TabIndex = 2;
@@ -166,7 +168,7 @@
             // 
             this.btnDefaults.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnDefaults.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnDefaults.Location = new System.Drawing.Point(12, 164);
+            this.btnDefaults.Location = new System.Drawing.Point(12, 12);
             this.btnDefaults.Name = "btnDefaults";
             this.btnDefaults.Size = new System.Drawing.Size(75, 30);
             this.btnDefaults.TabIndex = 11;
@@ -198,6 +200,19 @@
             this.cbxCloseTray.UseVisualStyleBackColor = true;
             this.cbxCloseTray.CheckedChanged += new System.EventHandler(this.cbxCloseTray_CheckedChanged);
             // 
+            // pnlBottom
+            // 
+            this.pnlBottom.BackColor = System.Drawing.SystemColors.Control;
+            this.pnlBottom.Controls.Add(this.btnApply);
+            this.pnlBottom.Controls.Add(this.btnDefaults);
+            this.pnlBottom.Controls.Add(this.btnCancel);
+            this.pnlBottom.Controls.Add(this.btnOK);
+            this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlBottom.Location = new System.Drawing.Point(0, 167);
+            this.pnlBottom.Name = "pnlBottom";
+            this.pnlBottom.Size = new System.Drawing.Size(654, 54);
+            this.pnlBottom.TabIndex = 14;
+            // 
             // dlgSettings
             // 
             this.AcceptButton = this.btnOK;
@@ -205,10 +220,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(654, 206);
+            this.ClientSize = new System.Drawing.Size(654, 221);
+            this.Controls.Add(this.pnlBottom);
             this.Controls.Add(this.cbxCloseTray);
             this.Controls.Add(this.cbxMinimizeTray);
-            this.Controls.Add(this.btnDefaults);
             this.Controls.Add(this.cbxShowConsole);
             this.Controls.Add(this.cbxMinimize);
             this.Controls.Add(this.btnBrowse2);
@@ -217,9 +232,6 @@
             this.Controls.Add(this.txtEXEdir);
             this.Controls.Add(this.lblCFGdir);
             this.Controls.Add(this.lblEXEdir);
-            this.Controls.Add(this.btnOK);
-            this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.btnApply);
             this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -232,6 +244,7 @@
             this.Text = "Settings";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.dlgSettings_FormClosing);
             this.Load += new System.EventHandler(this.dlgSettings_Load);
+            this.pnlBottom.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -253,5 +266,6 @@
         private System.Windows.Forms.Button btnDefaults;
         private System.Windows.Forms.CheckBox cbxMinimizeTray;
         private System.Windows.Forms.CheckBox cbxCloseTray;
+        private System.Windows.Forms.Panel pnlBottom;
     }
 }
