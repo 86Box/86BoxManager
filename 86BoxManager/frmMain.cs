@@ -983,18 +983,27 @@ namespace _86boxManager
                 //Get the VM name and find the associated LVI and VM object
                 CopyDataStruct ds = (CopyDataStruct)m.GetLParam(typeof(CopyDataStruct));
                 ListViewItem lvi = lstVMs.FindItemWithText(ds.Data);
-                VM vm = (VM)lvi.Tag;
 
-                //If the VM is already running, display an error, otherwise, start it
-                if (vm.Status != VM.STATUS_STOPPED)
+                //This check is necessary in case the specified VM was already removed but the shortcut remains
+                if(lvi != null)
                 {
-                    MessageBox.Show("This virtual machine is already running.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    VM vm = (VM)lvi.Tag;
+
+                    //If the VM is already running, display an error, otherwise, start it
+                    if (vm.Status != VM.STATUS_STOPPED)
+                    {
+                        MessageBox.Show("The virtual machine \"" + ds.Data + "\" is already running.", "Virtual machine already running", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        lvi.Focused = true;
+                        lvi.Selected = true;
+                        VMStart();
+                    }
                 }
                 else
                 {
-                    lvi.Focused = true;
-                    lvi.Selected = true;
-                    VMStart();
+                    MessageBox.Show("The virtual machine \"" + ds.Data + "\" could not be found. It may have been removed or the specified name is invalid.", "Virtual machine not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             base.WndProc(ref m);
