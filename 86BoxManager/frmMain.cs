@@ -65,6 +65,10 @@ namespace _86boxManager
                     lvi.Focused = true;
                     VMStart();
                 }
+                else
+                {
+                    MessageBox.Show("The virtual machine \"" + Program.args[2] + "\" could not be found. It may have been removed or the specified name is incorrect.", "Virtual machine not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -187,37 +191,63 @@ namespace _86boxManager
         //Load the settings from the registry
         private void LoadSettings()
         {
+            regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true);
+
+            //Try to load the settings from registry, if it fails fallback to default values
             try
             {
-                regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box");
                 exepath = regkey.GetValue("EXEdir").ToString();
                 cfgpath = regkey.GetValue("CFGdir").ToString();
-
-                //This check is necessary in case the tailing backslash is not present!
-                if (!exepath.EndsWith(@"\"))
-                {
-                    exepath += @"\";
-                }
-
-                if (!cfgpath.EndsWith(@"\"))
-                {
-                    cfgpath += @"\";
-                }
-
                 minimize = Convert.ToBoolean(regkey.GetValue("MinimizeOnVMStart"));
                 showConsole = Convert.ToBoolean(regkey.GetValue("ShowConsole"));
                 minimizeTray = Convert.ToBoolean(regkey.GetValue("MinimizeToTray"));
                 closeTray = Convert.ToBoolean(regkey.GetValue("CloseToTray"));
             }
-            catch (Exception ex) //Bad settings, retry
+            catch(Exception ex)
             {
-                MessageBox.Show("86Box Manager settings are missing or corrupted. This is normal if you're running 86Box Manager for the first time. Please (re)configure the settings now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                dlgSettings dlg = new dlgSettings();
-                dlg.ShowDialog();
-                LoadSettings();
+                MessageBox.Show("86Box Manager settings could not be loaded. This is normal if you're running 86Box Manager for the first time. Default values will be used.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                //If the key doesn't exist, create it and then reopen it
+                if (regkey == null)
+                {
+                    Registry.CurrentUser.CreateSubKey(@"SOFTWARE\86Box");
+                    regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true);
+                }
+                
+                cfgpath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\86Box VMs\";
+                exepath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + @"\86Box\"; 
+                minimize = false;
+                showConsole = true;
+                minimizeTray = false;
+                closeTray = false;
+
+                //Defaults must also be written to the registry
+                regkey.SetValue("EXEdir", exepath, RegistryValueKind.String);
+                regkey.SetValue("CFGdir", cfgpath, RegistryValueKind.String);
+                regkey.SetValue("MinimizeOnVMStart", minimize, RegistryValueKind.DWord);
+                regkey.SetValue("ShowConsole", showConsole, RegistryValueKind.DWord);
+                regkey.SetValue("MinimizeToTray", minimizeTray, RegistryValueKind.DWord);
+                regkey.SetValue("CloseToTray", closeTray, RegistryValueKind.DWord);
+
+                regkey.CreateSubKey("Virtual Machines");
             }
+            finally
+            {
+                //To make sure there's a trailing backslash at the end, as other cude using these strings expects it!
+                if (!exepath.EndsWith(@"\"))
+                {
+                    exepath += @"\";
+                }
+                if (!cfgpath.EndsWith(@"\"))
+                {
+                    cfgpath += @"\";
+                }
+            }
+
+            regkey.Close();
         }
 
+        //TODO: Rewrite
         //Load the VMs from the registry
         private void LoadVMs()
         {
@@ -525,6 +555,10 @@ namespace _86boxManager
                         btnConfigure.Enabled = true;
                     }
                 }
+            }
+            catch(Win32Exception ex)
+            {
+                MessageBox.Show("Cannot find 86Box.exe. Make sure your settings are correct and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
@@ -1003,7 +1037,7 @@ namespace _86boxManager
                 }
                 else
                 {
-                    MessageBox.Show("The virtual machine \"" + ds.Data + "\" could not be found. It may have been removed or the specified name is invalid.", "Virtual machine not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("The virtual machine \"" + ds.Data + "\" could not be found. It may have been removed or the specified name is incorrect.", "Virtual machine not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             base.WndProc(ref m);

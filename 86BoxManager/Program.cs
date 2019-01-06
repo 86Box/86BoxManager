@@ -49,10 +49,9 @@ namespace _86boxManager
         static void Main()
         {
             const string name = "86Box Manager";
-            bool firstInstance;
 
             //Use a mutex to check if this is the first instance of Manager
-            mutex = new Mutex(true, name, out firstInstance);
+            mutex = new Mutex(true, name, out bool firstInstance);
 
             //If it's not, we need to restore and focus the existing window, as well as pass on any potential command line arguments
             if (!firstInstance)
@@ -94,47 +93,6 @@ namespace _86boxManager
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new frmMain());
             }
-
-            /*
-            //Check if Manager is already running
-            Process[] pname = Process.GetProcessesByName("86manager");
-            if (pname.Length > 1)
-            {
-                //Find the window of the first instance and restore it
-                IntPtr hWnd = FindWindow(null, "86Box Manager");
-                ShowWindow(hWnd, ShowWindowEnum.Show);
-                ShowWindow(hWnd, ShowWindowEnum.Restore);
-                SetForegroundWindow(hWnd);
-
-                //If the second instance was started with the -S command line argument for starting a VM, we must send
-                //the arguments to the first instance 
-                if (args.Length == 3 && args[1] == "-S" && args[2] != null)
-                {
-                    CopyDataStruct DataStruct = new CopyDataStruct();
-                    DataStruct.ID = "1";
-                    DataStruct.Data = args[2];
-                    DataStruct.Length = DataStruct.Data.Length;
-                    if (!hWnd.Equals(IntPtr.Zero))
-                    {
-                        SendMessage(hWnd, WM_COPYDATA, 0, ref DataStruct);
-                    }
-                }
-            }
-            else
-            { //Then check if any instances of 86Box are already running and warn the user
-                pname = Process.GetProcessesByName("86box");
-                if (pname.Length > 0)
-                {
-                    DialogResult result = MessageBox.Show("At least one instance of 86box is already running. It's not recommended that you run 86Box.exe directly outside of Manager. Do you want to continue at your own risk?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                    if (result == DialogResult.No)
-                    {
-                        return;
-                    }
-                }
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new frmMain());
-            }*/
         }
     }
 }
