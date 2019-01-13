@@ -77,6 +77,7 @@ namespace _86boxManager
                 {
                     Registry.CurrentUser.CreateSubKey(@"SOFTWARE\86Box");
                     regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true);
+                    regkey.CreateSubKey("Virtual Machines");
                 }
 
                 //Store the new values, close the key, changes are saved
@@ -113,8 +114,8 @@ namespace _86boxManager
                     regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true);
                     regkey.CreateSubKey("Virtual Machines");
 
-                    txtCFGdir.Text = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\86Box VMs";
-                    txtEXEdir.Text = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + @"\86Box";
+                    txtCFGdir.Text = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\86Box VMs\";
+                    txtEXEdir.Text = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + @"\86Box\";
                     cbxMinimize.Checked = false;
                     cbxShowConsole.Checked = true;
                     cbxMinimizeTray.Checked = false;
@@ -197,62 +198,60 @@ namespace _86boxManager
         //Resets the settings to their default values
         private void ResetSettings()
         {
-            RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE", true);
+            RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true);
 
-            if(regkey != null)
+            if (regkey == null)
             {
-                txtCFGdir.Text = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\86Box VMs\";
-                txtEXEdir.Text = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + @"\86Box\";
-                cbxMinimize.Checked = false;
-                cbxShowConsole.Checked = true;
-                cbxMinimizeTray.Checked = false;
-                cbxCloseTray.Checked = false;
-
-                regkey.SetValue("EXEdir", txtEXEdir.Text, RegistryValueKind.String);
-                regkey.SetValue("CFGdir", txtCFGdir.Text, RegistryValueKind.String);
-                regkey.SetValue("MinimizeOnVMStart", cbxMinimize.Checked, RegistryValueKind.DWord);
-                regkey.SetValue("ShowConsole", cbxShowConsole.Checked, RegistryValueKind.DWord);
-                regkey.SetValue("MinimizeToTray", cbxMinimizeTray.Checked, RegistryValueKind.DWord);
-                regkey.SetValue("CloseToTray", cbxCloseTray.Checked, RegistryValueKind.DWord);
+                Registry.CurrentUser.CreateSubKey(@"SOFTWARE\86Box");
+                regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true);
+                regkey.CreateSubKey("Virtual Machines");
             }
 
+            txtCFGdir.Text = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\86Box VMs\";
+            txtEXEdir.Text = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + @"\86Box\";
+            cbxMinimize.Checked = false;
+            cbxShowConsole.Checked = true;
+            cbxMinimizeTray.Checked = false;
+            cbxCloseTray.Checked = false;
+
+            SaveSettings();
             regkey.Close();
         }
 
-        private void cbxCloseTray_CheckedChanged(object sender, EventArgs e)
+    private void cbxCloseTray_CheckedChanged(object sender, EventArgs e)
+    {
+        settingsChanged = CheckForChanges();
+    }
+
+    private void cbxMinimizeTray_CheckedChanged(object sender, EventArgs e)
+    {
+        settingsChanged = CheckForChanges();
+    }
+
+    //Checks if all controls match the currently saved settings to determine if any changes were made
+    private bool CheckForChanges()
+    {
+        RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box");
+
+        try
         {
-            settingsChanged = CheckForChanges();
+            btnApply.Enabled = (txtEXEdir.Text != regkey.GetValue("EXEdir").ToString() ||
+                txtCFGdir.Text != regkey.GetValue("CFGdir").ToString() ||
+            cbxMinimize.Checked != Convert.ToBoolean(regkey.GetValue("MinimizeOnVMStart")) ||
+            cbxShowConsole.Checked != Convert.ToBoolean(regkey.GetValue("ShowConsole")) ||
+            cbxMinimizeTray.Checked != Convert.ToBoolean(regkey.GetValue("MinimizeToTray")) ||
+            cbxCloseTray.Checked != Convert.ToBoolean(regkey.GetValue("CloseToTray")));
+
+            return btnApply.Enabled;
         }
-
-        private void cbxMinimizeTray_CheckedChanged(object sender, EventArgs e)
+        catch (Exception ex)
         {
-            settingsChanged = CheckForChanges();
+            return true; //For now let's just return true if anything goes wrong
         }
-
-        //Checks if all controls match the currently saved settings to determine if any changes were made
-        private bool CheckForChanges()
+        finally
         {
-            RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box");
-
-            try
-            {
-                btnApply.Enabled = (txtEXEdir.Text != regkey.GetValue("EXEdir").ToString() ||
-                    txtCFGdir.Text != regkey.GetValue("CFGdir").ToString() ||
-                cbxMinimize.Checked != Convert.ToBoolean(regkey.GetValue("MinimizeOnVMStart")) ||
-                cbxShowConsole.Checked != Convert.ToBoolean(regkey.GetValue("ShowConsole")) ||
-                cbxMinimizeTray.Checked != Convert.ToBoolean(regkey.GetValue("MinimizeToTray")) ||
-                cbxCloseTray.Checked != Convert.ToBoolean(regkey.GetValue("CloseToTray")));
-
-                return btnApply.Enabled;
-            }
-            catch(Exception ex)
-            {
-                return true; //For now let's just return true if anything goes wrong
-            }
-            finally
-            {
-                regkey.Close();
-            }
+            regkey.Close();
         }
     }
+}
 }

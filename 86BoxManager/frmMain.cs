@@ -203,7 +203,7 @@ namespace _86boxManager
                 minimizeTray = Convert.ToBoolean(regkey.GetValue("MinimizeToTray"));
                 closeTray = Convert.ToBoolean(regkey.GetValue("CloseToTray"));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("86Box Manager settings could not be loaded. This is normal if you're running 86Box Manager for the first time. Default values will be used.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
@@ -212,10 +212,11 @@ namespace _86boxManager
                 {
                     Registry.CurrentUser.CreateSubKey(@"SOFTWARE\86Box");
                     regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true);
+                    regkey.CreateSubKey("Virtual Machines");
                 }
-                
+
                 cfgpath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\86Box VMs\";
-                exepath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + @"\86Box\"; 
+                exepath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + @"\86Box\";
                 minimize = false;
                 showConsole = true;
                 minimizeTray = false;
@@ -228,12 +229,10 @@ namespace _86boxManager
                 regkey.SetValue("ShowConsole", showConsole, RegistryValueKind.DWord);
                 regkey.SetValue("MinimizeToTray", minimizeTray, RegistryValueKind.DWord);
                 regkey.SetValue("CloseToTray", closeTray, RegistryValueKind.DWord);
-
-                regkey.CreateSubKey("Virtual Machines");
             }
             finally
             {
-                //To make sure there's a trailing backslash at the end, as other cude using these strings expects it!
+                //To make sure there's a trailing backslash at the end, as other code using these strings expects it!
                 if (!exepath.EndsWith(@"\"))
                 {
                     exepath += @"\";
@@ -447,7 +446,7 @@ namespace _86boxManager
                     }
                     Thread.Sleep(1000); //Wait just a bit to make sure everything goes as planned
                 }
-                else if(DialogResult == DialogResult.Cancel)
+                else if (DialogResult == DialogResult.Cancel)
                 {
                     return;
                 }
@@ -556,7 +555,7 @@ namespace _86boxManager
                     }
                 }
             }
-            catch(Win32Exception ex)
+            catch (Win32Exception ex)
             {
                 MessageBox.Show("Cannot find 86Box.exe. Make sure your settings are correct and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -876,7 +875,7 @@ namespace _86boxManager
                     {
                         Directory.Delete(cfgpath + vm.Name, true);
                     }
-                    catch (DirectoryNotFoundException){/*Just ignore this for now*/}
+                    catch (DirectoryNotFoundException) {/*Just ignore this for now*/}
                     MessageBox.Show("Virtual machine \"" + vm.Name + "\" was successfully removed, along with its files.", "Virtual machine and files removed", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
@@ -1019,7 +1018,7 @@ namespace _86boxManager
                 ListViewItem lvi = lstVMs.FindItemWithText(ds.Data);
 
                 //This check is necessary in case the specified VM was already removed but the shortcut remains
-                if(lvi != null)
+                if (lvi != null)
                 {
                     VM vm = (VM)lvi.Tag;
 
@@ -1128,7 +1127,7 @@ namespace _86boxManager
                     }
                     Thread.Sleep(1000); //Wait just a bit to make sure everything goes as planned
                 }
-                else if(DialogResult == DialogResult.Cancel)
+                else if (DialogResult == DialogResult.Cancel)
                 {
                     return;
                 }
