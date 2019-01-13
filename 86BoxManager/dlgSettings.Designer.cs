@@ -53,7 +53,7 @@
             this.btnApply.Location = new System.Drawing.Point(567, 12);
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(75, 30);
-            this.btnApply.TabIndex = 0;
+            this.btnApply.TabIndex = 11;
             this.btnApply.Text = "Apply";
             this.btnApply.UseVisualStyleBackColor = true;
             this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
@@ -66,7 +66,7 @@
             this.btnCancel.Location = new System.Drawing.Point(486, 12);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 30);
-            this.btnCancel.TabIndex = 1;
+            this.btnCancel.TabIndex = 10;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -79,7 +79,7 @@
             this.btnOK.Location = new System.Drawing.Point(405, 12);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 30);
-            this.btnOK.TabIndex = 2;
+            this.btnOK.TabIndex = 9;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -107,7 +107,7 @@
             this.txtEXEdir.Location = new System.Drawing.Point(112, 12);
             this.txtEXEdir.Name = "txtEXEdir";
             this.txtEXEdir.Size = new System.Drawing.Size(439, 29);
-            this.txtEXEdir.TabIndex = 5;
+            this.txtEXEdir.TabIndex = 0;
             this.txtEXEdir.TextChanged += new System.EventHandler(this.txt_TextChanged);
             // 
             // txtCFGdir
@@ -115,7 +115,7 @@
             this.txtCFGdir.Location = new System.Drawing.Point(112, 48);
             this.txtCFGdir.Name = "txtCFGdir";
             this.txtCFGdir.Size = new System.Drawing.Size(439, 29);
-            this.txtCFGdir.TabIndex = 6;
+            this.txtCFGdir.TabIndex = 2;
             this.txtCFGdir.TextChanged += new System.EventHandler(this.txt_TextChanged);
             // 
             // btnBrowse1
@@ -124,7 +124,7 @@
             this.btnBrowse1.Location = new System.Drawing.Point(557, 12);
             this.btnBrowse1.Name = "btnBrowse1";
             this.btnBrowse1.Size = new System.Drawing.Size(85, 30);
-            this.btnBrowse1.TabIndex = 7;
+            this.btnBrowse1.TabIndex = 1;
             this.btnBrowse1.Text = "Browse...";
             this.btnBrowse1.UseVisualStyleBackColor = true;
             this.btnBrowse1.Click += new System.EventHandler(this.btnBrowse1_Click);
@@ -135,7 +135,7 @@
             this.btnBrowse2.Location = new System.Drawing.Point(557, 48);
             this.btnBrowse2.Name = "btnBrowse2";
             this.btnBrowse2.Size = new System.Drawing.Size(85, 30);
-            this.btnBrowse2.TabIndex = 8;
+            this.btnBrowse2.TabIndex = 3;
             this.btnBrowse2.Text = "Browse...";
             this.btnBrowse2.UseVisualStyleBackColor = true;
             this.btnBrowse2.Click += new System.EventHandler(this.btnBrowse2_Click);
@@ -147,7 +147,7 @@
             this.cbxMinimize.Location = new System.Drawing.Point(16, 94);
             this.cbxMinimize.Name = "cbxMinimize";
             this.cbxMinimize.Size = new System.Drawing.Size(361, 26);
-            this.cbxMinimize.TabIndex = 9;
+            this.cbxMinimize.TabIndex = 4;
             this.cbxMinimize.Text = "Minimize 86Box Manager when a VM is started";
             this.cbxMinimize.UseVisualStyleBackColor = true;
             this.cbxMinimize.CheckedChanged += new System.EventHandler(this.cbxMinimize_CheckedChanged);
@@ -159,7 +159,7 @@
             this.cbxShowConsole.Location = new System.Drawing.Point(377, 94);
             this.cbxShowConsole.Name = "cbxShowConsole";
             this.cbxShowConsole.Size = new System.Drawing.Size(275, 26);
-            this.cbxShowConsole.TabIndex = 10;
+            this.cbxShowConsole.TabIndex = 5;
             this.cbxShowConsole.Text = "Show the console window for VMs";
             this.cbxShowConsole.UseVisualStyleBackColor = true;
             this.cbxShowConsole.CheckedChanged += new System.EventHandler(this.cbxShowConsole_CheckedChanged);
@@ -171,7 +171,7 @@
             this.btnDefaults.Location = new System.Drawing.Point(12, 12);
             this.btnDefaults.Name = "btnDefaults";
             this.btnDefaults.Size = new System.Drawing.Size(75, 30);
-            this.btnDefaults.TabIndex = 11;
+            this.btnDefaults.TabIndex = 8;
             this.btnDefaults.Text = "Defaults";
             this.btnDefaults.UseVisualStyleBackColor = true;
             this.btnDefaults.Click += new System.EventHandler(this.btnDefaults_Click);
@@ -183,7 +183,7 @@
             this.cbxMinimizeTray.Location = new System.Drawing.Point(16, 125);
             this.cbxMinimizeTray.Name = "cbxMinimizeTray";
             this.cbxMinimizeTray.Size = new System.Drawing.Size(294, 26);
-            this.cbxMinimizeTray.TabIndex = 12;
+            this.cbxMinimizeTray.TabIndex = 6;
             this.cbxMinimizeTray.Text = "Minimize 86Box Manager to tray icon";
             this.cbxMinimizeTray.UseVisualStyleBackColor = true;
             this.cbxMinimizeTray.CheckedChanged += new System.EventHandler(this.cbxMinimizeTray_CheckedChanged);
@@ -195,7 +195,7 @@
             this.cbxCloseTray.Location = new System.Drawing.Point(377, 125);
             this.cbxCloseTray.Name = "cbxCloseTray";
             this.cbxCloseTray.Size = new System.Drawing.Size(268, 26);
-            this.cbxCloseTray.TabIndex = 13;
+            this.cbxCloseTray.TabIndex = 7;
             this.cbxCloseTray.Text = "Close 86Box Manager to tray icon";
             this.cbxCloseTray.UseVisualStyleBackColor = true;
             this.cbxCloseTray.CheckedChanged += new System.EventHandler(this.cbxCloseTray_CheckedChanged);

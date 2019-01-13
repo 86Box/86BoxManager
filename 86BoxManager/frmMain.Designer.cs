@@ -39,9 +39,6 @@
             this.clmName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.img86box = new System.Windows.Forms.ImageList(this.components);
-            this.btnAdd = new System.Windows.Forms.Button();
-            this.btnConfigure = new System.Windows.Forms.Button();
             this.cmsVM = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,6 +52,9 @@
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createADesktopShortcutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.img86box = new System.Windows.Forms.ImageList(this.components);
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.btnConfigure = new System.Windows.Forms.Button();
             this.imgStatus = new System.Windows.Forms.ImageList(this.components);
             this.btnPause = new System.Windows.Forms.Button();
             this.btnCtrlAltDel = new System.Windows.Forms.Button();
@@ -119,7 +119,7 @@
             this.btnSettings.Location = new System.Drawing.Point(568, 12);
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new System.Drawing.Size(67, 30);
-            this.btnSettings.TabIndex = 4;
+            this.btnSettings.TabIndex = 8;
             this.btnSettings.Text = "Settings";
             this.toolTip.SetToolTip(this.btnSettings, "Open 86Box Manager settings");
             this.btnSettings.UseVisualStyleBackColor = true;
@@ -132,7 +132,7 @@
             this.btnAbout.Location = new System.Drawing.Point(641, 12);
             this.btnAbout.Name = "btnAbout";
             this.btnAbout.Size = new System.Drawing.Size(61, 30);
-            this.btnAbout.TabIndex = 5;
+            this.btnAbout.TabIndex = 9;
             this.btnAbout.Text = "About";
             this.toolTip.SetToolTip(this.btnAbout, "Open the About 86Box Manager dialog");
             this.btnAbout.UseVisualStyleBackColor = true;
@@ -140,6 +140,7 @@
             // 
             // lstVMs
             // 
+            this.lstVMs.AllowColumnReorder = true;
             this.lstVMs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -147,9 +148,9 @@
             this.clmName,
             this.clmStatus,
             this.clmPath});
+            this.lstVMs.ContextMenuStrip = this.cmsVM;
             this.lstVMs.FullRowSelect = true;
             this.lstVMs.GridLines = true;
-            this.lstVMs.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lstVMs.HideSelection = false;
             this.lstVMs.Location = new System.Drawing.Point(12, 53);
             this.lstVMs.MultiSelect = false;
@@ -158,9 +159,10 @@
             this.lstVMs.ShowItemToolTips = true;
             this.lstVMs.Size = new System.Drawing.Size(690, 396);
             this.lstVMs.SmallImageList = this.img86box;
-            this.lstVMs.TabIndex = 6;
+            this.lstVMs.TabIndex = 10;
             this.lstVMs.UseCompatibleStateImageBehavior = false;
             this.lstVMs.View = System.Windows.Forms.View.Details;
+            this.lstVMs.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lstVMs_ColumnClick);
             this.lstVMs.SelectedIndexChanged += new System.EventHandler(this.lstVMs_SelectedIndexChanged);
             this.lstVMs.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lstVMs_KeyDown);
             this.lstVMs.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstVMs_MouseClick);
@@ -180,41 +182,6 @@
             // 
             this.clmPath.Text = "Path";
             this.clmPath.Width = 359;
-            // 
-            // img86box
-            // 
-            this.img86box.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("img86box.ImageStream")));
-            this.img86box.TransparentColor = System.Drawing.Color.Transparent;
-            this.img86box.Images.SetKeyName(0, "86box_16x16.png");
-            this.img86box.Images.SetKeyName(1, "86box_16x16_green.png");
-            this.img86box.Images.SetKeyName(2, "86box_16x16_yellow.png");
-            // 
-            // btnAdd
-            // 
-            this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnAdd.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnAdd.Location = new System.Drawing.Point(12, 12);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(45, 30);
-            this.btnAdd.TabIndex = 7;
-            this.btnAdd.Text = "Add";
-            this.toolTip.SetToolTip(this.btnAdd, "Add a new virtual machine");
-            this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-            // 
-            // btnConfigure
-            // 
-            this.btnConfigure.Enabled = false;
-            this.btnConfigure.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnConfigure.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnConfigure.Location = new System.Drawing.Point(263, 12);
-            this.btnConfigure.Name = "btnConfigure";
-            this.btnConfigure.Size = new System.Drawing.Size(81, 30);
-            this.btnConfigure.TabIndex = 8;
-            this.btnConfigure.Text = "Configure";
-            this.toolTip.SetToolTip(this.btnConfigure, "Open settings for this virtual machine");
-            this.btnConfigure.UseVisualStyleBackColor = true;
-            this.btnConfigure.Click += new System.EventHandler(this.btnConfigure_Click);
             // 
             // cmsVM
             // 
@@ -326,6 +293,41 @@
             this.createADesktopShortcutToolStripMenuItem.ToolTipText = "Create a shortcut for this virtual machine on the desktop";
             this.createADesktopShortcutToolStripMenuItem.Click += new System.EventHandler(this.createADesktopShortcutToolStripMenuItem_Click);
             // 
+            // img86box
+            // 
+            this.img86box.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("img86box.ImageStream")));
+            this.img86box.TransparentColor = System.Drawing.Color.Transparent;
+            this.img86box.Images.SetKeyName(0, "86box_16x16.png");
+            this.img86box.Images.SetKeyName(1, "86box_16x16_green.png");
+            this.img86box.Images.SetKeyName(2, "86box_16x16_yellow.png");
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnAdd.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.btnAdd.Location = new System.Drawing.Point(12, 12);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(45, 30);
+            this.btnAdd.TabIndex = 0;
+            this.btnAdd.Text = "Add";
+            this.toolTip.SetToolTip(this.btnAdd, "Add a new virtual machine");
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
+            // btnConfigure
+            // 
+            this.btnConfigure.Enabled = false;
+            this.btnConfigure.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnConfigure.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.btnConfigure.Location = new System.Drawing.Point(263, 12);
+            this.btnConfigure.Name = "btnConfigure";
+            this.btnConfigure.Size = new System.Drawing.Size(81, 30);
+            this.btnConfigure.TabIndex = 4;
+            this.btnConfigure.Text = "Configure";
+            this.toolTip.SetToolTip(this.btnConfigure, "Open settings for this virtual machine");
+            this.btnConfigure.UseVisualStyleBackColor = true;
+            this.btnConfigure.Click += new System.EventHandler(this.btnConfigure_Click);
+            // 
             // imgStatus
             // 
             this.imgStatus.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
@@ -340,7 +342,7 @@
             this.btnPause.Location = new System.Drawing.Point(350, 12);
             this.btnPause.Name = "btnPause";
             this.btnPause.Size = new System.Drawing.Size(65, 30);
-            this.btnPause.TabIndex = 9;
+            this.btnPause.TabIndex = 5;
             this.btnPause.Text = "Pause";
             this.toolTip.SetToolTip(this.btnPause, "Pause this virtual machine");
             this.btnPause.UseVisualStyleBackColor = true;
@@ -354,7 +356,7 @@
             this.btnCtrlAltDel.Location = new System.Drawing.Point(421, 12);
             this.btnCtrlAltDel.Name = "btnCtrlAltDel";
             this.btnCtrlAltDel.Size = new System.Drawing.Size(65, 30);
-            this.btnCtrlAltDel.TabIndex = 10;
+            this.btnCtrlAltDel.TabIndex = 6;
             this.btnCtrlAltDel.Text = "C+A+D";
             this.toolTip.SetToolTip(this.btnCtrlAltDel, "Send the CTRL+ALT+DEL keystroke to this virtual machine");
             this.btnCtrlAltDel.UseVisualStyleBackColor = true;
@@ -368,7 +370,7 @@
             this.btnReset.Location = new System.Drawing.Point(492, 12);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(53, 30);
-            this.btnReset.TabIndex = 11;
+            this.btnReset.TabIndex = 7;
             this.btnReset.Text = "Reset";
             this.toolTip.SetToolTip(this.btnReset, "Reset this virtual machine by simulating a power cycle");
             this.btnReset.UseVisualStyleBackColor = true;
@@ -472,7 +474,6 @@
         private System.Windows.Forms.ToolStripMenuItem pauseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resetCTRLALTDELETEToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hardResetToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ImageList img86box;
@@ -490,8 +491,9 @@
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripMenuItem killToolStripMenuItem;
         private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.ToolStripMenuItem killToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 

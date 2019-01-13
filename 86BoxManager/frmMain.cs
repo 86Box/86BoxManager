@@ -39,6 +39,7 @@ namespace _86boxManager
         private bool closeTray = false; //Close the Manager Window to tray icon?
         private string hWndHex = "";  //Window handle of this window  
         private const string ZEROID = "0000000000000000"; //Used for the id parameter of 86Box -H
+        private int sortColumn = -1; //For column sorting's asc/desc capability
 
         public frmMain()
         {
@@ -70,7 +71,7 @@ namespace _86boxManager
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            VM vm = (VM)lstVMs.FocusedItem.Tag;
+            VM vm = (VM)lstVMs.SelectedItems[0].Tag;
             if (vm.Status == VM.STATUS_STOPPED)
             {
                 VMStart();
@@ -115,7 +116,7 @@ namespace _86boxManager
             else
             {
                 //Disable relevant buttons if VM is running
-                VM vm = (VM)lstVMs.FocusedItem.Tag;
+                VM vm = (VM)lstVMs.SelectedItems[0].Tag;
                 if (vm.Status == VM.STATUS_RUNNING)
                 {
                     //btnConfigure.Enabled = false;
@@ -281,7 +282,7 @@ namespace _86boxManager
                     vm.hWnd = IntPtr.Zero;
                     item.SubItems[1].Text = vm.GetStatusString();
                     item.ImageIndex = 0;
-                    if (lstVMs.SelectedItems.Count > 0 && lstVMs.FocusedItem.Equals(item))
+                    if (lstVMs.SelectedItems.Count > 0 && lstVMs.SelectedItems[0].Equals(item))
                     {
                         btnEdit.Enabled = true;
                         btnDelete.Enabled = true;
@@ -298,87 +299,83 @@ namespace _86boxManager
             }
         }
 
-        //This is required so that the context menu only shows up when the user right-clicks on a listviewitem
-        private void lstVMs_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                if (lstVMs.FocusedItem.Bounds.Contains(e.Location))
-                {
-                    cmsVM.Show(lstVMs.FocusedItem.Position);
-                }
-            }
-        }
-
         //Enable/disable relevant menu items depending on selected VM's status
         private void cmsVM_Opening(object sender, CancelEventArgs e)
         {
-            VM vm = (VM)lstVMs.FocusedItem.Tag;
-            switch (vm.Status)
+            //Only show the menu if any VM is selected
+            if (lstVMs.SelectedItems.Count > 0)
             {
-                case VM.STATUS_RUNNING:
-                    {
-                        startToolStripMenuItem.Text = "Stop";
-                        startToolStripMenuItem.Enabled = true;
-                        startToolStripMenuItem.ToolTipText = "Stop this virtual machine";
-                        editToolStripMenuItem.Enabled = false;
-                        deleteToolStripMenuItem.Enabled = false;
-                        hardResetToolStripMenuItem.Enabled = true;
-                        resetCTRLALTDELETEToolStripMenuItem.Enabled = true;
-                        pauseToolStripMenuItem.Enabled = true;
-                        pauseToolStripMenuItem.Text = "Pause";
-                        killToolStripMenuItem.Enabled = true;
-                        configureToolStripMenuItem.Enabled = true;
-                    }
-                    break;
-                case VM.STATUS_STOPPED:
-                    {
-                        startToolStripMenuItem.Text = "Start";
-                        startToolStripMenuItem.Enabled = true;
-                        startToolStripMenuItem.ToolTipText = "Start this virtual machine";
-                        editToolStripMenuItem.Enabled = true;
-                        deleteToolStripMenuItem.Enabled = true;
-                        hardResetToolStripMenuItem.Enabled = false;
-                        resetCTRLALTDELETEToolStripMenuItem.Enabled = false;
-                        pauseToolStripMenuItem.Enabled = false;
-                        pauseToolStripMenuItem.Text = "Pause";
-                        killToolStripMenuItem.Enabled = false;
-                        configureToolStripMenuItem.Enabled = true;
-                    }
-                    break;
-                case VM.STATUS_IN_SETTINGS:
-                    {
-                        startToolStripMenuItem.Enabled = false;
-                        startToolStripMenuItem.Text = "Start";
-                        startToolStripMenuItem.ToolTipText = "Start this virtual machine";
-                        editToolStripMenuItem.Enabled = false;
-                        deleteToolStripMenuItem.Enabled = false;
-                        hardResetToolStripMenuItem.Enabled = false;
-                        resetCTRLALTDELETEToolStripMenuItem.Enabled = false;
-                        pauseToolStripMenuItem.Enabled = false;
-                        pauseToolStripMenuItem.Text = "Pause";
-                        pauseToolStripMenuItem.ToolTipText = "Pause this virtual machine";
-                        killToolStripMenuItem.Enabled = true;
-                        configureToolStripMenuItem.Enabled = false;
-                    }
-                    break;
-                case VM.STATUS_PAUSED:
-                    {
-                        startToolStripMenuItem.Enabled = false;
-                        startToolStripMenuItem.Text = "Stop";
-                        startToolStripMenuItem.ToolTipText = "Stop this virtual machine";
-                        editToolStripMenuItem.Enabled = false;
-                        deleteToolStripMenuItem.Enabled = false;
-                        hardResetToolStripMenuItem.Enabled = true;
-                        resetCTRLALTDELETEToolStripMenuItem.Enabled = true;
-                        pauseToolStripMenuItem.Enabled = true;
-                        pauseToolStripMenuItem.Text = "Resume";
-                        pauseToolStripMenuItem.ToolTipText = "Resume this virtual machine";
-                        killToolStripMenuItem.Enabled = true;
-                        configureToolStripMenuItem.Enabled = false;
-                    }
-                    break;
-            };
+                VM vm = (VM)lstVMs.SelectedItems[0].Tag;
+                switch (vm.Status)
+                {
+                    case VM.STATUS_RUNNING:
+                        {
+                            startToolStripMenuItem.Text = "Stop";
+                            startToolStripMenuItem.Enabled = true;
+                            startToolStripMenuItem.ToolTipText = "Stop this virtual machine";
+                            editToolStripMenuItem.Enabled = false;
+                            deleteToolStripMenuItem.Enabled = false;
+                            hardResetToolStripMenuItem.Enabled = true;
+                            resetCTRLALTDELETEToolStripMenuItem.Enabled = true;
+                            pauseToolStripMenuItem.Enabled = true;
+                            pauseToolStripMenuItem.Text = "Pause";
+                            killToolStripMenuItem.Enabled = true;
+                            configureToolStripMenuItem.Enabled = true;
+                        }
+                        break;
+                    case VM.STATUS_STOPPED:
+                        {
+                            startToolStripMenuItem.Text = "Start";
+                            startToolStripMenuItem.Enabled = true;
+                            startToolStripMenuItem.ToolTipText = "Start this virtual machine";
+                            editToolStripMenuItem.Enabled = true;
+                            deleteToolStripMenuItem.Enabled = true;
+                            hardResetToolStripMenuItem.Enabled = false;
+                            resetCTRLALTDELETEToolStripMenuItem.Enabled = false;
+                            pauseToolStripMenuItem.Enabled = false;
+                            pauseToolStripMenuItem.Text = "Pause";
+                            killToolStripMenuItem.Enabled = false;
+                            configureToolStripMenuItem.Enabled = true;
+                        }
+                        break;
+                    case VM.STATUS_IN_SETTINGS:
+                        {
+                            startToolStripMenuItem.Enabled = false;
+                            startToolStripMenuItem.Text = "Start";
+                            startToolStripMenuItem.ToolTipText = "Start this virtual machine";
+                            editToolStripMenuItem.Enabled = false;
+                            deleteToolStripMenuItem.Enabled = false;
+                            hardResetToolStripMenuItem.Enabled = false;
+                            resetCTRLALTDELETEToolStripMenuItem.Enabled = false;
+                            pauseToolStripMenuItem.Enabled = false;
+                            pauseToolStripMenuItem.Text = "Pause";
+                            pauseToolStripMenuItem.ToolTipText = "Pause this virtual machine";
+                            killToolStripMenuItem.Enabled = true;
+                            configureToolStripMenuItem.Enabled = false;
+                        }
+                        break;
+                    case VM.STATUS_PAUSED:
+                        {
+                            startToolStripMenuItem.Enabled = false;
+                            startToolStripMenuItem.Text = "Stop";
+                            startToolStripMenuItem.ToolTipText = "Stop this virtual machine";
+                            editToolStripMenuItem.Enabled = false;
+                            deleteToolStripMenuItem.Enabled = false;
+                            hardResetToolStripMenuItem.Enabled = true;
+                            resetCTRLALTDELETEToolStripMenuItem.Enabled = true;
+                            pauseToolStripMenuItem.Enabled = true;
+                            pauseToolStripMenuItem.Text = "Resume";
+                            pauseToolStripMenuItem.ToolTipText = "Resume this virtual machine";
+                            killToolStripMenuItem.Enabled = true;
+                            configureToolStripMenuItem.Enabled = false;
+                        }
+                        break;
+                };
+            }
+            else
+            {
+                e.Cancel = true; //Otherwise cancel the event to preven the menu being displayed
+            }
         }
 
         //Closing 86Box Manager before closing all the VMs can lead to weirdness if 86Box Manager is then restarted. So let's warn the user just in case and request confirmation.
@@ -429,7 +426,7 @@ namespace _86boxManager
 
         private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            VM vm = (VM)lstVMs.FocusedItem.Tag;
+            VM vm = (VM)lstVMs.SelectedItems[0].Tag;
             if (vm.Status == VM.STATUS_PAUSED)
             {
                 VMResume();
@@ -443,11 +440,11 @@ namespace _86boxManager
         //Pauses the selected VM
         private void VMPause()
         {
-            VM vm = (VM)lstVMs.FocusedItem.Tag;
+            VM vm = (VM)lstVMs.SelectedItems[0].Tag;
             PostMessage(vm.hWnd, 0x8890, IntPtr.Zero, IntPtr.Zero);
             vm.Status = VM.STATUS_PAUSED;
-            lstVMs.FocusedItem.SubItems[1].Text = vm.GetStatusString();
-            lstVMs.FocusedItem.ImageIndex = 2;
+            lstVMs.SelectedItems[0].SubItems[1].Text = vm.GetStatusString();
+            lstVMs.SelectedItems[0].ImageIndex = 2;
             pauseToolStripMenuItem.Text = "Resume";
             btnPause.Text = "Resume";
             btnStart.Enabled = false;
@@ -458,11 +455,11 @@ namespace _86boxManager
         //Resumes the selected VM
         private void VMResume()
         {
-            VM vm = (VM)lstVMs.FocusedItem.Tag;
+            VM vm = (VM)lstVMs.SelectedItems[0].Tag;
             PostMessage(vm.hWnd, 0x8890, IntPtr.Zero, IntPtr.Zero);
             vm.Status = VM.STATUS_RUNNING;
-            lstVMs.FocusedItem.SubItems[1].Text = vm.GetStatusString();
-            lstVMs.FocusedItem.ImageIndex = 1;
+            lstVMs.SelectedItems[0].SubItems[1].Text = vm.GetStatusString();
+            lstVMs.SelectedItems[0].ImageIndex = 1;
             pauseToolStripMenuItem.Text = "Pause";
             btnPause.Text = "Pause";
             btnStart.Enabled = true;
@@ -475,19 +472,19 @@ namespace _86boxManager
         {
             try
             {
-                VM vm = (VM)lstVMs.FocusedItem.Tag;
+                VM vm = (VM)lstVMs.SelectedItems[0].Tag;
                 if (vm.Status == VM.STATUS_STOPPED)
                 {
                     Process p = new Process();
                     p.StartInfo.FileName = exepath + "86Box.exe";
-                    p.StartInfo.Arguments = "-P \"" + lstVMs.FocusedItem.SubItems[2].Text + "\" -H " + ZEROID + "," + hWndHex;
+                    p.StartInfo.Arguments = "-P \"" + lstVMs.SelectedItems[0].SubItems[2].Text + "\" -H " + ZEROID + "," + hWndHex;
                     if (!showConsole)
                     {
                         p.StartInfo.RedirectStandardOutput = true;
                         p.StartInfo.UseShellExecute = false;
                     }
+
                     p.Start();
-                    // Process p = Process.Start(exepath + "86Box.exe", "-P \"" + lstVMs.FocusedItem.SubItems[2].Text + "\""); //Start the process with appropriate arguments
                     p.WaitForInputIdle(); //Wait a bit so hWnd can be obtained
 
                     if (!p.MainWindowHandle.Equals(IntPtr.Zero))
@@ -495,8 +492,8 @@ namespace _86boxManager
                         vm.hWnd = p.MainWindowHandle; //Get the window handle of the newly created process
                         vm.Pid = p.Id; //Assign the pid to the VM
                         vm.Status = VM.STATUS_RUNNING;
-                        lstVMs.FocusedItem.SubItems[1].Text = vm.GetStatusString();
-                        lstVMs.FocusedItem.ImageIndex = 1;
+                        lstVMs.SelectedItems[0].SubItems[1].Text = vm.GetStatusString();
+                        lstVMs.SelectedItems[0].ImageIndex = 1;
 
                         //Minimize the main window if the user wants this
                         if (minimize)
@@ -536,14 +533,14 @@ namespace _86boxManager
         //Stops a running/paused VM
         private void VMStop()
         {
-            VM vm = (VM)lstVMs.FocusedItem.Tag;
+            VM vm = (VM)lstVMs.SelectedItems[0].Tag;
             if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
             {
                 PostMessage(vm.hWnd, 0x8893, IntPtr.Zero, IntPtr.Zero);
                 vm.Status = VM.STATUS_STOPPED;
                 vm.hWnd = IntPtr.Zero;
-                lstVMs.FocusedItem.SubItems[1].Text = vm.GetStatusString();
-                lstVMs.FocusedItem.ImageIndex = 0;
+                lstVMs.SelectedItems[0].SubItems[1].Text = vm.GetStatusString();
+                lstVMs.SelectedItems[0].ImageIndex = 0;
 
                 btnStart.Text = "Start";
                 toolTip.SetToolTip(btnStart, "Start this virtual machine");
@@ -574,7 +571,7 @@ namespace _86boxManager
         //Start VM if it's stopped or stop it if it's running/paused
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            VM vm = (VM)lstVMs.FocusedItem.Tag;
+            VM vm = (VM)lstVMs.SelectedItems[0].Tag;
             if (vm.Status == VM.STATUS_STOPPED)
             {
                 VMStart();
@@ -593,7 +590,7 @@ namespace _86boxManager
         //Opens the settings window for the selected VM
         private void VMConfigure()
         {
-            VM vm = (VM)lstVMs.FocusedItem.Tag;
+            VM vm = (VM)lstVMs.SelectedItems[0].Tag;
 
             //If the VM is already running, only send the message to open the settings window. Otherwise, start the VM with the -S parameter
             if (vm.Status == VM.STATUS_RUNNING)
@@ -606,7 +603,7 @@ namespace _86boxManager
                 {
                     Process p = new Process();
                     p.StartInfo.FileName = exepath + "86Box.exe";
-                    p.StartInfo.Arguments = "-S -P \"" + lstVMs.FocusedItem.SubItems[2].Text + "\"";
+                    p.StartInfo.Arguments = "-S -P \"" + lstVMs.SelectedItems[0].SubItems[2].Text + "\"";
                     if (!showConsole)
                     {
                         p.StartInfo.RedirectStandardOutput = true;
@@ -618,8 +615,8 @@ namespace _86boxManager
                     vm.Status = VM.STATUS_IN_SETTINGS;
                     vm.hWnd = p.MainWindowHandle;
                     vm.Pid = p.Id;
-                    lstVMs.FocusedItem.SubItems[1].Text = vm.GetStatusString();
-                    lstVMs.FocusedItem.ImageIndex = 2;
+                    lstVMs.SelectedItems[0].SubItems[1].Text = vm.GetStatusString();
+                    lstVMs.SelectedItems[0].ImageIndex = 2;
 
                     BackgroundWorker bgw = new BackgroundWorker
                     {
@@ -659,12 +656,12 @@ namespace _86boxManager
         //Sends the CTRL+ALT+DEL keystroke to the VM, result depends on the guest OS
         private void VMCtrlAltDel()
         {
-            VM vm = (VM)lstVMs.FocusedItem.Tag;
+            VM vm = (VM)lstVMs.SelectedItems[0].Tag;
             if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
             {
                 PostMessage(vm.hWnd, 0x8894, IntPtr.Zero, IntPtr.Zero);
                 vm.Status = VM.STATUS_RUNNING;
-                lstVMs.FocusedItem.SubItems[1].Text = vm.GetStatusString();
+                lstVMs.SelectedItems[0].SubItems[1].Text = vm.GetStatusString();
                 btnPause.Text = "Pause";
             }
         }
@@ -677,12 +674,12 @@ namespace _86boxManager
         //Performs a hard reset for the selected VM
         private void VMHardReset()
         {
-            VM vm = (VM)lstVMs.FocusedItem.Tag;
+            VM vm = (VM)lstVMs.SelectedItems[0].Tag;
             if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
             {
                 PostMessage(vm.hWnd, 0x8892, IntPtr.Zero, IntPtr.Zero);
                 vm.Status = VM.STATUS_RUNNING;
-                lstVMs.FocusedItem.SubItems[1].Text = vm.GetStatusString();
+                lstVMs.SelectedItems[0].SubItems[1].Text = vm.GetStatusString();
                 btnPause.Text = "Pause";
             }
         }
@@ -692,9 +689,9 @@ namespace _86boxManager
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (lstVMs.FocusedItem.Bounds.Contains(e.Location))
+                if (lstVMs.SelectedItems[0].Bounds.Contains(e.Location))
                 {
-                    VM vm = (VM)lstVMs.FocusedItem.Tag;
+                    VM vm = (VM)lstVMs.SelectedItems[0].Tag;
                     if (vm.Status == VM.STATUS_STOPPED)
                     {
                         VMStart();
@@ -778,7 +775,7 @@ namespace _86boxManager
         //Changes a VM's name and/or description
         public void VMEdit(string name, string desc)
         {
-            VM vm = (VM)lstVMs.FocusedItem.Tag;
+            VM vm = (VM)lstVMs.SelectedItems[0].Tag;
             string oldname = vm.Name;
             if (!vm.Name.Equals(name))
             {
@@ -792,11 +789,11 @@ namespace _86boxManager
                 }
                 vm.Name = name;
                 vm.Path = cfgpath + vm.Name;
-                lstVMs.FocusedItem.Text = name;
-                lstVMs.FocusedItem.SubItems[2].Text = vm.Path;
+                lstVMs.SelectedItems[0].Text = name;
+                lstVMs.SelectedItems[0].SubItems[2].Text = vm.Path;
             }
             vm.Desc = desc;
-            lstVMs.FocusedItem.ToolTipText = desc;
+            lstVMs.SelectedItems[0].ToolTipText = desc;
 
             //Create a new registry value with new info, delete the old one
             regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box\Virtual Machines", true);
@@ -822,12 +819,12 @@ namespace _86boxManager
         //Removes the selected VM. Confirmations for maximum safety
         private void VMRemove()
         {
-            VM vm = (VM)lstVMs.FocusedItem.Tag;
+            VM vm = (VM)lstVMs.SelectedItems[0].Tag;
             DialogResult result1 = MessageBox.Show("Are you sure you want to remove this virtual machine?", "Remove virtual machine", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (result1 == DialogResult.Yes)
             {
-                lstVMs.Items.Remove(lstVMs.FocusedItem);
+                lstVMs.Items.Remove(lstVMs.SelectedItems[0]);
                 regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box\Virtual Machines", true);
                 regkey.DeleteValue(vm.Name);
                 regkey.Close();
@@ -872,7 +869,7 @@ namespace _86boxManager
 
         private void btnPause_Click(object sender, EventArgs e)
         {
-            VM vm = (VM)lstVMs.FocusedItem.Tag;
+            VM vm = (VM)lstVMs.SelectedItems[0].Tag;
             if (vm.Status == VM.STATUS_PAUSED)
             {
                 VMResume();
@@ -1011,7 +1008,7 @@ namespace _86boxManager
         {
             try
             {
-                VM vm = (VM)lstVMs.FocusedItem.Tag;
+                VM vm = (VM)lstVMs.SelectedItems[0].Tag;
                 Process.Start(vm.Path);
             }
             catch (Exception ex)
@@ -1022,7 +1019,7 @@ namespace _86boxManager
 
         private void createADesktopShortcutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            VM vm = (VM)lstVMs.FocusedItem.Tag;
+            VM vm = (VM)lstVMs.SelectedItems[0].Tag;
             WshShell shell = new WshShell();
             string shortcutAddress = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\" + vm.Name + ".lnk";
             IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortcutAddress);
@@ -1040,7 +1037,7 @@ namespace _86boxManager
         {
             if (e.KeyCode == Keys.Enter)
             {
-                VM vm = (VM)lstVMs.FocusedItem.Tag;
+                VM vm = (VM)lstVMs.SelectedItems[0].Tag;
                 if (vm.Status == VM.STATUS_RUNNING)
                 {
                     VMStop();
@@ -1134,15 +1131,15 @@ namespace _86boxManager
             DialogResult = MessageBox.Show("Killing a virtual machine can cause data loss. Only do this if 86Box.exe process gets stuck. Do you wish to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if(DialogResult == DialogResult.Yes)
             {
-                VM vm = (VM)lstVMs.FocusedItem.Tag;
+                VM vm = (VM)lstVMs.SelectedItems[0].Tag;
                 Process p = Process.GetProcessById(vm.Pid);
                 p.Kill();
 
                 //We need to cleanup afterwards to make sure the VM is put back into a valid state
                 vm.Status = VM.STATUS_STOPPED;
                 vm.hWnd = IntPtr.Zero;
-                lstVMs.FocusedItem.SubItems[1].Text = vm.GetStatusString();
-                lstVMs.FocusedItem.ImageIndex = 0;
+                lstVMs.SelectedItems[0].SubItems[1].Text = vm.GetStatusString();
+                lstVMs.SelectedItems[0].ImageIndex = 0;
 
                 btnStart.Text = "Start";
                 toolTip.SetToolTip(btnStart, "Stop this virtual machine");
@@ -1169,6 +1166,33 @@ namespace _86boxManager
                     btnCtrlAltDel.Enabled = false;
                 }
             }
+        }
+
+        //Handles the click event for the listview column headers, allowing to sort the items by columns
+        private void lstVMs_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            //Sorting a different column than the currently sorted one => sort by that one ascending
+            if (e.Column != sortColumn)
+            {
+                sortColumn = e.Column;
+                lstVMs.Sorting = SortOrder.Ascending;
+            }
+            //Sorting the same column => change the order from ascending to descending or vice versa
+            else
+            {
+                if (lstVMs.Sorting == SortOrder.Ascending)
+                    lstVMs.Sorting = SortOrder.Descending;
+                else
+                    lstVMs.Sorting = SortOrder.Ascending;
+            }
+
+            lstVMs.Sort();
+            lstVMs.ListViewItemSorter = new _86BoxManager.ListViewItemComparer(e.Column, lstVMs.Sorting);
+        }
+
+        private void lstVMs_MouseClick(object sender, MouseEventArgs e)
+        {
+           
         }
     }
 }

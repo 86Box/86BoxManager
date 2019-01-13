@@ -53,7 +53,7 @@
             this.cbxOpenCFG.Location = new System.Drawing.Point(263, 123);
             this.cbxOpenCFG.Name = "cbxOpenCFG";
             this.cbxOpenCFG.Size = new System.Drawing.Size(278, 26);
-            this.cbxOpenCFG.TabIndex = 2;
+            this.cbxOpenCFG.TabIndex = 3;
             this.cbxOpenCFG.Text = "Configure this virtual machine now";
             this.cbxOpenCFG.UseVisualStyleBackColor = true;
             // 
@@ -65,7 +65,7 @@
             this.btnCancel.Location = new System.Drawing.Point(537, 12);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 30);
-            this.btnCancel.TabIndex = 3;
+            this.btnCancel.TabIndex = 5;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
@@ -107,7 +107,7 @@
             this.txtName.Location = new System.Drawing.Point(73, 12);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(539, 29);
-            this.txtName.TabIndex = 10;
+            this.txtName.TabIndex = 0;
             this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
             // txtDescription
@@ -117,7 +117,7 @@
             this.txtDescription.Location = new System.Drawing.Point(110, 47);
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(502, 29);
-            this.txtDescription.TabIndex = 11;
+            this.txtDescription.TabIndex = 1;
             // 
             // lblPath1
             // 
@@ -146,7 +146,7 @@
             this.cbxStartVM.Location = new System.Drawing.Point(16, 123);
             this.cbxStartVM.Name = "cbxStartVM";
             this.cbxStartVM.Size = new System.Drawing.Size(241, 26);
-            this.cbxStartVM.TabIndex = 14;
+            this.cbxStartVM.TabIndex = 2;
             this.cbxStartVM.Text = "Start this virtual machine now";
             this.cbxStartVM.UseVisualStyleBackColor = true;
             // 

@@ -101,6 +101,7 @@
     <Compile Include="dlgSettings.Designer.cs">
       <DependentUpon>dlgSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="ListViewItemComparer.cs" />
     <Compile Include="VM.cs" />
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>

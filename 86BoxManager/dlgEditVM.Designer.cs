@@ -38,6 +38,8 @@
             this.lblPath = new System.Windows.Forms.Label();
             this.lblPath1 = new System.Windows.Forms.Label();
             this.tipLblPath1 = new System.Windows.Forms.ToolTip(this.components);
+            this.pnlBottom = new System.Windows.Forms.Panel();
+            this.pnlBottom.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnCancel
@@ -45,10 +47,10 @@
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnCancel.Location = new System.Drawing.Point(537, 119);
+            this.btnCancel.Location = new System.Drawing.Point(537, 12);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 30);
-            this.btnCancel.TabIndex = 0;
+            this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -58,10 +60,10 @@
             this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnApply.Enabled = false;
             this.btnApply.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnApply.Location = new System.Drawing.Point(456, 119);
+            this.btnApply.Location = new System.Drawing.Point(456, 12);
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(75, 30);
-            this.btnApply.TabIndex = 1;
+            this.btnApply.TabIndex = 2;
             this.btnApply.Text = "Apply";
             this.btnApply.UseVisualStyleBackColor = true;
             this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
@@ -91,7 +93,7 @@
             this.txtName.Location = new System.Drawing.Point(73, 12);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(539, 29);
-            this.txtName.TabIndex = 7;
+            this.txtName.TabIndex = 0;
             this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
             // txtDesc
@@ -101,7 +103,7 @@
             this.txtDesc.Location = new System.Drawing.Point(110, 47);
             this.txtDesc.Name = "txtDesc";
             this.txtDesc.Size = new System.Drawing.Size(502, 29);
-            this.txtDesc.TabIndex = 8;
+            this.txtDesc.TabIndex = 1;
             // 
             // lblPath
             // 
@@ -122,6 +124,17 @@
             this.lblPath1.TabIndex = 10;
             this.lblPath1.Text = "<path goes here>";
             // 
+            // pnlBottom
+            // 
+            this.pnlBottom.BackColor = System.Drawing.SystemColors.Control;
+            this.pnlBottom.Controls.Add(this.btnCancel);
+            this.pnlBottom.Controls.Add(this.btnApply);
+            this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlBottom.Location = new System.Drawing.Point(0, 122);
+            this.pnlBottom.Name = "pnlBottom";
+            this.pnlBottom.Size = new System.Drawing.Size(624, 54);
+            this.pnlBottom.TabIndex = 16;
+            // 
             // dlgEditVM
             // 
             this.AcceptButton = this.btnApply;
@@ -129,15 +142,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(624, 161);
+            this.ClientSize = new System.Drawing.Size(624, 176);
+            this.Controls.Add(this.pnlBottom);
             this.Controls.Add(this.lblPath1);
             this.Controls.Add(this.lblPath);
             this.Controls.Add(this.txtDesc);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.lblDesc);
             this.Controls.Add(this.lblName);
-            this.Controls.Add(this.btnApply);
-            this.Controls.Add(this.btnCancel);
             this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -149,6 +161,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Edit a virtual machine";
             this.Load += new System.EventHandler(this.dlgEditVM_Load);
+            this.pnlBottom.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -165,5 +178,6 @@
         private System.Windows.Forms.Label lblPath;
         private System.Windows.Forms.Label lblPath1;
         private System.Windows.Forms.ToolTip tipLblPath1;
+        private System.Windows.Forms.Panel pnlBottom;
     }
 }
