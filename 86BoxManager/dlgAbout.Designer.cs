@@ -58,6 +58,7 @@
             this.btnOK.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnOK.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.btnOK.Location = new System.Drawing.Point(148, 12);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 30);
@@ -69,27 +70,30 @@
             // lblDesc
             // 
             this.lblDesc.AutoSize = true;
+            this.lblDesc.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblDesc.Location = new System.Drawing.Point(12, 50);
             this.lblDesc.Name = "lblDesc";
-            this.lblDesc.Size = new System.Drawing.Size(347, 21);
+            this.lblDesc.Size = new System.Drawing.Size(307, 19);
             this.lblDesc.TabIndex = 2;
             this.lblDesc.Text = "A configuration manager for the 86Box emulator";
             // 
             // lblVersion
             // 
             this.lblVersion.AutoSize = true;
+            this.lblVersion.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblVersion.Location = new System.Drawing.Point(12, 78);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(65, 21);
+            this.lblVersion.Size = new System.Drawing.Size(58, 19);
             this.lblVersion.TabIndex = 3;
             this.lblVersion.Text = "Version:";
             // 
             // lnkGithub
             // 
             this.lnkGithub.AutoSize = true;
+            this.lnkGithub.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lnkGithub.Location = new System.Drawing.Point(12, 201);
             this.lnkGithub.Name = "lnkGithub";
-            this.lnkGithub.Size = new System.Drawing.Size(298, 21);
+            this.lnkGithub.Size = new System.Drawing.Size(264, 19);
             this.lnkGithub.TabIndex = 5;
             this.lnkGithub.TabStop = true;
             this.lnkGithub.Text = "https://github.com/86Box/86BoxManager";
@@ -98,9 +102,10 @@
             // lblCopyright
             // 
             this.lblCopyright.AutoSize = true;
+            this.lblCopyright.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblCopyright.Location = new System.Drawing.Point(12, 108);
             this.lblCopyright.Name = "lblCopyright";
-            this.lblCopyright.Size = new System.Drawing.Size(303, 63);
+            this.lblCopyright.Size = new System.Drawing.Size(265, 57);
             this.lblCopyright.TabIndex = 6;
             this.lblCopyright.Text = "Copyright © 2018 David Simunič\r\nLicensed under the MIT license. \r\nSee the LICENSE" +
     " file for more information.";
@@ -108,9 +113,10 @@
             // lnkGithub2
             // 
             this.lnkGithub2.AutoSize = true;
+            this.lnkGithub2.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lnkGithub2.Location = new System.Drawing.Point(12, 180);
             this.lnkGithub2.Name = "lnkGithub2";
-            this.lnkGithub2.Size = new System.Drawing.Size(236, 21);
+            this.lnkGithub2.Size = new System.Drawing.Size(209, 19);
             this.lnkGithub2.TabIndex = 7;
             this.lnkGithub2.TabStop = true;
             this.lnkGithub2.Text = "https://github.com/86Box/86Box";
@@ -119,9 +125,10 @@
             // lblVersion1
             // 
             this.lblVersion1.AutoSize = true;
+            this.lblVersion1.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblVersion1.Location = new System.Drawing.Point(72, 78);
             this.lblVersion1.Name = "lblVersion1";
-            this.lblVersion1.Size = new System.Drawing.Size(155, 21);
+            this.lblVersion1.Size = new System.Drawing.Size(137, 19);
             this.lblVersion1.TabIndex = 8;
             this.lblVersion1.Text = "<version goes here>";
             // 
@@ -139,6 +146,7 @@
             this.pnlBottom.BackColor = System.Drawing.SystemColors.Control;
             this.pnlBottom.Controls.Add(this.btnOK);
             this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlBottom.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.pnlBottom.Location = new System.Drawing.Point(0, 237);
             this.pnlBottom.Name = "pnlBottom";
             this.pnlBottom.Size = new System.Drawing.Size(371, 54);

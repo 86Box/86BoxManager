@@ -47,6 +47,7 @@
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.btnCancel.Location = new System.Drawing.Point(537, 12);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 30);
@@ -60,6 +61,7 @@
             this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnApply.Enabled = false;
             this.btnApply.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnApply.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.btnApply.Location = new System.Drawing.Point(456, 12);
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(75, 30);
@@ -71,18 +73,20 @@
             // lblName
             // 
             this.lblName.AutoSize = true;
+            this.lblName.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblName.Location = new System.Drawing.Point(12, 15);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(55, 21);
+            this.lblName.Size = new System.Drawing.Size(48, 19);
             this.lblName.TabIndex = 2;
             this.lblName.Text = "Name:";
             // 
             // lblDesc
             // 
             this.lblDesc.AutoSize = true;
+            this.lblDesc.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblDesc.Location = new System.Drawing.Point(12, 50);
             this.lblDesc.Name = "lblDesc";
-            this.lblDesc.Size = new System.Drawing.Size(92, 21);
+            this.lblDesc.Size = new System.Drawing.Size(81, 19);
             this.lblDesc.TabIndex = 4;
             this.lblDesc.Text = "Description:";
             // 
@@ -90,9 +94,10 @@
             // 
             this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtName.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.txtName.Location = new System.Drawing.Point(73, 12);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(539, 29);
+            this.txtName.Size = new System.Drawing.Size(539, 25);
             this.txtName.TabIndex = 0;
             this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
@@ -100,23 +105,26 @@
             // 
             this.txtDesc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtDesc.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.txtDesc.Location = new System.Drawing.Point(110, 47);
             this.txtDesc.Name = "txtDesc";
-            this.txtDesc.Size = new System.Drawing.Size(502, 29);
+            this.txtDesc.Size = new System.Drawing.Size(502, 25);
             this.txtDesc.TabIndex = 1;
             // 
             // lblPath
             // 
             this.lblPath.AutoSize = true;
+            this.lblPath.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblPath.Location = new System.Drawing.Point(12, 85);
             this.lblPath.Name = "lblPath";
-            this.lblPath.Size = new System.Drawing.Size(43, 21);
+            this.lblPath.Size = new System.Drawing.Size(40, 19);
             this.lblPath.TabIndex = 9;
             this.lblPath.Text = "Path:";
             // 
             // lblPath1
             // 
             this.lblPath1.AutoEllipsis = true;
+            this.lblPath1.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblPath1.Location = new System.Drawing.Point(61, 85);
             this.lblPath1.MaximumSize = new System.Drawing.Size(551, 21);
             this.lblPath1.Name = "lblPath1";
@@ -130,6 +138,7 @@
             this.pnlBottom.Controls.Add(this.btnCancel);
             this.pnlBottom.Controls.Add(this.btnApply);
             this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlBottom.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.pnlBottom.Location = new System.Drawing.Point(0, 122);
             this.pnlBottom.Name = "pnlBottom";
             this.pnlBottom.Size = new System.Drawing.Size(624, 54);

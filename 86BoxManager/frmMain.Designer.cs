@@ -33,8 +33,6 @@
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
-            this.btnSettings = new System.Windows.Forms.Button();
-            this.btnAbout = new System.Windows.Forms.Button();
             this.lstVMs = new System.Windows.Forms.ListView();
             this.clmName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -57,8 +55,6 @@
             this.btnConfigure = new System.Windows.Forms.Button();
             this.imgStatus = new System.Windows.Forms.ImageList(this.components);
             this.btnPause = new System.Windows.Forms.Button();
-            this.btnCtrlAltDel = new System.Windows.Forms.Button();
-            this.btnReset = new System.Windows.Forms.Button();
             this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmsTrayIcon = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.open86BoxManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,6 +62,27 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.mainMenu1 = new System.Windows.Forms.MainMenu(this.components);
+            this.mnuFile = new System.Windows.Forms.MenuItem();
+            this.mnuFileAdd = new System.Windows.Forms.MenuItem();
+            this.mnuFileEdit = new System.Windows.Forms.MenuItem();
+            this.mnuFileDelete = new System.Windows.Forms.MenuItem();
+            this.mnuFileBar0 = new System.Windows.Forms.MenuItem();
+            this.mnuFileOptions = new System.Windows.Forms.MenuItem();
+            this.mnuFileBar1 = new System.Windows.Forms.MenuItem();
+            this.mnuFileExit = new System.Windows.Forms.MenuItem();
+            this.mnuAction = new System.Windows.Forms.MenuItem();
+            this.mnuActionStart = new System.Windows.Forms.MenuItem();
+            this.mnuActionPause = new System.Windows.Forms.MenuItem();
+            this.mnuActionReset = new System.Windows.Forms.MenuItem();
+            this.mnuActionBar0 = new System.Windows.Forms.MenuItem();
+            this.mnuActionCAD = new System.Windows.Forms.MenuItem();
+            this.mnuActionBar1 = new System.Windows.Forms.MenuItem();
+            this.mnuActionConfigure = new System.Windows.Forms.MenuItem();
+            this.mnuHelp = new System.Windows.Forms.MenuItem();
+            this.mnuHelp86BoxOnline = new System.Windows.Forms.MenuItem();
+            this.mnuHelpBar0 = new System.Windows.Forms.MenuItem();
+            this.mnuHelpAbout = new System.Windows.Forms.MenuItem();
             this.cmsVM.SuspendLayout();
             this.cmsTrayIcon.SuspendLayout();
             this.SuspendLayout();
@@ -74,7 +91,7 @@
             // 
             this.btnEdit.Enabled = false;
             this.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnEdit.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.btnEdit.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnEdit.Location = new System.Drawing.Point(63, 12);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(51, 30);
@@ -88,7 +105,7 @@
             // 
             this.btnDelete.Enabled = false;
             this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnDelete.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.btnDelete.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnDelete.Location = new System.Drawing.Point(120, 12);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(70, 30);
@@ -102,8 +119,8 @@
             // 
             this.btnStart.Enabled = false;
             this.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnStart.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnStart.Location = new System.Drawing.Point(206, 12);
+            this.btnStart.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.btnStart.Location = new System.Drawing.Point(196, 12);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(51, 30);
             this.btnStart.TabIndex = 3;
@@ -111,32 +128,6 @@
             this.toolTip.SetToolTip(this.btnStart, "Start this virtual machine");
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
-            // 
-            // btnSettings
-            // 
-            this.btnSettings.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnSettings.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnSettings.Location = new System.Drawing.Point(568, 12);
-            this.btnSettings.Name = "btnSettings";
-            this.btnSettings.Size = new System.Drawing.Size(67, 30);
-            this.btnSettings.TabIndex = 8;
-            this.btnSettings.Text = "Settings";
-            this.toolTip.SetToolTip(this.btnSettings, "Open 86Box Manager settings");
-            this.btnSettings.UseVisualStyleBackColor = true;
-            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
-            // 
-            // btnAbout
-            // 
-            this.btnAbout.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnAbout.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnAbout.Location = new System.Drawing.Point(641, 12);
-            this.btnAbout.Name = "btnAbout";
-            this.btnAbout.Size = new System.Drawing.Size(61, 30);
-            this.btnAbout.TabIndex = 9;
-            this.btnAbout.Text = "About";
-            this.toolTip.SetToolTip(this.btnAbout, "Open the About 86Box Manager dialog");
-            this.btnAbout.UseVisualStyleBackColor = true;
-            this.btnAbout.Click += new System.EventHandler(this.btnAbout_Click);
             // 
             // lstVMs
             // 
@@ -149,15 +140,17 @@
             this.clmStatus,
             this.clmPath});
             this.lstVMs.ContextMenuStrip = this.cmsVM;
+            this.lstVMs.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lstVMs.FullRowSelect = true;
             this.lstVMs.GridLines = true;
             this.lstVMs.HideSelection = false;
-            this.lstVMs.Location = new System.Drawing.Point(12, 53);
+            this.lstVMs.LargeImageList = this.img86box;
+            this.lstVMs.Location = new System.Drawing.Point(12, 48);
             this.lstVMs.MultiSelect = false;
             this.lstVMs.Name = "lstVMs";
             this.lstVMs.ShowGroups = false;
             this.lstVMs.ShowItemToolTips = true;
-            this.lstVMs.Size = new System.Drawing.Size(690, 396);
+            this.lstVMs.Size = new System.Drawing.Size(607, 160);
             this.lstVMs.SmallImageList = this.img86box;
             this.lstVMs.TabIndex = 10;
             this.lstVMs.UseCompatibleStateImageBehavior = false;
@@ -165,7 +158,6 @@
             this.lstVMs.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lstVMs_ColumnClick);
             this.lstVMs.SelectedIndexChanged += new System.EventHandler(this.lstVMs_SelectedIndexChanged);
             this.lstVMs.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lstVMs_KeyDown);
-            this.lstVMs.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstVMs_MouseClick);
             this.lstVMs.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstVMs_MouseDoubleClick);
             // 
             // clmName
@@ -304,7 +296,7 @@
             // btnAdd
             // 
             this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnAdd.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.btnAdd.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnAdd.Location = new System.Drawing.Point(12, 12);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(45, 30);
@@ -318,8 +310,8 @@
             // 
             this.btnConfigure.Enabled = false;
             this.btnConfigure.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnConfigure.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnConfigure.Location = new System.Drawing.Point(263, 12);
+            this.btnConfigure.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.btnConfigure.Location = new System.Drawing.Point(324, 12);
             this.btnConfigure.Name = "btnConfigure";
             this.btnConfigure.Size = new System.Drawing.Size(81, 30);
             this.btnConfigure.TabIndex = 4;
@@ -338,8 +330,8 @@
             // 
             this.btnPause.Enabled = false;
             this.btnPause.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnPause.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnPause.Location = new System.Drawing.Point(350, 12);
+            this.btnPause.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.btnPause.Location = new System.Drawing.Point(253, 12);
             this.btnPause.Name = "btnPause";
             this.btnPause.Size = new System.Drawing.Size(65, 30);
             this.btnPause.TabIndex = 5;
@@ -347,34 +339,6 @@
             this.toolTip.SetToolTip(this.btnPause, "Pause this virtual machine");
             this.btnPause.UseVisualStyleBackColor = true;
             this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
-            // 
-            // btnCtrlAltDel
-            // 
-            this.btnCtrlAltDel.Enabled = false;
-            this.btnCtrlAltDel.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnCtrlAltDel.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnCtrlAltDel.Location = new System.Drawing.Point(421, 12);
-            this.btnCtrlAltDel.Name = "btnCtrlAltDel";
-            this.btnCtrlAltDel.Size = new System.Drawing.Size(65, 30);
-            this.btnCtrlAltDel.TabIndex = 6;
-            this.btnCtrlAltDel.Text = "C+A+D";
-            this.toolTip.SetToolTip(this.btnCtrlAltDel, "Send the CTRL+ALT+DEL keystroke to this virtual machine");
-            this.btnCtrlAltDel.UseVisualStyleBackColor = true;
-            this.btnCtrlAltDel.Click += new System.EventHandler(this.btnCtrlAltDel_Click);
-            // 
-            // btnReset
-            // 
-            this.btnReset.Enabled = false;
-            this.btnReset.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnReset.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnReset.Location = new System.Drawing.Point(492, 12);
-            this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(53, 30);
-            this.btnReset.TabIndex = 7;
-            this.btnReset.Text = "Reset";
-            this.toolTip.SetToolTip(this.btnReset, "Reset this virtual machine by simulating a power cycle");
-            this.btnReset.UseVisualStyleBackColor = true;
-            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
             // trayIcon
             // 
@@ -423,20 +387,155 @@
             this.exitToolStripMenuItem.ToolTipText = "Close 86Box Manager";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // mainMenu1
+            // 
+            this.mainMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mnuFile,
+            this.mnuAction,
+            this.mnuHelp});
+            // 
+            // mnuFile
+            // 
+            this.mnuFile.Index = 0;
+            this.mnuFile.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mnuFileAdd,
+            this.mnuFileEdit,
+            this.mnuFileDelete,
+            this.mnuFileBar0,
+            this.mnuFileOptions,
+            this.mnuFileBar1,
+            this.mnuFileExit});
+            this.mnuFile.Text = "File";
+            // 
+            // mnuFileAdd
+            // 
+            this.mnuFileAdd.Index = 0;
+            this.mnuFileAdd.Text = "Add";
+            this.mnuFileAdd.Click += new System.EventHandler(this.mnuFileAdd_Click);
+            // 
+            // mnuFileEdit
+            // 
+            this.mnuFileEdit.Index = 1;
+            this.mnuFileEdit.Text = "Edit";
+            this.mnuFileEdit.Click += new System.EventHandler(this.mnuFileEdit_Click);
+            // 
+            // mnuFileDelete
+            // 
+            this.mnuFileDelete.Index = 2;
+            this.mnuFileDelete.Text = "Delete";
+            this.mnuFileDelete.Click += new System.EventHandler(this.mnuFileDelete_Click);
+            // 
+            // mnuFileBar0
+            // 
+            this.mnuFileBar0.Index = 3;
+            this.mnuFileBar0.Text = "-";
+            // 
+            // mnuFileOptions
+            // 
+            this.mnuFileOptions.Index = 4;
+            this.mnuFileOptions.Text = "Manager Options";
+            this.mnuFileOptions.Click += new System.EventHandler(this.mnuFileOptions_Click);
+            // 
+            // mnuFileBar1
+            // 
+            this.mnuFileBar1.Index = 5;
+            this.mnuFileBar1.Text = "-";
+            // 
+            // mnuFileExit
+            // 
+            this.mnuFileExit.Index = 6;
+            this.mnuFileExit.Text = "Exit";
+            this.mnuFileExit.Click += new System.EventHandler(this.mnuFileExit_Click);
+            // 
+            // mnuAction
+            // 
+            this.mnuAction.Index = 1;
+            this.mnuAction.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mnuActionStart,
+            this.mnuActionPause,
+            this.mnuActionReset,
+            this.mnuActionBar0,
+            this.mnuActionCAD,
+            this.mnuActionBar1,
+            this.mnuActionConfigure});
+            this.mnuAction.Text = "Action";
+            // 
+            // mnuActionStart
+            // 
+            this.mnuActionStart.Index = 0;
+            this.mnuActionStart.Text = "Start";
+            this.mnuActionStart.Click += new System.EventHandler(this.mnuActionStart_Click);
+            // 
+            // mnuActionPause
+            // 
+            this.mnuActionPause.Index = 1;
+            this.mnuActionPause.Text = "Pause";
+            this.mnuActionPause.Click += new System.EventHandler(this.mnuActionPause_Click);
+            // 
+            // mnuActionReset
+            // 
+            this.mnuActionReset.Index = 2;
+            this.mnuActionReset.Text = "Reset";
+            this.mnuActionReset.Click += new System.EventHandler(this.mnuActionReset_Click);
+            // 
+            // mnuActionBar0
+            // 
+            this.mnuActionBar0.Index = 3;
+            this.mnuActionBar0.Text = "-";
+            // 
+            // mnuActionCAD
+            // 
+            this.mnuActionCAD.Index = 4;
+            this.mnuActionCAD.Text = "Ctrl+Alt+Del";
+            this.mnuActionCAD.Click += new System.EventHandler(this.mnuActionCAD_Click);
+            // 
+            // mnuActionBar1
+            // 
+            this.mnuActionBar1.Index = 5;
+            this.mnuActionBar1.Text = "-";
+            // 
+            // mnuActionConfigure
+            // 
+            this.mnuActionConfigure.Index = 6;
+            this.mnuActionConfigure.Text = "Configure";
+            this.mnuActionConfigure.Click += new System.EventHandler(this.mnuActionConfigure_Click);
+            // 
+            // mnuHelp
+            // 
+            this.mnuHelp.Index = 2;
+            this.mnuHelp.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mnuHelp86BoxOnline,
+            this.mnuHelpBar0,
+            this.mnuHelpAbout});
+            this.mnuHelp.Text = "Help";
+            // 
+            // mnuHelp86BoxOnline
+            // 
+            this.mnuHelp86BoxOnline.Index = 0;
+            this.mnuHelp86BoxOnline.Text = "86Box Main Page";
+            this.mnuHelp86BoxOnline.Click += new System.EventHandler(this.mnuHelp86BoxOnline_Click);
+            // 
+            // mnuHelpBar0
+            // 
+            this.mnuHelpBar0.Index = 1;
+            this.mnuHelpBar0.Text = "-";
+            // 
+            // mnuHelpAbout
+            // 
+            this.mnuHelpAbout.Index = 2;
+            this.mnuHelpAbout.Text = "About 86Box Manager";
+            this.mnuHelpAbout.Click += new System.EventHandler(this.mnuHelpAbout_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(714, 461);
-            this.Controls.Add(this.btnReset);
-            this.Controls.Add(this.btnCtrlAltDel);
+            this.ClientSize = new System.Drawing.Size(631, 226);
             this.Controls.Add(this.btnPause);
             this.Controls.Add(this.btnConfigure);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.lstVMs);
-            this.Controls.Add(this.btnAbout);
-            this.Controls.Add(this.btnSettings);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnEdit);
@@ -445,6 +544,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
+            this.Menu = this.mainMenu1;
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "86Box Manager";
@@ -461,8 +561,6 @@
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnStart;
-        private System.Windows.Forms.Button btnSettings;
-        private System.Windows.Forms.Button btnAbout;
         private System.Windows.Forms.ColumnHeader clmName;
         private System.Windows.Forms.ColumnHeader clmStatus;
         private System.Windows.Forms.Button btnAdd;
@@ -480,8 +578,6 @@
         private System.Windows.Forms.ImageList imgStatus;
         public System.Windows.Forms.ListView lstVMs;
         private System.Windows.Forms.Button btnPause;
-        private System.Windows.Forms.Button btnCtrlAltDel;
-        private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.ToolStripMenuItem openFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createADesktopShortcutToolStripMenuItem;
         private System.Windows.Forms.NotifyIcon trayIcon;
@@ -494,6 +590,27 @@
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.ToolStripMenuItem killToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.MainMenu mainMenu1;
+        private System.Windows.Forms.MenuItem mnuFile;
+        private System.Windows.Forms.MenuItem mnuFileAdd;
+        private System.Windows.Forms.MenuItem mnuFileEdit;
+        private System.Windows.Forms.MenuItem mnuFileDelete;
+        private System.Windows.Forms.MenuItem mnuFileBar0;
+        private System.Windows.Forms.MenuItem mnuFileOptions;
+        private System.Windows.Forms.MenuItem mnuAction;
+        private System.Windows.Forms.MenuItem mnuActionStart;
+        private System.Windows.Forms.MenuItem mnuHelp;
+        private System.Windows.Forms.MenuItem mnuHelp86BoxOnline;
+        private System.Windows.Forms.MenuItem mnuHelpBar0;
+        private System.Windows.Forms.MenuItem mnuHelpAbout;
+        private System.Windows.Forms.MenuItem mnuFileBar1;
+        private System.Windows.Forms.MenuItem mnuFileExit;
+        private System.Windows.Forms.MenuItem mnuActionPause;
+        private System.Windows.Forms.MenuItem mnuActionReset;
+        private System.Windows.Forms.MenuItem mnuActionBar0;
+        private System.Windows.Forms.MenuItem mnuActionCAD;
+        private System.Windows.Forms.MenuItem mnuActionBar1;
+        private System.Windows.Forms.MenuItem mnuActionConfigure;
     }
 }
 

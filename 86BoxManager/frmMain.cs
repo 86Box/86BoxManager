@@ -109,9 +109,15 @@ namespace _86boxManager
                 btnStart.Enabled = false;
                 btnEdit.Enabled = false;
                 btnDelete.Enabled = false;
-                btnReset.Enabled = false;
-                btnCtrlAltDel.Enabled = false;
                 btnPause.Enabled = false;
+
+                mnuFileDelete.Enabled = false;
+                mnuFileEdit.Enabled = false;
+                mnuActionStart.Enabled = false;
+                mnuActionReset.Enabled = false;
+                mnuActionPause.Enabled = false;
+                mnuActionCAD.Enabled = false;
+                mnuActionConfigure.Enabled = false;
             }
             else
             {
@@ -123,13 +129,24 @@ namespace _86boxManager
                     btnStart.Enabled = true;
                     btnStart.Text = "Stop";
                     toolTip.SetToolTip(btnStart, "Stop this virtual machine");
+
+                    mnuActionStart.Enabled = true;
+                    mnuActionStart.Text = "Stop";
+
                     btnEdit.Enabled = false;
                     btnDelete.Enabled = false;
                     btnConfigure.Enabled = true;
                     btnPause.Enabled = true;
                     btnPause.Text = "Pause";
-                    btnReset.Enabled = true;
-                    btnCtrlAltDel.Enabled = true;
+
+                    mnuFileEdit.Enabled = false;
+                    mnuFileDelete.Enabled = false;
+                    mnuActionConfigure.Enabled = true;
+                    mnuActionPause.Enabled = true;
+                    mnuActionPause.Text = "Pause";
+
+                    mnuActionReset.Enabled = true;
+                    mnuActionCAD.Enabled = true;
                 }
                 else if (vm.Status == VM.STATUS_STOPPED)
                 {
@@ -141,8 +158,17 @@ namespace _86boxManager
                     btnConfigure.Enabled = true;
                     btnPause.Enabled = false;
                     btnPause.Text = "Pause";
-                    btnReset.Enabled = false;
-                    btnCtrlAltDel.Enabled = false;
+
+                    mnuActionStart.Enabled = true;
+                    mnuActionStart.Text = "Start";
+                    mnuFileEdit.Enabled = true;
+                    mnuFileDelete.Enabled = true;
+                    mnuActionConfigure.Enabled = true;
+                    mnuActionPause.Enabled = false;
+                    mnuActionPause.Text = "Pause";
+
+                    mnuActionReset.Enabled = false;
+                    mnuActionCAD.Enabled = false;
                 }
                 else if (vm.Status == VM.STATUS_PAUSED)
                 {
@@ -154,8 +180,17 @@ namespace _86boxManager
                     btnConfigure.Enabled = false;
                     btnPause.Enabled = true;
                     btnPause.Text = "Resume";
-                    btnReset.Enabled = true;
-                    btnCtrlAltDel.Enabled = true;
+
+                    mnuActionStart.Enabled = false;
+                    mnuActionStart.Text = "Stop";
+                    mnuFileEdit.Enabled = false;
+                    mnuFileDelete.Enabled = false;
+                    mnuActionConfigure.Enabled = false;
+                    mnuActionPause.Enabled = true;
+                    mnuActionPause.Text = "Resume";
+
+                    mnuActionReset.Enabled = true;
+                    mnuActionCAD.Enabled = true;
                 }
                 else if (vm.Status == VM.STATUS_IN_SETTINGS)
                 {
@@ -164,11 +199,20 @@ namespace _86boxManager
                     toolTip.SetToolTip(btnStart, "Stop this virtual machine");
                     btnEdit.Enabled = false;
                     btnDelete.Enabled = false;
-                    btnReset.Enabled = false;
-                    btnCtrlAltDel.Enabled = false;
                     btnPause.Enabled = false;
                     btnPause.Text = "Pause";
                     btnConfigure.Enabled = false;
+
+                    mnuActionStart.Enabled = false;
+                    mnuActionStart.Text = "Start";
+                    mnuFileEdit.Enabled = false;
+                    mnuFileDelete.Enabled = false;
+                    mnuActionPause.Enabled = false;
+                    mnuActionPause.Text = "Pause";
+                    mnuActionConfigure.Enabled = false;
+
+                    mnuActionReset.Enabled = false;
+                    mnuActionCAD.Enabled = false;
                 }
             }
         }
@@ -292,8 +336,17 @@ namespace _86boxManager
                         btnConfigure.Enabled = true;
                         btnPause.Enabled = false;
                         btnPause.Text = "Pause";
-                        btnCtrlAltDel.Enabled = false;
-                        btnReset.Enabled = false;
+
+                        mnuFileEdit.Enabled = true;
+                        mnuFileDelete.Enabled = true;
+                        mnuActionStart.Enabled = true;
+                        mnuActionStart.Text = "Start";
+                        mnuActionConfigure.Enabled = true;
+                        mnuActionPause.Enabled = false;
+                        mnuActionPause.Text = "Pause";
+
+                        mnuActionCAD.Enabled = false;
+                        mnuActionReset.Enabled = false;
                     }
                 }
             }
@@ -422,6 +475,7 @@ namespace _86boxManager
 
                 e.Cancel = false;
             }
+            Hide();
         }
 
         private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
@@ -449,6 +503,9 @@ namespace _86boxManager
             btnPause.Text = "Resume";
             btnStart.Enabled = false;
             btnConfigure.Enabled = false;
+            mnuActionPause.Text = "Resume";
+            mnuActionStart.Enabled = false;
+            mnuActionConfigure.Enabled = false;
             pauseToolStripMenuItem.ToolTipText = "Resume this virtual machine";
         }
 
@@ -464,6 +521,9 @@ namespace _86boxManager
             btnPause.Text = "Pause";
             btnStart.Enabled = true;
             btnConfigure.Enabled = true;
+            mnuActionPause.Text = "Pause";
+            mnuActionStart.Enabled = true;
+            mnuActionConfigure.Enabled = true;
             pauseToolStripMenuItem.ToolTipText = "Pause this virtual machine";
         }
 
@@ -518,9 +578,18 @@ namespace _86boxManager
                         btnDelete.Enabled = false;
                         btnPause.Enabled = true;
                         btnPause.Text = "Pause";
-                        btnReset.Enabled = true;
-                        btnCtrlAltDel.Enabled = true;
                         btnConfigure.Enabled = true;
+
+                        mnuActionStart.Enabled = true;
+                        mnuActionStart.Text = "Stop";
+                        mnuActionPause.Enabled = true;
+                        mnuActionPause.Text = "Pause";
+                        mnuActionConfigure.Enabled = true;
+                        mnuFileEdit.Enabled = false;
+                        mnuFileDelete.Enabled = false;
+
+                        mnuActionReset.Enabled = true;
+                        mnuActionCAD.Enabled = true;
                     }
                 }
             }
@@ -552,8 +621,15 @@ namespace _86boxManager
                     btnStart.Enabled = true;
                     btnConfigure.Enabled = true;
                     btnPause.Enabled = false;
-                    btnReset.Enabled = false;
-                    btnCtrlAltDel.Enabled = false;
+
+                    mnuFileEdit.Enabled = true;
+                    mnuFileDelete.Enabled = true;
+                    mnuActionStart.Enabled = true;
+                    mnuActionConfigure.Enabled = true;
+                    mnuActionPause.Enabled = false;
+
+                    mnuActionReset.Enabled = false;
+                    mnuActionCAD.Enabled = false;
                 }
                 else
                 {
@@ -562,8 +638,15 @@ namespace _86boxManager
                     btnStart.Enabled = false;
                     btnConfigure.Enabled = false;
                     btnPause.Enabled = false;
-                    btnReset.Enabled = false;
-                    btnCtrlAltDel.Enabled = false;
+
+                    mnuFileEdit.Enabled = false;
+                    mnuFileDelete.Enabled = false;
+                    mnuActionStart.Enabled = false;
+                    mnuActionConfigure.Enabled = false;
+                    mnuActionPause.Enabled = false;
+
+                    mnuActionReset.Enabled = false;
+                    mnuActionCAD.Enabled = false;
                 }
             }
         }
@@ -627,15 +710,24 @@ namespace _86boxManager
                     bgw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backgroundWorker_RunWorkerCompleted);
                     bgw.RunWorkerAsync(vm);
 
-                    btnStart.Enabled = false;
-                    btnStart.Text = "Start";
                     btnEdit.Enabled = false;
                     btnDelete.Enabled = false;
+                    btnStart.Enabled = false;
+                    btnStart.Text = "Start";
                     btnConfigure.Enabled = false;
-                    btnReset.Enabled = false;
                     btnPause.Enabled = false;
                     btnPause.Text = "Pause";
-                    btnCtrlAltDel.Enabled = false;
+
+                    mnuFileEdit.Enabled = false;
+                    mnuFileDelete.Enabled = false;
+                    mnuActionStart.Enabled = false;
+                    mnuActionStart.Text = "Start";
+                    mnuActionConfigure.Enabled = false;
+                    mnuActionPause.Enabled = false;
+                    mnuActionPause.Text = "Pause";
+
+                    mnuActionReset.Enabled = false;
+                    mnuActionCAD.Enabled = false;
                 }
                 catch (Exception ex)
                 {
@@ -937,16 +1029,26 @@ namespace _86boxManager
                             vm.Status = VM.STATUS_IN_SETTINGS;
                             lvi.SubItems[1].Text = vm.GetStatusString();
                             lvi.ImageIndex = 2;
+
+                            btnEdit.Enabled = false;
+                            btnDelete.Enabled = false;
                             btnStart.Enabled = false;
                             btnStart.Text = "Stop";
                             toolTip.SetToolTip(btnStart, "Stop this virtual machine");
-                            btnEdit.Enabled = false;
-                            btnDelete.Enabled = false;
                             btnConfigure.Enabled = false;
-                            btnReset.Enabled = false;
                             btnPause.Enabled = false;
                             btnPause.Text = "Pause";
-                            btnCtrlAltDel.Enabled = false;
+
+                            mnuFileEdit.Enabled = false;
+                            mnuFileDelete.Enabled = false;
+                            mnuActionStart.Enabled = false;
+                            mnuActionStart.Text = "Stop";
+                            mnuActionConfigure.Enabled = false;
+                            mnuActionPause.Enabled = false;
+                            mnuActionPause.Text = "Pause";
+
+                            mnuActionReset.Enabled = false;
+                            mnuActionCAD.Enabled = false;
                         }
                     }
                 }
@@ -960,6 +1062,7 @@ namespace _86boxManager
                             vm.Status = VM.STATUS_RUNNING;
                             lvi.SubItems[1].Text = vm.GetStatusString();
                             lvi.ImageIndex = 1;
+                            
                             btnEdit.Enabled = false;
                             btnDelete.Enabled = false;
                             btnStart.Enabled = true;
@@ -968,8 +1071,17 @@ namespace _86boxManager
                             btnConfigure.Enabled = true;
                             btnPause.Enabled = true;
                             btnPause.Text = "Pause";
-                            btnCtrlAltDel.Enabled = true;
-                            btnReset.Enabled = true;
+
+                            mnuFileEdit.Enabled = false;
+                            mnuFileDelete.Enabled = false;
+                            mnuActionStart.Enabled = true;
+                            mnuActionStart.Text = "Stop";
+                            mnuActionConfigure.Enabled = true;
+                            mnuActionPause.Enabled = true;
+                            mnuActionPause.Text = "Pause";
+
+                            mnuActionCAD.Enabled = true;
+                            mnuActionReset.Enabled = true;
                         }
                     }
                 }
@@ -1152,8 +1264,16 @@ namespace _86boxManager
 
                     btnConfigure.Enabled = true;
                     btnPause.Enabled = false;
-                    btnReset.Enabled = false;
-                    btnCtrlAltDel.Enabled = false;
+
+                    mnuFileEdit.Enabled = true;
+                    mnuFileDelete.Enabled = true;
+                    mnuActionStart.Enabled = true;
+
+                    mnuActionConfigure.Enabled = true;
+                    mnuActionPause.Enabled = false;
+
+                    mnuActionReset.Enabled = false;
+                    mnuActionCAD.Enabled = false;
                 }
                 else
                 {
@@ -1162,8 +1282,15 @@ namespace _86boxManager
                     btnStart.Enabled = false;
                     btnConfigure.Enabled = false;
                     btnPause.Enabled = false;
-                    btnReset.Enabled = false;
-                    btnCtrlAltDel.Enabled = false;
+
+                    mnuFileEdit.Enabled = false;
+                    mnuFileDelete.Enabled = false;
+                    mnuActionStart.Enabled = false;
+                    mnuActionConfigure.Enabled = false;
+                    mnuActionPause.Enabled = false;
+
+                    mnuActionReset.Enabled = false;
+                    mnuActionCAD.Enabled = false;
                 }
             }
         }
@@ -1190,9 +1317,114 @@ namespace _86boxManager
             lstVMs.ListViewItemSorter = new _86BoxManager.ListViewItemComparer(e.Column, lstVMs.Sorting);
         }
 
-        private void lstVMs_MouseClick(object sender, MouseEventArgs e)
+        private void mnuFileAdd_Click(object sender, EventArgs e)
         {
-           
+            dlgAddVM dlg = new dlgAddVM();
+            dlg.ShowDialog();
+        }
+
+        private void mnuFileEdit_Click(object sender, EventArgs e)
+        {
+            dlgEditVM dlg = new dlgEditVM();
+            dlg.ShowDialog();
+        }
+
+        private void mnuFileDelete_Click(object sender, EventArgs e)
+        {
+            VMRemove();
+        }
+
+        private void mnuFileOptions_Click(object sender, EventArgs e)
+        {
+            dlgSettings dlg = new dlgSettings();
+            dlg.ShowDialog();
+            LoadSettings(); //Reload the settings due to potential changes  
+        }
+
+        private void mnuFileExit_Click(object sender, EventArgs e)
+        {
+            List<ListViewItem> vms = new List<ListViewItem>();
+            foreach (ListViewItem item in lstVMs.Items)
+            {
+                VM vm = (VM)item.Tag;
+                if (vm.Status != VM.STATUS_STOPPED)
+                {
+                    vms.Add(item);
+                }
+            }
+
+            //If there are running VMs, display the warning and stop the VMs if user says so
+            if (vms.Count > 0)
+            {
+                DialogResult = MessageBox.Show("It appears some virtual machines are still running. It's recommended you stop them first before closing 86Box Manager. Do you want to stop them now?", "Virtual machines are still running", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+                if (DialogResult == DialogResult.Yes)
+                {
+                    foreach (ListViewItem lvi in vms)
+                    {
+                        lvi.Focused = true;
+                        VMStop();
+                    }
+                    Thread.Sleep(1000); //Wait just a bit to make sure everything goes as planned
+                }
+                else if (DialogResult == DialogResult.Cancel)
+                {
+                    return;
+                }
+                Application.Exit();
+            }
+            Application.Exit();
+        }
+
+        private void mnuActionStart_Click(object sender, EventArgs e)
+        {
+            VM vm = (VM)lstVMs.SelectedItems[0].Tag;
+            if (vm.Status == VM.STATUS_STOPPED)
+            {
+                VMStart();
+            }
+            else if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
+            {
+                VMStop();
+            }
+        }
+
+        private void mnuActionPause_Click(object sender, EventArgs e)
+        {
+            VM vm = (VM)lstVMs.SelectedItems[0].Tag;
+            if (vm.Status == VM.STATUS_PAUSED)
+            {
+                VMResume();
+            }
+            else if (vm.Status == VM.STATUS_RUNNING)
+            {
+                VMPause();
+            }
+        }
+
+        private void mnuActionReset_Click(object sender, EventArgs e)
+        {
+            VMHardReset();
+        }
+
+        private void mnuActionCAD_Click(object sender, EventArgs e)
+        {
+            VMCtrlAltDel();
+        }
+
+        private void mnuActionConfigure_Click(object sender, EventArgs e)
+        {
+            VMConfigure();
+        }
+
+        private void mnuHelp86BoxOnline_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://86box.github.io/");
+        }
+
+        private void mnuHelpAbout_Click(object sender, EventArgs e)
+        {
+            dlgAbout dlg = new dlgAbout();
+            dlg.ShowDialog();
         }
     }
 }
