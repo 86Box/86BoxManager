@@ -46,10 +46,10 @@
             // 
             this.lblTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lblTitle.Location = new System.Drawing.Point(122, 9);
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 15F, System.Drawing.FontStyle.Bold);
+            this.lblTitle.Location = new System.Drawing.Point(109, 9);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(165, 30);
+            this.lblTitle.Size = new System.Drawing.Size(154, 28);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "86Box Manager";
             // 
@@ -58,9 +58,11 @@
             this.btnOK.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnOK.Location = new System.Drawing.Point(148, 12);
+            this.btnOK.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.btnOK.Location = new System.Drawing.Point(135, 11);
+            this.btnOK.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(75, 30);
+            this.btnOK.Size = new System.Drawing.Size(65, 30);
             this.btnOK.TabIndex = 1;
             this.btnOK.Text = "Close";
             this.btnOK.UseVisualStyleBackColor = true;
@@ -69,27 +71,30 @@
             // lblDesc
             // 
             this.lblDesc.AutoSize = true;
-            this.lblDesc.Location = new System.Drawing.Point(12, 50);
+            this.lblDesc.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.lblDesc.Location = new System.Drawing.Point(12, 52);
             this.lblDesc.Name = "lblDesc";
-            this.lblDesc.Size = new System.Drawing.Size(347, 21);
+            this.lblDesc.Size = new System.Drawing.Size(307, 19);
             this.lblDesc.TabIndex = 2;
             this.lblDesc.Text = "A configuration manager for the 86Box emulator";
             // 
             // lblVersion
             // 
             this.lblVersion.AutoSize = true;
-            this.lblVersion.Location = new System.Drawing.Point(12, 78);
+            this.lblVersion.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.lblVersion.Location = new System.Drawing.Point(12, 80);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(65, 21);
+            this.lblVersion.Size = new System.Drawing.Size(57, 19);
             this.lblVersion.TabIndex = 3;
             this.lblVersion.Text = "Version:";
             // 
             // lnkGithub
             // 
             this.lnkGithub.AutoSize = true;
-            this.lnkGithub.Location = new System.Drawing.Point(12, 201);
+            this.lnkGithub.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.lnkGithub.Location = new System.Drawing.Point(12, 217);
             this.lnkGithub.Name = "lnkGithub";
-            this.lnkGithub.Size = new System.Drawing.Size(298, 21);
+            this.lnkGithub.Size = new System.Drawing.Size(264, 19);
             this.lnkGithub.TabIndex = 5;
             this.lnkGithub.TabStop = true;
             this.lnkGithub.Text = "https://github.com/86Box/86BoxManager";
@@ -98,19 +103,21 @@
             // lblCopyright
             // 
             this.lblCopyright.AutoSize = true;
+            this.lblCopyright.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblCopyright.Location = new System.Drawing.Point(12, 108);
             this.lblCopyright.Name = "lblCopyright";
-            this.lblCopyright.Size = new System.Drawing.Size(303, 63);
+            this.lblCopyright.Size = new System.Drawing.Size(297, 76);
             this.lblCopyright.TabIndex = 6;
-            this.lblCopyright.Text = "Copyright © 2018 David Simunič\r\nLicensed under the MIT license. \r\nSee the LICENSE" +
-    " file for more information.";
+            this.lblCopyright.Text = "Copyright © 2018-2019 David Simunič\r\nLicensed under the MIT license. \r\nSee the LI" +
+    "CENSE file for license information and\r\nAUTHORS for a list of contributors.";
             // 
             // lnkGithub2
             // 
             this.lnkGithub2.AutoSize = true;
-            this.lnkGithub2.Location = new System.Drawing.Point(12, 180);
+            this.lnkGithub2.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.lnkGithub2.Location = new System.Drawing.Point(12, 194);
             this.lnkGithub2.Name = "lnkGithub2";
-            this.lnkGithub2.Size = new System.Drawing.Size(236, 21);
+            this.lnkGithub2.Size = new System.Drawing.Size(209, 19);
             this.lnkGithub2.TabIndex = 7;
             this.lnkGithub2.TabStop = true;
             this.lnkGithub2.Text = "https://github.com/86Box/86Box";
@@ -119,16 +126,18 @@
             // lblVersion1
             // 
             this.lblVersion1.AutoSize = true;
-            this.lblVersion1.Location = new System.Drawing.Point(72, 78);
+            this.lblVersion1.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.lblVersion1.Location = new System.Drawing.Point(65, 80);
             this.lblVersion1.Name = "lblVersion1";
-            this.lblVersion1.Size = new System.Drawing.Size(155, 21);
+            this.lblVersion1.Size = new System.Drawing.Size(137, 19);
             this.lblVersion1.TabIndex = 8;
             this.lblVersion1.Text = "<version goes here>";
             // 
             // imgLogo
             // 
             this.imgLogo.Image = global::_86BoxManager.Properties.Resources._86Box;
-            this.imgLogo.Location = new System.Drawing.Point(84, 9);
+            this.imgLogo.Location = new System.Drawing.Point(71, 9);
+            this.imgLogo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.imgLogo.Name = "imgLogo";
             this.imgLogo.Size = new System.Drawing.Size(32, 32);
             this.imgLogo.TabIndex = 9;
@@ -139,9 +148,10 @@
             this.pnlBottom.BackColor = System.Drawing.SystemColors.Control;
             this.pnlBottom.Controls.Add(this.btnOK);
             this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlBottom.Location = new System.Drawing.Point(0, 237);
+            this.pnlBottom.Location = new System.Drawing.Point(0, 249);
+            this.pnlBottom.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pnlBottom.Name = "pnlBottom";
-            this.pnlBottom.Size = new System.Drawing.Size(371, 54);
+            this.pnlBottom.Size = new System.Drawing.Size(334, 52);
             this.pnlBottom.TabIndex = 15;
             // 
             // dlgAbout
@@ -151,13 +161,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnOK;
-            this.ClientSize = new System.Drawing.Size(371, 291);
+            this.ClientSize = new System.Drawing.Size(334, 301);
             this.Controls.Add(this.pnlBottom);
+            this.Controls.Add(this.lnkGithub);
             this.Controls.Add(this.imgLogo);
             this.Controls.Add(this.lblVersion1);
             this.Controls.Add(this.lnkGithub2);
             this.Controls.Add(this.lblCopyright);
-            this.Controls.Add(this.lnkGithub);
             this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.lblDesc);
             this.Controls.Add(this.lblTitle);

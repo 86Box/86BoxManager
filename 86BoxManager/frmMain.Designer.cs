@@ -75,9 +75,9 @@
             this.btnEdit.Enabled = false;
             this.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnEdit.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnEdit.Location = new System.Drawing.Point(63, 12);
+            this.btnEdit.Location = new System.Drawing.Point(58, 12);
             this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(51, 30);
+            this.btnEdit.Size = new System.Drawing.Size(45, 30);
             this.btnEdit.TabIndex = 1;
             this.btnEdit.Text = "Edit";
             this.toolTip.SetToolTip(this.btnEdit, "Edit the properties of this virtual machine");
@@ -89,9 +89,9 @@
             this.btnDelete.Enabled = false;
             this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnDelete.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnDelete.Location = new System.Drawing.Point(120, 12);
+            this.btnDelete.Location = new System.Drawing.Point(109, 12);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(70, 30);
+            this.btnDelete.Size = new System.Drawing.Size(60, 30);
             this.btnDelete.TabIndex = 2;
             this.btnDelete.Text = "Remove";
             this.toolTip.SetToolTip(this.btnDelete, "Remove this virtual machine");
@@ -103,9 +103,9 @@
             this.btnStart.Enabled = false;
             this.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnStart.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnStart.Location = new System.Drawing.Point(206, 12);
+            this.btnStart.Location = new System.Drawing.Point(197, 12);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(51, 30);
+            this.btnStart.Size = new System.Drawing.Size(45, 30);
             this.btnStart.TabIndex = 3;
             this.btnStart.Text = "Start";
             this.toolTip.SetToolTip(this.btnStart, "Start this virtual machine");
@@ -114,11 +114,12 @@
             // 
             // btnSettings
             // 
+            this.btnSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSettings.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnSettings.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnSettings.Location = new System.Drawing.Point(568, 12);
+            this.btnSettings.Location = new System.Drawing.Point(551, 12);
             this.btnSettings.Name = "btnSettings";
-            this.btnSettings.Size = new System.Drawing.Size(67, 30);
+            this.btnSettings.Size = new System.Drawing.Size(65, 30);
             this.btnSettings.TabIndex = 8;
             this.btnSettings.Text = "Settings";
             this.toolTip.SetToolTip(this.btnSettings, "Open 86Box Manager settings");
@@ -127,11 +128,12 @@
             // 
             // btnAbout
             // 
+            this.btnAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAbout.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnAbout.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnAbout.Location = new System.Drawing.Point(641, 12);
+            this.btnAbout.Location = new System.Drawing.Point(622, 12);
             this.btnAbout.Name = "btnAbout";
-            this.btnAbout.Size = new System.Drawing.Size(61, 30);
+            this.btnAbout.Size = new System.Drawing.Size(50, 30);
             this.btnAbout.TabIndex = 9;
             this.btnAbout.Text = "About";
             this.toolTip.SetToolTip(this.btnAbout, "Open the About 86Box Manager dialog");
@@ -149,15 +151,16 @@
             this.clmStatus,
             this.clmPath});
             this.lstVMs.ContextMenuStrip = this.cmsVM;
+            this.lstVMs.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lstVMs.FullRowSelect = true;
             this.lstVMs.GridLines = true;
             this.lstVMs.HideSelection = false;
-            this.lstVMs.Location = new System.Drawing.Point(12, 53);
+            this.lstVMs.Location = new System.Drawing.Point(12, 52);
             this.lstVMs.MultiSelect = false;
             this.lstVMs.Name = "lstVMs";
             this.lstVMs.ShowGroups = false;
             this.lstVMs.ShowItemToolTips = true;
-            this.lstVMs.Size = new System.Drawing.Size(690, 396);
+            this.lstVMs.Size = new System.Drawing.Size(660, 397);
             this.lstVMs.SmallImageList = this.img86box;
             this.lstVMs.TabIndex = 10;
             this.lstVMs.UseCompatibleStateImageBehavior = false;
@@ -307,7 +310,7 @@
             this.btnAdd.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.btnAdd.Location = new System.Drawing.Point(12, 12);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(45, 30);
+            this.btnAdd.Size = new System.Drawing.Size(40, 30);
             this.btnAdd.TabIndex = 0;
             this.btnAdd.Text = "Add";
             this.toolTip.SetToolTip(this.btnAdd, "Add a new virtual machine");
@@ -319,9 +322,9 @@
             this.btnConfigure.Enabled = false;
             this.btnConfigure.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnConfigure.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnConfigure.Location = new System.Drawing.Point(263, 12);
+            this.btnConfigure.Location = new System.Drawing.Point(248, 12);
             this.btnConfigure.Name = "btnConfigure";
-            this.btnConfigure.Size = new System.Drawing.Size(81, 30);
+            this.btnConfigure.Size = new System.Drawing.Size(70, 30);
             this.btnConfigure.TabIndex = 4;
             this.btnConfigure.Text = "Configure";
             this.toolTip.SetToolTip(this.btnConfigure, "Open settings for this virtual machine");
@@ -339,9 +342,9 @@
             this.btnPause.Enabled = false;
             this.btnPause.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnPause.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnPause.Location = new System.Drawing.Point(350, 12);
+            this.btnPause.Location = new System.Drawing.Point(324, 12);
             this.btnPause.Name = "btnPause";
-            this.btnPause.Size = new System.Drawing.Size(65, 30);
+            this.btnPause.Size = new System.Drawing.Size(55, 30);
             this.btnPause.TabIndex = 5;
             this.btnPause.Text = "Pause";
             this.toolTip.SetToolTip(this.btnPause, "Pause this virtual machine");
@@ -353,9 +356,9 @@
             this.btnCtrlAltDel.Enabled = false;
             this.btnCtrlAltDel.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnCtrlAltDel.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnCtrlAltDel.Location = new System.Drawing.Point(421, 12);
+            this.btnCtrlAltDel.Location = new System.Drawing.Point(385, 12);
             this.btnCtrlAltDel.Name = "btnCtrlAltDel";
-            this.btnCtrlAltDel.Size = new System.Drawing.Size(65, 30);
+            this.btnCtrlAltDel.Size = new System.Drawing.Size(60, 30);
             this.btnCtrlAltDel.TabIndex = 6;
             this.btnCtrlAltDel.Text = "C+A+D";
             this.toolTip.SetToolTip(this.btnCtrlAltDel, "Send the CTRL+ALT+DEL keystroke to this virtual machine");
@@ -367,9 +370,9 @@
             this.btnReset.Enabled = false;
             this.btnReset.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnReset.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnReset.Location = new System.Drawing.Point(492, 12);
+            this.btnReset.Location = new System.Drawing.Point(451, 12);
             this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(53, 30);
+            this.btnReset.Size = new System.Drawing.Size(50, 30);
             this.btnReset.TabIndex = 7;
             this.btnReset.Text = "Reset";
             this.toolTip.SetToolTip(this.btnReset, "Reset this virtual machine by simulating a power cycle");
@@ -425,10 +428,10 @@
             // 
             // frmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(714, 461);
+            this.ClientSize = new System.Drawing.Size(684, 461);
             this.Controls.Add(this.btnReset);
             this.Controls.Add(this.btnCtrlAltDel);
             this.Controls.Add(this.btnPause);
@@ -440,11 +443,10 @@
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnEdit);
-            this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.MaximizeBox = false;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MinimumSize = new System.Drawing.Size(700, 500);
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "86Box Manager";

@@ -50,9 +50,10 @@
             // 
             this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnApply.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnApply.Location = new System.Drawing.Point(567, 12);
+            this.btnApply.Location = new System.Drawing.Point(558, 11);
+            this.btnApply.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnApply.Name = "btnApply";
-            this.btnApply.Size = new System.Drawing.Size(75, 30);
+            this.btnApply.Size = new System.Drawing.Size(65, 30);
             this.btnApply.TabIndex = 11;
             this.btnApply.Text = "Apply";
             this.btnApply.UseVisualStyleBackColor = true;
@@ -63,9 +64,10 @@
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnCancel.Location = new System.Drawing.Point(486, 12);
+            this.btnCancel.Location = new System.Drawing.Point(489, 11);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 30);
+            this.btnCancel.Size = new System.Drawing.Size(65, 30);
             this.btnCancel.TabIndex = 10;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -76,9 +78,10 @@
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.Enabled = false;
             this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnOK.Location = new System.Drawing.Point(405, 12);
+            this.btnOK.Location = new System.Drawing.Point(420, 11);
+            this.btnOK.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(75, 30);
+            this.btnOK.Size = new System.Drawing.Size(65, 30);
             this.btnOK.TabIndex = 9;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
@@ -87,43 +90,49 @@
             // lblEXEdir
             // 
             this.lblEXEdir.AutoSize = true;
-            this.lblEXEdir.Location = new System.Drawing.Point(12, 15);
+            this.lblEXEdir.Location = new System.Drawing.Point(11, 18);
+            this.lblEXEdir.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblEXEdir.Name = "lblEXEdir";
-            this.lblEXEdir.Size = new System.Drawing.Size(91, 21);
+            this.lblEXEdir.Size = new System.Drawing.Size(82, 19);
             this.lblEXEdir.TabIndex = 3;
             this.lblEXEdir.Text = "86Box path:";
             // 
             // lblCFGdir
             // 
             this.lblCFGdir.AutoSize = true;
-            this.lblCFGdir.Location = new System.Drawing.Point(12, 51);
+            this.lblCFGdir.Location = new System.Drawing.Point(11, 52);
+            this.lblCFGdir.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblCFGdir.Name = "lblCFGdir";
-            this.lblCFGdir.Size = new System.Drawing.Size(94, 21);
+            this.lblCFGdir.Size = new System.Drawing.Size(84, 19);
             this.lblCFGdir.TabIndex = 4;
             this.lblCFGdir.Text = "Config path:";
             // 
             // txtEXEdir
             // 
-            this.txtEXEdir.Location = new System.Drawing.Point(112, 12);
+            this.txtEXEdir.Location = new System.Drawing.Point(99, 48);
+            this.txtEXEdir.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtEXEdir.Name = "txtEXEdir";
-            this.txtEXEdir.Size = new System.Drawing.Size(439, 29);
+            this.txtEXEdir.Size = new System.Drawing.Size(450, 25);
             this.txtEXEdir.TabIndex = 0;
             this.txtEXEdir.TextChanged += new System.EventHandler(this.txt_TextChanged);
             // 
             // txtCFGdir
             // 
-            this.txtCFGdir.Location = new System.Drawing.Point(112, 48);
+            this.txtCFGdir.Location = new System.Drawing.Point(99, 14);
+            this.txtCFGdir.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtCFGdir.Name = "txtCFGdir";
-            this.txtCFGdir.Size = new System.Drawing.Size(439, 29);
+            this.txtCFGdir.Size = new System.Drawing.Size(450, 25);
             this.txtCFGdir.TabIndex = 2;
             this.txtCFGdir.TextChanged += new System.EventHandler(this.txt_TextChanged);
             // 
             // btnBrowse1
             // 
             this.btnBrowse1.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnBrowse1.Location = new System.Drawing.Point(557, 12);
+            this.btnBrowse1.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.btnBrowse1.Location = new System.Drawing.Point(553, 11);
+            this.btnBrowse1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBrowse1.Name = "btnBrowse1";
-            this.btnBrowse1.Size = new System.Drawing.Size(85, 30);
+            this.btnBrowse1.Size = new System.Drawing.Size(70, 30);
             this.btnBrowse1.TabIndex = 1;
             this.btnBrowse1.Text = "Browse...";
             this.btnBrowse1.UseVisualStyleBackColor = true;
@@ -132,9 +141,10 @@
             // btnBrowse2
             // 
             this.btnBrowse2.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnBrowse2.Location = new System.Drawing.Point(557, 48);
+            this.btnBrowse2.Location = new System.Drawing.Point(553, 45);
+            this.btnBrowse2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBrowse2.Name = "btnBrowse2";
-            this.btnBrowse2.Size = new System.Drawing.Size(85, 30);
+            this.btnBrowse2.Size = new System.Drawing.Size(70, 30);
             this.btnBrowse2.TabIndex = 3;
             this.btnBrowse2.Text = "Browse...";
             this.btnBrowse2.UseVisualStyleBackColor = true;
@@ -144,9 +154,10 @@
             // 
             this.cbxMinimize.AutoSize = true;
             this.cbxMinimize.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cbxMinimize.Location = new System.Drawing.Point(16, 94);
+            this.cbxMinimize.Location = new System.Drawing.Point(15, 85);
+            this.cbxMinimize.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cbxMinimize.Name = "cbxMinimize";
-            this.cbxMinimize.Size = new System.Drawing.Size(361, 26);
+            this.cbxMinimize.Size = new System.Drawing.Size(324, 24);
             this.cbxMinimize.TabIndex = 4;
             this.cbxMinimize.Text = "Minimize 86Box Manager when a VM is started";
             this.cbxMinimize.UseVisualStyleBackColor = true;
@@ -156,9 +167,10 @@
             // 
             this.cbxShowConsole.AutoSize = true;
             this.cbxShowConsole.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cbxShowConsole.Location = new System.Drawing.Point(377, 94);
+            this.cbxShowConsole.Location = new System.Drawing.Point(343, 85);
+            this.cbxShowConsole.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cbxShowConsole.Name = "cbxShowConsole";
-            this.cbxShowConsole.Size = new System.Drawing.Size(275, 26);
+            this.cbxShowConsole.Size = new System.Drawing.Size(245, 24);
             this.cbxShowConsole.TabIndex = 5;
             this.cbxShowConsole.Text = "Show the console window for VMs";
             this.cbxShowConsole.UseVisualStyleBackColor = true;
@@ -168,9 +180,10 @@
             // 
             this.btnDefaults.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnDefaults.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnDefaults.Location = new System.Drawing.Point(12, 12);
+            this.btnDefaults.Location = new System.Drawing.Point(15, 11);
+            this.btnDefaults.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnDefaults.Name = "btnDefaults";
-            this.btnDefaults.Size = new System.Drawing.Size(75, 30);
+            this.btnDefaults.Size = new System.Drawing.Size(65, 30);
             this.btnDefaults.TabIndex = 8;
             this.btnDefaults.Text = "Defaults";
             this.btnDefaults.UseVisualStyleBackColor = true;
@@ -180,9 +193,10 @@
             // 
             this.cbxMinimizeTray.AutoSize = true;
             this.cbxMinimizeTray.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cbxMinimizeTray.Location = new System.Drawing.Point(16, 125);
+            this.cbxMinimizeTray.Location = new System.Drawing.Point(15, 113);
+            this.cbxMinimizeTray.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cbxMinimizeTray.Name = "cbxMinimizeTray";
-            this.cbxMinimizeTray.Size = new System.Drawing.Size(294, 26);
+            this.cbxMinimizeTray.Size = new System.Drawing.Size(264, 24);
             this.cbxMinimizeTray.TabIndex = 6;
             this.cbxMinimizeTray.Text = "Minimize 86Box Manager to tray icon";
             this.cbxMinimizeTray.UseVisualStyleBackColor = true;
@@ -192,9 +206,10 @@
             // 
             this.cbxCloseTray.AutoSize = true;
             this.cbxCloseTray.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cbxCloseTray.Location = new System.Drawing.Point(377, 125);
+            this.cbxCloseTray.Location = new System.Drawing.Point(343, 113);
+            this.cbxCloseTray.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cbxCloseTray.Name = "cbxCloseTray";
-            this.cbxCloseTray.Size = new System.Drawing.Size(268, 26);
+            this.cbxCloseTray.Size = new System.Drawing.Size(242, 24);
             this.cbxCloseTray.TabIndex = 7;
             this.cbxCloseTray.Text = "Close 86Box Manager to tray icon";
             this.cbxCloseTray.UseVisualStyleBackColor = true;
@@ -208,19 +223,20 @@
             this.pnlBottom.Controls.Add(this.btnCancel);
             this.pnlBottom.Controls.Add(this.btnOK);
             this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlBottom.Location = new System.Drawing.Point(0, 167);
+            this.pnlBottom.Location = new System.Drawing.Point(0, 150);
+            this.pnlBottom.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pnlBottom.Name = "pnlBottom";
-            this.pnlBottom.Size = new System.Drawing.Size(654, 54);
+            this.pnlBottom.Size = new System.Drawing.Size(634, 52);
             this.pnlBottom.TabIndex = 14;
             // 
             // dlgSettings
             // 
             this.AcceptButton = this.btnOK;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(654, 221);
+            this.ClientSize = new System.Drawing.Size(634, 202);
             this.Controls.Add(this.pnlBottom);
             this.Controls.Add(this.cbxCloseTray);
             this.Controls.Add(this.cbxMinimizeTray);
@@ -232,9 +248,8 @@
             this.Controls.Add(this.txtEXEdir);
             this.Controls.Add(this.lblCFGdir);
             this.Controls.Add(this.lblEXEdir);
-            this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "dlgSettings";
