@@ -1,7 +1,7 @@
 # 86Box Manager
 **86Box Manager** is the official (though optional) configuration manager for the [86Box emulator](https://github.com/86Box/86Box). It's released under the MIT license, so it can be freely distributed with 86Box. See the `LICENSE` file for more information.
 
-It's written in C# with Windows Forms using Visual Studio 2017.
+It's written in C# with Windows Forms using Visual Studio 2017. Please see the [wiki](https://github.com/86Box/86BoxManager/wiki) for additional information.
 
 ## Features
 * Powerful, lightweight and completely optional
@@ -23,8 +23,6 @@ Same as for 86Box. Additionally, the following is required:
 2. Run 86Manager.exe
 3. Choose the folder where 86Box.exe is located (along with the roms folder) and a folder where your virtual machines will be located (for configs, nvr folders, etc.)
 4. Start creating new virtual machines and enjoy
-
-Please see the wiki section for additional information for end users.
 
 ## How to build
 
