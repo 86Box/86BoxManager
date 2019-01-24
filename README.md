@@ -19,7 +19,7 @@ Same as for 86Box. Additionally, the following is required:
 
 ## How to use
 
-1. Download the desired build
+1. Download the desired build [here](https://github.com/86Box/86BoxManager/releases)
 2. Run 86Manager.exe
 3. Choose the folder where 86Box.exe is located (along with the roms folder) and a folder where your virtual machines will be located (for configs, nvr folders, etc.)
 4. Start creating new virtual machines and enjoy
