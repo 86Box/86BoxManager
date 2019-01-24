@@ -20,20 +20,20 @@ Same as for 86Box. Additionally, the following is required:
 ## How to use
 
 1. Download the desired build [here](https://github.com/86Box/86BoxManager/releases)
-2. Run 86Manager.exe
-3. Choose the folder where 86Box.exe is located (along with the roms folder) and a folder where your virtual machines will be located (for configs, nvr folders, etc.)
+2. Run `86Manager.exe`
+3. Choose the folder where `86Box.exe` is located (along with the roms folder) and a folder where your virtual machines will be located (for configs, nvr folders, etc.)
 4. Start creating new virtual machines and enjoy
 
 ## How to build
 
 1. Clone the repo
-2. Open 86BoxManager.sln solution file in Visual Studio 2017
+2. Open `86BoxManager.sln` solution file in Visual Studio 2017
 3. Make your changes
-4. Choose the "Release" configuration and "x86" platform/CPU
-5. Build solution
-6. 86Manager.exe is now in Bin\x86\Release\
+4. Choose the `Release` configuration and `x86` platform/CPU
+5. Build the solution
+6. `86Manager.exe` is now in `Bin\x86\Release\`
 
 Please see the wiki section for additional information for contributors.
 
 ## Support
-If you have any issues, questions, suggestions, etc., please open an issue here on GitHub or visit the official 86Box support channels on IRC and Discord (see the main 86Box repo for links). Lead developer, daviunic, is often idling there under the name Overdoze.
+If you have any issues, questions, suggestions, etc., please follow the [troubleshooting steps](https://github.com/86Box/86BoxManager/wiki/Troubleshooting-steps) or visit the official 86Box support channels on IRC and Discord (see the main 86Box repo for links). Lead developer, daviunic, is often idling there under the name Overdoze.
