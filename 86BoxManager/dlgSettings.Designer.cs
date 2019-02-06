@@ -33,8 +33,8 @@
             this.btnOK = new System.Windows.Forms.Button();
             this.lblEXEdir = new System.Windows.Forms.Label();
             this.lblCFGdir = new System.Windows.Forms.Label();
-            this.txtEXEdir = new System.Windows.Forms.TextBox();
             this.txtCFGdir = new System.Windows.Forms.TextBox();
+            this.txtEXEdir = new System.Windows.Forms.TextBox();
             this.btnBrowse1 = new System.Windows.Forms.Button();
             this.btnBrowse2 = new System.Windows.Forms.Button();
             this.cbxMinimize = new System.Windows.Forms.CheckBox();
@@ -49,6 +49,7 @@
             // btnApply
             // 
             this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnApply.Enabled = false;
             this.btnApply.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnApply.Location = new System.Drawing.Point(558, 11);
             this.btnApply.Margin = new System.Windows.Forms.Padding(2);
@@ -107,23 +108,23 @@
             this.lblCFGdir.TabIndex = 4;
             this.lblCFGdir.Text = "VM path:";
             // 
-            // txtEXEdir
-            // 
-            this.txtEXEdir.Location = new System.Drawing.Point(99, 48);
-            this.txtEXEdir.Margin = new System.Windows.Forms.Padding(2);
-            this.txtEXEdir.Name = "txtEXEdir";
-            this.txtEXEdir.Size = new System.Drawing.Size(450, 25);
-            this.txtEXEdir.TabIndex = 0;
-            this.txtEXEdir.TextChanged += new System.EventHandler(this.txt_TextChanged);
-            // 
             // txtCFGdir
             // 
-            this.txtCFGdir.Location = new System.Drawing.Point(99, 14);
+            this.txtCFGdir.Location = new System.Drawing.Point(99, 48);
             this.txtCFGdir.Margin = new System.Windows.Forms.Padding(2);
             this.txtCFGdir.Name = "txtCFGdir";
             this.txtCFGdir.Size = new System.Drawing.Size(450, 25);
-            this.txtCFGdir.TabIndex = 2;
+            this.txtCFGdir.TabIndex = 0;
             this.txtCFGdir.TextChanged += new System.EventHandler(this.txt_TextChanged);
+            // 
+            // txtEXEdir
+            // 
+            this.txtEXEdir.Location = new System.Drawing.Point(99, 14);
+            this.txtEXEdir.Margin = new System.Windows.Forms.Padding(2);
+            this.txtEXEdir.Name = "txtEXEdir";
+            this.txtEXEdir.Size = new System.Drawing.Size(450, 25);
+            this.txtEXEdir.TabIndex = 2;
+            this.txtEXEdir.TextChanged += new System.EventHandler(this.txt_TextChanged);
             // 
             // btnBrowse1
             // 
@@ -244,8 +245,8 @@
             this.Controls.Add(this.cbxMinimize);
             this.Controls.Add(this.btnBrowse2);
             this.Controls.Add(this.btnBrowse1);
-            this.Controls.Add(this.txtCFGdir);
             this.Controls.Add(this.txtEXEdir);
+            this.Controls.Add(this.txtCFGdir);
             this.Controls.Add(this.lblCFGdir);
             this.Controls.Add(this.lblEXEdir);
             this.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -272,8 +273,8 @@
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Label lblEXEdir;
         private System.Windows.Forms.Label lblCFGdir;
-        private System.Windows.Forms.TextBox txtEXEdir;
         private System.Windows.Forms.TextBox txtCFGdir;
+        private System.Windows.Forms.TextBox txtEXEdir;
         private System.Windows.Forms.Button btnBrowse1;
         private System.Windows.Forms.Button btnBrowse2;
         private System.Windows.Forms.CheckBox cbxMinimize;

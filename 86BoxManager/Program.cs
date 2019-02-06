@@ -48,10 +48,9 @@ namespace _86boxManager
         static void Main()
         {
             const string name = "86Box Manager";
-            bool firstInstance;
 
             //Use a mutex to check if this is the first instance of Manager
-            mutex = new Mutex(true, name, out firstInstance);
+            mutex = new Mutex(true, name, out bool firstInstance);
 
             //If it's not, we need to restore and focus the existing window, as well as pass on any potential command line arguments
             if (!firstInstance)
