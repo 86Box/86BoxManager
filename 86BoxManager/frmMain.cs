@@ -10,7 +10,6 @@ using IWshRuntimeLibrary;
 using System.Collections.Generic;
 using System.Threading;
 using _86BoxManager;
-//using _86BoxManager;
 
 namespace _86boxManager
 {
@@ -25,11 +24,11 @@ namespace _86boxManager
         public static extern int PostMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam); //Sends a message to the window of hWnd
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct CopyDataStruct
+        public struct COPYDATASTRUCT
         {
-            public string ID;
-            public int Length;
-            public string Data;
+            public IntPtr dwData;
+            public int cbData;
+            public IntPtr lpData;
         }
 
         private static RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true); //Registry key for accessing the settings and VM list
@@ -59,6 +58,7 @@ namespace _86boxManager
             //Check if command line arguments for starting a VM are OK
             if (Program.args.Length == 3 && Program.args[1] == "-S" && Program.args[2] != null)
             {
+                Console.WriteLine(Program.args[2]);
                 //Find the VM with given name
                 ListViewItem lvi = lstVMs.FindItemWithText(Program.args[2], false, 0, false);
 
@@ -66,6 +66,7 @@ namespace _86boxManager
                 if (lvi != null)
                 {
                     lvi.Focused = true;
+                    lvi.Selected = true;
                     VMStart();
                 }
                 else
@@ -576,37 +577,44 @@ namespace _86boxManager
         private void VMStop()
         {
             VM vm = (VM)lstVMs.SelectedItems[0].Tag;
-            if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
+            try
             {
-                PostMessage(vm.hWnd, 0x8893, IntPtr.Zero, IntPtr.Zero);
-                vm.Status = VM.STATUS_STOPPED;
-                vm.hWnd = IntPtr.Zero;
-                lstVMs.SelectedItems[0].SubItems[1].Text = vm.GetStatusString();
-                lstVMs.SelectedItems[0].ImageIndex = 0;
+                if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
+                {
+                    PostMessage(vm.hWnd, 0x8893, IntPtr.Zero, IntPtr.Zero);
+                    vm.Status = VM.STATUS_STOPPED;
+                    vm.hWnd = IntPtr.Zero;
+                    lstVMs.SelectedItems[0].SubItems[1].Text = vm.GetStatusString();
+                    lstVMs.SelectedItems[0].ImageIndex = 0;
 
-                btnStart.Text = "Start";
-                toolTip.SetToolTip(btnStart, "Start this virtual machine");
-                btnPause.Text = "Pause";
-                if (lstVMs.SelectedItems.Count > 0)
-                {
-                    btnEdit.Enabled = true;
-                    btnDelete.Enabled = true;
-                    btnStart.Enabled = true;
-                    btnConfigure.Enabled = true;
-                    btnPause.Enabled = false;
-                    btnReset.Enabled = false;
-                    btnCtrlAltDel.Enabled = false;
+                    btnStart.Text = "Start";
+                    toolTip.SetToolTip(btnStart, "Start this virtual machine");
+                    btnPause.Text = "Pause";
+                    if (lstVMs.SelectedItems.Count > 0)
+                    {
+                        btnEdit.Enabled = true;
+                        btnDelete.Enabled = true;
+                        btnStart.Enabled = true;
+                        btnConfigure.Enabled = true;
+                        btnPause.Enabled = false;
+                        btnReset.Enabled = false;
+                        btnCtrlAltDel.Enabled = false;
+                    }
+                    else
+                    {
+                        btnEdit.Enabled = false;
+                        btnDelete.Enabled = false;
+                        btnStart.Enabled = false;
+                        btnConfigure.Enabled = false;
+                        btnPause.Enabled = false;
+                        btnReset.Enabled = false;
+                        btnCtrlAltDel.Enabled = false;
+                    }
                 }
-                else
-                {
-                    btnEdit.Enabled = false;
-                    btnDelete.Enabled = false;
-                    btnStart.Enabled = false;
-                    btnConfigure.Enabled = false;
-                    btnPause.Enabled = false;
-                    btnReset.Enabled = false;
-                    btnCtrlAltDel.Enabled = false;
-                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("An error occurred trying to stop the selected virtual machine.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1022,8 +1030,9 @@ namespace _86boxManager
             if (m.Msg == 0x004A)
             {
                 //Get the VM name and find the associated LVI and VM object
-                CopyDataStruct ds = (CopyDataStruct)m.GetLParam(typeof(CopyDataStruct));
-                ListViewItem lvi = lstVMs.FindItemWithText(ds.Data);
+                COPYDATASTRUCT ds = (COPYDATASTRUCT)m.GetLParam(typeof(COPYDATASTRUCT));
+                string vmName = Marshal.PtrToStringAnsi(ds.lpData, ds.cbData);
+                ListViewItem lvi = lstVMs.FindItemWithText(vmName);
 
                 //This check is necessary in case the specified VM was already removed but the shortcut remains
                 if (lvi != null)
@@ -1033,7 +1042,7 @@ namespace _86boxManager
                     //If the VM is already running, display an error, otherwise, start it
                     if (vm.Status != VM.STATUS_STOPPED)
                     {
-                        MessageBox.Show("The virtual machine \"" + ds.Data + "\" is already running.", "Virtual machine already running", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("The virtual machine \"" + vmName + "\" is already running.", "Virtual machine already running", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
@@ -1044,7 +1053,7 @@ namespace _86boxManager
                 }
                 else
                 {
-                    MessageBox.Show("The virtual machine \"" + ds.Data + "\" could not be found. It may have been removed or the specified name is incorrect.", "Virtual machine not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("The virtual machine \"" + vmName + "\" could not be found. It may have been removed or the specified name is incorrect.", "Virtual machine not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             base.WndProc(ref m);
@@ -1186,7 +1195,7 @@ namespace _86boxManager
             {
                 VM vm = (VM)lstVMs.SelectedItems[0].Tag;
                 try
-                {  
+                {
                     Process p = Process.GetProcessById(vm.Pid);
                     p.Kill();
                 }
@@ -1277,7 +1286,7 @@ namespace _86boxManager
                 catch (Exception ex)
                 {
                     MessageBox.Show("An error occurred trying to wipe the selected virtual machine.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }   
+                }
             }
         }
 
