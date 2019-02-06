@@ -47,7 +47,7 @@
             this.lblTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 15F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.Location = new System.Drawing.Point(109, 9);
+            this.lblTitle.Location = new System.Drawing.Point(135, 12);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(154, 28);
             this.lblTitle.TabIndex = 0;
@@ -59,7 +59,7 @@
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnOK.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnOK.Location = new System.Drawing.Point(135, 11);
+            this.btnOK.Location = new System.Drawing.Point(162, 11);
             this.btnOK.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(65, 30);
@@ -92,7 +92,7 @@
             // 
             this.lnkGithub.AutoSize = true;
             this.lnkGithub.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lnkGithub.Location = new System.Drawing.Point(12, 217);
+            this.lnkGithub.Location = new System.Drawing.Point(12, 197);
             this.lnkGithub.Name = "lnkGithub";
             this.lnkGithub.Size = new System.Drawing.Size(264, 19);
             this.lnkGithub.TabIndex = 5;
@@ -106,16 +106,16 @@
             this.lblCopyright.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblCopyright.Location = new System.Drawing.Point(12, 108);
             this.lblCopyright.Name = "lblCopyright";
-            this.lblCopyright.Size = new System.Drawing.Size(297, 76);
+            this.lblCopyright.Size = new System.Drawing.Size(368, 57);
             this.lblCopyright.TabIndex = 6;
-            this.lblCopyright.Text = "Copyright © 2018-2019 David Simunič\r\nLicensed under the MIT license. \r\nSee the LI" +
-    "CENSE file for license information and\r\nAUTHORS for a list of contributors.";
+            this.lblCopyright.Text = "Copyright © 2018-2019 David Simunič\r\nLicensed under the MIT license.  See the LIC" +
+    "ENSE file for\r\nlicense information and AUTHORS for a list of contributors.";
             // 
             // lnkGithub2
             // 
             this.lnkGithub2.AutoSize = true;
             this.lnkGithub2.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lnkGithub2.Location = new System.Drawing.Point(12, 194);
+            this.lnkGithub2.Location = new System.Drawing.Point(12, 174);
             this.lnkGithub2.Name = "lnkGithub2";
             this.lnkGithub2.Size = new System.Drawing.Size(209, 19);
             this.lnkGithub2.TabIndex = 7;
@@ -136,7 +136,7 @@
             // imgLogo
             // 
             this.imgLogo.Image = global::_86BoxManager.Properties.Resources._86Box;
-            this.imgLogo.Location = new System.Drawing.Point(71, 9);
+            this.imgLogo.Location = new System.Drawing.Point(100, 11);
             this.imgLogo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.imgLogo.Name = "imgLogo";
             this.imgLogo.Size = new System.Drawing.Size(32, 32);
@@ -148,10 +148,10 @@
             this.pnlBottom.BackColor = System.Drawing.SystemColors.Control;
             this.pnlBottom.Controls.Add(this.btnOK);
             this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlBottom.Location = new System.Drawing.Point(0, 249);
+            this.pnlBottom.Location = new System.Drawing.Point(0, 232);
             this.pnlBottom.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pnlBottom.Name = "pnlBottom";
-            this.pnlBottom.Size = new System.Drawing.Size(334, 52);
+            this.pnlBottom.Size = new System.Drawing.Size(389, 52);
             this.pnlBottom.TabIndex = 15;
             // 
             // dlgAbout
@@ -161,7 +161,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnOK;
-            this.ClientSize = new System.Drawing.Size(334, 301);
+            this.ClientSize = new System.Drawing.Size(389, 284);
             this.Controls.Add(this.pnlBottom);
             this.Controls.Add(this.lnkGithub);
             this.Controls.Add(this.imgLogo);

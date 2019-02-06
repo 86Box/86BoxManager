@@ -89,6 +89,12 @@
     <Compile Include="dlgAddVM.Designer.cs">
       <DependentUpon>dlgAddVM.cs</DependentUpon>
     </Compile>
+    <Compile Include="dlgCloneVM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dlgCloneVM.Designer.cs">
+      <DependentUpon>dlgCloneVM.cs</DependentUpon>
+    </Compile>
     <Compile Include="dlgEditVM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -116,6 +122,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="dlgAddVM.resx">
       <DependentUpon>dlgAddVM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dlgCloneVM.resx">
+      <DependentUpon>dlgCloneVM.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="dlgEditVM.resx">
       <DependentUpon>dlgEditVM.cs</DependentUpon>

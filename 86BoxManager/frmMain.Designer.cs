@@ -47,6 +47,7 @@
             this.hardResetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.killToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.wipeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,6 +67,7 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.cloneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsVM.SuspendLayout();
             this.cmsTrayIcon.SuspendLayout();
             this.SuspendLayout();
@@ -168,7 +170,6 @@
             this.lstVMs.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lstVMs_ColumnClick);
             this.lstVMs.SelectedIndexChanged += new System.EventHandler(this.lstVMs_SelectedIndexChanged);
             this.lstVMs.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lstVMs_KeyDown);
-            this.lstVMs.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstVMs_MouseClick);
             this.lstVMs.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstVMs_MouseDoubleClick);
             // 
             // clmName
@@ -196,14 +197,16 @@
             this.hardResetToolStripMenuItem,
             this.toolStripSeparator3,
             this.killToolStripMenuItem,
+            this.wipeToolStripMenuItem,
             this.toolStripSeparator1,
             this.editToolStripMenuItem,
+            this.cloneToolStripMenuItem,
             this.deleteToolStripMenuItem,
             this.openFolderToolStripMenuItem,
             this.createADesktopShortcutToolStripMenuItem});
             this.cmsVM.Name = "cmsVM";
             this.cmsVM.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.cmsVM.Size = new System.Drawing.Size(210, 236);
+            this.cmsVM.Size = new System.Drawing.Size(210, 302);
             this.cmsVM.Opening += new System.ComponentModel.CancelEventHandler(this.cmsVM_Opening);
             // 
             // startToolStripMenuItem
@@ -258,6 +261,14 @@
             this.killToolStripMenuItem.Text = "Kill";
             this.killToolStripMenuItem.ToolTipText = "Kill this virtual machine";
             this.killToolStripMenuItem.Click += new System.EventHandler(this.killToolStripMenuItem_Click);
+            // 
+            // wipeToolStripMenuItem
+            // 
+            this.wipeToolStripMenuItem.Name = "wipeToolStripMenuItem";
+            this.wipeToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.wipeToolStripMenuItem.Text = "Wipe";
+            this.wipeToolStripMenuItem.ToolTipText = "Delete configuration and nvr for this virtual machine";
+            this.wipeToolStripMenuItem.Click += new System.EventHandler(this.wipeToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -426,6 +437,14 @@
             this.exitToolStripMenuItem.ToolTipText = "Close 86Box Manager";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // cloneToolStripMenuItem
+            // 
+            this.cloneToolStripMenuItem.Name = "cloneToolStripMenuItem";
+            this.cloneToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.cloneToolStripMenuItem.Text = "Clone";
+            this.cloneToolStripMenuItem.ToolTipText = "Clone this virtual machine";
+            this.cloneToolStripMenuItem.Click += new System.EventHandler(this.cloneToolStripMenuItem_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -445,7 +464,7 @@
             this.Controls.Add(this.btnEdit);
             this.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(700, 500);
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -496,6 +515,8 @@
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.ToolStripMenuItem killToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem wipeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cloneToolStripMenuItem;
     }
 }
 

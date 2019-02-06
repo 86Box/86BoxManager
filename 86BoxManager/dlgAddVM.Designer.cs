@@ -42,6 +42,9 @@
             this.cbxStartVM = new System.Windows.Forms.CheckBox();
             this.pnlBottom = new System.Windows.Forms.Panel();
             this.tipTxtName = new System.Windows.Forms.ToolTip(this.components);
+            this.btnBrowse = new System.Windows.Forms.Button();
+            this.cbxImport = new System.Windows.Forms.CheckBox();
+            this.txtImportPath = new System.Windows.Forms.TextBox();
             this.pnlBottom.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,8 +52,8 @@
             // 
             this.cbxOpenCFG.AutoSize = true;
             this.cbxOpenCFG.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cbxOpenCFG.Location = new System.Drawing.Point(235, 111);
-            this.cbxOpenCFG.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbxOpenCFG.Location = new System.Drawing.Point(235, 177);
+            this.cbxOpenCFG.Margin = new System.Windows.Forms.Padding(2);
             this.cbxOpenCFG.Name = "cbxOpenCFG";
             this.cbxOpenCFG.Size = new System.Drawing.Size(247, 24);
             this.cbxOpenCFG.TabIndex = 3;
@@ -63,7 +66,7 @@
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnCancel.Location = new System.Drawing.Point(508, 11);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(65, 30);
             this.btnCancel.TabIndex = 5;
@@ -76,7 +79,7 @@
             this.btnAdd.Enabled = false;
             this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnAdd.Location = new System.Drawing.Point(439, 11);
-            this.btnAdd.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnAdd.Margin = new System.Windows.Forms.Padding(2);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(65, 30);
             this.btnAdd.TabIndex = 4;
@@ -108,10 +111,10 @@
             // 
             this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtName.Location = new System.Drawing.Point(63, 11);
-            this.txtName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtName.Location = new System.Drawing.Point(96, 11);
+            this.txtName.Margin = new System.Windows.Forms.Padding(2);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(510, 25);
+            this.txtName.Size = new System.Drawing.Size(477, 25);
             this.txtName.TabIndex = 0;
             this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
@@ -120,7 +123,7 @@
             this.txtDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtDescription.Location = new System.Drawing.Point(96, 45);
-            this.txtDescription.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtDescription.Margin = new System.Windows.Forms.Padding(2);
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(477, 25);
             this.txtDescription.TabIndex = 1;
@@ -150,8 +153,8 @@
             // 
             this.cbxStartVM.AutoSize = true;
             this.cbxStartVM.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cbxStartVM.Location = new System.Drawing.Point(15, 111);
-            this.cbxStartVM.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbxStartVM.Location = new System.Drawing.Point(15, 177);
+            this.cbxStartVM.Margin = new System.Windows.Forms.Padding(2);
             this.cbxStartVM.Name = "cbxStartVM";
             this.cbxStartVM.Size = new System.Drawing.Size(216, 24);
             this.cbxStartVM.TabIndex = 2;
@@ -164,8 +167,8 @@
             this.pnlBottom.Controls.Add(this.btnCancel);
             this.pnlBottom.Controls.Add(this.btnAdd);
             this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlBottom.Location = new System.Drawing.Point(0, 149);
-            this.pnlBottom.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pnlBottom.Location = new System.Drawing.Point(0, 211);
+            this.pnlBottom.Margin = new System.Windows.Forms.Padding(2);
             this.pnlBottom.Name = "pnlBottom";
             this.pnlBottom.Size = new System.Drawing.Size(584, 52);
             this.pnlBottom.TabIndex = 15;
@@ -179,6 +182,42 @@
             this.tipTxtName.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Error;
             this.tipTxtName.ToolTipTitle = "Name contains invalid characters";
             // 
+            // btnBrowse
+            // 
+            this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnBrowse.Enabled = false;
+            this.btnBrowse.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnBrowse.Location = new System.Drawing.Point(503, 139);
+            this.btnBrowse.Margin = new System.Windows.Forms.Padding(2);
+            this.btnBrowse.Name = "btnBrowse";
+            this.btnBrowse.Size = new System.Drawing.Size(70, 30);
+            this.btnBrowse.TabIndex = 6;
+            this.btnBrowse.Text = "Browse...";
+            this.btnBrowse.UseVisualStyleBackColor = true;
+            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
+            // 
+            // cbxImport
+            // 
+            this.cbxImport.AutoSize = true;
+            this.cbxImport.Location = new System.Drawing.Point(15, 114);
+            this.cbxImport.Name = "cbxImport";
+            this.cbxImport.Size = new System.Drawing.Size(159, 23);
+            this.cbxImport.TabIndex = 16;
+            this.cbxImport.Text = "Import VM files from:";
+            this.cbxImport.UseVisualStyleBackColor = true;
+            this.cbxImport.CheckedChanged += new System.EventHandler(this.cbxImport_CheckedChanged);
+            // 
+            // txtImportPath
+            // 
+            this.txtImportPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtImportPath.Enabled = false;
+            this.txtImportPath.Location = new System.Drawing.Point(15, 142);
+            this.txtImportPath.Margin = new System.Windows.Forms.Padding(2);
+            this.txtImportPath.Name = "txtImportPath";
+            this.txtImportPath.Size = new System.Drawing.Size(484, 25);
+            this.txtImportPath.TabIndex = 17;
+            // 
             // dlgAddVM
             // 
             this.AcceptButton = this.btnAdd;
@@ -186,7 +225,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(584, 201);
+            this.ClientSize = new System.Drawing.Size(584, 263);
+            this.Controls.Add(this.txtImportPath);
+            this.Controls.Add(this.cbxImport);
+            this.Controls.Add(this.btnBrowse);
             this.Controls.Add(this.pnlBottom);
             this.Controls.Add(this.cbxStartVM);
             this.Controls.Add(this.cbxOpenCFG);
@@ -227,5 +269,8 @@
         private System.Windows.Forms.CheckBox cbxStartVM;
         private System.Windows.Forms.Panel pnlBottom;
         private System.Windows.Forms.ToolTip tipTxtName;
+        private System.Windows.Forms.Button btnBrowse;
+        private System.Windows.Forms.CheckBox cbxImport;
+        private System.Windows.Forms.TextBox txtImportPath;
     }
 }

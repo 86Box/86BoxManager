@@ -51,7 +51,7 @@
             this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnApply.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnApply.Location = new System.Drawing.Point(558, 11);
-            this.btnApply.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnApply.Margin = new System.Windows.Forms.Padding(2);
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(65, 30);
             this.btnApply.TabIndex = 11;
@@ -65,7 +65,7 @@
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnCancel.Location = new System.Drawing.Point(489, 11);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(65, 30);
             this.btnCancel.TabIndex = 10;
@@ -79,7 +79,7 @@
             this.btnOK.Enabled = false;
             this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnOK.Location = new System.Drawing.Point(420, 11);
-            this.btnOK.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnOK.Margin = new System.Windows.Forms.Padding(2);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(65, 30);
             this.btnOK.TabIndex = 9;
@@ -103,14 +103,14 @@
             this.lblCFGdir.Location = new System.Drawing.Point(11, 52);
             this.lblCFGdir.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblCFGdir.Name = "lblCFGdir";
-            this.lblCFGdir.Size = new System.Drawing.Size(84, 19);
+            this.lblCFGdir.Size = new System.Drawing.Size(66, 19);
             this.lblCFGdir.TabIndex = 4;
-            this.lblCFGdir.Text = "Config path:";
+            this.lblCFGdir.Text = "VM path:";
             // 
             // txtEXEdir
             // 
             this.txtEXEdir.Location = new System.Drawing.Point(99, 48);
-            this.txtEXEdir.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtEXEdir.Margin = new System.Windows.Forms.Padding(2);
             this.txtEXEdir.Name = "txtEXEdir";
             this.txtEXEdir.Size = new System.Drawing.Size(450, 25);
             this.txtEXEdir.TabIndex = 0;
@@ -119,7 +119,7 @@
             // txtCFGdir
             // 
             this.txtCFGdir.Location = new System.Drawing.Point(99, 14);
-            this.txtCFGdir.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtCFGdir.Margin = new System.Windows.Forms.Padding(2);
             this.txtCFGdir.Name = "txtCFGdir";
             this.txtCFGdir.Size = new System.Drawing.Size(450, 25);
             this.txtCFGdir.TabIndex = 2;
@@ -130,7 +130,7 @@
             this.btnBrowse1.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnBrowse1.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.btnBrowse1.Location = new System.Drawing.Point(553, 11);
-            this.btnBrowse1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnBrowse1.Margin = new System.Windows.Forms.Padding(2);
             this.btnBrowse1.Name = "btnBrowse1";
             this.btnBrowse1.Size = new System.Drawing.Size(70, 30);
             this.btnBrowse1.TabIndex = 1;
@@ -142,7 +142,7 @@
             // 
             this.btnBrowse2.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnBrowse2.Location = new System.Drawing.Point(553, 45);
-            this.btnBrowse2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnBrowse2.Margin = new System.Windows.Forms.Padding(2);
             this.btnBrowse2.Name = "btnBrowse2";
             this.btnBrowse2.Size = new System.Drawing.Size(70, 30);
             this.btnBrowse2.TabIndex = 3;
@@ -155,7 +155,7 @@
             this.cbxMinimize.AutoSize = true;
             this.cbxMinimize.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cbxMinimize.Location = new System.Drawing.Point(15, 85);
-            this.cbxMinimize.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbxMinimize.Margin = new System.Windows.Forms.Padding(2);
             this.cbxMinimize.Name = "cbxMinimize";
             this.cbxMinimize.Size = new System.Drawing.Size(324, 24);
             this.cbxMinimize.TabIndex = 4;
@@ -168,7 +168,7 @@
             this.cbxShowConsole.AutoSize = true;
             this.cbxShowConsole.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cbxShowConsole.Location = new System.Drawing.Point(343, 85);
-            this.cbxShowConsole.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbxShowConsole.Margin = new System.Windows.Forms.Padding(2);
             this.cbxShowConsole.Name = "cbxShowConsole";
             this.cbxShowConsole.Size = new System.Drawing.Size(245, 24);
             this.cbxShowConsole.TabIndex = 5;
@@ -181,7 +181,7 @@
             this.btnDefaults.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnDefaults.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnDefaults.Location = new System.Drawing.Point(15, 11);
-            this.btnDefaults.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnDefaults.Margin = new System.Windows.Forms.Padding(2);
             this.btnDefaults.Name = "btnDefaults";
             this.btnDefaults.Size = new System.Drawing.Size(65, 30);
             this.btnDefaults.TabIndex = 8;
@@ -194,7 +194,7 @@
             this.cbxMinimizeTray.AutoSize = true;
             this.cbxMinimizeTray.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cbxMinimizeTray.Location = new System.Drawing.Point(15, 113);
-            this.cbxMinimizeTray.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbxMinimizeTray.Margin = new System.Windows.Forms.Padding(2);
             this.cbxMinimizeTray.Name = "cbxMinimizeTray";
             this.cbxMinimizeTray.Size = new System.Drawing.Size(264, 24);
             this.cbxMinimizeTray.TabIndex = 6;
@@ -207,7 +207,7 @@
             this.cbxCloseTray.AutoSize = true;
             this.cbxCloseTray.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cbxCloseTray.Location = new System.Drawing.Point(343, 113);
-            this.cbxCloseTray.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbxCloseTray.Margin = new System.Windows.Forms.Padding(2);
             this.cbxCloseTray.Name = "cbxCloseTray";
             this.cbxCloseTray.Size = new System.Drawing.Size(242, 24);
             this.cbxCloseTray.TabIndex = 7;
@@ -224,7 +224,7 @@
             this.pnlBottom.Controls.Add(this.btnOK);
             this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlBottom.Location = new System.Drawing.Point(0, 150);
-            this.pnlBottom.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pnlBottom.Margin = new System.Windows.Forms.Padding(2);
             this.pnlBottom.Name = "pnlBottom";
             this.pnlBottom.Size = new System.Drawing.Size(634, 52);
             this.pnlBottom.TabIndex = 14;

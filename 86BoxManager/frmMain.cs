@@ -9,6 +9,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 using IWshRuntimeLibrary;
 using System.Collections.Generic;
 using System.Threading;
+using _86BoxManager;
+//using _86BoxManager;
 
 namespace _86boxManager
 {
@@ -374,7 +376,7 @@ namespace _86boxManager
             }
             else
             {
-                e.Cancel = true; //Otherwise cancel the event to preven the menu being displayed
+                e.Cancel = true; //Otherwise cancel the event to prevent the menu being displayed
             }
         }
 
@@ -485,9 +487,9 @@ namespace _86boxManager
                     }
 
                     p.Start();
-                    p.WaitForInputIdle(); //Wait a bit so hWnd can be obtained
+                    bool initSuccess = p.WaitForInputIdle(5000); //Wait 5 seconds so hWnd can be obtained
 
-                    if (!p.MainWindowHandle.Equals(IntPtr.Zero))
+                    if (!p.MainWindowHandle.Equals(IntPtr.Zero) && initSuccess)
                     {
                         vm.hWnd = p.MainWindowHandle; //Get the window handle of the newly created process
                         vm.Pid = p.Id; //Assign the pid to the VM
@@ -522,7 +524,15 @@ namespace _86boxManager
                         btnCtrlAltDel.Enabled = true;
                         btnConfigure.Enabled = true;
                     }
+                    else
+                    {
+                        MessageBox.Show("The 86Box process did not initialize in time. This could be due to poor system performance, or it could indicate a bug. Consider contacting the developer.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show("The process failed to initialize or its window handle could not be obtained.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
@@ -735,7 +745,8 @@ namespace _86boxManager
             MessageBox.Show("Virtual machine \"" + newVM.Name + "\" was successfully created!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             //Select the newly created VM
-            lstVMs.FocusedItem = newLvi;
+            newLvi.Focused = true;
+            newLvi.Selected = true;
 
             //Start the VM and/or open settings window if the user chose this option
             if (startVM)
@@ -838,7 +849,7 @@ namespace _86boxManager
                 {
                     try
                     {
-                        Directory.Delete(cfgpath + vm.Name, true);
+                        Directory.Delete(vm.Path, true);
                     }
                     catch (DirectoryNotFoundException){/*Just ignore this for now*/}
                     MessageBox.Show("Virtual machine \"" + vm.Name + "\" was successfully removed, along with its files.", "Virtual machine and files removed", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -1125,47 +1136,60 @@ namespace _86boxManager
             LoadSettings();
         }
 
-        private void killToolStripMenuItem_Click(object sender, EventArgs e)
+        //Kill the selected virtual machine process
+        private void VMKill()
         {
             //Ask the user to confirm and kill the VM's process
             DialogResult = MessageBox.Show("Killing a virtual machine can cause data loss. Only do this if 86Box.exe process gets stuck. Do you wish to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if(DialogResult == DialogResult.Yes)
+            if (DialogResult == DialogResult.Yes)
             {
-                VM vm = (VM)lstVMs.SelectedItems[0].Tag;
-                Process p = Process.GetProcessById(vm.Pid);
-                p.Kill();
-
-                //We need to cleanup afterwards to make sure the VM is put back into a valid state
-                vm.Status = VM.STATUS_STOPPED;
-                vm.hWnd = IntPtr.Zero;
-                lstVMs.SelectedItems[0].SubItems[1].Text = vm.GetStatusString();
-                lstVMs.SelectedItems[0].ImageIndex = 0;
-
-                btnStart.Text = "Start";
-                toolTip.SetToolTip(btnStart, "Stop this virtual machine");
-                btnPause.Text = "Pause";
-                if (lstVMs.SelectedItems.Count > 0)
+                try
                 {
-                    btnEdit.Enabled = true;
-                    btnDelete.Enabled = true;
-                    btnStart.Enabled = true;
+                    VM vm = (VM)lstVMs.SelectedItems[0].Tag;
+                    Process p = Process.GetProcessById(vm.Pid);
+                    p.Kill();
 
-                    btnConfigure.Enabled = true;
-                    btnPause.Enabled = false;
-                    btnReset.Enabled = false;
-                    btnCtrlAltDel.Enabled = false;
+                    //We need to cleanup afterwards to make sure the VM is put back into a valid state
+                    vm.Status = VM.STATUS_STOPPED;
+                    vm.hWnd = IntPtr.Zero;
+                    lstVMs.SelectedItems[0].SubItems[1].Text = vm.GetStatusString();
+                    lstVMs.SelectedItems[0].ImageIndex = 0;
+
+                    btnStart.Text = "Start";
+                    toolTip.SetToolTip(btnStart, "Stop this virtual machine");
+                    btnPause.Text = "Pause";
+                    if (lstVMs.SelectedItems.Count > 0)
+                    {
+                        btnEdit.Enabled = true;
+                        btnDelete.Enabled = true;
+                        btnStart.Enabled = true;
+
+                        btnConfigure.Enabled = true;
+                        btnPause.Enabled = false;
+                        btnReset.Enabled = false;
+                        btnCtrlAltDel.Enabled = false;
+                    }
+                    else
+                    {
+                        btnEdit.Enabled = false;
+                        btnDelete.Enabled = false;
+                        btnStart.Enabled = false;
+                        btnConfigure.Enabled = false;
+                        btnPause.Enabled = false;
+                        btnReset.Enabled = false;
+                        btnCtrlAltDel.Enabled = false;
+                    }
                 }
-                else
+                catch(Exception ex)
                 {
-                    btnEdit.Enabled = false;
-                    btnDelete.Enabled = false;
-                    btnStart.Enabled = false;
-                    btnConfigure.Enabled = false;
-                    btnPause.Enabled = false;
-                    btnReset.Enabled = false;
-                    btnCtrlAltDel.Enabled = false;
+                    MessageBox.Show("An error occurred trying to kill the selected virtual machine.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void killToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            VMKill();
         }
 
         //Handles the click event for the listview column headers, allowing to sort the items by columns
@@ -1190,9 +1214,102 @@ namespace _86boxManager
             lstVMs.ListViewItemSorter = new _86BoxManager.ListViewItemComparer(e.Column, lstVMs.Sorting);
         }
 
-        private void lstVMs_MouseClick(object sender, MouseEventArgs e)
+        private void wipeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-           
+            VMWipe();
+        }
+
+        //Deletes the config and nvr of selected VM
+        private void VMWipe()
+        {
+            DialogResult = MessageBox.Show("You are about delete the configuration and nvr files for this virtual machine. You'll have to reconfigure both the virtual machine and the BIOS. Do you wish to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (DialogResult == DialogResult.Yes)
+            {
+                try
+                {
+                    VM vm = (VM)lstVMs.SelectedItems[0].Tag;
+                    System.IO.File.Delete(vm.Path + @"\86box.cfg");
+                    Directory.Delete(vm.Path + @"\nvr", true);
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("An error occurred trying to wipe the selected virtual machine.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        //Imports existing VM files to a new VM
+        public void VMImport(string name, string desc, string importPath, bool openCFG, bool startVM)
+        {
+            VM newVM = new VM(name, desc, cfgpath + name);
+            ListViewItem newLvi = new ListViewItem(newVM.Name)
+            {
+                Tag = newVM,
+                ToolTipText = newVM.Desc,
+                ImageIndex = 0
+            };
+            newLvi.SubItems.Add(new ListViewItem.ListViewSubItem(newLvi, newVM.GetStatusString()));
+            newLvi.SubItems.Add(new ListViewItem.ListViewSubItem(newLvi, newVM.Path));
+            lstVMs.Items.Add(newLvi);
+            Directory.CreateDirectory(cfgpath + newVM.Name);
+
+            bool importFailed = false;
+
+            //Copy existing files to the new VM directory
+            try
+            {
+                foreach (string oldPath in Directory.GetDirectories(importPath, "*", SearchOption.AllDirectories))
+                {
+                    Directory.CreateDirectory(oldPath.Replace(importPath, newVM.Path));
+                }
+                foreach (string newPath in Directory.GetFiles(importPath, "*.*", SearchOption.AllDirectories))
+                {
+                    System.IO.File.Copy(newPath, newPath.Replace(importPath, newVM.Path), true);
+                }
+            }
+            catch(Exception ex)
+            {
+                importFailed = true; //Set this flag so we can inform the user at the end
+            }
+
+            using (var ms = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(ms, newVM);
+                var data = ms.ToArray();
+                regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box\Virtual Machines", true);
+                regkey.SetValue(newVM.Name, data, RegistryValueKind.Binary);
+            }
+
+            if(importFailed)
+            {
+                MessageBox.Show("Virtual machine \"" + newVM.Name + "\" was successfully created, but files could not be imported. Make sure the path you selected was correct and valid.", "Import failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                MessageBox.Show("Virtual machine \"" + newVM.Name + "\" was successfully created, files were imported. Remember to update any paths pointing to disk images in your config!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            //Select the newly created VM
+            newLvi.Focused = true;
+            newLvi.Selected = true;
+
+            //Start the VM and/or open settings window if the user chose this option
+            if (startVM)
+            {
+                VMStart();
+            }
+            if (openCFG)
+            {
+                VMConfigure();
+            }
+        }
+
+        private void cloneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            VM vm = (VM)lstVMs.SelectedItems[0].Tag;
+            dlgCloneVM dc = new dlgCloneVM(vm.Path);
+            dc.ShowDialog();
         }
     }
 }
