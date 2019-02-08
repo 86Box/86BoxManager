@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using Microsoft.Win32;
 
-namespace _86boxManager
+namespace _86BoxManager
 {
     public partial class dlgSettings : Form
     {
@@ -149,14 +149,15 @@ namespace _86boxManager
 
         private void btnBrowse1_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            fbd.Description = "Select a folder where 86Box program files and the roms folder are located.";
-            fbd.ShowNewFolderButton = true;
-            fbd.RootFolder = Environment.SpecialFolder.MyComputer;
-            DialogResult result = fbd.ShowDialog();
-            if (result == DialogResult.OK)
+            FolderSelectDialog dialog = new FolderSelectDialog
             {
-                txtEXEdir.Text = fbd.SelectedPath;
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer),
+                Title = "Select a folder where 86Box program files and the roms folder are located"
+            };
+
+            if (dialog.Show(Handle))
+            {
+                txtEXEdir.Text  = dialog.FileName;
                 if (!txtEXEdir.Text.EndsWith(@"\")) //Just in case
                 {
                     txtEXEdir.Text += @"\";
@@ -166,14 +167,15 @@ namespace _86boxManager
 
         private void btnBrowse2_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            fbd.Description = "Select a folder where your virtual machines (configs, nvr folders, etc.) will be located.";
-            fbd.ShowNewFolderButton = true;
-            fbd.RootFolder = Environment.SpecialFolder.MyComputer;
-            DialogResult result = fbd.ShowDialog();
-            if (result == DialogResult.OK)
+            FolderSelectDialog dialog = new FolderSelectDialog
             {
-                txtCFGdir.Text = fbd.SelectedPath;
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer),
+                Title = "Select a folder where your virtual machines (configs, nvr folders, etc.) will be located"
+            };
+
+            if (dialog.Show(Handle))
+            {
+                txtCFGdir.Text = dialog.FileName;
                 if (!txtCFGdir.Text.EndsWith(@"\")) //Just in case
                 {
                     txtCFGdir.Text += @"\";

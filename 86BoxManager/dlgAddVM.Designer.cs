@@ -1,4 +1,4 @@
-﻿namespace _86boxManager
+﻿namespace _86BoxManager
 {
     partial class dlgAddVM
     {
@@ -42,9 +42,9 @@
             this.cbxStartVM = new System.Windows.Forms.CheckBox();
             this.pnlBottom = new System.Windows.Forms.Panel();
             this.tipTxtName = new System.Windows.Forms.ToolTip(this.components);
-            this.btnBrowse = new System.Windows.Forms.Button();
-            this.cbxImport = new System.Windows.Forms.CheckBox();
             this.txtImportPath = new System.Windows.Forms.TextBox();
+            this.cbxImport = new System.Windows.Forms.CheckBox();
+            this.btnBrowse = new System.Windows.Forms.Button();
             this.pnlBottom.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -90,7 +90,7 @@
             // lblName
             // 
             this.lblName.AutoSize = true;
-            this.lblName.Location = new System.Drawing.Point(11, 14);
+            this.lblName.Location = new System.Drawing.Point(11, 79);
             this.lblName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblName.Name = "lblName";
             this.lblName.Size = new System.Drawing.Size(48, 19);
@@ -100,7 +100,7 @@
             // lblDesc
             // 
             this.lblDesc.AutoSize = true;
-            this.lblDesc.Location = new System.Drawing.Point(11, 48);
+            this.lblDesc.Location = new System.Drawing.Point(11, 113);
             this.lblDesc.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDesc.Name = "lblDesc";
             this.lblDesc.Size = new System.Drawing.Size(81, 19);
@@ -111,7 +111,7 @@
             // 
             this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtName.Location = new System.Drawing.Point(96, 11);
+            this.txtName.Location = new System.Drawing.Point(96, 76);
             this.txtName.Margin = new System.Windows.Forms.Padding(2);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(477, 25);
@@ -122,7 +122,7 @@
             // 
             this.txtDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtDescription.Location = new System.Drawing.Point(96, 45);
+            this.txtDescription.Location = new System.Drawing.Point(96, 110);
             this.txtDescription.Margin = new System.Windows.Forms.Padding(2);
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(477, 25);
@@ -131,7 +131,7 @@
             // lblPath1
             // 
             this.lblPath1.AutoEllipsis = true;
-            this.lblPath1.Location = new System.Drawing.Point(55, 81);
+            this.lblPath1.Location = new System.Drawing.Point(55, 146);
             this.lblPath1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblPath1.MaximumSize = new System.Drawing.Size(429, 17);
             this.lblPath1.Name = "lblPath1";
@@ -142,7 +142,7 @@
             // lblPath
             // 
             this.lblPath.AutoSize = true;
-            this.lblPath.Location = new System.Drawing.Point(11, 81);
+            this.lblPath.Location = new System.Drawing.Point(11, 146);
             this.lblPath.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblPath.Name = "lblPath";
             this.lblPath.Size = new System.Drawing.Size(40, 19);
@@ -182,41 +182,42 @@
             this.tipTxtName.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Error;
             this.tipTxtName.ToolTipTitle = "Name contains invalid characters";
             // 
-            // btnBrowse
-            // 
-            this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnBrowse.Enabled = false;
-            this.btnBrowse.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnBrowse.Location = new System.Drawing.Point(503, 139);
-            this.btnBrowse.Margin = new System.Windows.Forms.Padding(2);
-            this.btnBrowse.Name = "btnBrowse";
-            this.btnBrowse.Size = new System.Drawing.Size(70, 30);
-            this.btnBrowse.TabIndex = 6;
-            this.btnBrowse.Text = "Browse...";
-            this.btnBrowse.UseVisualStyleBackColor = true;
-            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
-            // 
-            // cbxImport
-            // 
-            this.cbxImport.AutoSize = true;
-            this.cbxImport.Location = new System.Drawing.Point(15, 114);
-            this.cbxImport.Name = "cbxImport";
-            this.cbxImport.Size = new System.Drawing.Size(159, 23);
-            this.cbxImport.TabIndex = 16;
-            this.cbxImport.Text = "Import VM files from:";
-            this.cbxImport.UseVisualStyleBackColor = true;
-            this.cbxImport.CheckedChanged += new System.EventHandler(this.cbxImport_CheckedChanged);
-            // 
             // txtImportPath
             // 
             this.txtImportPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtImportPath.Enabled = false;
-            this.txtImportPath.Location = new System.Drawing.Point(15, 142);
+            this.txtImportPath.Location = new System.Drawing.Point(15, 40);
             this.txtImportPath.Margin = new System.Windows.Forms.Padding(2);
             this.txtImportPath.Name = "txtImportPath";
             this.txtImportPath.Size = new System.Drawing.Size(484, 25);
-            this.txtImportPath.TabIndex = 17;
+            this.txtImportPath.TabIndex = 20;
+            // 
+            // cbxImport
+            // 
+            this.cbxImport.AutoSize = true;
+            this.cbxImport.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cbxImport.Location = new System.Drawing.Point(15, 12);
+            this.cbxImport.Name = "cbxImport";
+            this.cbxImport.Size = new System.Drawing.Size(165, 24);
+            this.cbxImport.TabIndex = 19;
+            this.cbxImport.Text = "Import VM files from:";
+            this.cbxImport.UseVisualStyleBackColor = true;
+            this.cbxImport.CheckedChanged += new System.EventHandler(this.cbxImport_CheckedChanged);
+            // 
+            // btnBrowse
+            // 
+            this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnBrowse.Enabled = false;
+            this.btnBrowse.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnBrowse.Location = new System.Drawing.Point(503, 37);
+            this.btnBrowse.Margin = new System.Windows.Forms.Padding(2);
+            this.btnBrowse.Name = "btnBrowse";
+            this.btnBrowse.Size = new System.Drawing.Size(70, 30);
+            this.btnBrowse.TabIndex = 18;
+            this.btnBrowse.Text = "Browse...";
+            this.btnBrowse.UseVisualStyleBackColor = true;
+            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
             // 
             // dlgAddVM
             // 
@@ -269,8 +270,8 @@
         private System.Windows.Forms.CheckBox cbxStartVM;
         private System.Windows.Forms.Panel pnlBottom;
         private System.Windows.Forms.ToolTip tipTxtName;
-        private System.Windows.Forms.Button btnBrowse;
-        private System.Windows.Forms.CheckBox cbxImport;
         private System.Windows.Forms.TextBox txtImportPath;
+        private System.Windows.Forms.CheckBox cbxImport;
+        private System.Windows.Forms.Button btnBrowse;
     }
 }

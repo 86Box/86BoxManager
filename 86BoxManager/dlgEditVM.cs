@@ -2,7 +2,7 @@
 using System.IO;
 using System.Windows.Forms;
 
-namespace _86boxManager
+namespace _86BoxManager
 {
     public partial class dlgEditVM : Form
     {

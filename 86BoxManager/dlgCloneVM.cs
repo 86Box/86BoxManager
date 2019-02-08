@@ -1,7 +1,5 @@
-﻿using _86boxManager;
-using System;
+﻿using System;
 using System.IO;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace _86BoxManager

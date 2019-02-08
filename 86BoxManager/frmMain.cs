@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Threading;
 using _86BoxManager;
 
-namespace _86boxManager
+namespace _86BoxManager
 {
     public partial class frmMain : Form
     {

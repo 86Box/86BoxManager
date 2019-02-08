@@ -2,7 +2,7 @@
 using System.IO;
 using System.Windows.Forms;
 
-namespace _86boxManager
+namespace _86BoxManager
 {
     public partial class dlgAddVM : Form
     {
@@ -76,15 +76,16 @@ namespace _86boxManager
 
         private void btnBrowse_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            fbd.Description = "Select a folder with virtual machine files to import.";
-            fbd.ShowNewFolderButton = true;
-            fbd.RootFolder = Environment.SpecialFolder.MyComputer;
-            DialogResult result = fbd.ShowDialog();
-            if (result == DialogResult.OK)
+            FolderSelectDialog dialog = new FolderSelectDialog
             {
-                txtImportPath.Text = fbd.SelectedPath;
-                txtName.Text = Path.GetFileName(fbd.SelectedPath);
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer),
+                Title = "Select a folder where your virtual machines (configs, nvr folders, etc.) will be located"
+            };
+
+            if (dialog.Show(Handle))
+            {
+                txtImportPath.Text = dialog.FileName;
+                txtName.Text = Path.GetFileName(dialog.FileName);
             }
         }
 
