@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{559F81B9-D1A5-45FC-AA69-E98F3B3926BB}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>_86BoxManager</RootNamespace>
+    <RootNamespace>_86boxManager</RootNamespace>
     <AssemblyName>86Manager</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -50,7 +50,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>_86BoxManager.Program</StartupObject>
+    <StartupObject>_86boxManager.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <PlatformTarget>x86</PlatformTarget>

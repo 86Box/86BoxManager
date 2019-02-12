@@ -2,7 +2,7 @@
 using System.IO;
 using System.Windows.Forms;
 
-namespace _86BoxManager
+namespace _86boxManager
 {
     public partial class dlgCloneVM : Form
     {

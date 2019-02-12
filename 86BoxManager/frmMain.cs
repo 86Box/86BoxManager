@@ -9,9 +9,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 using IWshRuntimeLibrary;
 using System.Collections.Generic;
 using System.Threading;
-using _86BoxManager;
 
-namespace _86BoxManager
+namespace _86boxManager
 {
     public partial class frmMain : Form
     {
@@ -1262,7 +1261,7 @@ namespace _86BoxManager
             }
 
             lstVMs.Sort();
-            lstVMs.ListViewItemSorter = new _86BoxManager.ListViewItemComparer(e.Column, lstVMs.Sorting);
+            lstVMs.ListViewItemSorter = new _86boxManager.ListViewItemComparer(e.Column, lstVMs.Sorting);
         }
 
         private void wipeToolStripMenuItem_Click(object sender, EventArgs e)

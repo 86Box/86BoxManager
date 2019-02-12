@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace _86BoxManager
+namespace _86boxManager
 {
     static class Program
     {

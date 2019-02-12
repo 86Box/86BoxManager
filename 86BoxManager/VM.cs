@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace _86BoxManager
+namespace _86boxManager
 {
     [Serializable] //For serializing VMs so they can be stored in the registry
     public class VM

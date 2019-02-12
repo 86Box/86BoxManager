@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace _86BoxManager
+namespace _86boxManager
 {
     public partial class dlgAbout : Form
     {

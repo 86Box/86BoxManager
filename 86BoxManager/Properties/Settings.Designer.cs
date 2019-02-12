@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace _86BoxManager.Properties {
+namespace _86boxManager.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

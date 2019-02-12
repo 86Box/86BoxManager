@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using Microsoft.Win32;
 
-namespace _86BoxManager
+namespace _86boxManager
 {
     public partial class dlgSettings : Form
     {

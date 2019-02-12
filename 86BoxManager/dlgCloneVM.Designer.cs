@@ -1,4 +1,4 @@
-﻿namespace _86BoxManager
+﻿namespace _86boxManager
 {
     partial class dlgCloneVM
     {

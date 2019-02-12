@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace _86BoxManager
+namespace _86boxManager
 {
     /// <summary>
     /// Present the Windows Vista-style open file dialog to select a folder. Fall back for older Windows Versions
