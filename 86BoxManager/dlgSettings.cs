@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace _86boxManager
@@ -59,7 +60,8 @@ namespace _86boxManager
 
         private void txt_TextChanged(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtEXEdir.Text) || string.IsNullOrWhiteSpace(txtCFGdir.Text) || string.IsNullOrWhiteSpace(txtLaunchTimeout.Text))
+            if (string.IsNullOrWhiteSpace(txtEXEdir.Text) || string.IsNullOrWhiteSpace(txtCFGdir.Text) ||
+                string.IsNullOrWhiteSpace(txtLaunchTimeout.Text))
             {
                 btnApply.Enabled = false;
             }
@@ -74,6 +76,10 @@ namespace _86boxManager
         //Save the settings to the registry
         private void SaveSettings()
         {
+            if (!File.Exists(txtEXEdir.Text + "86Box.exe") && !File.Exists(txtEXEdir.Text + @"\86Box.exe"))
+            {
+                MessageBox.Show("86Box.exe could not be found in the directory you specified. Make sure the path is correct or you won't be able to use any virtual machines.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             try
             {
                 RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true); //Try to open the key first (in read-write mode) to see if it already exists
