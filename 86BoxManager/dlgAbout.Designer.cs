@@ -108,8 +108,8 @@
             this.lblCopyright.Name = "lblCopyright";
             this.lblCopyright.Size = new System.Drawing.Size(368, 57);
             this.lblCopyright.TabIndex = 6;
-            this.lblCopyright.Text = "Copyright © 2018-2019 David Simunič\r\nLicensed under the MIT license.  See the LIC" +
-    "ENSE file for\r\nlicense information and AUTHORS for a list of contributors.";
+            this.lblCopyright.Text = "Copyright © 2018-2019 David Simunič\r\nLicensed under the MIT license. See the LICE" +
+    "NSE file for\r\nlicense information and AUTHORS for a list of contributors.";
             // 
             // lnkGithub2
             // 

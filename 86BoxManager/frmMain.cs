@@ -40,6 +40,7 @@ namespace _86boxManager
         private string hWndHex = "";  //Window handle of this window  
         private const string ZEROID = "0000000000000000"; //Used for the id parameter of 86Box -H
         private int sortColumn = -1; //For column sorting's asc/desc capability
+        private int launchTimeout = 5000; //Timeout for waiting for 86Box.exe to initialize
 
         public frmMain()
         {
@@ -205,6 +206,7 @@ namespace _86boxManager
                 showConsole = Convert.ToBoolean(regkey.GetValue("ShowConsole"));
                 minimizeTray = Convert.ToBoolean(regkey.GetValue("MinimizeToTray"));
                 closeTray = Convert.ToBoolean(regkey.GetValue("CloseToTray"));
+                launchTimeout = int.Parse(regkey.GetValue("LaunchTimeout").ToString());
             }
             catch (Exception ex)
             {
@@ -224,6 +226,7 @@ namespace _86boxManager
                 showConsole = true;
                 minimizeTray = false;
                 closeTray = false;
+                launchTimeout = 5000;
 
                 //Defaults must also be written to the registry
                 regkey.SetValue("EXEdir", exepath, RegistryValueKind.String);
@@ -232,6 +235,7 @@ namespace _86boxManager
                 regkey.SetValue("ShowConsole", showConsole, RegistryValueKind.DWord);
                 regkey.SetValue("MinimizeToTray", minimizeTray, RegistryValueKind.DWord);
                 regkey.SetValue("CloseToTray", closeTray, RegistryValueKind.DWord);
+                regkey.SetValue("LaunchTimeout", launchTimeout, RegistryValueKind.DWord);
             }
             finally
             {

@@ -43,6 +43,8 @@
             this.cbxMinimizeTray = new System.Windows.Forms.CheckBox();
             this.cbxCloseTray = new System.Windows.Forms.CheckBox();
             this.pnlBottom = new System.Windows.Forms.Panel();
+            this.lblLaunchTimeout = new System.Windows.Forms.Label();
+            this.txtLaunchTimeout = new System.Windows.Forms.TextBox();
             this.pnlBottom.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -77,7 +79,6 @@
             // btnOK
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOK.Enabled = false;
             this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnOK.Location = new System.Drawing.Point(420, 11);
             this.btnOK.Margin = new System.Windows.Forms.Padding(2);
@@ -153,9 +154,10 @@
             // 
             // cbxMinimize
             // 
+            this.cbxMinimize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cbxMinimize.AutoSize = true;
             this.cbxMinimize.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cbxMinimize.Location = new System.Drawing.Point(15, 85);
+            this.cbxMinimize.Location = new System.Drawing.Point(15, 118);
             this.cbxMinimize.Margin = new System.Windows.Forms.Padding(2);
             this.cbxMinimize.Name = "cbxMinimize";
             this.cbxMinimize.Size = new System.Drawing.Size(324, 24);
@@ -166,9 +168,10 @@
             // 
             // cbxShowConsole
             // 
+            this.cbxShowConsole.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cbxShowConsole.AutoSize = true;
             this.cbxShowConsole.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cbxShowConsole.Location = new System.Drawing.Point(343, 85);
+            this.cbxShowConsole.Location = new System.Drawing.Point(343, 118);
             this.cbxShowConsole.Margin = new System.Windows.Forms.Padding(2);
             this.cbxShowConsole.Name = "cbxShowConsole";
             this.cbxShowConsole.Size = new System.Drawing.Size(245, 24);
@@ -192,9 +195,10 @@
             // 
             // cbxMinimizeTray
             // 
+            this.cbxMinimizeTray.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cbxMinimizeTray.AutoSize = true;
             this.cbxMinimizeTray.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cbxMinimizeTray.Location = new System.Drawing.Point(15, 113);
+            this.cbxMinimizeTray.Location = new System.Drawing.Point(15, 146);
             this.cbxMinimizeTray.Margin = new System.Windows.Forms.Padding(2);
             this.cbxMinimizeTray.Name = "cbxMinimizeTray";
             this.cbxMinimizeTray.Size = new System.Drawing.Size(264, 24);
@@ -205,9 +209,10 @@
             // 
             // cbxCloseTray
             // 
+            this.cbxCloseTray.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cbxCloseTray.AutoSize = true;
             this.cbxCloseTray.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cbxCloseTray.Location = new System.Drawing.Point(343, 113);
+            this.cbxCloseTray.Location = new System.Drawing.Point(343, 146);
             this.cbxCloseTray.Margin = new System.Windows.Forms.Padding(2);
             this.cbxCloseTray.Name = "cbxCloseTray";
             this.cbxCloseTray.Size = new System.Drawing.Size(242, 24);
@@ -224,11 +229,32 @@
             this.pnlBottom.Controls.Add(this.btnCancel);
             this.pnlBottom.Controls.Add(this.btnOK);
             this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlBottom.Location = new System.Drawing.Point(0, 150);
+            this.pnlBottom.Location = new System.Drawing.Point(0, 183);
             this.pnlBottom.Margin = new System.Windows.Forms.Padding(2);
             this.pnlBottom.Name = "pnlBottom";
             this.pnlBottom.Size = new System.Drawing.Size(634, 52);
             this.pnlBottom.TabIndex = 14;
+            // 
+            // lblLaunchTimeout
+            // 
+            this.lblLaunchTimeout.AutoSize = true;
+            this.lblLaunchTimeout.Location = new System.Drawing.Point(11, 86);
+            this.lblLaunchTimeout.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblLaunchTimeout.Name = "lblLaunchTimeout";
+            this.lblLaunchTimeout.Size = new System.Drawing.Size(254, 19);
+            this.lblLaunchTimeout.TabIndex = 15;
+            this.lblLaunchTimeout.Text = "Launch timeout:                   miliseconds";
+            // 
+            // txtLaunchTimeout
+            // 
+            this.txtLaunchTimeout.Location = new System.Drawing.Point(123, 83);
+            this.txtLaunchTimeout.Margin = new System.Windows.Forms.Padding(2);
+            this.txtLaunchTimeout.MaxLength = 5;
+            this.txtLaunchTimeout.Name = "txtLaunchTimeout";
+            this.txtLaunchTimeout.Size = new System.Drawing.Size(56, 25);
+            this.txtLaunchTimeout.TabIndex = 16;
+            this.txtLaunchTimeout.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtLaunchTimeout.TextChanged += new System.EventHandler(this.txt_TextChanged);
             // 
             // dlgSettings
             // 
@@ -237,7 +263,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(634, 202);
+            this.ClientSize = new System.Drawing.Size(634, 235);
+            this.Controls.Add(this.txtLaunchTimeout);
+            this.Controls.Add(this.lblLaunchTimeout);
             this.Controls.Add(this.pnlBottom);
             this.Controls.Add(this.cbxCloseTray);
             this.Controls.Add(this.cbxMinimizeTray);
@@ -283,5 +311,7 @@
         private System.Windows.Forms.CheckBox cbxMinimizeTray;
         private System.Windows.Forms.CheckBox cbxCloseTray;
         private System.Windows.Forms.Panel pnlBottom;
+        private System.Windows.Forms.Label lblLaunchTimeout;
+        private System.Windows.Forms.TextBox txtLaunchTimeout;
     }
 }

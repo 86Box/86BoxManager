@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Windows.Forms;
-using Microsoft.Win32;
 
 namespace _86boxManager
 {
@@ -44,25 +44,29 @@ namespace _86boxManager
         private void btnApply_Click(object sender, EventArgs e)
         {
             SaveSettings();
-            btnApply.Enabled = false;
+            settingsChanged = CheckForChanges();
+            btnApply.Enabled = settingsChanged;
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            SaveSettings();
+            if (settingsChanged)
+            {
+                SaveSettings();
+            }
             Close();
         }
 
         private void txt_TextChanged(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtEXEdir.Text) || string.IsNullOrWhiteSpace(txtCFGdir.Text))
+            if (string.IsNullOrWhiteSpace(txtEXEdir.Text) || string.IsNullOrWhiteSpace(txtCFGdir.Text) || string.IsNullOrWhiteSpace(txtLaunchTimeout.Text))
             {
-                btnOK.Enabled = false;
+                btnApply.Enabled = false;
             }
             else
             {
                 settingsChanged = CheckForChanges();
-                btnOK.Enabled = true;
+                btnApply.Enabled = settingsChanged;
             }
         }
 
@@ -87,6 +91,7 @@ namespace _86boxManager
                 regkey.SetValue("ShowConsole", cbxShowConsole.Checked, RegistryValueKind.DWord);
                 regkey.SetValue("MinimizeToTray", cbxMinimizeTray.Checked, RegistryValueKind.DWord);
                 regkey.SetValue("CloseToTray", cbxCloseTray.Checked, RegistryValueKind.DWord);
+                regkey.SetValue("LaunchTimeout", int.Parse(txtLaunchTimeout.Text), RegistryValueKind.DWord);
                 regkey.Close();
 
                 settingsChanged = CheckForChanges();
@@ -121,6 +126,7 @@ namespace _86boxManager
                     cbxShowConsole.Checked = true;
                     cbxMinimizeTray.Checked = false;
                     cbxCloseTray.Checked = false;
+                    txtLaunchTimeout.Text = "5000";
 
                     SaveSettings(); //This will write the default values to the registry
                 }
@@ -132,18 +138,20 @@ namespace _86boxManager
                     cbxShowConsole.Checked = Convert.ToBoolean(regkey.GetValue("ShowConsole"));
                     cbxMinimizeTray.Checked = Convert.ToBoolean(regkey.GetValue("MinimizeToTray"));
                     cbxCloseTray.Checked = Convert.ToBoolean(regkey.GetValue("CloseToTray"));
+                    txtLaunchTimeout.Text = Convert.ToString(regkey.GetValue("LaunchTimeout"));
                 }
 
                 regkey.Close();
             }
             catch (Exception ex)
             {
-                txtCFGdir.Text = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\86Box Virtual Machines";
+                txtCFGdir.Text = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\86Box VMs";
                 txtEXEdir.Text = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + @"\86Box";
                 cbxMinimize.Checked = false;
                 cbxShowConsole.Checked = true;
                 cbxMinimizeTray.Checked = false;
                 cbxCloseTray.Checked = false;
+                txtLaunchTimeout.Text = "5000";
             }
         }
 
@@ -216,6 +224,7 @@ namespace _86boxManager
             cbxShowConsole.Checked = true;
             cbxMinimizeTray.Checked = false;
             cbxCloseTray.Checked = false;
+            txtLaunchTimeout.Text = "5000";
 
             SaveSettings();
             regkey.Close();
@@ -243,7 +252,8 @@ namespace _86boxManager
                 cbxMinimize.Checked != Convert.ToBoolean(regkey.GetValue("MinimizeOnVMStart")) ||
                 cbxShowConsole.Checked != Convert.ToBoolean(regkey.GetValue("ShowConsole")) ||
                 cbxMinimizeTray.Checked != Convert.ToBoolean(regkey.GetValue("MinimizeToTray")) ||
-                cbxCloseTray.Checked != Convert.ToBoolean(regkey.GetValue("CloseToTray")));
+                cbxCloseTray.Checked != Convert.ToBoolean(regkey.GetValue("CloseToTray")) || 
+                txtLaunchTimeout.Text != Convert.ToString(regkey.GetValue("LaunchTimeout")));
 
                 return btnApply.Enabled;
             }
