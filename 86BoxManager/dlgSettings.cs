@@ -95,6 +95,8 @@ namespace _86boxManager
                 regkey.Close();
 
                 settingsChanged = CheckForChanges();
+
+                MessageBox.Show("Settings were successfully saved.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
@@ -203,7 +205,11 @@ namespace _86boxManager
 
         private void btnDefaults_Click(object sender, EventArgs e)
         {
-            ResetSettings();
+            DialogResult result = MessageBox.Show("All settings will be reset to their default values. Do you wish to continue?", "Settings will be reset", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
+            {
+                ResetSettings();
+            }
         }
 
         //Resets the settings to their default values
