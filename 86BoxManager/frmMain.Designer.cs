@@ -50,6 +50,7 @@
             this.wipeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cloneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createADesktopShortcutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,7 +68,6 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.cloneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsVM.SuspendLayout();
             this.cmsTrayIcon.SuspendLayout();
             this.SuspendLayout();
@@ -155,7 +155,6 @@
             this.lstVMs.ContextMenuStrip = this.cmsVM;
             this.lstVMs.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lstVMs.FullRowSelect = true;
-            this.lstVMs.GridLines = true;
             this.lstVMs.HideSelection = false;
             this.lstVMs.Location = new System.Drawing.Point(12, 52);
             this.lstVMs.MultiSelect = false;
@@ -206,7 +205,7 @@
             this.createADesktopShortcutToolStripMenuItem});
             this.cmsVM.Name = "cmsVM";
             this.cmsVM.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.cmsVM.Size = new System.Drawing.Size(210, 302);
+            this.cmsVM.Size = new System.Drawing.Size(210, 280);
             this.cmsVM.Opening += new System.ComponentModel.CancelEventHandler(this.cmsVM_Opening);
             // 
             // startToolStripMenuItem
@@ -282,6 +281,14 @@
             this.editToolStripMenuItem.Text = "Edit";
             this.editToolStripMenuItem.ToolTipText = "Edit the properties of this virtual machine";
             this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
+            // 
+            // cloneToolStripMenuItem
+            // 
+            this.cloneToolStripMenuItem.Name = "cloneToolStripMenuItem";
+            this.cloneToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.cloneToolStripMenuItem.Text = "Clone";
+            this.cloneToolStripMenuItem.ToolTipText = "Clone this virtual machine";
+            this.cloneToolStripMenuItem.Click += new System.EventHandler(this.cloneToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
@@ -436,14 +443,6 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.ToolTipText = "Close 86Box Manager";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
-            // cloneToolStripMenuItem
-            // 
-            this.cloneToolStripMenuItem.Name = "cloneToolStripMenuItem";
-            this.cloneToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
-            this.cloneToolStripMenuItem.Text = "Clone";
-            this.cloneToolStripMenuItem.ToolTipText = "Clone this virtual machine";
-            this.cloneToolStripMenuItem.Click += new System.EventHandler(this.cloneToolStripMenuItem_Click);
             // 
             // frmMain
             // 
