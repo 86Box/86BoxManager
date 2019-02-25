@@ -1130,25 +1130,27 @@ namespace _86boxManager
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            List<ListViewItem> vms = new List<ListViewItem>();
+            //List<ListViewItem> vms = new List<ListViewItem>();
+            int vmCount = 0;
             foreach (ListViewItem item in lstVMs.Items)
             {
                 VM vm = (VM)item.Tag;
                 if (vm.Status != VM.STATUS_STOPPED)
                 {
-                    vms.Add(item);
+                    vmCount++;
                 }
             }
 
             //If there are running VMs, display the warning and stop the VMs if user says so
-            if (vms.Count > 0)
+            if (vmCount > 0)
             {
                 DialogResult = MessageBox.Show("It appears some virtual machines are still running. It's recommended you stop them first before closing 86Box Manager. Do you want to stop them now?", "Virtual machines are still running", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
                 if (DialogResult == DialogResult.Yes)
                 {
-                    foreach (ListViewItem lvi in vms)
+                    foreach (ListViewItem lvi in lstVMs.Items)
                     {
                         lvi.Focused = true;
+                        lvi.Selected = true;
                         VMStop();
                     }
                     Thread.Sleep(1000); //Wait just a bit to make sure everything goes as planned
