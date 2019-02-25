@@ -519,12 +519,13 @@ namespace _86boxManager
                     }
 
                     p.Start();
-                    bool initSuccess = p.WaitForInputIdle(5000); //Wait 5 seconds so hWnd can be obtained
+                    vm.Pid = p.Id;
+                    bool initSuccess = p.WaitForInputIdle(launchTimeout); //Wait 5 seconds so hWnd can be obtained
 
                     if (!p.MainWindowHandle.Equals(IntPtr.Zero) && initSuccess)
                     {
                         vm.hWnd = p.MainWindowHandle; //Get the window handle of the newly created process
-                        vm.Pid = p.Id; //Assign the pid to the VM
+                       //vm.Pid = p.Id; //Assign the pid to the VM
                         vm.Status = VM.STATUS_RUNNING;
                         lstVMs.SelectedItems[0].SubItems[1].Text = vm.GetStatusString();
                         lstVMs.SelectedItems[0].ImageIndex = 1;
@@ -557,8 +558,11 @@ namespace _86boxManager
                         btnConfigure.Enabled = true;
                     }
                     else
-                    {
-                        MessageBox.Show("The 86Box process did not initialize in time. This could be due to poor system performance, or it could indicate a bug. Consider contacting the developer.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    { //Inform the user what happened
+                        MessageBox.Show("The 86Box process did not initialize in time. This usually happens due to poor system performance.\n\nIf you see this message often, consider increasing the timeout value in the settings. It's recommended that you kill the associated 86Box process now.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                        //And try to stop the process so we don't end up in limbo land...
+                        VMKill();
                     }
                 }
             }
