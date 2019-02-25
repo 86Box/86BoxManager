@@ -42,11 +42,16 @@ namespace _86boxManager
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern int SendMessage(IntPtr hwnd, int wMsg, IntPtr wParam, ref COPYDATASTRUCT lParam);
 
+        [DllImport("shell32.dll", SetLastError = true)]
+        static extern void SetCurrentProcessExplicitAppUserModelID([MarshalAs(UnmanagedType.LPWStr)] string AppID);
+
+        private static readonly string AppID = "86Box.86Box"; //For grouping windows together in Win7+ taskbar
         private static Mutex mutex = null;
 
         [STAThread]
         static void Main()
         {
+            SetCurrentProcessExplicitAppUserModelID(AppID);
             const string name = "86Box Manager";
 
             //Use a mutex to check if this is the first instance of Manager
