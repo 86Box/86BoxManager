@@ -1,5 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
@@ -17,6 +19,7 @@ namespace _86boxManager
         private void dlgSettings_Load(object sender, EventArgs e)
         {
             LoadSettings();
+            Get86BoxVersion();
         }
 
         private void dlgSettings_FormClosing(object sender, FormClosingEventArgs e)
@@ -72,6 +75,35 @@ namespace _86boxManager
             }
         }
 
+        //Obtains the 86Box version from 86Box.exe
+        private void Get86BoxVersion()
+        {
+            try
+            {
+                FileVersionInfo vi = FileVersionInfo.GetVersionInfo(txtEXEdir.Text + @"\86Box.exe");
+                if (vi.FilePrivatePart >= 1799) //Officially supported builds
+                {
+                    lbl86BoxVer1.Text = vi.FileMajorPart.ToString() + "." + vi.FileMinorPart.ToString() + "." + vi.FileBuildPart.ToString() + "." + vi.FilePrivatePart.ToString() + " - all features supported";
+                    lbl86BoxVer1.ForeColor = Color.ForestGreen;
+                }
+                else if (vi.FilePrivatePart >= 1763 && vi.FilePrivatePart < 1799) //Should mostly work
+                {
+                    lbl86BoxVer1.Text = vi.FileMajorPart.ToString() + "." + vi.FileMinorPart.ToString() + "." + vi.FileBuildPart.ToString() + "." + vi.FilePrivatePart.ToString() + " - some features not supported";
+                    lbl86BoxVer1.ForeColor = Color.Orange;
+                }
+                else //Completely unsupported, since version info can't be obtained anyway
+                {
+                    lbl86BoxVer1.Text = "2.0 (pre-1763) - not supported";
+                    lbl86BoxVer1.ForeColor = Color.Red;
+                }
+            }
+            catch(FileNotFoundException ex)
+            {
+                lbl86BoxVer1.Text = "N/A";
+                lbl86BoxVer1.ForeColor = Color.DarkGray;
+            }
+        }
+        
         //TODO: Rewrite
         //Save the settings to the registry
         private void SaveSettings()
@@ -107,6 +139,10 @@ namespace _86boxManager
             catch (Exception ex)
             {
                 MessageBox.Show("An error has occurred. Please provide the following information to the developer:\n" + ex.Message + "\n" + ex.StackTrace, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                Get86BoxVersion(); //Get the new exe version in any case
             }
         }
 
