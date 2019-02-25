@@ -412,7 +412,8 @@ namespace _86boxManager
         //Closing 86Box Manager before closing all the VMs can lead to weirdness if 86Box Manager is then restarted. So let's warn the user just in case and request confirmation.
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            List<ListViewItem> vms = new List<ListViewItem>();
+            //List<ListViewItem> vms = new List<ListViewItem>();
+            int vmCount = 0;
             if (e.CloseReason == CloseReason.UserClosing && closeTray)
             {
                 e.Cancel = true;
@@ -427,21 +428,22 @@ namespace _86boxManager
                     VM vm = (VM)item.Tag;
                     if (vm.Status != VM.STATUS_STOPPED && Visible)
                     {
-                        vms.Add(item);
+                        vmCount++;
                     }
                 }
             }
 
             //If there are running VMs, display the warning and stop the VMs if user says so
-            if (vms.Count > 0)
+            if (vmCount > 0)
             {
                 e.Cancel = true;
                 DialogResult = MessageBox.Show("It appears some virtual machines are still running. It's recommended you stop them first before closing 86Box Manager. Do you want to stop them now?", "Virtual machines are still running", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
                 if (DialogResult == DialogResult.Yes)
                 {
-                    foreach (ListViewItem lvi in vms)
+                    foreach (ListViewItem lvi in lstVMs.Items)
                     {
                         lvi.Focused = true;
+                        lvi.Selected = true;
                         VMStop();
                     }
                     Thread.Sleep(1000); //Wait just a bit to make sure everything goes as planned
