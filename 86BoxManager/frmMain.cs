@@ -1346,7 +1346,7 @@ namespace _86boxManager
 
             if (importFailed)
             {
-                MessageBox.Show("Virtual machine \"" + newVM.Name + "\" was successfully created, but files could not be imported. Make sure the path you selected was correct and valid.", "Import failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Virtual machine \"" + newVM.Name + "\" was successfully created, but files could not be imported. Make sure the path you selected was correct and valid.\n\nIf the VM is already located in your VMs folder, you don't need to select the Import option, just add a new VM with the same name.", "Import failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
             {
