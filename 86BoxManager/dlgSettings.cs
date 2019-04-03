@@ -130,6 +130,7 @@ namespace _86boxManager
                 regkey.SetValue("MinimizeToTray", cbxMinimizeTray.Checked, RegistryValueKind.DWord);
                 regkey.SetValue("CloseToTray", cbxCloseTray.Checked, RegistryValueKind.DWord);
                 regkey.SetValue("LaunchTimeout", int.Parse(txtLaunchTimeout.Text), RegistryValueKind.DWord);
+                regkey.SetValue("EnableLogging", cbxLogging.Checked, RegistryValueKind.DWord);
                 regkey.Close();
 
                 settingsChanged = CheckForChanges();
@@ -170,6 +171,7 @@ namespace _86boxManager
                     cbxShowConsole.Checked = true;
                     cbxMinimizeTray.Checked = false;
                     cbxCloseTray.Checked = false;
+                    cbxLogging.Checked = false;
                     txtLaunchTimeout.Text = "5000";
 
                     SaveSettings(); //This will write the default values to the registry
@@ -182,6 +184,7 @@ namespace _86boxManager
                     cbxShowConsole.Checked = Convert.ToBoolean(regkey.GetValue("ShowConsole"));
                     cbxMinimizeTray.Checked = Convert.ToBoolean(regkey.GetValue("MinimizeToTray"));
                     cbxCloseTray.Checked = Convert.ToBoolean(regkey.GetValue("CloseToTray"));
+                    cbxLogging.Checked = Convert.ToBoolean(regkey.GetValue("EnableLogging"));
                     txtLaunchTimeout.Text = Convert.ToString(regkey.GetValue("LaunchTimeout"));
                 }
 
@@ -195,6 +198,7 @@ namespace _86boxManager
                 cbxShowConsole.Checked = true;
                 cbxMinimizeTray.Checked = false;
                 cbxCloseTray.Checked = false;
+                cbxLogging.Checked = false;
                 txtLaunchTimeout.Text = "5000";
             }
         }
@@ -235,16 +239,6 @@ namespace _86boxManager
             }
         }
 
-        private void cbxMinimize_CheckedChanged(object sender, EventArgs e)
-        {
-            settingsChanged = CheckForChanges();
-        }
-
-        private void cbxShowConsole_CheckedChanged(object sender, EventArgs e)
-        {
-            settingsChanged = CheckForChanges();
-        }
-
         private void btnDefaults_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("All settings will be reset to their default values. Do you wish to continue?", "Settings will be reset", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -272,20 +266,11 @@ namespace _86boxManager
             cbxShowConsole.Checked = true;
             cbxMinimizeTray.Checked = false;
             cbxCloseTray.Checked = false;
+            cbxLogging.Checked = false;
             txtLaunchTimeout.Text = "5000";
 
             SaveSettings();
             regkey.Close();
-        }
-
-        private void cbxCloseTray_CheckedChanged(object sender, EventArgs e)
-        {
-            settingsChanged = CheckForChanges();
-        }
-
-        private void cbxMinimizeTray_CheckedChanged(object sender, EventArgs e)
-        {
-            settingsChanged = CheckForChanges();
         }
 
         //Checks if all controls match the currently saved settings to determine if any changes were made
@@ -301,7 +286,8 @@ namespace _86boxManager
                 cbxShowConsole.Checked != Convert.ToBoolean(regkey.GetValue("ShowConsole")) ||
                 cbxMinimizeTray.Checked != Convert.ToBoolean(regkey.GetValue("MinimizeToTray")) ||
                 cbxCloseTray.Checked != Convert.ToBoolean(regkey.GetValue("CloseToTray")) || 
-                txtLaunchTimeout.Text != Convert.ToString(regkey.GetValue("LaunchTimeout")));
+                txtLaunchTimeout.Text != Convert.ToString(regkey.GetValue("LaunchTimeout")) ||
+                cbxLogging.Checked != Convert.ToBoolean(regkey.GetValue("EnableLogging")));
 
                 return btnApply.Enabled;
             }
@@ -313,6 +299,11 @@ namespace _86boxManager
             {
                 regkey.Close();
             }
+        }
+
+        private void cbx_CheckedChanged(object sender, EventArgs e)
+        {
+            settingsChanged = CheckForChanges();
         }
     }
 }

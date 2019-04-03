@@ -44,6 +44,8 @@
             this.cbxCloseTray = new System.Windows.Forms.CheckBox();
             this.cbxMinimize = new System.Windows.Forms.CheckBox();
             this.gbxPaths = new System.Windows.Forms.GroupBox();
+            this.lbl86BoxVer1 = new System.Windows.Forms.Label();
+            this.lbl86BoxVer = new System.Windows.Forms.Label();
             this.lblCFGdir = new System.Windows.Forms.Label();
             this.txtCFGdir = new System.Windows.Forms.TextBox();
             this.txtEXEdir = new System.Windows.Forms.TextBox();
@@ -52,9 +54,9 @@
             this.btnBrowse1 = new System.Windows.Forms.Button();
             this.tabAdvanced = new System.Windows.Forms.TabPage();
             this.gbxMisc = new System.Windows.Forms.GroupBox();
-            this.lbl86BoxVer = new System.Windows.Forms.Label();
-            this.lbl86BoxVer1 = new System.Windows.Forms.Label();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.gbxTimeouts = new System.Windows.Forms.GroupBox();
+            this.cbxLogging = new System.Windows.Forms.CheckBox();
             this.pnlBottom.SuspendLayout();
             this.tbcSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -62,6 +64,7 @@
             this.gbxPaths.SuspendLayout();
             this.tabAdvanced.SuspendLayout();
             this.gbxMisc.SuspendLayout();
+            this.gbxTimeouts.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnApply
@@ -109,14 +112,14 @@
             // 
             this.cbxShowConsole.AutoSize = true;
             this.cbxShowConsole.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cbxShowConsole.Location = new System.Drawing.Point(301, 27);
+            this.cbxShowConsole.Location = new System.Drawing.Point(9, 30);
             this.cbxShowConsole.Margin = new System.Windows.Forms.Padding(2);
             this.cbxShowConsole.Name = "cbxShowConsole";
             this.cbxShowConsole.Size = new System.Drawing.Size(217, 24);
             this.cbxShowConsole.TabIndex = 5;
             this.cbxShowConsole.Text = "Enable 86Box console window";
             this.cbxShowConsole.UseVisualStyleBackColor = true;
-            this.cbxShowConsole.CheckedChanged += new System.EventHandler(this.cbxShowConsole_CheckedChanged);
+            this.cbxShowConsole.CheckedChanged += new System.EventHandler(this.cbx_CheckedChanged);
             // 
             // btnDefaults
             // 
@@ -148,7 +151,7 @@
             // lblLaunchTimeout
             // 
             this.lblLaunchTimeout.AutoSize = true;
-            this.lblLaunchTimeout.Location = new System.Drawing.Point(5, 30);
+            this.lblLaunchTimeout.Location = new System.Drawing.Point(5, 33);
             this.lblLaunchTimeout.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblLaunchTimeout.Name = "lblLaunchTimeout";
             this.lblLaunchTimeout.Size = new System.Drawing.Size(254, 19);
@@ -157,7 +160,7 @@
             // 
             // txtLaunchTimeout
             // 
-            this.txtLaunchTimeout.Location = new System.Drawing.Point(117, 27);
+            this.txtLaunchTimeout.Location = new System.Drawing.Point(117, 30);
             this.txtLaunchTimeout.Margin = new System.Windows.Forms.Padding(2);
             this.txtLaunchTimeout.MaxLength = 5;
             this.txtLaunchTimeout.Name = "txtLaunchTimeout";
@@ -211,7 +214,7 @@
             this.cbxMinimizeTray.TabIndex = 6;
             this.cbxMinimizeTray.Text = "Minimize 86Box Manager to tray icon";
             this.cbxMinimizeTray.UseVisualStyleBackColor = true;
-            this.cbxMinimizeTray.CheckedChanged += new System.EventHandler(this.cbxMinimizeTray_CheckedChanged);
+            this.cbxMinimizeTray.CheckedChanged += new System.EventHandler(this.cbx_CheckedChanged);
             // 
             // cbxCloseTray
             // 
@@ -224,7 +227,7 @@
             this.cbxCloseTray.TabIndex = 7;
             this.cbxCloseTray.Text = "Close 86Box Manager to tray icon";
             this.cbxCloseTray.UseVisualStyleBackColor = true;
-            this.cbxCloseTray.CheckedChanged += new System.EventHandler(this.cbxCloseTray_CheckedChanged);
+            this.cbxCloseTray.CheckedChanged += new System.EventHandler(this.cbx_CheckedChanged);
             // 
             // cbxMinimize
             // 
@@ -237,7 +240,7 @@
             this.cbxMinimize.TabIndex = 4;
             this.cbxMinimize.Text = "Minimize 86Box Manager when a VM is started";
             this.cbxMinimize.UseVisualStyleBackColor = true;
-            this.cbxMinimize.CheckedChanged += new System.EventHandler(this.cbxMinimize_CheckedChanged);
+            this.cbxMinimize.CheckedChanged += new System.EventHandler(this.cbx_CheckedChanged);
             // 
             // gbxPaths
             // 
@@ -255,6 +258,27 @@
             this.gbxPaths.TabIndex = 5;
             this.gbxPaths.TabStop = false;
             this.gbxPaths.Text = "Paths";
+            // 
+            // lbl86BoxVer1
+            // 
+            this.lbl86BoxVer1.AutoSize = true;
+            this.lbl86BoxVer1.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
+            this.lbl86BoxVer1.Location = new System.Drawing.Point(100, 59);
+            this.lbl86BoxVer1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbl86BoxVer1.Name = "lbl86BoxVer1";
+            this.lbl86BoxVer1.Size = new System.Drawing.Size(69, 19);
+            this.lbl86BoxVer1.TabIndex = 6;
+            this.lbl86BoxVer1.Text = "Unknown";
+            // 
+            // lbl86BoxVer
+            // 
+            this.lbl86BoxVer.AutoSize = true;
+            this.lbl86BoxVer.Location = new System.Drawing.Point(5, 59);
+            this.lbl86BoxVer.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbl86BoxVer.Name = "lbl86BoxVer";
+            this.lbl86BoxVer.Size = new System.Drawing.Size(98, 19);
+            this.lbl86BoxVer.TabIndex = 5;
+            this.lbl86BoxVer.Text = "86Box version:";
             // 
             // lblCFGdir
             // 
@@ -321,6 +345,7 @@
             // 
             // tabAdvanced
             // 
+            this.tabAdvanced.Controls.Add(this.gbxTimeouts);
             this.tabAdvanced.Controls.Add(this.gbxMisc);
             this.tabAdvanced.Location = new System.Drawing.Point(4, 26);
             this.tabAdvanced.Name = "tabAdvanced";
@@ -332,36 +357,38 @@
             // 
             // gbxMisc
             // 
-            this.gbxMisc.Controls.Add(this.txtLaunchTimeout);
+            this.gbxMisc.Controls.Add(this.cbxLogging);
             this.gbxMisc.Controls.Add(this.cbxShowConsole);
-            this.gbxMisc.Controls.Add(this.lblLaunchTimeout);
-            this.gbxMisc.Location = new System.Drawing.Point(6, 6);
+            this.gbxMisc.Location = new System.Drawing.Point(6, 84);
             this.gbxMisc.Name = "gbxMisc";
             this.gbxMisc.Size = new System.Drawing.Size(669, 72);
             this.gbxMisc.TabIndex = 0;
             this.gbxMisc.TabStop = false;
             this.gbxMisc.Text = "Miscellaneous";
             // 
-            // lbl86BoxVer
+            // gbxTimeouts
             // 
-            this.lbl86BoxVer.AutoSize = true;
-            this.lbl86BoxVer.Location = new System.Drawing.Point(5, 59);
-            this.lbl86BoxVer.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lbl86BoxVer.Name = "lbl86BoxVer";
-            this.lbl86BoxVer.Size = new System.Drawing.Size(98, 19);
-            this.lbl86BoxVer.TabIndex = 5;
-            this.lbl86BoxVer.Text = "86Box version:";
+            this.gbxTimeouts.Controls.Add(this.txtLaunchTimeout);
+            this.gbxTimeouts.Controls.Add(this.lblLaunchTimeout);
+            this.gbxTimeouts.Location = new System.Drawing.Point(6, 6);
+            this.gbxTimeouts.Name = "gbxTimeouts";
+            this.gbxTimeouts.Size = new System.Drawing.Size(669, 72);
+            this.gbxTimeouts.TabIndex = 17;
+            this.gbxTimeouts.TabStop = false;
+            this.gbxTimeouts.Text = "Timeouts";
             // 
-            // lbl86BoxVer1
+            // cbxLogging
             // 
-            this.lbl86BoxVer1.AutoSize = true;
-            this.lbl86BoxVer1.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
-            this.lbl86BoxVer1.Location = new System.Drawing.Point(100, 59);
-            this.lbl86BoxVer1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lbl86BoxVer1.Name = "lbl86BoxVer1";
-            this.lbl86BoxVer1.Size = new System.Drawing.Size(69, 19);
-            this.lbl86BoxVer1.TabIndex = 6;
-            this.lbl86BoxVer1.Text = "Unknown";
+            this.cbxLogging.AutoSize = true;
+            this.cbxLogging.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cbxLogging.Location = new System.Drawing.Point(230, 30);
+            this.cbxLogging.Margin = new System.Windows.Forms.Padding(2);
+            this.cbxLogging.Name = "cbxLogging";
+            this.cbxLogging.Size = new System.Drawing.Size(166, 24);
+            this.cbxLogging.TabIndex = 6;
+            this.cbxLogging.Text = "Enable 86Box logging";
+            this.cbxLogging.UseVisualStyleBackColor = true;
+            this.cbxLogging.CheckedChanged += new System.EventHandler(this.cbx_CheckedChanged);
             // 
             // dlgSettings
             // 
@@ -394,6 +421,8 @@
             this.tabAdvanced.ResumeLayout(false);
             this.gbxMisc.ResumeLayout(false);
             this.gbxMisc.PerformLayout();
+            this.gbxTimeouts.ResumeLayout(false);
+            this.gbxTimeouts.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -426,5 +455,7 @@
         private System.Windows.Forms.Label lbl86BoxVer1;
         private System.Windows.Forms.Label lbl86BoxVer;
         private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.GroupBox gbxTimeouts;
+        private System.Windows.Forms.CheckBox cbxLogging;
     }
 }

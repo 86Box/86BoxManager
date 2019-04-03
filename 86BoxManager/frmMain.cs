@@ -1,14 +1,13 @@
-﻿using System;
-using System.Windows.Forms;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
+﻿using IWshRuntimeLibrary;
 using Microsoft.Win32;
+using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
-using IWshRuntimeLibrary;
-using System.Collections.Generic;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace _86boxManager
 {
@@ -41,6 +40,7 @@ namespace _86boxManager
         private const string ZEROID = "0000000000000000"; //Used for the id parameter of 86Box -H
         private int sortColumn = -1; //For column sorting's asc/desc capability
         private int launchTimeout = 5000; //Timeout for waiting for 86Box.exe to initialize
+        private bool logging = false; //Logging enabled for 86Box.exe (-L parameter)?
 
         public frmMain()
         {
@@ -126,7 +126,6 @@ namespace _86boxManager
                 VM vm = (VM)lstVMs.SelectedItems[0].Tag;
                 if (vm.Status == VM.STATUS_RUNNING)
                 {
-                    //btnConfigure.Enabled = false;
                     btnStart.Enabled = true;
                     btnStart.Text = "Stop";
                     toolTip.SetToolTip(btnStart, "Stop this virtual machine");
@@ -415,7 +414,6 @@ namespace _86boxManager
         //Closing 86Box Manager before closing all the VMs can lead to weirdness if 86Box Manager is then restarted. So let's warn the user just in case and request confirmation.
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //List<ListViewItem> vms = new List<ListViewItem>();
             int vmCount = 0;
             if (e.CloseReason == CloseReason.UserClosing && closeTray)
             {
@@ -478,7 +476,6 @@ namespace _86boxManager
         {
             VM vm = (VM)lstVMs.SelectedItems[0].Tag;
             PostMessage(vm.hWnd, 0x8890, IntPtr.Zero, IntPtr.Zero);
-            vm.Status = VM.STATUS_PAUSED;
             lstVMs.SelectedItems[0].SubItems[1].Text = vm.GetStatusString();
             lstVMs.SelectedItems[0].ImageIndex = 2;
             pauseToolStripMenuItem.Text = "Resume";
@@ -514,6 +511,10 @@ namespace _86boxManager
                     Process p = new Process();
                     p.StartInfo.FileName = exepath + "86Box.exe";
                     p.StartInfo.Arguments = "-P \"" + lstVMs.SelectedItems[0].SubItems[2].Text + "\" -H " + ZEROID + "," + hWndHex;
+                    if (logging)
+                    {
+                        p.StartInfo.Arguments += " -L";
+                    }
                     if (!showConsole)
                     {
                         p.StartInfo.RedirectStandardOutput = true;
@@ -522,12 +523,11 @@ namespace _86boxManager
 
                     p.Start();
                     vm.Pid = p.Id;
-                    bool initSuccess = p.WaitForInputIdle(launchTimeout); //Wait 5 seconds so hWnd can be obtained
+                    bool initSuccess = p.WaitForInputIdle(launchTimeout); //Wait for the specified amount of time so hWnd can be obtained
 
                     if (!p.MainWindowHandle.Equals(IntPtr.Zero) && initSuccess)
                     {
                         vm.hWnd = p.MainWindowHandle; //Get the window handle of the newly created process
-                       //vm.Pid = p.Id; //Assign the pid to the VM
                         vm.Status = VM.STATUS_RUNNING;
                         lstVMs.SelectedItems[0].SubItems[1].Text = vm.GetStatusString();
                         lstVMs.SelectedItems[0].ImageIndex = 1;
