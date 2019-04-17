@@ -1105,7 +1105,7 @@ namespace _86boxManager
         //Starts/stops selected VM when enter is pressed
         private void lstVMs_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter && lstVMs.SelectedItems.Count > 0)
             {
                 VM vm = (VM)lstVMs.SelectedItems[0].Tag;
                 if (vm.Status == VM.STATUS_RUNNING)
