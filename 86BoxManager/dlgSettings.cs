@@ -64,7 +64,7 @@ namespace _86boxManager
         private void txt_TextChanged(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtEXEdir.Text) || string.IsNullOrWhiteSpace(txtCFGdir.Text) ||
-                string.IsNullOrWhiteSpace(txtLaunchTimeout.Text))
+                string.IsNullOrWhiteSpace(txtLaunchTimeout.Text) || string.IsNullOrWhiteSpace(txtLogPath.Text))
             {
                 btnApply.Enabled = false;
             }
@@ -93,7 +93,7 @@ namespace _86boxManager
                 }
                 else //Completely unsupported, since version info can't be obtained anyway
                 {
-                    lbl86BoxVer1.Text = "2.0 (pre-1763) - not supported";
+                    lbl86BoxVer1.Text = "2.0 (pre-1763) - no support / unofficial build - support level unknown";
                     lbl86BoxVer1.ForeColor = Color.Red;
                 }
             }
@@ -131,6 +131,8 @@ namespace _86boxManager
                 regkey.SetValue("CloseToTray", cbxCloseTray.Checked, RegistryValueKind.DWord);
                 regkey.SetValue("LaunchTimeout", int.Parse(txtLaunchTimeout.Text), RegistryValueKind.DWord);
                 regkey.SetValue("EnableLogging", cbxLogging.Checked, RegistryValueKind.DWord);
+                regkey.SetValue("LogPath", txtLogPath.Text, RegistryValueKind.String);
+                regkey.SetValue("EnableGridLines", cbxGrid.Checked, RegistryValueKind.DWord);
                 regkey.Close();
 
                 settingsChanged = CheckForChanges();
@@ -173,6 +175,10 @@ namespace _86boxManager
                     cbxCloseTray.Checked = false;
                     cbxLogging.Checked = false;
                     txtLaunchTimeout.Text = "5000";
+                    txtLogPath.Text = "";
+                    cbxGrid.Checked = false;
+                    btnBrowse3.Enabled = false;
+                    txtLogPath.Enabled = false;
 
                     SaveSettings(); //This will write the default values to the registry
                 }
@@ -186,6 +192,10 @@ namespace _86boxManager
                     cbxCloseTray.Checked = Convert.ToBoolean(regkey.GetValue("CloseToTray"));
                     cbxLogging.Checked = Convert.ToBoolean(regkey.GetValue("EnableLogging"));
                     txtLaunchTimeout.Text = Convert.ToString(regkey.GetValue("LaunchTimeout"));
+                    txtLogPath.Text = Convert.ToString(regkey.GetValue("LogPath"));
+                    cbxGrid.Checked = Convert.ToBoolean(regkey.GetValue("EnableGridLines"));
+                    txtLogPath.Enabled = cbxLogging.Checked;
+                    btnBrowse3.Enabled = cbxLogging.Checked;
                 }
 
                 regkey.Close();
@@ -200,6 +210,10 @@ namespace _86boxManager
                 cbxCloseTray.Checked = false;
                 cbxLogging.Checked = false;
                 txtLaunchTimeout.Text = "5000";
+                txtLogPath.Text = "";
+                cbxGrid.Checked = false;
+                txtLogPath.Enabled = false;
+                btnBrowse3.Enabled = false;
             }
         }
 
@@ -268,6 +282,10 @@ namespace _86boxManager
             cbxCloseTray.Checked = false;
             cbxLogging.Checked = false;
             txtLaunchTimeout.Text = "5000";
+            txtLogPath.Text = "";
+            cbxGrid.Checked = false;
+            txtLogPath.Enabled = false;
+            btnBrowse3.Enabled = false;
 
             SaveSettings();
             regkey.Close();
@@ -287,7 +305,9 @@ namespace _86boxManager
                 cbxMinimizeTray.Checked != Convert.ToBoolean(regkey.GetValue("MinimizeToTray")) ||
                 cbxCloseTray.Checked != Convert.ToBoolean(regkey.GetValue("CloseToTray")) || 
                 txtLaunchTimeout.Text != Convert.ToString(regkey.GetValue("LaunchTimeout")) ||
-                cbxLogging.Checked != Convert.ToBoolean(regkey.GetValue("EnableLogging")));
+                cbxLogging.Checked != Convert.ToBoolean(regkey.GetValue("EnableLogging")) ||
+                txtLogPath.Text != regkey.GetValue("LogPath").ToString() ||
+                cbxGrid.Checked != Convert.ToBoolean(regkey.GetValue("EnableGridLines")));
 
                 return btnApply.Enabled;
             }
@@ -304,6 +324,28 @@ namespace _86boxManager
         private void cbx_CheckedChanged(object sender, EventArgs e)
         {
             settingsChanged = CheckForChanges();
+        }
+
+        private void cbxLogging_CheckedChanged(object sender, EventArgs e)
+        {
+            settingsChanged = CheckForChanges();
+            txt_TextChanged(sender, e); //Needed so the Apply button doesn't get enabled on an empty logpath textbox. Too lazy to write a duplicated empty check...
+            txtLogPath.Enabled = cbxLogging.Checked;
+            btnBrowse3.Enabled = cbxLogging.Checked;
+        }
+
+        private void btnBrowse3_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog ofd = new SaveFileDialog();
+            ofd.DefaultExt = "log";
+            ofd.Title = "Select a file where 86Box logs will be saved";
+            ofd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer);
+            ofd.Filter = "Log files (*.log)|*.log";
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                txtLogPath.Text = ofd.FileName;
+            }
         }
     }
 }

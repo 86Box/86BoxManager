@@ -41,6 +41,8 @@ namespace _86boxManager
         private int sortColumn = -1; //For column sorting's asc/desc capability
         private int launchTimeout = 5000; //Timeout for waiting for 86Box.exe to initialize
         private bool logging = false; //Logging enabled for 86Box.exe (-L parameter)?
+        private string logpath = ""; //Path to log file
+        private bool gridlines = false; //Are grid lines enabled for VM list?
 
         public frmMain()
         {
@@ -206,6 +208,11 @@ namespace _86boxManager
                 minimizeTray = Convert.ToBoolean(regkey.GetValue("MinimizeToTray"));
                 closeTray = Convert.ToBoolean(regkey.GetValue("CloseToTray"));
                 launchTimeout = int.Parse(regkey.GetValue("LaunchTimeout").ToString());
+                logpath = regkey.GetValue("LogPath").ToString();
+                logging = Convert.ToBoolean(regkey.GetValue("EnableLogging"));
+                gridlines = Convert.ToBoolean(regkey.GetValue("EnableGridLines"));
+
+                lstVMs.GridLines = gridlines;
             }
             catch (Exception ex)
             {
@@ -226,6 +233,11 @@ namespace _86boxManager
                 minimizeTray = false;
                 closeTray = false;
                 launchTimeout = 5000;
+                logging = false;
+                logpath = "";
+                gridlines = false;
+
+                lstVMs.GridLines = false;
 
                 //Defaults must also be written to the registry
                 regkey.SetValue("EXEdir", exepath, RegistryValueKind.String);
@@ -235,6 +247,9 @@ namespace _86boxManager
                 regkey.SetValue("MinimizeToTray", minimizeTray, RegistryValueKind.DWord);
                 regkey.SetValue("CloseToTray", closeTray, RegistryValueKind.DWord);
                 regkey.SetValue("LaunchTimeout", launchTimeout, RegistryValueKind.DWord);
+                regkey.SetValue("EnableLogging", logging, RegistryValueKind.DWord);
+                regkey.SetValue("LogPath", logpath, RegistryValueKind.String);
+                regkey.SetValue("EnableGridLines", gridlines, RegistryValueKind.DWord);
             }
             finally
             {
@@ -513,7 +528,7 @@ namespace _86boxManager
                     p.StartInfo.Arguments = "-P \"" + lstVMs.SelectedItems[0].SubItems[2].Text + "\" -H " + ZEROID + "," + hWndHex;
                     if (logging)
                     {
-                        p.StartInfo.Arguments += " -L";
+                        p.StartInfo.Arguments += " -L \"" + logpath + "\"";
                     }
                     if (!showConsole)
                     {

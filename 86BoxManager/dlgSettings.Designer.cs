@@ -54,9 +54,11 @@
             this.btnBrowse1 = new System.Windows.Forms.Button();
             this.tabAdvanced = new System.Windows.Forms.TabPage();
             this.gbxMisc = new System.Windows.Forms.GroupBox();
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.gbxTimeouts = new System.Windows.Forms.GroupBox();
+            this.cbxGrid = new System.Windows.Forms.CheckBox();
+            this.btnBrowse3 = new System.Windows.Forms.Button();
+            this.txtLogPath = new System.Windows.Forms.TextBox();
             this.cbxLogging = new System.Windows.Forms.CheckBox();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.pnlBottom.SuspendLayout();
             this.tbcSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -64,7 +66,6 @@
             this.gbxPaths.SuspendLayout();
             this.tabAdvanced.SuspendLayout();
             this.gbxMisc.SuspendLayout();
-            this.gbxTimeouts.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnApply
@@ -112,7 +113,7 @@
             // 
             this.cbxShowConsole.AutoSize = true;
             this.cbxShowConsole.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cbxShowConsole.Location = new System.Drawing.Point(9, 30);
+            this.cbxShowConsole.Location = new System.Drawing.Point(285, 146);
             this.cbxShowConsole.Margin = new System.Windows.Forms.Padding(2);
             this.cbxShowConsole.Name = "cbxShowConsole";
             this.cbxShowConsole.Size = new System.Drawing.Size(217, 24);
@@ -345,7 +346,6 @@
             // 
             // tabAdvanced
             // 
-            this.tabAdvanced.Controls.Add(this.gbxTimeouts);
             this.tabAdvanced.Controls.Add(this.gbxMisc);
             this.tabAdvanced.Location = new System.Drawing.Point(4, 26);
             this.tabAdvanced.Name = "tabAdvanced";
@@ -357,38 +357,65 @@
             // 
             // gbxMisc
             // 
-            this.gbxMisc.Controls.Add(this.cbxLogging);
+            this.gbxMisc.Controls.Add(this.cbxGrid);
+            this.gbxMisc.Controls.Add(this.txtLaunchTimeout);
+            this.gbxMisc.Controls.Add(this.btnBrowse3);
             this.gbxMisc.Controls.Add(this.cbxShowConsole);
-            this.gbxMisc.Location = new System.Drawing.Point(6, 84);
+            this.gbxMisc.Controls.Add(this.txtLogPath);
+            this.gbxMisc.Controls.Add(this.lblLaunchTimeout);
+            this.gbxMisc.Controls.Add(this.cbxLogging);
+            this.gbxMisc.Location = new System.Drawing.Point(6, 6);
             this.gbxMisc.Name = "gbxMisc";
-            this.gbxMisc.Size = new System.Drawing.Size(669, 72);
-            this.gbxMisc.TabIndex = 0;
+            this.gbxMisc.Size = new System.Drawing.Size(669, 221);
+            this.gbxMisc.TabIndex = 17;
             this.gbxMisc.TabStop = false;
             this.gbxMisc.Text = "Miscellaneous";
             // 
-            // gbxTimeouts
+            // cbxGrid
             // 
-            this.gbxTimeouts.Controls.Add(this.txtLaunchTimeout);
-            this.gbxTimeouts.Controls.Add(this.lblLaunchTimeout);
-            this.gbxTimeouts.Location = new System.Drawing.Point(6, 6);
-            this.gbxTimeouts.Name = "gbxTimeouts";
-            this.gbxTimeouts.Size = new System.Drawing.Size(669, 72);
-            this.gbxTimeouts.TabIndex = 17;
-            this.gbxTimeouts.TabStop = false;
-            this.gbxTimeouts.Text = "Timeouts";
+            this.cbxGrid.AutoSize = true;
+            this.cbxGrid.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cbxGrid.Location = new System.Drawing.Point(9, 146);
+            this.cbxGrid.Margin = new System.Windows.Forms.Padding(2);
+            this.cbxGrid.Name = "cbxGrid";
+            this.cbxGrid.Size = new System.Drawing.Size(272, 24);
+            this.cbxGrid.TabIndex = 9;
+            this.cbxGrid.Text = "Enable grid lines in virtual machines list";
+            this.cbxGrid.UseVisualStyleBackColor = true;
+            this.cbxGrid.CheckedChanged += new System.EventHandler(this.cbx_CheckedChanged);
+            // 
+            // btnBrowse3
+            // 
+            this.btnBrowse3.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnBrowse3.Location = new System.Drawing.Point(594, 101);
+            this.btnBrowse3.Margin = new System.Windows.Forms.Padding(2);
+            this.btnBrowse3.Name = "btnBrowse3";
+            this.btnBrowse3.Size = new System.Drawing.Size(70, 30);
+            this.btnBrowse3.TabIndex = 8;
+            this.btnBrowse3.Text = "Browse...";
+            this.btnBrowse3.UseVisualStyleBackColor = true;
+            this.btnBrowse3.Click += new System.EventHandler(this.btnBrowse3_Click);
+            // 
+            // txtLogPath
+            // 
+            this.txtLogPath.Location = new System.Drawing.Point(9, 104);
+            this.txtLogPath.Name = "txtLogPath";
+            this.txtLogPath.Size = new System.Drawing.Size(580, 25);
+            this.txtLogPath.TabIndex = 7;
+            this.txtLogPath.TextChanged += new System.EventHandler(this.txt_TextChanged);
             // 
             // cbxLogging
             // 
             this.cbxLogging.AutoSize = true;
             this.cbxLogging.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cbxLogging.Location = new System.Drawing.Point(230, 30);
+            this.cbxLogging.Location = new System.Drawing.Point(9, 76);
             this.cbxLogging.Margin = new System.Windows.Forms.Padding(2);
             this.cbxLogging.Name = "cbxLogging";
-            this.cbxLogging.Size = new System.Drawing.Size(166, 24);
+            this.cbxLogging.Size = new System.Drawing.Size(207, 24);
             this.cbxLogging.TabIndex = 6;
-            this.cbxLogging.Text = "Enable 86Box logging";
+            this.cbxLogging.Text = "Enable 86Box logging to file:";
             this.cbxLogging.UseVisualStyleBackColor = true;
-            this.cbxLogging.CheckedChanged += new System.EventHandler(this.cbx_CheckedChanged);
+            this.cbxLogging.CheckedChanged += new System.EventHandler(this.cbxLogging_CheckedChanged);
             // 
             // dlgSettings
             // 
@@ -421,8 +448,6 @@
             this.tabAdvanced.ResumeLayout(false);
             this.gbxMisc.ResumeLayout(false);
             this.gbxMisc.PerformLayout();
-            this.gbxTimeouts.ResumeLayout(false);
-            this.gbxTimeouts.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -451,11 +476,13 @@
         private System.Windows.Forms.Label lblEXEdir;
         private System.Windows.Forms.Button btnBrowse1;
         private System.Windows.Forms.TabPage tabAdvanced;
-        private System.Windows.Forms.GroupBox gbxMisc;
         private System.Windows.Forms.Label lbl86BoxVer1;
         private System.Windows.Forms.Label lbl86BoxVer;
         private System.Windows.Forms.ToolTip toolTip;
-        private System.Windows.Forms.GroupBox gbxTimeouts;
+        private System.Windows.Forms.GroupBox gbxMisc;
         private System.Windows.Forms.CheckBox cbxLogging;
+        private System.Windows.Forms.Button btnBrowse3;
+        private System.Windows.Forms.TextBox txtLogPath;
+        private System.Windows.Forms.CheckBox cbxGrid;
     }
 }
