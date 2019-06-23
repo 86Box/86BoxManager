@@ -899,24 +899,41 @@ namespace _86boxManager
 
             if (result1 == DialogResult.Yes)
             {
-                lstVMs.Items.Remove(lstVMs.SelectedItems[0]);
-                regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box\Virtual Machines", true);
-                regkey.DeleteValue(vm.Name);
-                regkey.Close();
-
-                DialogResult result2 = MessageBox.Show("Would you like to delete the files of this virtual machine as well?", "Delete files", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (result2 == DialogResult.No)
+                try
                 {
-                    MessageBox.Show("Virtual machine \"" + vm.Name + "\" was successfully removed. Its files are still there if you want to re-add it later.", "Virtual machine removed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    lstVMs.Items.Remove(lstVMs.SelectedItems[0]);
+                    regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box\Virtual Machines", true);
+                    regkey.DeleteValue(vm.Name);
+                    regkey.Close();
                 }
-                else if (result2 == DialogResult.Yes)
+                catch(Exception ex) //Catches "regkey doesn't exist" exceptions and such
+                {
+                    MessageBox.Show("Virtual machine \"" + vm.Name + "\" could not be removed due to the following error:\n\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error );
+                    return;
+                }
+
+                DialogResult result2 = MessageBox.Show("Virtual machine \"" + vm.Name + "\" was successfully removed. Would you like to delete its files as well?", "Virtual machine removed", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result2 == DialogResult.Yes)
                 {
                     try
                     {
                         Directory.Delete(vm.Path, true);
                     }
-                    catch (DirectoryNotFoundException) {/*Just ignore this for now*/}
-                    MessageBox.Show("Virtual machine \"" + vm.Name + "\" was successfully removed, along with its files.", "Virtual machine and files removed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    catch (UnauthorizedAccessException) //Files are read-only or protected by privileges
+                    {
+                        MessageBox.Show("86Box Manager was unable to delete the files of this virtual machine, because they are set as read-only or you don't have sufficient privileges to delete them.\n\nMake sure the files are free for deletion, then remove them manually.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    catch (IOException) //Files are in use by another process
+                    {
+                        MessageBox.Show("86Box Manager was unable to delete the files of this virtual machine, because they are currently in use by another process.\n\nMake sure the files are free for deletion, then remove them manually.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    catch (Exception ex) { //Other exceptions
+                        MessageBox.Show("The following error occurred while trying to remove the files of this virtual machine:\n\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    MessageBox.Show("Files of virtual machine \"" + vm.Name + "\" were successfully deleted.", "Virtual machine files removed", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
