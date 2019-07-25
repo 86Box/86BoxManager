@@ -129,7 +129,7 @@ namespace _86boxManager
                 regkey.SetValue("ShowConsole", cbxShowConsole.Checked, RegistryValueKind.DWord);
                 regkey.SetValue("MinimizeToTray", cbxMinimizeTray.Checked, RegistryValueKind.DWord);
                 regkey.SetValue("CloseToTray", cbxCloseTray.Checked, RegistryValueKind.DWord);
-                regkey.SetValue("LaunchTimeout", int.Parse(txtLaunchTimeout.Text), RegistryValueKind.DWord);
+                regkey.SetValue("LaunchTimeout", Convert.ToInt32(txtLaunchTimeout.Text), RegistryValueKind.DWord);
                 regkey.SetValue("EnableLogging", cbxLogging.Checked, RegistryValueKind.DWord);
                 regkey.SetValue("LogPath", txtLogPath.Text, RegistryValueKind.String);
                 regkey.SetValue("EnableGridLines", cbxGrid.Checked, RegistryValueKind.DWord);
@@ -186,13 +186,13 @@ namespace _86boxManager
                 {
                     txtEXEdir.Text = regkey.GetValue("EXEdir").ToString();
                     txtCFGdir.Text = regkey.GetValue("CFGdir").ToString();
+                    txtLaunchTimeout.Text = regkey.GetValue("LaunchTimeout").ToString();
+                    txtLogPath.Text = regkey.GetValue("LogPath").ToString();
                     cbxMinimize.Checked = Convert.ToBoolean(regkey.GetValue("MinimizeOnVMStart"));
                     cbxShowConsole.Checked = Convert.ToBoolean(regkey.GetValue("ShowConsole"));
                     cbxMinimizeTray.Checked = Convert.ToBoolean(regkey.GetValue("MinimizeToTray"));
                     cbxCloseTray.Checked = Convert.ToBoolean(regkey.GetValue("CloseToTray"));
                     cbxLogging.Checked = Convert.ToBoolean(regkey.GetValue("EnableLogging"));
-                    txtLaunchTimeout.Text = Convert.ToString(regkey.GetValue("LaunchTimeout"));
-                    txtLogPath.Text = Convert.ToString(regkey.GetValue("LogPath"));
                     cbxGrid.Checked = Convert.ToBoolean(regkey.GetValue("EnableGridLines"));
                     txtLogPath.Enabled = cbxLogging.Checked;
                     btnBrowse3.Enabled = cbxLogging.Checked;
@@ -298,21 +298,65 @@ namespace _86boxManager
 
             try
             {
-                btnApply.Enabled = (txtEXEdir.Text != regkey.GetValue("EXEdir").ToString() ||
+                if(txtEXEdir.Text != regkey.GetValue("EXEdir").ToString())
+                {
+                    Console.WriteLine("EXEdir");
+                }
+                if (txtCFGdir.Text != regkey.GetValue("CFGdir").ToString())
+                {
+                    Console.WriteLine("CFGdir");
+                }
+                if (cbxMinimize.Checked != Convert.ToBoolean(regkey.GetValue("MinimizeOnVMStart")))
+                {
+                    Console.WriteLine("MinimizeOnVMStart");
+                }
+                if (cbxShowConsole.Checked != Convert.ToBoolean(regkey.GetValue("ShowConsole")))
+                {
+                    Console.WriteLine("ShowConsole");
+                }
+                if (cbxMinimizeTray.Checked != Convert.ToBoolean(regkey.GetValue("MinimizeToTray")))
+                {
+                    Console.WriteLine("MinimizeToTray");
+                }
+                if (cbxCloseTray.Checked != Convert.ToBoolean(regkey.GetValue("CloseToTray")))
+                {
+                    Console.WriteLine("CloseToTray");
+                }
+                if (txtLaunchTimeout.Text != regkey.GetValue("LaunchTimeout").ToString())
+                {
+                    Console.WriteLine("LaunchTimeout: " + regkey.GetValue("LaunchTimeout").ToString());
+                    Console.WriteLine("txtLaunchTimeout.Text: " + txtLaunchTimeout.Text);
+                }
+                if (cbxLogging.Checked != Convert.ToBoolean(regkey.GetValue("EnableLogging")))
+                {
+                    Console.WriteLine("EnableLogging");
+                }
+                if (txtLogPath.Text != regkey.GetValue("LogPath").ToString())
+                {
+                    Console.WriteLine("LogPath");
+                }
+                if (cbxGrid.Checked != Convert.ToBoolean(regkey.GetValue("EnableGridLines")))
+                {
+                    Console.WriteLine("EnableGridLines");
+                }
+
+                btnApply.Enabled = (
+                    txtEXEdir.Text != regkey.GetValue("EXEdir").ToString() ||
                     txtCFGdir.Text != regkey.GetValue("CFGdir").ToString() ||
-                cbxMinimize.Checked != Convert.ToBoolean(regkey.GetValue("MinimizeOnVMStart")) ||
-                cbxShowConsole.Checked != Convert.ToBoolean(regkey.GetValue("ShowConsole")) ||
-                cbxMinimizeTray.Checked != Convert.ToBoolean(regkey.GetValue("MinimizeToTray")) ||
-                cbxCloseTray.Checked != Convert.ToBoolean(regkey.GetValue("CloseToTray")) || 
-                txtLaunchTimeout.Text != Convert.ToString(regkey.GetValue("LaunchTimeout")) ||
-                cbxLogging.Checked != Convert.ToBoolean(regkey.GetValue("EnableLogging")) ||
-                txtLogPath.Text != regkey.GetValue("LogPath").ToString() ||
-                cbxGrid.Checked != Convert.ToBoolean(regkey.GetValue("EnableGridLines")));
+                    cbxMinimize.Checked != Convert.ToBoolean(regkey.GetValue("MinimizeOnVMStart")) ||
+                    cbxShowConsole.Checked != Convert.ToBoolean(regkey.GetValue("ShowConsole")) ||
+                    cbxMinimizeTray.Checked != Convert.ToBoolean(regkey.GetValue("MinimizeToTray")) ||
+                    cbxCloseTray.Checked != Convert.ToBoolean(regkey.GetValue("CloseToTray")) || 
+                    txtLaunchTimeout.Text != regkey.GetValue("LaunchTimeout").ToString() ||
+                    cbxLogging.Checked != Convert.ToBoolean(regkey.GetValue("EnableLogging")) ||
+                    txtLogPath.Text != regkey.GetValue("LogPath").ToString() ||
+                    cbxGrid.Checked != Convert.ToBoolean(regkey.GetValue("EnableGridLines")));
 
                 return btnApply.Enabled;
             }
             catch (Exception ex)
             {
+                MessageBox.Show("Error: " + ex.Message);
                 return true; //For now let's just return true if anything goes wrong
             }
             finally

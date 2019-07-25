@@ -207,7 +207,7 @@ namespace _86boxManager
                 showConsole = Convert.ToBoolean(regkey.GetValue("ShowConsole"));
                 minimizeTray = Convert.ToBoolean(regkey.GetValue("MinimizeToTray"));
                 closeTray = Convert.ToBoolean(regkey.GetValue("CloseToTray"));
-                launchTimeout = int.Parse(regkey.GetValue("LaunchTimeout").ToString());
+                launchTimeout = Convert.ToInt32(regkey.GetValue("LaunchTimeout"));
                 logpath = regkey.GetValue("LogPath").ToString();
                 logging = Convert.ToBoolean(regkey.GetValue("EnableLogging"));
                 gridlines = Convert.ToBoolean(regkey.GetValue("EnableGridLines"));
