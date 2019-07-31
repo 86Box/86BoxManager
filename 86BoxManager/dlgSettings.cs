@@ -83,17 +83,17 @@ namespace _86boxManager
                 FileVersionInfo vi = FileVersionInfo.GetVersionInfo(txtEXEdir.Text + @"\86Box.exe");
                 if (vi.FilePrivatePart >= 1799) //Officially supported builds
                 {
-                    lbl86BoxVer1.Text = vi.FileMajorPart.ToString() + "." + vi.FileMinorPart.ToString() + "." + vi.FileBuildPart.ToString() + "." + vi.FilePrivatePart.ToString() + " - all features supported";
+                    lbl86BoxVer1.Text = vi.FileMajorPart.ToString() + "." + vi.FileMinorPart.ToString() + "." + vi.FileBuildPart.ToString() + "." + vi.FilePrivatePart.ToString() + " - supported";
                     lbl86BoxVer1.ForeColor = Color.ForestGreen;
                 }
                 else if (vi.FilePrivatePart >= 1763 && vi.FilePrivatePart < 1799) //Should mostly work
                 {
-                    lbl86BoxVer1.Text = vi.FileMajorPart.ToString() + "." + vi.FileMinorPart.ToString() + "." + vi.FileBuildPart.ToString() + "." + vi.FilePrivatePart.ToString() + " - some features not supported";
+                    lbl86BoxVer1.Text = vi.FileMajorPart.ToString() + "." + vi.FileMinorPart.ToString() + "." + vi.FileBuildPart.ToString() + "." + vi.FilePrivatePart.ToString() + " - partially supported";
                     lbl86BoxVer1.ForeColor = Color.Orange;
                 }
                 else //Completely unsupported, since version info can't be obtained anyway
                 {
-                    lbl86BoxVer1.Text = "2.0 (pre-1763) - no support / unofficial build - support level unknown";
+                    lbl86BoxVer1.Text = "Unknown - not supported";
                     lbl86BoxVer1.ForeColor = Color.Red;
                 }
             }
@@ -298,48 +298,6 @@ namespace _86boxManager
 
             try
             {
-                if(txtEXEdir.Text != regkey.GetValue("EXEdir").ToString())
-                {
-                    Console.WriteLine("EXEdir");
-                }
-                if (txtCFGdir.Text != regkey.GetValue("CFGdir").ToString())
-                {
-                    Console.WriteLine("CFGdir");
-                }
-                if (cbxMinimize.Checked != Convert.ToBoolean(regkey.GetValue("MinimizeOnVMStart")))
-                {
-                    Console.WriteLine("MinimizeOnVMStart");
-                }
-                if (cbxShowConsole.Checked != Convert.ToBoolean(regkey.GetValue("ShowConsole")))
-                {
-                    Console.WriteLine("ShowConsole");
-                }
-                if (cbxMinimizeTray.Checked != Convert.ToBoolean(regkey.GetValue("MinimizeToTray")))
-                {
-                    Console.WriteLine("MinimizeToTray");
-                }
-                if (cbxCloseTray.Checked != Convert.ToBoolean(regkey.GetValue("CloseToTray")))
-                {
-                    Console.WriteLine("CloseToTray");
-                }
-                if (txtLaunchTimeout.Text != regkey.GetValue("LaunchTimeout").ToString())
-                {
-                    Console.WriteLine("LaunchTimeout: " + regkey.GetValue("LaunchTimeout").ToString());
-                    Console.WriteLine("txtLaunchTimeout.Text: " + txtLaunchTimeout.Text);
-                }
-                if (cbxLogging.Checked != Convert.ToBoolean(regkey.GetValue("EnableLogging")))
-                {
-                    Console.WriteLine("EnableLogging");
-                }
-                if (txtLogPath.Text != regkey.GetValue("LogPath").ToString())
-                {
-                    Console.WriteLine("LogPath");
-                }
-                if (cbxGrid.Checked != Convert.ToBoolean(regkey.GetValue("EnableGridLines")))
-                {
-                    Console.WriteLine("EnableGridLines");
-                }
-
                 btnApply.Enabled = (
                     txtEXEdir.Text != regkey.GetValue("EXEdir").ToString() ||
                     txtCFGdir.Text != regkey.GetValue("CFGdir").ToString() ||

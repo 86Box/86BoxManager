@@ -77,7 +77,7 @@
             this.btnApply.Margin = new System.Windows.Forms.Padding(2);
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(65, 30);
-            this.btnApply.TabIndex = 11;
+            this.btnApply.TabIndex = 17;
             this.btnApply.Text = "Apply";
             this.btnApply.UseVisualStyleBackColor = true;
             this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
@@ -91,7 +91,7 @@
             this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(65, 30);
-            this.btnCancel.TabIndex = 10;
+            this.btnCancel.TabIndex = 16;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -104,7 +104,7 @@
             this.btnOK.Margin = new System.Windows.Forms.Padding(2);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(65, 30);
-            this.btnOK.TabIndex = 9;
+            this.btnOK.TabIndex = 15;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -117,7 +117,7 @@
             this.cbxShowConsole.Margin = new System.Windows.Forms.Padding(2);
             this.cbxShowConsole.Name = "cbxShowConsole";
             this.cbxShowConsole.Size = new System.Drawing.Size(217, 24);
-            this.cbxShowConsole.TabIndex = 5;
+            this.cbxShowConsole.TabIndex = 13;
             this.cbxShowConsole.Text = "Enable 86Box console window";
             this.cbxShowConsole.UseVisualStyleBackColor = true;
             this.cbxShowConsole.CheckedChanged += new System.EventHandler(this.cbx_CheckedChanged);
@@ -130,7 +130,7 @@
             this.btnDefaults.Margin = new System.Windows.Forms.Padding(2);
             this.btnDefaults.Name = "btnDefaults";
             this.btnDefaults.Size = new System.Drawing.Size(65, 30);
-            this.btnDefaults.TabIndex = 8;
+            this.btnDefaults.TabIndex = 14;
             this.btnDefaults.Text = "Defaults";
             this.btnDefaults.UseVisualStyleBackColor = true;
             this.btnDefaults.Click += new System.EventHandler(this.btnDefaults_Click);
@@ -166,7 +166,7 @@
             this.txtLaunchTimeout.MaxLength = 5;
             this.txtLaunchTimeout.Name = "txtLaunchTimeout";
             this.txtLaunchTimeout.Size = new System.Drawing.Size(56, 25);
-            this.txtLaunchTimeout.TabIndex = 16;
+            this.txtLaunchTimeout.TabIndex = 8;
             this.txtLaunchTimeout.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtLaunchTimeout.TextChanged += new System.EventHandler(this.txt_TextChanged);
             // 
@@ -178,7 +178,7 @@
             this.tbcSettings.Name = "tbcSettings";
             this.tbcSettings.SelectedIndex = 0;
             this.tbcSettings.Size = new System.Drawing.Size(689, 263);
-            this.tbcSettings.TabIndex = 17;
+            this.tbcSettings.TabIndex = 0;
             // 
             // tabGeneral
             // 
@@ -212,7 +212,7 @@
             this.cbxMinimizeTray.Margin = new System.Windows.Forms.Padding(2);
             this.cbxMinimizeTray.Name = "cbxMinimizeTray";
             this.cbxMinimizeTray.Size = new System.Drawing.Size(264, 24);
-            this.cbxMinimizeTray.TabIndex = 6;
+            this.cbxMinimizeTray.TabIndex = 5;
             this.cbxMinimizeTray.Text = "Minimize 86Box Manager to tray icon";
             this.cbxMinimizeTray.UseVisualStyleBackColor = true;
             this.cbxMinimizeTray.CheckedChanged += new System.EventHandler(this.cbx_CheckedChanged);
@@ -225,7 +225,7 @@
             this.cbxCloseTray.Margin = new System.Windows.Forms.Padding(2);
             this.cbxCloseTray.Name = "cbxCloseTray";
             this.cbxCloseTray.Size = new System.Drawing.Size(242, 24);
-            this.cbxCloseTray.TabIndex = 7;
+            this.cbxCloseTray.TabIndex = 6;
             this.cbxCloseTray.Text = "Close 86Box Manager to tray icon";
             this.cbxCloseTray.UseVisualStyleBackColor = true;
             this.cbxCloseTray.CheckedChanged += new System.EventHandler(this.cbx_CheckedChanged);
@@ -238,7 +238,7 @@
             this.cbxMinimize.Margin = new System.Windows.Forms.Padding(2);
             this.cbxMinimize.Name = "cbxMinimize";
             this.cbxMinimize.Size = new System.Drawing.Size(324, 24);
-            this.cbxMinimize.TabIndex = 4;
+            this.cbxMinimize.TabIndex = 7;
             this.cbxMinimize.Text = "Minimize 86Box Manager when a VM is started";
             this.cbxMinimize.UseVisualStyleBackColor = true;
             this.cbxMinimize.CheckedChanged += new System.EventHandler(this.cbx_CheckedChanged);
@@ -297,7 +297,7 @@
             this.txtCFGdir.Margin = new System.Windows.Forms.Padding(2);
             this.txtCFGdir.Name = "txtCFGdir";
             this.txtCFGdir.Size = new System.Drawing.Size(497, 25);
-            this.txtCFGdir.TabIndex = 0;
+            this.txtCFGdir.TabIndex = 3;
             this.txtCFGdir.TextChanged += new System.EventHandler(this.txt_TextChanged);
             // 
             // txtEXEdir
@@ -306,7 +306,7 @@
             this.txtEXEdir.Margin = new System.Windows.Forms.Padding(2);
             this.txtEXEdir.Name = "txtEXEdir";
             this.txtEXEdir.Size = new System.Drawing.Size(497, 25);
-            this.txtEXEdir.TabIndex = 2;
+            this.txtEXEdir.TabIndex = 1;
             this.txtEXEdir.TextChanged += new System.EventHandler(this.txt_TextChanged);
             // 
             // btnBrowse2
@@ -316,7 +316,7 @@
             this.btnBrowse2.Margin = new System.Windows.Forms.Padding(2);
             this.btnBrowse2.Name = "btnBrowse2";
             this.btnBrowse2.Size = new System.Drawing.Size(70, 30);
-            this.btnBrowse2.TabIndex = 3;
+            this.btnBrowse2.TabIndex = 4;
             this.btnBrowse2.Text = "Browse...";
             this.btnBrowse2.UseVisualStyleBackColor = true;
             this.btnBrowse2.Click += new System.EventHandler(this.btnBrowse2_Click);
@@ -339,7 +339,7 @@
             this.btnBrowse1.Margin = new System.Windows.Forms.Padding(2);
             this.btnBrowse1.Name = "btnBrowse1";
             this.btnBrowse1.Size = new System.Drawing.Size(70, 30);
-            this.btnBrowse1.TabIndex = 1;
+            this.btnBrowse1.TabIndex = 2;
             this.btnBrowse1.Text = "Browse...";
             this.btnBrowse1.UseVisualStyleBackColor = true;
             this.btnBrowse1.Click += new System.EventHandler(this.btnBrowse1_Click);
@@ -379,7 +379,7 @@
             this.cbxGrid.Margin = new System.Windows.Forms.Padding(2);
             this.cbxGrid.Name = "cbxGrid";
             this.cbxGrid.Size = new System.Drawing.Size(272, 24);
-            this.cbxGrid.TabIndex = 9;
+            this.cbxGrid.TabIndex = 12;
             this.cbxGrid.Text = "Enable grid lines in virtual machines list";
             this.cbxGrid.UseVisualStyleBackColor = true;
             this.cbxGrid.CheckedChanged += new System.EventHandler(this.cbx_CheckedChanged);
@@ -391,7 +391,7 @@
             this.btnBrowse3.Margin = new System.Windows.Forms.Padding(2);
             this.btnBrowse3.Name = "btnBrowse3";
             this.btnBrowse3.Size = new System.Drawing.Size(70, 30);
-            this.btnBrowse3.TabIndex = 8;
+            this.btnBrowse3.TabIndex = 11;
             this.btnBrowse3.Text = "Browse...";
             this.btnBrowse3.UseVisualStyleBackColor = true;
             this.btnBrowse3.Click += new System.EventHandler(this.btnBrowse3_Click);
@@ -401,7 +401,7 @@
             this.txtLogPath.Location = new System.Drawing.Point(9, 104);
             this.txtLogPath.Name = "txtLogPath";
             this.txtLogPath.Size = new System.Drawing.Size(580, 25);
-            this.txtLogPath.TabIndex = 7;
+            this.txtLogPath.TabIndex = 10;
             this.txtLogPath.TextChanged += new System.EventHandler(this.txt_TextChanged);
             // 
             // cbxLogging
@@ -412,7 +412,7 @@
             this.cbxLogging.Margin = new System.Windows.Forms.Padding(2);
             this.cbxLogging.Name = "cbxLogging";
             this.cbxLogging.Size = new System.Drawing.Size(207, 24);
-            this.cbxLogging.TabIndex = 6;
+            this.cbxLogging.TabIndex = 9;
             this.cbxLogging.Text = "Enable 86Box logging to file:";
             this.cbxLogging.UseVisualStyleBackColor = true;
             this.cbxLogging.CheckedChanged += new System.EventHandler(this.cbxLogging_CheckedChanged);

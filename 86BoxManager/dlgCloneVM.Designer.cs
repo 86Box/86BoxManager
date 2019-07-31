@@ -75,7 +75,7 @@
             this.txtDescription.Margin = new System.Windows.Forms.Padding(2);
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(477, 25);
-            this.txtDescription.TabIndex = 15;
+            this.txtDescription.TabIndex = 1;
             // 
             // txtName
             // 
@@ -85,7 +85,7 @@
             this.txtName.Margin = new System.Windows.Forms.Padding(2);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(477, 25);
-            this.txtName.TabIndex = 14;
+            this.txtName.TabIndex = 0;
             this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
             // lblDesc
@@ -155,7 +155,7 @@
             this.cbxStartVM.Margin = new System.Windows.Forms.Padding(2);
             this.cbxStartVM.Name = "cbxStartVM";
             this.cbxStartVM.Size = new System.Drawing.Size(216, 24);
-            this.cbxStartVM.TabIndex = 20;
+            this.cbxStartVM.TabIndex = 2;
             this.cbxStartVM.Text = "Start this virtual machine now";
             this.cbxStartVM.UseVisualStyleBackColor = true;
             // 
@@ -167,7 +167,7 @@
             this.cbxOpenCFG.Margin = new System.Windows.Forms.Padding(2);
             this.cbxOpenCFG.Name = "cbxOpenCFG";
             this.cbxOpenCFG.Size = new System.Drawing.Size(247, 24);
-            this.cbxOpenCFG.TabIndex = 21;
+            this.cbxOpenCFG.TabIndex = 3;
             this.cbxOpenCFG.Text = "Configure this virtual machine now";
             this.cbxOpenCFG.UseVisualStyleBackColor = true;
             // 

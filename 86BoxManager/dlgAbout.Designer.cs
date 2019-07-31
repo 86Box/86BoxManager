@@ -63,7 +63,7 @@
             this.btnOK.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(65, 30);
-            this.btnOK.TabIndex = 1;
+            this.btnOK.TabIndex = 2;
             this.btnOK.Text = "Close";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -95,7 +95,7 @@
             this.lnkGithub.Location = new System.Drawing.Point(12, 197);
             this.lnkGithub.Name = "lnkGithub";
             this.lnkGithub.Size = new System.Drawing.Size(264, 19);
-            this.lnkGithub.TabIndex = 5;
+            this.lnkGithub.TabIndex = 1;
             this.lnkGithub.TabStop = true;
             this.lnkGithub.Text = "https://github.com/86Box/86BoxManager";
             this.lnkGithub.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkGithub_LinkClicked);
@@ -118,7 +118,7 @@
             this.lnkGithub2.Location = new System.Drawing.Point(12, 174);
             this.lnkGithub2.Name = "lnkGithub2";
             this.lnkGithub2.Size = new System.Drawing.Size(209, 19);
-            this.lnkGithub2.TabIndex = 7;
+            this.lnkGithub2.TabIndex = 0;
             this.lnkGithub2.TabStop = true;
             this.lnkGithub2.Text = "https://github.com/86Box/86Box";
             this.lnkGithub2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkGuthub2_LinkClicked);

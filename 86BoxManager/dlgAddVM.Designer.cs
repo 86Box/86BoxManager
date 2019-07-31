@@ -56,7 +56,7 @@
             this.cbxOpenCFG.Margin = new System.Windows.Forms.Padding(2);
             this.cbxOpenCFG.Name = "cbxOpenCFG";
             this.cbxOpenCFG.Size = new System.Drawing.Size(247, 24);
-            this.cbxOpenCFG.TabIndex = 3;
+            this.cbxOpenCFG.TabIndex = 6;
             this.cbxOpenCFG.Text = "Configure this virtual machine now";
             this.cbxOpenCFG.UseVisualStyleBackColor = true;
             // 
@@ -69,7 +69,7 @@
             this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(65, 30);
-            this.btnCancel.TabIndex = 5;
+            this.btnCancel.TabIndex = 8;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
@@ -82,7 +82,7 @@
             this.btnAdd.Margin = new System.Windows.Forms.Padding(2);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(65, 30);
-            this.btnAdd.TabIndex = 4;
+            this.btnAdd.TabIndex = 7;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
@@ -115,7 +115,7 @@
             this.txtName.Margin = new System.Windows.Forms.Padding(2);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(477, 25);
-            this.txtName.TabIndex = 0;
+            this.txtName.TabIndex = 3;
             this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
             // txtDescription
@@ -126,7 +126,7 @@
             this.txtDescription.Margin = new System.Windows.Forms.Padding(2);
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(477, 25);
-            this.txtDescription.TabIndex = 1;
+            this.txtDescription.TabIndex = 4;
             // 
             // lblPath1
             // 
@@ -157,7 +157,7 @@
             this.cbxStartVM.Margin = new System.Windows.Forms.Padding(2);
             this.cbxStartVM.Name = "cbxStartVM";
             this.cbxStartVM.Size = new System.Drawing.Size(216, 24);
-            this.cbxStartVM.TabIndex = 2;
+            this.cbxStartVM.TabIndex = 5;
             this.cbxStartVM.Text = "Start this virtual machine now";
             this.cbxStartVM.UseVisualStyleBackColor = true;
             // 
@@ -191,7 +191,7 @@
             this.txtImportPath.Margin = new System.Windows.Forms.Padding(2);
             this.txtImportPath.Name = "txtImportPath";
             this.txtImportPath.Size = new System.Drawing.Size(484, 25);
-            this.txtImportPath.TabIndex = 20;
+            this.txtImportPath.TabIndex = 1;
             // 
             // cbxImport
             // 
@@ -200,7 +200,7 @@
             this.cbxImport.Location = new System.Drawing.Point(15, 12);
             this.cbxImport.Name = "cbxImport";
             this.cbxImport.Size = new System.Drawing.Size(165, 24);
-            this.cbxImport.TabIndex = 19;
+            this.cbxImport.TabIndex = 0;
             this.cbxImport.Text = "Import VM files from:";
             this.cbxImport.UseVisualStyleBackColor = true;
             this.cbxImport.CheckedChanged += new System.EventHandler(this.cbxImport_CheckedChanged);
@@ -214,7 +214,7 @@
             this.btnBrowse.Margin = new System.Windows.Forms.Padding(2);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(70, 30);
-            this.btnBrowse.TabIndex = 18;
+            this.btnBrowse.TabIndex = 2;
             this.btnBrowse.Text = "Browse...";
             this.btnBrowse.UseVisualStyleBackColor = true;
             this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
