@@ -91,7 +91,7 @@ namespace _86boxManager
 
         private void cbxImport_CheckedChanged(object sender, EventArgs e)
         {
-            existingVM = true;
+            existingVM = !existingVM;
             txtImportPath.Enabled = cbxImport.Checked;
             btnBrowse.Enabled = cbxImport.Checked;
         }

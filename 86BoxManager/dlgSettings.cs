@@ -47,7 +47,11 @@ namespace _86boxManager
 
         private void btnApply_Click(object sender, EventArgs e)
         {
-            SaveSettings();
+            bool success = SaveSettings();
+            if (!success)
+            {
+                return;
+            }
             settingsChanged = CheckForChanges();
             btnApply.Enabled = settingsChanged;
         }
@@ -64,7 +68,7 @@ namespace _86boxManager
         private void txt_TextChanged(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtEXEdir.Text) || string.IsNullOrWhiteSpace(txtCFGdir.Text) ||
-                string.IsNullOrWhiteSpace(txtLaunchTimeout.Text) || string.IsNullOrWhiteSpace(txtLogPath.Text))
+                string.IsNullOrWhiteSpace(txtLaunchTimeout.Text))
             {
                 btnApply.Enabled = false;
             }
@@ -106,11 +110,23 @@ namespace _86boxManager
         
         //TODO: Rewrite
         //Save the settings to the registry
-        private void SaveSettings()
+        private bool SaveSettings()
         {
+            if (cbxLogging.Checked && string.IsNullOrWhiteSpace(txtLogPath.Text))
+            {
+                DialogResult result = MessageBox.Show("Using an empty or whitespace string for the log path will prevent 86Box from logging anything. Are you sure you want to use this path?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (result == DialogResult.No)
+                {
+                    return false;
+                }
+            }
             if (!File.Exists(txtEXEdir.Text + "86Box.exe") && !File.Exists(txtEXEdir.Text + @"\86Box.exe"))
             {
-                MessageBox.Show("86Box.exe could not be found in the directory you specified. Make sure the path is correct or you won't be able to use any virtual machines.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                DialogResult result = MessageBox.Show("86Box.exe could not be found in the directory you specified, so you won't be able to use any virtual machines. Are you sure you want to use this path?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (result == DialogResult.No)
+                {
+                    return false;
+                }
             }
             try
             {
@@ -142,11 +158,13 @@ namespace _86boxManager
             catch (Exception ex)
             {
                 MessageBox.Show("An error has occurred. Please provide the following information to the developer:\n" + ex.Message + "\n" + ex.StackTrace, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
             finally
             {
                 Get86BoxVersion(); //Get the new exe version in any case
             }
+            return true;
         }
 
         //TODO: Rewrite
@@ -266,13 +284,13 @@ namespace _86boxManager
         private void ResetSettings()
         {
             RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true);
-
             if (regkey == null)
             {
                 Registry.CurrentUser.CreateSubKey(@"SOFTWARE\86Box");
                 regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true);
                 regkey.CreateSubKey("Virtual Machines");
             }
+            regkey.Close();
 
             txtCFGdir.Text = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\86Box VMs\";
             txtEXEdir.Text = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + @"\86Box\";
@@ -287,8 +305,7 @@ namespace _86boxManager
             txtLogPath.Enabled = false;
             btnBrowse3.Enabled = false;
 
-            SaveSettings();
-            regkey.Close();
+            settingsChanged = CheckForChanges();
         }
 
         //Checks if all controls match the currently saved settings to determine if any changes were made
@@ -301,13 +318,13 @@ namespace _86boxManager
                 btnApply.Enabled = (
                     txtEXEdir.Text != regkey.GetValue("EXEdir").ToString() ||
                     txtCFGdir.Text != regkey.GetValue("CFGdir").ToString() ||
+                    txtLogPath.Text != regkey.GetValue("LogPath").ToString() ||
+                    txtLaunchTimeout.Text != regkey.GetValue("LaunchTimeout").ToString() ||
                     cbxMinimize.Checked != Convert.ToBoolean(regkey.GetValue("MinimizeOnVMStart")) ||
                     cbxShowConsole.Checked != Convert.ToBoolean(regkey.GetValue("ShowConsole")) ||
                     cbxMinimizeTray.Checked != Convert.ToBoolean(regkey.GetValue("MinimizeToTray")) ||
                     cbxCloseTray.Checked != Convert.ToBoolean(regkey.GetValue("CloseToTray")) || 
-                    txtLaunchTimeout.Text != regkey.GetValue("LaunchTimeout").ToString() ||
                     cbxLogging.Checked != Convert.ToBoolean(regkey.GetValue("EnableLogging")) ||
-                    txtLogPath.Text != regkey.GetValue("LogPath").ToString() ||
                     cbxGrid.Checked != Convert.ToBoolean(regkey.GetValue("EnableGridLines")));
 
                 return btnApply.Enabled;

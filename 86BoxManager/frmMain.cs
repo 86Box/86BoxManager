@@ -711,6 +711,10 @@ namespace _86boxManager
                     btnPause.Text = "Pause";
                     btnCtrlAltDel.Enabled = false;
                 }
+                catch (Win32Exception ex)
+                {
+                    MessageBox.Show("Cannot find 86Box.exe. Make sure your settings are correct and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 catch (Exception ex)
                 {
                     //Revert to stopped status and alert the user

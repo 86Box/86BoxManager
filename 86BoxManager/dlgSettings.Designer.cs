@@ -267,9 +267,9 @@
             this.lbl86BoxVer1.Location = new System.Drawing.Point(100, 59);
             this.lbl86BoxVer1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl86BoxVer1.Name = "lbl86BoxVer1";
-            this.lbl86BoxVer1.Size = new System.Drawing.Size(69, 19);
+            this.lbl86BoxVer1.Size = new System.Drawing.Size(170, 19);
             this.lbl86BoxVer1.TabIndex = 6;
-            this.lbl86BoxVer1.Text = "Unknown";
+            this.lbl86BoxVer1.Text = "<status string goes here>";
             // 
             // lbl86BoxVer
             // 
