@@ -925,12 +925,17 @@ namespace _86boxManager
                     }
                     catch (UnauthorizedAccessException) //Files are read-only or protected by privileges
                     {
-                        MessageBox.Show("86Box Manager was unable to delete the files of this virtual machine, because they are set as read-only or you don't have sufficient privileges to delete them.\n\nMake sure the files are free for deletion, then remove them manually.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("86Box Manager was unable to delete the files of this virtual machine because they are read-only or you don't have sufficient privileges to delete them.\n\nMake sure the files are free for deletion, then remove them manually.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    catch (DirectoryNotFoundException) //Directory not found
+                    {
+                        MessageBox.Show("86Box Manager was unable to delete the files of this virtual machine because they no longer exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                     catch (IOException) //Files are in use by another process
                     {
-                        MessageBox.Show("86Box Manager was unable to delete the files of this virtual machine, because they are currently in use by another process.\n\nMake sure the files are free for deletion, then remove them manually.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("86Box Manager was unable to delete some files of this virtual machine because they are currently in use by another process.\n\nMake sure the files are free for deletion, then remove them manually.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                     catch (Exception ex) { //Other exceptions
