@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !NETCOREAPP
+using System;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -108,3 +109,4 @@ namespace _86boxManager
         }
     }
 }
+#endif

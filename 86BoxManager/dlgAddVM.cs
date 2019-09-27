@@ -74,6 +74,23 @@ namespace _86boxManager
             }
         }
 
+#if NETCOREAPP
+        private void btnBrowse_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog dialog = new FolderBrowserDialog
+            {
+                RootFolder = Environment.SpecialFolder.MyComputer,
+                Description = "Select a folder where your virtual machines (configs, nvr folders, etc.) will be located",
+                UseDescriptionForTitle = true
+            };
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                txtImportPath.Text = dialog.SelectedPath;
+                txtName.Text = Path.GetFileName(dialog.SelectedPath);
+            }
+        }
+#else
         private void btnBrowse_Click(object sender, EventArgs e)
         {
             FolderSelectDialog dialog = new FolderSelectDialog
@@ -88,6 +105,7 @@ namespace _86boxManager
                 txtName.Text = Path.GetFileName(dialog.FileName);
             }
         }
+#endif
 
         private void cbxImport_CheckedChanged(object sender, EventArgs e)
         {
