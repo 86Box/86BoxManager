@@ -1,4 +1,4 @@
-﻿#if !NETCOREAPP
+﻿#if !NETCOREAPP // Not required for .NET Core builds
 using System;
 using System.Reflection;
 using System.Windows.Forms;

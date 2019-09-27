@@ -74,6 +74,7 @@ namespace _86boxManager
             }
         }
 
+// .NET Core implements the better Vista-style folder browse dialog in the stock FolderBrowserDialog
 #if NETCOREAPP
         private void btnBrowse_Click(object sender, EventArgs e)
         {
@@ -90,6 +91,7 @@ namespace _86boxManager
                 txtName.Text = Path.GetFileName(dialog.SelectedPath);
             }
         }
+// A custom class is required for Vista-style folder dialogs under the original .NET Framework
 #else
         private void btnBrowse_Click(object sender, EventArgs e)
         {
