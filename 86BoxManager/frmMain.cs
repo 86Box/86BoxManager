@@ -1,4 +1,4 @@
-﻿#if NETFRAMEWORK
+﻿#if !NETCOREAPP
 using IWshRuntimeLibrary;
 #endif
 using Microsoft.Win32;
@@ -52,7 +52,7 @@ namespace _86boxManager
             LoadSettings();
             LoadVMs();
 
-#if !NETFRAMEWORK
+#if NETCOREAPP
             createADesktopShortcutToolStripMenuItem.Enabled = false;
 #endif
         }
@@ -1136,7 +1136,7 @@ namespace _86boxManager
 
         private void createADesktopShortcutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-#if NETFRAMEWORK
+#if !NETCOREAPP
             VM vm = (VM)lstVMs.SelectedItems[0].Tag;
             WshShell shell = new WshShell();
             string shortcutAddress = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\" + vm.Name + ".lnk";
