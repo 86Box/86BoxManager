@@ -50,7 +50,7 @@ namespace _86boxManager
             private readonly static Assembly s_windowsFormsAssembly = typeof(FileDialog).Assembly;
             private readonly static Type s_iFileDialogType = s_windowsFormsAssembly.GetType("System.Windows.Forms.FileDialogNative+IFileDialog");
             private readonly static MethodInfo s_createVistaDialogMethodInfo = typeof(OpenFileDialog).GetMethod("CreateVistaDialog", c_flags);
-            private readonly static MethodInfo s_onBeforeVistaDialogMethodInfo = typeof(OpenFileDialog).GetMethod("OnBeforeVistaDialog", c_flags);
+            private readonly static MethodInfo s_onBeforeVistaDialogMethodInfo = typeof(FileDialog).GetMethod("OnBeforeVistaDialog", c_flags);
             private readonly static MethodInfo s_getOptionsMethodInfo = typeof(FileDialog).GetMethod("GetOptions", c_flags);
             private readonly static MethodInfo s_setOptionsMethodInfo = s_iFileDialogType.GetMethod("SetOptions", c_flags);
             private readonly static uint s_fosPickFoldersBitFlag = (uint)s_windowsFormsAssembly
