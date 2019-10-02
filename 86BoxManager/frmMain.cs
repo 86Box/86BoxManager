@@ -1,4 +1,4 @@
-﻿#if NETFRAMEWORK
+﻿#if !NETCOREAPP // COM references require .NET framework for now
 using IWshRuntimeLibrary;
 #endif
 using Microsoft.Win32;
@@ -52,8 +52,8 @@ namespace _86boxManager
             LoadSettings();
             LoadVMs();
 
-#if !NETFRAMEWORK
-            createADesktopShortcutToolStripMenuItem.Enabled = false;
+#if NETCOREAPP
+            createADesktopShortcutToolStripMenuItem.Enabled = false; // Requires the original .NET framework
 #endif
         }
 
@@ -1136,7 +1136,7 @@ namespace _86boxManager
 
         private void createADesktopShortcutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-#if NETFRAMEWORK
+#if !NETCOREAPP // Requires the original .NET Framework
             VM vm = (VM)lstVMs.SelectedItems[0].Tag;
             WshShell shell = new WshShell();
             string shortcutAddress = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\" + vm.Name + ".lnk";

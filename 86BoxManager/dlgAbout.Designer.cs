@@ -140,6 +140,7 @@
             this.imgLogo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.imgLogo.Name = "imgLogo";
             this.imgLogo.Size = new System.Drawing.Size(32, 32);
+            this.imgLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.imgLogo.TabIndex = 9;
             this.imgLogo.TabStop = false;
             // 
