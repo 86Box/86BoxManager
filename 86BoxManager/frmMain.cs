@@ -20,8 +20,13 @@ namespace _86boxManager
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool IsWindow(IntPtr hWnd); //Checks if hWnd belongs to an existing window
 
+        //Posts a message to the window with specified handle - DOES NOT WAIT FOR THE RECIPIENT TO PROCESS THE MESSAGE!!!
         [DllImport("user32.dll")]
-        public static extern int PostMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam); //Sends a message to the window of hWnd
+        public static extern int PostMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
+
+        //Sends a message to the window with specified handle - WAITS FOR THE RECIPIENT TO PROCESS THE MESSAGE!!!
+        [DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
 
         [StructLayout(LayoutKind.Sequential)]
         public struct COPYDATASTRUCT
@@ -649,35 +654,7 @@ namespace _86boxManager
             {
                 if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
                 {
-                    PostMessage(vm.hWnd, 0x8893, IntPtr.Zero, IntPtr.Zero);
-                    vm.Status = VM.STATUS_STOPPED;
-                    vm.hWnd = IntPtr.Zero;
-                    lstVMs.SelectedItems[0].SubItems[1].Text = vm.GetStatusString();
-                    lstVMs.SelectedItems[0].ImageIndex = 0;
-
-                    btnStart.Text = "Start";
-                    toolTip.SetToolTip(btnStart, "Start this virtual machine");
-                    btnPause.Text = "Pause";
-                    if (lstVMs.SelectedItems.Count > 0)
-                    {
-                        btnEdit.Enabled = true;
-                        btnDelete.Enabled = true;
-                        btnStart.Enabled = true;
-                        btnConfigure.Enabled = true;
-                        btnPause.Enabled = false;
-                        btnReset.Enabled = false;
-                        btnCtrlAltDel.Enabled = false;
-                    }
-                    else
-                    {
-                        btnEdit.Enabled = false;
-                        btnDelete.Enabled = false;
-                        btnStart.Enabled = false;
-                        btnConfigure.Enabled = false;
-                        btnPause.Enabled = false;
-                        btnReset.Enabled = false;
-                        btnCtrlAltDel.Enabled = false;
-                    }
+                    SendMessage(vm.hWnd, 0x8893, IntPtr.Zero, IntPtr.Zero);    
                 }
             }
             catch(Exception ex)
@@ -1043,9 +1020,12 @@ namespace _86boxManager
         //This function monitors recieved window messages
         protected override void WndProc(ref Message m)
         {
-            // WM_SENDSTATUS (0x8895) - wparam = 1: vm paused, wparam = 0: vm resumed
+            // WM_SENDSTATUS (0x8895) - wparam = 1: VM paused, wparam = 0: VM resumed
             // WM_SENDSSTATUS (0x8896) - wparam = 1: settings open, wparam = 0: settings closed
             // NOTE: This code works only with 86Box build 1799 or later!!!
+            //
+            // WM_SHUTDOWN_DONE (0x8897) - user confirmed shutdown
+            // NOTE: This one works only with 86Box build 2006 or later!!!
             if (m.Msg == 0x8895)
             {
                 if (m.WParam.ToInt32() == 1) //VM was paused
@@ -1134,6 +1114,55 @@ namespace _86boxManager
                     }
                 }
             }
+            if (m.Msg == 0x8897) //User confirmed shutdown
+            {
+                foreach (ListViewItem lvi in lstVMs.Items)
+                {
+                    VM vm = (VM)lvi.Tag;
+                    if (vm.hWnd.Equals(m.LParam) && vm.Status != VM.STATUS_STOPPED)
+                    {
+                        vm.Status = VM.STATUS_STOPPED;
+                        vm.hWnd = IntPtr.Zero;
+                        lvi.SubItems[1].Text = vm.GetStatusString();
+                        lvi.ImageIndex = 0;
+
+                        btnStart.Text = "Start";
+                        toolTip.SetToolTip(btnStart, "Start this virtual machine");
+                        btnPause.Text = "Pause";
+                        if (lstVMs.SelectedItems.Count == 1)
+                        {
+                            btnEdit.Enabled = true;
+                            btnDelete.Enabled = true;
+                            btnStart.Enabled = true;
+                            btnConfigure.Enabled = true;
+                            btnPause.Enabled = false;
+                            btnReset.Enabled = false;
+                            btnCtrlAltDel.Enabled = false;
+                        }
+                        else if (lstVMs.SelectedItems.Count == 0)
+                        {
+                            btnEdit.Enabled = false;
+                            btnDelete.Enabled = false;
+                            btnStart.Enabled = false;
+                            btnConfigure.Enabled = false;
+                            btnPause.Enabled = false;
+                            btnReset.Enabled = false;
+                            btnCtrlAltDel.Enabled = false;
+                        }
+                        else
+                        {
+                            btnEdit.Enabled = false;
+                            btnDelete.Enabled = true;
+                            btnStart.Enabled = false;
+                            btnConfigure.Enabled = false;
+                            btnPause.Enabled = false;
+                            btnReset.Enabled = false;
+                            btnCtrlAltDel.Enabled = false;
+                        }
+                    }
+                }
+            }
+
             //This is the WM_COPYDATA message, used here to pass command line args to an already running instance
             //NOTE: This code will have to be modified in case more command line arguments are added in the future.
             if (m.Msg == 0x004A)
