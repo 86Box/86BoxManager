@@ -40,7 +40,8 @@ namespace _86boxManager
         private bool closeTray = false; //Close the Manager Window to tray icon?
         private string hWndHex = "";  //Window handle of this window  
         private const string ZEROID = "0000000000000000"; //Used for the id parameter of 86Box -H
-        private int sortColumn = -1; //For column sorting's asc/desc capability
+        private int sortColumn = 0; //The column for sorting
+        private SortOrder sortOrder = SortOrder.Ascending; //Sorting order
         private int launchTimeout = 5000; //Timeout for waiting for 86Box.exe to initialize
         private bool logging = false; //Logging enabled for 86Box.exe (-L parameter)?
         private string logpath = ""; //Path to log file
@@ -226,8 +227,12 @@ namespace _86boxManager
                 logpath = regkey.GetValue("LogPath").ToString();
                 logging = Convert.ToBoolean(regkey.GetValue("EnableLogging"));
                 gridlines = Convert.ToBoolean(regkey.GetValue("EnableGridLines"));
+                sortColumn = Convert.ToInt32(regkey.GetValue("SortColumn"));
+                sortOrder = (SortOrder)Convert.ToInt32(regkey.GetValue("SortOrder"));
 
                 lstVMs.GridLines = gridlines;
+                //lstVMs.Sorting = sortOrder;
+                VMSort(sortColumn, sortOrder);
             }
             catch (Exception ex)
             {
@@ -251,10 +256,14 @@ namespace _86boxManager
                 logging = false;
                 logpath = "";
                 gridlines = false;
+                sortColumn = 0;
+                sortOrder = SortOrder.Ascending;
 
                 lstVMs.GridLines = false;
+                VMSort(sortColumn, sortOrder);
 
                 //Defaults must also be written to the registry
+                regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true);
                 regkey.SetValue("EXEdir", exepath, RegistryValueKind.String);
                 regkey.SetValue("CFGdir", cfgpath, RegistryValueKind.String);
                 regkey.SetValue("MinimizeOnVMStart", minimize, RegistryValueKind.DWord);
@@ -265,6 +274,8 @@ namespace _86boxManager
                 regkey.SetValue("EnableLogging", logging, RegistryValueKind.DWord);
                 regkey.SetValue("LogPath", logpath, RegistryValueKind.String);
                 regkey.SetValue("EnableGridLines", gridlines, RegistryValueKind.DWord);
+                regkey.SetValue("SortColumn", sortColumn, RegistryValueKind.DWord);
+                regkey.SetValue("SortOrder", sortOrder, RegistryValueKind.DWord);
             }
             finally
             {
@@ -525,6 +536,8 @@ namespace _86boxManager
             btnStart.Enabled = false;
             btnConfigure.Enabled = false;
             pauseToolStripMenuItem.ToolTipText = "Resume this virtual machine";
+
+            VMSort(sortColumn, sortOrder);
         }
 
         //Resumes the selected VM
@@ -540,6 +553,8 @@ namespace _86boxManager
             btnStart.Enabled = true;
             btnConfigure.Enabled = true;
             pauseToolStripMenuItem.ToolTipText = "Pause this virtual machine";
+
+            VMSort(sortColumn, sortOrder);
         }
 
         //Starts the selected VM
@@ -622,6 +637,8 @@ namespace _86boxManager
             {
                 MessageBox.Show("An error has occurred. Please provide the following information to the developer:\n" + ex.Message + "\n" + ex.StackTrace, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            VMSort(sortColumn, sortOrder);
         }
 
         //Stops a running/paused VM
@@ -667,6 +684,8 @@ namespace _86boxManager
             {
                 MessageBox.Show("An error occurred trying to stop the selected virtual machine.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            VMSort(sortColumn, sortOrder);
         }
 
         //Start VM if it's stopped or stop it if it's running/paused
@@ -751,6 +770,8 @@ namespace _86boxManager
                     MessageBox.Show("This virtual machine could not be started. Please provide the following information to the developer:\n" + ex.Message + "\n" + ex.StackTrace, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+
+            VMSort(sortColumn, sortOrder);
         }
 
         private void resetCTRLALTDELETEToolStripMenuItem_Click(object sender, EventArgs e)
@@ -915,6 +936,7 @@ namespace _86boxManager
             regkey.Close();
 
             MessageBox.Show("Virtual machine \"" + vm.Name + "\" was successfully modified. Please update its configuration so that any folder paths (e.g. for hard disk images) point to the new folder.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            VMSort(sortColumn, sortOrder);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -932,9 +954,14 @@ namespace _86boxManager
 
                 if (result1 == DialogResult.Yes)
                 {
+                    if(vm.Status != VM.STATUS_STOPPED)
+                    {
+                        MessageBox.Show("Virtual machine \"" + vm.Name + "\" is currently running and cannot be removed. Please stop virtual machines before attempting to remove them.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        continue;
+                    }
                     try
                     {
-                        lstVMs.Items.Remove(lstVMs.SelectedItems[0]);
+                        lstVMs.Items.Remove(lvi);
                         regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box\Virtual Machines", true);
                         regkey.DeleteValue(vm.Name);
                         regkey.Close();
@@ -942,7 +969,7 @@ namespace _86boxManager
                     catch (Exception ex) //Catches "regkey doesn't exist" exceptions and such
                     {
                         MessageBox.Show("Virtual machine \"" + vm.Name + "\" could not be removed due to the following error:\n\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
+                        continue;
                     }
 
                     DialogResult result2 = MessageBox.Show("Virtual machine \"" + vm.Name + "\" was successfully removed. Would you like to delete its files as well?", "Virtual machine removed", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -955,27 +982,28 @@ namespace _86boxManager
                         catch (UnauthorizedAccessException) //Files are read-only or protected by privileges
                         {
                             MessageBox.Show("86Box Manager was unable to delete the files of this virtual machine because they are read-only or you don't have sufficient privileges to delete them.\n\nMake sure the files are free for deletion, then remove them manually.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return;
+                            continue;
                         }
                         catch (DirectoryNotFoundException) //Directory not found
                         {
                             MessageBox.Show("86Box Manager was unable to delete the files of this virtual machine because they no longer exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return;
+                            continue;
                         }
                         catch (IOException) //Files are in use by another process
                         {
                             MessageBox.Show("86Box Manager was unable to delete some files of this virtual machine because they are currently in use by another process.\n\nMake sure the files are free for deletion, then remove them manually.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return;
+                            continue;
                         }
                         catch (Exception ex)
                         { //Other exceptions
                             MessageBox.Show("The following error occurred while trying to remove the files of this virtual machine:\n\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return;
+                            continue;
                         }
                         MessageBox.Show("Files of virtual machine \"" + vm.Name + "\" were successfully deleted.", "Virtual machine files removed", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
             }
+            VMSort(sortColumn, sortOrder);
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1207,6 +1235,10 @@ namespace _86boxManager
                     VMStart();
                 }
             }
+            if (e.KeyCode == Keys.Delete && lstVMs.SelectedItems.Count > 0)
+            {
+                VMRemove();
+            }
         }
 
         private void trayIcon_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -1220,7 +1252,6 @@ namespace _86boxManager
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //List<ListViewItem> vms = new List<ListViewItem>();
             int vmCount = 0;
             foreach (ListViewItem item in lstVMs.Items)
             {
@@ -1340,6 +1371,7 @@ namespace _86boxManager
                     }
                 }
             }
+            VMSort(sortColumn, sortOrder);
         }
 
         private void killToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1347,26 +1379,54 @@ namespace _86boxManager
             VMKill();
         }
 
+        //Sort the VM list by specified column and order
+        private void VMSort(int column, SortOrder order)
+        {
+            const string ascArrow = " ▲";
+            const string descArrow = " ▼";
+
+            lstVMs.SelectedItems.Clear(); //Just in case so we don't end up with weird selection glitches
+
+            //Remove the arrows from the current column text if they exist
+            if (sortColumn > -1 && (lstVMs.Columns[sortColumn].Text.EndsWith(ascArrow) || lstVMs.Columns[sortColumn].Text.EndsWith(descArrow)))
+            {
+                lstVMs.Columns[sortColumn].Text = lstVMs.Columns[sortColumn].Text.Substring(0, lstVMs.Columns[sortColumn].Text.Length - 2);
+            }
+
+            //Then append the appropriate arrow to the new column text
+            if (order == SortOrder.Ascending)
+            {
+                lstVMs.Columns[column].Text += ascArrow;
+            }
+            else if (order == SortOrder.Descending)
+            {
+                lstVMs.Columns[column].Text += descArrow;
+            }
+
+            sortColumn = column;
+            sortOrder = order;
+            lstVMs.Sorting = sortOrder;
+            lstVMs.Sort();
+            lstVMs.ListViewItemSorter = new ListViewItemComparer(sortColumn, sortOrder);
+            
+            //Save the new column and order to the registry
+            regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true);
+            regkey.SetValue("SortColumn", sortColumn, RegistryValueKind.DWord);
+            regkey.SetValue("SortOrder", sortOrder, RegistryValueKind.DWord);
+            regkey.Close();
+        }
+
         //Handles the click event for the listview column headers, allowing to sort the items by columns
         private void lstVMs_ColumnClick(object sender, ColumnClickEventArgs e)
         {
-            //Sorting a different column than the currently sorted one => sort by that one ascending
-            if (e.Column != sortColumn)
+            if(lstVMs.Sorting == SortOrder.Ascending)
             {
-                sortColumn = e.Column;
-                lstVMs.Sorting = SortOrder.Ascending;
+                VMSort(e.Column, SortOrder.Descending);
             }
-            //Sorting the same column => change the order from ascending to descending or vice versa
-            else
+            else if(lstVMs.Sorting == SortOrder.Descending || lstVMs.Sorting == SortOrder.None)
             {
-                if (lstVMs.Sorting == SortOrder.Ascending)
-                    lstVMs.Sorting = SortOrder.Descending;
-                else
-                    lstVMs.Sorting = SortOrder.Ascending;
+                VMSort(e.Column, SortOrder.Ascending);
             }
-
-            lstVMs.Sort();
-            lstVMs.ListViewItemSorter = new _86boxManager.ListViewItemComparer(e.Column, lstVMs.Sorting);
         }
 
         private void wipeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1384,15 +1444,21 @@ namespace _86boxManager
                 DialogResult = MessageBox.Show("Wiping a virtual machine deletes its configuration and nvr files. You'll have to reconfigure the virtual machine (and the BIOS if applicable).\n\n Are you sure you wish to wipe the virtual machine \"" + vm.Name + "\"?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (DialogResult == DialogResult.Yes)
                 {
+                    if(vm.Status != VM.STATUS_STOPPED)
+                    {
+                        MessageBox.Show("The virtual machine \"" + vm.Name + "\" is currently running and cannot be wiped. Please stop virtual machines before attempting to wipe them.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        continue;
+                    }
                     try
                     {
                         System.IO.File.Delete(vm.Path + @"\86box.cfg");
                         Directory.Delete(vm.Path + @"\nvr", true);
-                        MessageBox.Show("The virtual machine \"" + vm.Name + "\" was successfully wiped.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information); ;
+                        MessageBox.Show("The virtual machine \"" + vm.Name + "\" was successfully wiped.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show("An error occurred trying to wipe the virtual machine \"" + vm.Name + "\".", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        continue;
                     }
                 }
             }

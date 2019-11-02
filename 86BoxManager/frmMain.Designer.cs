@@ -162,6 +162,7 @@
             this.lstVMs.ShowItemToolTips = true;
             this.lstVMs.Size = new System.Drawing.Size(660, 397);
             this.lstVMs.SmallImageList = this.img86box;
+            this.lstVMs.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lstVMs.TabIndex = 10;
             this.lstVMs.UseCompatibleStateImageBehavior = false;
             this.lstVMs.View = System.Windows.Forms.View.Details;
