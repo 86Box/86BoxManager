@@ -157,7 +157,6 @@
             this.lstVMs.FullRowSelect = true;
             this.lstVMs.HideSelection = false;
             this.lstVMs.Location = new System.Drawing.Point(12, 52);
-            this.lstVMs.MultiSelect = false;
             this.lstVMs.Name = "lstVMs";
             this.lstVMs.ShowGroups = false;
             this.lstVMs.ShowItemToolTips = true;
