@@ -1,4 +1,6 @@
-﻿using IWshRuntimeLibrary;
+﻿#if !NETCOREAPP // COM references require .NET framework for now
+using IWshRuntimeLibrary;
+#endif
 using Microsoft.Win32;
 using System;
 using System.ComponentModel;
@@ -49,6 +51,10 @@ namespace _86boxManager
             InitializeComponent();
             LoadSettings();
             LoadVMs();
+
+#if NETCOREAPP
+            createADesktopShortcutToolStripMenuItem.Enabled = false; // Requires the original .NET framework
+#endif
         }
 
         private void frmMain_Load(object sender, EventArgs e)
@@ -1130,6 +1136,7 @@ namespace _86boxManager
 
         private void createADesktopShortcutToolStripMenuItem_Click(object sender, EventArgs e)
         {
+#if !NETCOREAPP // Requires the original .NET Framework
             VM vm = (VM)lstVMs.SelectedItems[0].Tag;
             WshShell shell = new WshShell();
             string shortcutAddress = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\" + vm.Name + ".lnk";
@@ -1141,6 +1148,7 @@ namespace _86boxManager
             shortcut.Save();
 
             MessageBox.Show("A desktop shortcut for this virtual machine was successfully created.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+#endif
         }
 
         //Starts/stops selected VM when enter is pressed
