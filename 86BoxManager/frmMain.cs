@@ -28,6 +28,10 @@ namespace _86boxManager
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
 
+        //Focus a window
+        [DllImport("user32.dll")]
+        public static extern int SetForegroundWindow(IntPtr hwnd);
+
         [StructLayout(LayoutKind.Sequential)]
         public struct COPYDATASTRUCT
         {
@@ -98,7 +102,7 @@ namespace _86boxManager
             }
             else if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
             {
-                VMStop();
+                VMRequestStop();
             }
         }
 
@@ -133,7 +137,7 @@ namespace _86boxManager
                 btnCtrlAltDel.Enabled = false;
                 btnPause.Enabled = false;
             }
-            else if(lstVMs.SelectedItems.Count == 1)
+            else if (lstVMs.SelectedItems.Count == 1)
             {
                 //Disable relevant buttons if VM is running
                 VM vm = (VM)lstVMs.SelectedItems[0].Tag;
@@ -176,10 +180,10 @@ namespace _86boxManager
                     btnReset.Enabled = true;
                     btnCtrlAltDel.Enabled = true;
                 }
-                else if (vm.Status == VM.STATUS_IN_SETTINGS)
+                else if (vm.Status == VM.STATUS_WAITING)
                 {
                     btnStart.Enabled = false;
-                    btnStart.Text = "Start";
+                    btnStart.Text = "Stop";
                     toolTip.SetToolTip(btnStart, "Stop this virtual machine");
                     btnEdit.Enabled = false;
                     btnDelete.Enabled = false;
@@ -228,15 +232,14 @@ namespace _86boxManager
                 showConsole = Convert.ToBoolean(regkey.GetValue("ShowConsole"));
                 minimizeTray = Convert.ToBoolean(regkey.GetValue("MinimizeToTray"));
                 closeTray = Convert.ToBoolean(regkey.GetValue("CloseToTray"));
-                launchTimeout = Convert.ToInt32(regkey.GetValue("LaunchTimeout"));
+                launchTimeout = (int)regkey.GetValue("LaunchTimeout");
                 logpath = regkey.GetValue("LogPath").ToString();
                 logging = Convert.ToBoolean(regkey.GetValue("EnableLogging"));
                 gridlines = Convert.ToBoolean(regkey.GetValue("EnableGridLines"));
-                sortColumn = Convert.ToInt32(regkey.GetValue("SortColumn"));
-                sortOrder = (SortOrder)Convert.ToInt32(regkey.GetValue("SortOrder"));
+                sortColumn = (int)regkey.GetValue("SortColumn");
+                sortOrder = (SortOrder)regkey.GetValue("SortOrder");
 
                 lstVMs.GridLines = gridlines;
-                //lstVMs.Sorting = sortOrder;
                 VMSort(sortColumn, sortOrder);
             }
             catch (Exception ex)
@@ -419,11 +422,11 @@ namespace _86boxManager
                             configureToolStripMenuItem.Enabled = true;
                         }
                         break;
-                    case VM.STATUS_IN_SETTINGS:
+                    case VM.STATUS_WAITING:
                         {
                             startToolStripMenuItem.Enabled = false;
-                            startToolStripMenuItem.Text = "Start";
-                            startToolStripMenuItem.ToolTipText = "Start this virtual machine";
+                            startToolStripMenuItem.Text = "Stop";
+                            startToolStripMenuItem.ToolTipText = "Stop this virtual machine";
                             editToolStripMenuItem.Enabled = false;
                             deleteToolStripMenuItem.Enabled = false;
                             hardResetToolStripMenuItem.Enabled = false;
@@ -472,7 +475,9 @@ namespace _86boxManager
         //Closing 86Box Manager before closing all the VMs can lead to weirdness if 86Box Manager is then restarted. So let's warn the user just in case and request confirmation.
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            int vmCount = 0;
+            int vmCount = 0; //Number of running VMs
+
+            //Close to tray
             if (e.CloseReason == CloseReason.UserClosing && closeTray)
             {
                 e.Cancel = true;
@@ -496,16 +501,22 @@ namespace _86boxManager
             if (vmCount > 0)
             {
                 e.Cancel = true;
-                DialogResult = MessageBox.Show("It appears some virtual machines are still running. It's recommended you stop them first before closing 86Box Manager. Do you want to stop them now?", "Virtual machines are still running", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+                DialogResult = MessageBox.Show("Some virtual machines are still running. It's recommended you stop them first before closing 86Box Manager. Do you want to stop them now?", "Virtual machines are still running", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
                 if (DialogResult == DialogResult.Yes)
                 {
                     foreach (ListViewItem lvi in lstVMs.Items)
                     {
-                        lvi.Focused = true;
-                        lvi.Selected = true;
-                        VMStop();
+                        lstVMs.SelectedItems.Clear(); //To prevent weird stuff
+                        VM vm = (VM)lvi.Tag;
+                        if (vm.Status != VM.STATUS_STOPPED)
+                        {
+                            lvi.Focused = true;
+                            lvi.Selected = true;
+                            VMForceStop(); //Tell the VM to shut down without asking for user confirmation
+                        }
                     }
-                    Thread.Sleep(1000); //Wait just a bit to make sure everything goes as planned
+
+                    Thread.Sleep(vmCount * 500); //Wait just a bit to make sure everything goes as planned
                 }
                 else if (DialogResult == DialogResult.Cancel)
                 {
@@ -646,18 +657,38 @@ namespace _86boxManager
             VMSort(sortColumn, sortOrder);
         }
 
-        //Stops a running/paused VM
-        private void VMStop()
+        //Sends a running/pause VM a request to stop without asking the user for confirmation
+        private void VMForceStop()
         {
             VM vm = (VM)lstVMs.SelectedItems[0].Tag;
             try
             {
                 if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
                 {
-                    SendMessage(vm.hWnd, 0x8893, IntPtr.Zero, IntPtr.Zero);    
+                    PostMessage(vm.hWnd, 0x0002, IntPtr.Zero, IntPtr.Zero);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred trying to stop the selected virtual machine.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            VMSort(sortColumn, sortOrder);
+        }
+
+        //Sends a running/paused VM a request to stop and asking the user for confirmation
+        private void VMRequestStop()
+        {
+            VM vm = (VM)lstVMs.SelectedItems[0].Tag;
+            try
+            {
+                if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
+                {
+                    PostMessage(vm.hWnd, 0x8893, IntPtr.Zero, IntPtr.Zero);
+                    SetForegroundWindow(vm.hWnd);
+                }
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show("An error occurred trying to stop the selected virtual machine.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -675,7 +706,7 @@ namespace _86boxManager
             }
             else if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
             {
-                VMStop();
+                VMRequestStop();
             }
         }
 
@@ -709,7 +740,7 @@ namespace _86boxManager
                     p.Start();
                     p.WaitForInputIdle();
 
-                    vm.Status = VM.STATUS_IN_SETTINGS;
+                    vm.Status = VM.STATUS_WAITING;
                     vm.hWnd = p.MainWindowHandle;
                     vm.Pid = p.Id;
                     lstVMs.SelectedItems[0].SubItems[1].Text = vm.GetStatusString();
@@ -725,7 +756,7 @@ namespace _86boxManager
                     bgw.RunWorkerAsync(vm);
 
                     btnStart.Enabled = false;
-                    btnStart.Text = "Start";
+                    btnStart.Text = "Stop";
                     btnEdit.Enabled = false;
                     btnDelete.Enabled = false;
                     btnConfigure.Enabled = false;
@@ -781,9 +812,7 @@ namespace _86boxManager
             if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
             {
                 PostMessage(vm.hWnd, 0x8892, IntPtr.Zero, IntPtr.Zero);
-                vm.Status = VM.STATUS_RUNNING;
-                lstVMs.SelectedItems[0].SubItems[1].Text = vm.GetStatusString();
-                btnPause.Text = "Pause";
+                SetForegroundWindow(vm.hWnd);
             }
         }
 
@@ -801,7 +830,7 @@ namespace _86boxManager
                     }
                     else if (vm.Status == VM.STATUS_RUNNING)
                     {
-                        VMStop();
+                        VMRequestStop();
                     }
                     else if (vm.Status == VM.STATUS_PAUSED)
                     {
@@ -924,14 +953,14 @@ namespace _86boxManager
         //Removes the selected VM. Confirmations for maximum safety
         private void VMRemove()
         {
-            foreach(ListViewItem lvi in lstVMs.SelectedItems)
+            foreach (ListViewItem lvi in lstVMs.SelectedItems)
             {
                 VM vm = (VM)lvi.Tag;//(VM)lstVMs.SelectedItems[0].Tag;
                 DialogResult result1 = MessageBox.Show("Are you sure you want to remove the virtual machine \"" + vm.Name + "\"?", "Remove virtual machine", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 if (result1 == DialogResult.Yes)
                 {
-                    if(vm.Status != VM.STATUS_STOPPED)
+                    if (vm.Status != VM.STATUS_STOPPED)
                     {
                         MessageBox.Show("Virtual machine \"" + vm.Name + "\" is currently running and cannot be removed. Please stop virtual machines before attempting to remove them.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         continue;
@@ -1020,16 +1049,14 @@ namespace _86boxManager
         //This function monitors recieved window messages
         protected override void WndProc(ref Message m)
         {
-            // WM_SENDSTATUS (0x8895) - wparam = 1: VM paused, wparam = 0: VM resumed
-            // WM_SENDSSTATUS (0x8896) - wparam = 1: settings open, wparam = 0: settings closed
-            // NOTE: This code works only with 86Box build 1799 or later!!!
-            //
-            // WM_SHUTDOWN_DONE (0x8897) - user confirmed shutdown
-            // NOTE: This one works only with 86Box build 2006 or later!!!
+            // 0x8895 - VM paused/resumed, wparam = 1: VM paused, wparam = 0: VM resumed
+            // 0x8896 - Dialog opened/closed, wparam = 1: opened, wparam = 0: closed
+            // 0x8897 - Shutdown confirmed
             if (m.Msg == 0x8895)
             {
                 if (m.WParam.ToInt32() == 1) //VM was paused
                 {
+                    Console.WriteLine(m.Msg + ": VM was paused");
                     foreach (ListViewItem lvi in lstVMs.Items)
                     {
                         VM vm = (VM)lvi.Tag;
@@ -1048,6 +1075,7 @@ namespace _86boxManager
                 }
                 else if (m.WParam.ToInt32() == 0) //VM was resumed
                 {
+                    Console.WriteLine(m.Msg + ": VM was resumed");
                     foreach (ListViewItem lvi in lstVMs.Items)
                     {
                         VM vm = (VM)lvi.Tag;
@@ -1067,14 +1095,15 @@ namespace _86boxManager
             }
             if (m.Msg == 0x8896)
             {
-                if (m.WParam.ToInt32() == 1) //Settings were opened
+                if (m.WParam.ToInt32() == 1)  //A dialog was opened
                 {
+                    Console.WriteLine(m.Msg + ": a dialog was opened");
                     foreach (ListViewItem lvi in lstVMs.Items)
                     {
                         VM vm = (VM)lvi.Tag;
-                        if (vm.hWnd == m.LParam && vm.Status != VM.STATUS_IN_SETTINGS)
+                        if (vm.hWnd == m.LParam && vm.Status != VM.STATUS_WAITING)
                         {
-                            vm.Status = VM.STATUS_IN_SETTINGS;
+                            vm.Status = VM.STATUS_WAITING;
                             lvi.SubItems[1].Text = vm.GetStatusString();
                             lvi.ImageIndex = 2;
                             btnStart.Enabled = false;
@@ -1090,32 +1119,35 @@ namespace _86boxManager
                         }
                     }
                 }
-                else if (m.WParam.ToInt32() == 0) //Settings were closed
+                else if (m.WParam.ToInt32() == 0) //A dialog was closed
                 {
+                    Console.WriteLine(m.Msg + ": a dialog was closed");
                     foreach (ListViewItem lvi in lstVMs.Items)
                     {
                         VM vm = (VM)lvi.Tag;
-                        if (vm.hWnd == m.LParam & vm.Status != VM.STATUS_RUNNING)
+                        if (vm.hWnd == m.LParam && vm.Status != VM.STATUS_RUNNING)
                         {
                             vm.Status = VM.STATUS_RUNNING;
                             lvi.SubItems[1].Text = vm.GetStatusString();
                             lvi.ImageIndex = 1;
-                            btnEdit.Enabled = false;
-                            btnDelete.Enabled = false;
                             btnStart.Enabled = true;
                             btnStart.Text = "Stop";
                             toolTip.SetToolTip(btnStart, "Stop this virtual machine");
+                            btnEdit.Enabled = false;
+                            btnDelete.Enabled = false;
                             btnConfigure.Enabled = true;
+                            btnReset.Enabled = true;
                             btnPause.Enabled = true;
                             btnPause.Text = "Pause";
                             btnCtrlAltDel.Enabled = true;
-                            btnReset.Enabled = true;
                         }
                     }
                 }
             }
-            if (m.Msg == 0x8897) //User confirmed shutdown
+
+            if (m.Msg == 0x8897) //Shutdown confirmed
             {
+                Console.WriteLine(m.Msg + ": shutdown was confirmed");
                 foreach (ListViewItem lvi in lstVMs.Items)
                 {
                     VM vm = (VM)lvi.Tag;
@@ -1162,7 +1194,6 @@ namespace _86boxManager
                     }
                 }
             }
-
             //This is the WM_COPYDATA message, used here to pass command line args to an already running instance
             //NOTE: This code will have to be modified in case more command line arguments are added in the future.
             if (m.Msg == 0x004A)
@@ -1241,7 +1272,7 @@ namespace _86boxManager
 
                     MessageBox.Show("A desktop shortcut for the virtual machine \"" + vm.Name + "\" was successfully created.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show("A desktop shortcut for the virtual machine \"" + vm.Name + "\" could not be created.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -1257,14 +1288,14 @@ namespace _86boxManager
                 VM vm = (VM)lstVMs.SelectedItems[0].Tag;
                 if (vm.Status == VM.STATUS_RUNNING)
                 {
-                    VMStop();
+                    VMRequestStop();
                 }
                 else if (vm.Status == VM.STATUS_STOPPED)
                 {
                     VMStart();
                 }
             }
-            if (e.KeyCode == Keys.Delete && lstVMs.SelectedItems.Count > 0)
+            if (e.KeyCode == Keys.Delete && lstVMs.SelectedItems.Count == 1)
             {
                 VMRemove();
             }
@@ -1294,16 +1325,22 @@ namespace _86boxManager
             //If there are running VMs, display the warning and stop the VMs if user says so
             if (vmCount > 0)
             {
-                DialogResult = MessageBox.Show("It appears some virtual machines are still running. It's recommended you stop them first before closing 86Box Manager. Do you want to stop them now?", "Virtual machines are still running", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+                DialogResult = MessageBox.Show("Some virtual machines are still running. It's recommended you stop them first before closing 86Box Manager. Do you want to stop them now?", "Virtual machines are still running", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
                 if (DialogResult == DialogResult.Yes)
                 {
                     foreach (ListViewItem lvi in lstVMs.Items)
                     {
-                        lvi.Focused = true;
-                        lvi.Selected = true;
-                        VMStop();
+                        VM vm = (VM)lvi.Tag;
+                        lstVMs.SelectedItems.Clear();
+                        if (vm.Status != VM.STATUS_STOPPED)
+                        {
+                            lvi.Focused = true;
+                            lvi.Selected = true;
+                            VMForceStop(); //Tell the VMs to stop without asking for user confirmation
+                        }
                     }
-                    Thread.Sleep(1000); //Wait just a bit to make sure everything goes as planned
+
+                    Thread.Sleep(vmCount * 500); //Wait just a bit to make sure everything goes as planned
                 }
                 else if (DialogResult == DialogResult.Cancel)
                 {
@@ -1414,7 +1451,10 @@ namespace _86boxManager
             const string ascArrow = " ▲";
             const string descArrow = " ▼";
 
-            lstVMs.SelectedItems.Clear(); //Just in case so we don't end up with weird selection glitches
+            if (lstVMs.SelectedItems.Count > 1)
+            {
+                lstVMs.SelectedItems.Clear(); //Just in case so we don't end up with weird selection glitches
+            }
 
             //Remove the arrows from the current column text if they exist
             if (sortColumn > -1 && (lstVMs.Columns[sortColumn].Text.EndsWith(ascArrow) || lstVMs.Columns[sortColumn].Text.EndsWith(descArrow)))
@@ -1437,7 +1477,7 @@ namespace _86boxManager
             lstVMs.Sorting = sortOrder;
             lstVMs.Sort();
             lstVMs.ListViewItemSorter = new ListViewItemComparer(sortColumn, sortOrder);
-            
+
             //Save the new column and order to the registry
             regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true);
             regkey.SetValue("SortColumn", sortColumn, RegistryValueKind.DWord);
@@ -1448,11 +1488,11 @@ namespace _86boxManager
         //Handles the click event for the listview column headers, allowing to sort the items by columns
         private void lstVMs_ColumnClick(object sender, ColumnClickEventArgs e)
         {
-            if(lstVMs.Sorting == SortOrder.Ascending)
+            if (lstVMs.Sorting == SortOrder.Ascending)
             {
                 VMSort(e.Column, SortOrder.Descending);
             }
-            else if(lstVMs.Sorting == SortOrder.Descending || lstVMs.Sorting == SortOrder.None)
+            else if (lstVMs.Sorting == SortOrder.Descending || lstVMs.Sorting == SortOrder.None)
             {
                 VMSort(e.Column, SortOrder.Ascending);
             }
@@ -1473,7 +1513,7 @@ namespace _86boxManager
                 DialogResult = MessageBox.Show("Wiping a virtual machine deletes its configuration and nvr files. You'll have to reconfigure the virtual machine (and the BIOS if applicable).\n\n Are you sure you wish to wipe the virtual machine \"" + vm.Name + "\"?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (DialogResult == DialogResult.Yes)
                 {
-                    if(vm.Status != VM.STATUS_STOPPED)
+                    if (vm.Status != VM.STATUS_STOPPED)
                     {
                         MessageBox.Show("The virtual machine \"" + vm.Name + "\" is currently running and cannot be wiped. Please stop virtual machines before attempting to wipe them.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         continue;

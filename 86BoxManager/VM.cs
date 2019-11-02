@@ -13,7 +13,7 @@ namespace _86boxManager
         public int Pid { get; set; } //Process ID of 86box.exe running the VM
         public const int STATUS_STOPPED = 0; //VM is not running
         public const int STATUS_RUNNING = 1; //VM is running
-        public const int STATUS_IN_SETTINGS = 2; //Only the settings window is open
+        public const int STATUS_WAITING = 2; //VM is waiting for user response
         public const int STATUS_PAUSED = 3; //VM is paused
 
         public VM(){
@@ -46,7 +46,7 @@ namespace _86boxManager
                 case STATUS_STOPPED: return "Stopped";
                 case STATUS_RUNNING: return "Running";
                 case STATUS_PAUSED: return "Paused";
-                case STATUS_IN_SETTINGS: return "In settings";
+                case STATUS_WAITING: return "Waiting";
                 default: return "Invalid status";
             }
         }
