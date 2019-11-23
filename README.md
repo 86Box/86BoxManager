@@ -14,7 +14,7 @@ It's written in C# with Windows Forms using Visual Studio 2017. Please see the [
 ## System requirements
 System requirements are the same as for 86Box. Additionally, the following is required:  
 
-* [86Box 2.0](http://https://github.com/86Box/86Box/releases) or later (earlier builds don't support all the features the Manager expects)
+* [86Box 2.07](http://https://github.com/86Box/86Box/releases) or later (earlier builds don't support all the features the Manager expects)
 * [.NET Framework 4.6](https://dotnet.microsoft.com/download/dotnet-framework/net46)
 
 ## Support
