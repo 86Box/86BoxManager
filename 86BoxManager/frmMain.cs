@@ -169,12 +169,12 @@ namespace _86boxManager
                 }
                 else if (vm.Status == VM.STATUS_PAUSED)
                 {
-                    btnStart.Enabled = false;
+                    btnStart.Enabled = true;
                     btnStart.Text = "Stop";
                     toolTip.SetToolTip(btnStart, "Stop this virtual machine");
                     btnEdit.Enabled = false;
                     btnDelete.Enabled = false;
-                    btnConfigure.Enabled = false;
+                    btnConfigure.Enabled = true;
                     btnPause.Enabled = true;
                     btnPause.Text = "Resume";
                     btnReset.Enabled = true;
@@ -439,7 +439,7 @@ namespace _86boxManager
                         break;
                     case VM.STATUS_PAUSED:
                         {
-                            startToolStripMenuItem.Enabled = false;
+                            startToolStripMenuItem.Enabled = true;
                             startToolStripMenuItem.Text = "Stop";
                             startToolStripMenuItem.ToolTipText = "Stop this virtual machine";
                             editToolStripMenuItem.Enabled = false;
@@ -449,7 +449,7 @@ namespace _86boxManager
                             pauseToolStripMenuItem.Enabled = true;
                             pauseToolStripMenuItem.Text = "Resume";
                             pauseToolStripMenuItem.ToolTipText = "Resume this virtual machine";
-                            configureToolStripMenuItem.Enabled = false;
+                            configureToolStripMenuItem.Enabled = true;
                         }
                         break;
                 };
@@ -549,9 +549,14 @@ namespace _86boxManager
             lstVMs.SelectedItems[0].ImageIndex = 2;
             pauseToolStripMenuItem.Text = "Resume";
             btnPause.Text = "Resume";
-            btnStart.Enabled = false;
-            btnConfigure.Enabled = false;
+            toolTip.SetToolTip(btnStart, "Stop this virtual machine");
+            btnStart.Enabled = true;
+            btnStart.Text = "Stop";
+            startToolStripMenuItem.Text = "Stop";
+            startToolStripMenuItem.ToolTipText = "Stop this virtual machine";
+            btnConfigure.Enabled = true;
             pauseToolStripMenuItem.ToolTipText = "Resume this virtual machine";
+            toolTip.SetToolTip(btnPause, "Resume this virtual machine");
 
             VMSort(sortColumn, sortOrder);
         }
@@ -567,8 +572,12 @@ namespace _86boxManager
             pauseToolStripMenuItem.Text = "Pause";
             btnPause.Text = "Pause";
             btnStart.Enabled = true;
+            startToolStripMenuItem.Text = "Stop";
+            startToolStripMenuItem.ToolTipText = "Stop this virtual machine";
             btnConfigure.Enabled = true;
             pauseToolStripMenuItem.ToolTipText = "Pause this virtual machine";
+            toolTip.SetToolTip(btnStart, "Stop this virtual machine");
+            toolTip.SetToolTip(btnPause, "Pause this virtual machine");
 
             VMSort(sortColumn, sortOrder);
         }
@@ -721,7 +730,7 @@ namespace _86boxManager
             VM vm = (VM)lstVMs.SelectedItems[0].Tag;
 
             //If the VM is already running, only send the message to open the settings window. Otherwise, start the VM with the -S parameter
-            if (vm.Status == VM.STATUS_RUNNING)
+            if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
             {
                 PostMessage(vm.hWnd, 0x8889, IntPtr.Zero, IntPtr.Zero);
             }
@@ -757,12 +766,18 @@ namespace _86boxManager
 
                     btnStart.Enabled = false;
                     btnStart.Text = "Stop";
+                    toolTip.SetToolTip(btnStart, "Stop this virtual machine");
+                    startToolStripMenuItem.Text = "Stop";
+                    startToolStripMenuItem.ToolTipText = "Stop this virtual machine";
                     btnEdit.Enabled = false;
                     btnDelete.Enabled = false;
                     btnConfigure.Enabled = false;
                     btnReset.Enabled = false;
                     btnPause.Enabled = false;
                     btnPause.Text = "Pause";
+                    toolTip.SetToolTip(btnPause, "Pause this virtual machine");
+                    pauseToolStripMenuItem.Text = "Pause";
+                    pauseToolStripMenuItem.ToolTipText = "Pause this virtual machine";
                     btnCtrlAltDel.Enabled = false;
                 }
                 catch (Win32Exception ex)
@@ -797,6 +812,9 @@ namespace _86boxManager
                 vm.Status = VM.STATUS_RUNNING;
                 lstVMs.SelectedItems[0].SubItems[1].Text = vm.GetStatusString();
                 btnPause.Text = "Pause";
+                toolTip.SetToolTip(btnPause, "Pause this virtual machine");
+                pauseToolStripMenuItem.Text = "Pause";
+                pauseToolStripMenuItem.ToolTipText = "Pause this virtual machine";
             }
         }
 
@@ -1056,7 +1074,6 @@ namespace _86boxManager
             {
                 if (m.WParam.ToInt32() == 1) //VM was paused
                 {
-                    Console.WriteLine(m.Msg + ": VM was paused");
                     foreach (ListViewItem lvi in lstVMs.Items)
                     {
                         VM vm = (VM)lvi.Tag;
@@ -1068,8 +1085,13 @@ namespace _86boxManager
                             pauseToolStripMenuItem.Text = "Resume";
                             btnPause.Text = "Resume";
                             pauseToolStripMenuItem.ToolTipText = "Resume this virtual machine";
-                            btnStart.Enabled = false;
-                            btnConfigure.Enabled = false;
+                            toolTip.SetToolTip(btnPause, "Resume this virtual machine");
+                            btnStart.Enabled = true;
+                            btnStart.Text = "Stop";
+                            startToolStripMenuItem.Text = "Stop";
+                            startToolStripMenuItem.ToolTipText = "Stop this virtual machine";
+                            toolTip.SetToolTip(btnStart, "Stop this virtual machine");
+                            btnConfigure.Enabled = true;
                         }
                     }
                 }
@@ -1086,8 +1108,13 @@ namespace _86boxManager
                             lvi.ImageIndex = 1;
                             pauseToolStripMenuItem.Text = "Pause";
                             btnPause.Text = "Pause";
+                            toolTip.SetToolTip(btnPause, "Pause this virtual machine");
                             pauseToolStripMenuItem.ToolTipText = "Pause this virtual machine";
                             btnStart.Enabled = true;
+                            btnStart.Text = "Stop";
+                            toolTip.SetToolTip(btnStart, "Stop this virtual machine");
+                            startToolStripMenuItem.Text = "Stop";
+                            startToolStripMenuItem.ToolTipText = "Stop this virtual machine";
                             btnConfigure.Enabled = true;
                         }
                     }
@@ -1109,12 +1136,13 @@ namespace _86boxManager
                             btnStart.Enabled = false;
                             btnStart.Text = "Stop";
                             toolTip.SetToolTip(btnStart, "Stop this virtual machine");
+                            startToolStripMenuItem.Text = "Stop";
+                            startToolStripMenuItem.ToolTipText = "Stop this virtual machine";
                             btnEdit.Enabled = false;
                             btnDelete.Enabled = false;
                             btnConfigure.Enabled = false;
                             btnReset.Enabled = false;
                             btnPause.Enabled = false;
-                            btnPause.Text = "Pause";
                             btnCtrlAltDel.Enabled = false;
                         }
                     }
@@ -1133,12 +1161,17 @@ namespace _86boxManager
                             btnStart.Enabled = true;
                             btnStart.Text = "Stop";
                             toolTip.SetToolTip(btnStart, "Stop this virtual machine");
+                            startToolStripMenuItem.Text = "Stop";
+                            startToolStripMenuItem.ToolTipText = "Stop this virtual machine";
                             btnEdit.Enabled = false;
                             btnDelete.Enabled = false;
                             btnConfigure.Enabled = true;
                             btnReset.Enabled = true;
                             btnPause.Enabled = true;
                             btnPause.Text = "Pause";
+                            pauseToolStripMenuItem.Text = "Pause";
+                            pauseToolStripMenuItem.ToolTipText = "Pause this virtual machine";
+                            toolTip.SetToolTip(btnPause, "Pause this virtual machine");
                             btnCtrlAltDel.Enabled = true;
                         }
                     }
@@ -1159,8 +1192,13 @@ namespace _86boxManager
                         lvi.ImageIndex = 0;
 
                         btnStart.Text = "Start";
+                        startToolStripMenuItem.Text = "Start";
+                        startToolStripMenuItem.ToolTipText = "Start this virtual machine";
                         toolTip.SetToolTip(btnStart, "Start this virtual machine");
                         btnPause.Text = "Pause";
+                        pauseToolStripMenuItem.ToolTipText = "Pause this virtual machine";
+                        pauseToolStripMenuItem.Text = "Pause";
+                        toolTip.SetToolTip(btnPause, "Pause this virtual machine");
                         if (lstVMs.SelectedItems.Count == 1)
                         {
                             btnEdit.Enabled = true;
