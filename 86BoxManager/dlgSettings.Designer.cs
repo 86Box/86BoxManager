@@ -264,6 +264,7 @@
             // 
             this.lbl86BoxVer1.AutoSize = true;
             this.lbl86BoxVer1.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
+            this.lbl86BoxVer1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.lbl86BoxVer1.Location = new System.Drawing.Point(100, 59);
             this.lbl86BoxVer1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl86BoxVer1.Name = "lbl86BoxVer1";

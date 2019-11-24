@@ -85,12 +85,12 @@ namespace _86boxManager
             try
             {
                 FileVersionInfo vi = FileVersionInfo.GetVersionInfo(txtEXEdir.Text + @"\86Box.exe");
-                if (vi.FilePrivatePart >= 2000) //Officially supported builds
+                if (vi.FilePrivatePart >= 2008) //Officially supported builds
                 {
                     lbl86BoxVer1.Text = vi.FileMajorPart.ToString() + "." + vi.FileMinorPart.ToString() + "." + vi.FileBuildPart.ToString() + "." + vi.FilePrivatePart.ToString() + " - supported";
                     lbl86BoxVer1.ForeColor = Color.ForestGreen;
                 }
-                else if (vi.FilePrivatePart >= 1763 && vi.FilePrivatePart < 2000) //Should mostly work
+                else if (vi.FilePrivatePart >= 1763 && vi.FilePrivatePart < 2008) //Should mostly work...
                 {
                     lbl86BoxVer1.Text = vi.FileMajorPart.ToString() + "." + vi.FileMinorPart.ToString() + "." + vi.FileBuildPart.ToString() + "." + vi.FilePrivatePart.ToString() + " - partially supported";
                     lbl86BoxVer1.ForeColor = Color.Orange;
@@ -103,8 +103,8 @@ namespace _86boxManager
             }
             catch(FileNotFoundException ex)
             {
-                lbl86BoxVer1.Text = "N/A";
-                lbl86BoxVer1.ForeColor = Color.DarkGray;
+                lbl86BoxVer1.Text = "86Box.exe not found";
+                lbl86BoxVer1.ForeColor = Color.Gray;
             }
         }
         
