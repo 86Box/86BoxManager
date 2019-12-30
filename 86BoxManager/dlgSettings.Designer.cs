@@ -59,6 +59,16 @@
             this.txtLogPath = new System.Windows.Forms.TextBox();
             this.cbxLogging = new System.Windows.Forms.CheckBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.gbxLogging = new System.Windows.Forms.GroupBox();
+            this.tabAbout = new System.Windows.Forms.TabPage();
+            this.lnkGithub = new System.Windows.Forms.LinkLabel();
+            this.imgLogo = new System.Windows.Forms.PictureBox();
+            this.lblVersion1 = new System.Windows.Forms.Label();
+            this.lnkGithub2 = new System.Windows.Forms.LinkLabel();
+            this.lblCopyright = new System.Windows.Forms.Label();
+            this.lblVersion = new System.Windows.Forms.Label();
+            this.lblDesc = new System.Windows.Forms.Label();
+            this.lblTitle = new System.Windows.Forms.Label();
             this.pnlBottom.SuspendLayout();
             this.tbcSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -66,6 +76,9 @@
             this.gbxPaths.SuspendLayout();
             this.tabAdvanced.SuspendLayout();
             this.gbxMisc.SuspendLayout();
+            this.gbxLogging.SuspendLayout();
+            this.tabAbout.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgLogo)).BeginInit();
             this.SuspendLayout();
             // 
             // btnApply
@@ -113,7 +126,7 @@
             // 
             this.cbxShowConsole.AutoSize = true;
             this.cbxShowConsole.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cbxShowConsole.Location = new System.Drawing.Point(285, 146);
+            this.cbxShowConsole.Location = new System.Drawing.Point(285, 23);
             this.cbxShowConsole.Margin = new System.Windows.Forms.Padding(2);
             this.cbxShowConsole.Name = "cbxShowConsole";
             this.cbxShowConsole.Size = new System.Drawing.Size(217, 24);
@@ -126,7 +139,7 @@
             // 
             this.btnDefaults.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnDefaults.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnDefaults.Location = new System.Drawing.Point(15, 11);
+            this.btnDefaults.Location = new System.Drawing.Point(11, 11);
             this.btnDefaults.Margin = new System.Windows.Forms.Padding(2);
             this.btnDefaults.Name = "btnDefaults";
             this.btnDefaults.Size = new System.Drawing.Size(65, 30);
@@ -152,7 +165,7 @@
             // lblLaunchTimeout
             // 
             this.lblLaunchTimeout.AutoSize = true;
-            this.lblLaunchTimeout.Location = new System.Drawing.Point(5, 33);
+            this.lblLaunchTimeout.Location = new System.Drawing.Point(4, 64);
             this.lblLaunchTimeout.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblLaunchTimeout.Name = "lblLaunchTimeout";
             this.lblLaunchTimeout.Size = new System.Drawing.Size(254, 19);
@@ -161,7 +174,7 @@
             // 
             // txtLaunchTimeout
             // 
-            this.txtLaunchTimeout.Location = new System.Drawing.Point(117, 30);
+            this.txtLaunchTimeout.Location = new System.Drawing.Point(116, 61);
             this.txtLaunchTimeout.Margin = new System.Windows.Forms.Padding(2);
             this.txtLaunchTimeout.MaxLength = 5;
             this.txtLaunchTimeout.Name = "txtLaunchTimeout";
@@ -174,6 +187,7 @@
             // 
             this.tbcSettings.Controls.Add(this.tabGeneral);
             this.tbcSettings.Controls.Add(this.tabAdvanced);
+            this.tbcSettings.Controls.Add(this.tabAbout);
             this.tbcSettings.Location = new System.Drawing.Point(12, 12);
             this.tbcSettings.Name = "tbcSettings";
             this.tbcSettings.SelectedIndex = 0;
@@ -347,6 +361,7 @@
             // 
             // tabAdvanced
             // 
+            this.tabAdvanced.Controls.Add(this.gbxLogging);
             this.tabAdvanced.Controls.Add(this.gbxMisc);
             this.tabAdvanced.Location = new System.Drawing.Point(4, 26);
             this.tabAdvanced.Name = "tabAdvanced";
@@ -360,14 +375,11 @@
             // 
             this.gbxMisc.Controls.Add(this.cbxGrid);
             this.gbxMisc.Controls.Add(this.txtLaunchTimeout);
-            this.gbxMisc.Controls.Add(this.btnBrowse3);
             this.gbxMisc.Controls.Add(this.cbxShowConsole);
-            this.gbxMisc.Controls.Add(this.txtLogPath);
             this.gbxMisc.Controls.Add(this.lblLaunchTimeout);
-            this.gbxMisc.Controls.Add(this.cbxLogging);
-            this.gbxMisc.Location = new System.Drawing.Point(6, 6);
+            this.gbxMisc.Location = new System.Drawing.Point(6, 105);
             this.gbxMisc.Name = "gbxMisc";
-            this.gbxMisc.Size = new System.Drawing.Size(669, 221);
+            this.gbxMisc.Size = new System.Drawing.Size(669, 122);
             this.gbxMisc.TabIndex = 17;
             this.gbxMisc.TabStop = false;
             this.gbxMisc.Text = "Miscellaneous";
@@ -376,7 +388,7 @@
             // 
             this.cbxGrid.AutoSize = true;
             this.cbxGrid.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cbxGrid.Location = new System.Drawing.Point(9, 146);
+            this.cbxGrid.Location = new System.Drawing.Point(9, 23);
             this.cbxGrid.Margin = new System.Windows.Forms.Padding(2);
             this.cbxGrid.Name = "cbxGrid";
             this.cbxGrid.Size = new System.Drawing.Size(272, 24);
@@ -388,7 +400,7 @@
             // btnBrowse3
             // 
             this.btnBrowse3.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnBrowse3.Location = new System.Drawing.Point(594, 101);
+            this.btnBrowse3.Location = new System.Drawing.Point(594, 49);
             this.btnBrowse3.Margin = new System.Windows.Forms.Padding(2);
             this.btnBrowse3.Name = "btnBrowse3";
             this.btnBrowse3.Size = new System.Drawing.Size(70, 30);
@@ -399,7 +411,7 @@
             // 
             // txtLogPath
             // 
-            this.txtLogPath.Location = new System.Drawing.Point(9, 104);
+            this.txtLogPath.Location = new System.Drawing.Point(9, 52);
             this.txtLogPath.Name = "txtLogPath";
             this.txtLogPath.Size = new System.Drawing.Size(580, 25);
             this.txtLogPath.TabIndex = 10;
@@ -409,7 +421,7 @@
             // 
             this.cbxLogging.AutoSize = true;
             this.cbxLogging.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cbxLogging.Location = new System.Drawing.Point(9, 76);
+            this.cbxLogging.Location = new System.Drawing.Point(9, 23);
             this.cbxLogging.Margin = new System.Windows.Forms.Padding(2);
             this.cbxLogging.Name = "cbxLogging";
             this.cbxLogging.Size = new System.Drawing.Size(207, 24);
@@ -417,6 +429,123 @@
             this.cbxLogging.Text = "Enable 86Box logging to file:";
             this.cbxLogging.UseVisualStyleBackColor = true;
             this.cbxLogging.CheckedChanged += new System.EventHandler(this.cbxLogging_CheckedChanged);
+            // 
+            // gbxLogging
+            // 
+            this.gbxLogging.Controls.Add(this.cbxLogging);
+            this.gbxLogging.Controls.Add(this.txtLogPath);
+            this.gbxLogging.Controls.Add(this.btnBrowse3);
+            this.gbxLogging.Location = new System.Drawing.Point(6, 6);
+            this.gbxLogging.Name = "gbxLogging";
+            this.gbxLogging.Size = new System.Drawing.Size(669, 93);
+            this.gbxLogging.TabIndex = 18;
+            this.gbxLogging.TabStop = false;
+            this.gbxLogging.Text = "Logging";
+            // 
+            // tabAbout
+            // 
+            this.tabAbout.Controls.Add(this.lnkGithub);
+            this.tabAbout.Controls.Add(this.imgLogo);
+            this.tabAbout.Controls.Add(this.lblVersion1);
+            this.tabAbout.Controls.Add(this.lnkGithub2);
+            this.tabAbout.Controls.Add(this.lblCopyright);
+            this.tabAbout.Controls.Add(this.lblVersion);
+            this.tabAbout.Controls.Add(this.lblDesc);
+            this.tabAbout.Controls.Add(this.lblTitle);
+            this.tabAbout.Location = new System.Drawing.Point(4, 26);
+            this.tabAbout.Name = "tabAbout";
+            this.tabAbout.Padding = new System.Windows.Forms.Padding(3);
+            this.tabAbout.Size = new System.Drawing.Size(681, 233);
+            this.tabAbout.TabIndex = 2;
+            this.tabAbout.Text = "About";
+            this.tabAbout.UseVisualStyleBackColor = true;
+            // 
+            // lnkGithub
+            // 
+            this.lnkGithub.AutoSize = true;
+            this.lnkGithub.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.lnkGithub.Location = new System.Drawing.Point(15, 200);
+            this.lnkGithub.Name = "lnkGithub";
+            this.lnkGithub.Size = new System.Drawing.Size(264, 19);
+            this.lnkGithub.TabIndex = 12;
+            this.lnkGithub.TabStop = true;
+            this.lnkGithub.Text = "https://github.com/86Box/86BoxManager";
+            this.lnkGithub.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkGithub_LinkClicked);
+            // 
+            // imgLogo
+            // 
+            this.imgLogo.Image = global::_86boxManager.Properties.Resources._86Box;
+            this.imgLogo.Location = new System.Drawing.Point(15, 14);
+            this.imgLogo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.imgLogo.Name = "imgLogo";
+            this.imgLogo.Size = new System.Drawing.Size(32, 32);
+            this.imgLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.imgLogo.TabIndex = 17;
+            this.imgLogo.TabStop = false;
+            // 
+            // lblVersion1
+            // 
+            this.lblVersion1.AutoSize = true;
+            this.lblVersion1.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.lblVersion1.Location = new System.Drawing.Point(69, 83);
+            this.lblVersion1.Name = "lblVersion1";
+            this.lblVersion1.Size = new System.Drawing.Size(137, 19);
+            this.lblVersion1.TabIndex = 16;
+            this.lblVersion1.Text = "<version goes here>";
+            // 
+            // lnkGithub2
+            // 
+            this.lnkGithub2.AutoSize = true;
+            this.lnkGithub2.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.lnkGithub2.Location = new System.Drawing.Point(15, 177);
+            this.lnkGithub2.Name = "lnkGithub2";
+            this.lnkGithub2.Size = new System.Drawing.Size(209, 19);
+            this.lnkGithub2.TabIndex = 10;
+            this.lnkGithub2.TabStop = true;
+            this.lnkGithub2.Text = "https://github.com/86Box/86Box";
+            this.lnkGithub2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkGithub2_LinkClicked);
+            // 
+            // lblCopyright
+            // 
+            this.lblCopyright.AutoSize = true;
+            this.lblCopyright.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.lblCopyright.Location = new System.Drawing.Point(15, 111);
+            this.lblCopyright.Name = "lblCopyright";
+            this.lblCopyright.Size = new System.Drawing.Size(368, 57);
+            this.lblCopyright.TabIndex = 15;
+            this.lblCopyright.Text = "Copyright © 2018-2020 David Simunič\r\nLicensed under the MIT license. See the LICE" +
+    "NSE file for\r\nlicense information and AUTHORS for a list of contributors.";
+            // 
+            // lblVersion
+            // 
+            this.lblVersion.AutoSize = true;
+            this.lblVersion.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.lblVersion.Location = new System.Drawing.Point(15, 83);
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Size = new System.Drawing.Size(57, 19);
+            this.lblVersion.TabIndex = 14;
+            this.lblVersion.Text = "Version:";
+            // 
+            // lblDesc
+            // 
+            this.lblDesc.AutoSize = true;
+            this.lblDesc.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.lblDesc.Location = new System.Drawing.Point(15, 55);
+            this.lblDesc.Name = "lblDesc";
+            this.lblDesc.Size = new System.Drawing.Size(307, 19);
+            this.lblDesc.TabIndex = 13;
+            this.lblDesc.Text = "A configuration manager for the 86Box emulator";
+            // 
+            // lblTitle
+            // 
+            this.lblTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 15F, System.Drawing.FontStyle.Bold);
+            this.lblTitle.Location = new System.Drawing.Point(53, 15);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(154, 28);
+            this.lblTitle.TabIndex = 11;
+            this.lblTitle.Text = "86Box Manager";
             // 
             // dlgSettings
             // 
@@ -449,6 +578,11 @@
             this.tabAdvanced.ResumeLayout(false);
             this.gbxMisc.ResumeLayout(false);
             this.gbxMisc.PerformLayout();
+            this.gbxLogging.ResumeLayout(false);
+            this.gbxLogging.PerformLayout();
+            this.tabAbout.ResumeLayout(false);
+            this.tabAbout.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgLogo)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -485,5 +619,15 @@
         private System.Windows.Forms.Button btnBrowse3;
         private System.Windows.Forms.TextBox txtLogPath;
         private System.Windows.Forms.CheckBox cbxGrid;
+        private System.Windows.Forms.GroupBox gbxLogging;
+        private System.Windows.Forms.TabPage tabAbout;
+        private System.Windows.Forms.LinkLabel lnkGithub;
+        private System.Windows.Forms.PictureBox imgLogo;
+        private System.Windows.Forms.Label lblVersion1;
+        private System.Windows.Forms.LinkLabel lnkGithub2;
+        private System.Windows.Forms.Label lblCopyright;
+        private System.Windows.Forms.Label lblVersion;
+        private System.Windows.Forms.Label lblDesc;
+        private System.Windows.Forms.Label lblTitle;
     }
 }

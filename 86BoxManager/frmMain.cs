@@ -111,12 +111,6 @@ namespace _86boxManager
             VMConfigure();
         }
 
-        private void btnAbout_Click(object sender, EventArgs e)
-        {
-            dlgAbout dlg = new dlgAbout();
-            dlg.ShowDialog();
-        }
-
         private void btnSettings_Click(object sender, EventArgs e)
         {
             dlgSettings dlg = new dlgSettings();
@@ -327,6 +321,8 @@ namespace _86boxManager
                     newLvi.SubItems.Add(new ListViewItem.ListViewSubItem(newLvi, vm.Path));
                     lstVMs.Items.Add(newLvi);
                 }
+
+                lblVMCount.Text += " " + lstVMs.Items.Count;
             }
             catch (Exception ex)
             {

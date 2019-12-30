@@ -34,7 +34,6 @@
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
             this.btnSettings = new System.Windows.Forms.Button();
-            this.btnAbout = new System.Windows.Forms.Button();
             this.lstVMs = new System.Windows.Forms.ListView();
             this.clmName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -68,8 +67,11 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.lblVMCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.cmsVM.SuspendLayout();
             this.cmsTrayIcon.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnEdit
@@ -119,7 +121,7 @@
             this.btnSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSettings.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnSettings.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnSettings.Location = new System.Drawing.Point(551, 12);
+            this.btnSettings.Location = new System.Drawing.Point(607, 12);
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new System.Drawing.Size(65, 30);
             this.btnSettings.TabIndex = 8;
@@ -127,20 +129,6 @@
             this.toolTip.SetToolTip(this.btnSettings, "Open 86Box Manager settings");
             this.btnSettings.UseVisualStyleBackColor = true;
             this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
-            // 
-            // btnAbout
-            // 
-            this.btnAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAbout.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnAbout.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnAbout.Location = new System.Drawing.Point(622, 12);
-            this.btnAbout.Name = "btnAbout";
-            this.btnAbout.Size = new System.Drawing.Size(50, 30);
-            this.btnAbout.TabIndex = 9;
-            this.btnAbout.Text = "About";
-            this.toolTip.SetToolTip(this.btnAbout, "Open the About 86Box Manager dialog");
-            this.btnAbout.UseVisualStyleBackColor = true;
-            this.btnAbout.Click += new System.EventHandler(this.btnAbout_Click);
             // 
             // lstVMs
             // 
@@ -160,7 +148,7 @@
             this.lstVMs.Name = "lstVMs";
             this.lstVMs.ShowGroups = false;
             this.lstVMs.ShowItemToolTips = true;
-            this.lstVMs.Size = new System.Drawing.Size(660, 397);
+            this.lstVMs.Size = new System.Drawing.Size(660, 407);
             this.lstVMs.SmallImageList = this.img86box;
             this.lstVMs.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lstVMs.TabIndex = 10;
@@ -444,19 +432,37 @@
             this.exitToolStripMenuItem.ToolTipText = "Close 86Box Manager";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lblVMCount});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 473);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(684, 22);
+            this.statusStrip1.TabIndex = 11;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // lblVMCount
+            // 
+            this.lblVMCount.BackColor = System.Drawing.Color.Transparent;
+            this.lblVMCount.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.lblVMCount.Name = "lblVMCount";
+            this.lblVMCount.Size = new System.Drawing.Size(121, 17);
+            this.lblVMCount.Text = "# of virtual machines:";
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(684, 461);
+            this.ClientSize = new System.Drawing.Size(684, 495);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.btnReset);
             this.Controls.Add(this.btnCtrlAltDel);
             this.Controls.Add(this.btnPause);
             this.Controls.Add(this.btnConfigure);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.lstVMs);
-            this.Controls.Add(this.btnAbout);
             this.Controls.Add(this.btnSettings);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.btnDelete);
@@ -473,7 +479,10 @@
             this.Resize += new System.EventHandler(this.frmMain_Resize);
             this.cmsVM.ResumeLayout(false);
             this.cmsTrayIcon.ResumeLayout(false);
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -482,7 +491,6 @@
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Button btnSettings;
-        private System.Windows.Forms.Button btnAbout;
         private System.Windows.Forms.ColumnHeader clmName;
         private System.Windows.Forms.ColumnHeader clmStatus;
         private System.Windows.Forms.Button btnAdd;
@@ -516,6 +524,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem wipeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cloneToolStripMenuItem;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel lblVMCount;
     }
 }
 

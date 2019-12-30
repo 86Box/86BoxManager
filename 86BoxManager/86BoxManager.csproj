@@ -85,12 +85,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="dlgAbout.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="dlgAbout.Designer.cs">
-      <DependentUpon>dlgAbout.cs</DependentUpon>
-    </Compile>
     <Compile Include="dlgAddVM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -126,9 +120,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="dlgAbout.resx">
-      <DependentUpon>dlgAbout.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="dlgAddVM.resx">
       <DependentUpon>dlgAddVM.cs</DependentUpon>
     </EmbeddedResource>

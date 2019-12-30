@@ -20,6 +20,12 @@ namespace _86boxManager
         {
             LoadSettings();
             Get86BoxVersion();
+
+            lblVersion1.Text = Application.ProductVersion.Substring(0, Application.ProductVersion.Length - 2);
+
+            #if DEBUG
+                lblVersion1.Text += " (Debug)";
+            #endif
         }
 
         private void dlgSettings_FormClosing(object sender, FormClosingEventArgs e)
@@ -407,6 +413,18 @@ namespace _86boxManager
             {
                 txtLogPath.Text = ofd.FileName;
             }
+        }
+
+        private void lnkGithub2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            lnkGithub2.LinkVisited = true;
+            Process.Start("https://github.com/86Box/86Box");
+        }
+
+        private void lnkGithub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            lnkGithub.LinkVisited = true;
+            Process.Start("https://github.com/86Box/86BoxManager");
         }
     }
 }
