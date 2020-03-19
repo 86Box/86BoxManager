@@ -322,7 +322,7 @@ namespace _86boxManager
                     lstVMs.Items.Add(newLvi);
                 }
 
-                lblVMCount.Text += " " + lstVMs.Items.Count;
+                VMCountRefresh();
             }
             catch (Exception ex)
             {
@@ -555,6 +555,7 @@ namespace _86boxManager
             toolTip.SetToolTip(btnPause, "Resume this virtual machine");
 
             VMSort(sortColumn, sortOrder);
+            VMCountRefresh();
         }
 
         //Resumes the selected VM
@@ -576,6 +577,7 @@ namespace _86boxManager
             toolTip.SetToolTip(btnPause, "Pause this virtual machine");
 
             VMSort(sortColumn, sortOrder);
+            VMCountRefresh();
         }
 
         //Starts the selected VM
@@ -636,6 +638,8 @@ namespace _86boxManager
                         btnReset.Enabled = true;
                         btnCtrlAltDel.Enabled = true;
                         btnConfigure.Enabled = true;
+
+                        VMCountRefresh();
                     }
                     else
                     { //Inform the user what happened
@@ -660,6 +664,7 @@ namespace _86boxManager
             }
 
             VMSort(sortColumn, sortOrder);
+
         }
 
         //Sends a running/pause VM a request to stop without asking the user for confirmation
@@ -679,6 +684,7 @@ namespace _86boxManager
             }
 
             VMSort(sortColumn, sortOrder);
+            VMCountRefresh();
         }
 
         //Sends a running/paused VM a request to stop and asking the user for confirmation
@@ -699,6 +705,7 @@ namespace _86boxManager
             }
 
             VMSort(sortColumn, sortOrder);
+            VMCountRefresh();
         }
 
         //Start VM if it's stopped or stop it if it's running/paused
@@ -791,6 +798,7 @@ namespace _86boxManager
             }
 
             VMSort(sortColumn, sortOrder);
+            VMCountRefresh();
         }
 
         private void resetCTRLALTDELETEToolStripMenuItem_Click(object sender, EventArgs e)
@@ -812,6 +820,7 @@ namespace _86boxManager
                 pauseToolStripMenuItem.Text = "Pause";
                 pauseToolStripMenuItem.ToolTipText = "Pause this virtual machine";
             }
+            VMCountRefresh();
         }
 
         private void hardResetToolStripMenuItem_Click(object sender, EventArgs e)
@@ -828,6 +837,7 @@ namespace _86boxManager
                 PostMessage(vm.hWnd, 0x8892, IntPtr.Zero, IntPtr.Zero);
                 SetForegroundWindow(vm.hWnd);
             }
+            VMCountRefresh();
         }
 
         //For double clicking an item, do something based on VM status
@@ -893,6 +903,9 @@ namespace _86boxManager
             {
                 VMConfigure();
             }
+
+            VMSort(sortColumn, sortOrder);
+            VMCountRefresh();
         }
 
         //Checks if a VM with this name already exists
@@ -1024,6 +1037,7 @@ namespace _86boxManager
                 }
             }
             VMSort(sortColumn, sortOrder);
+            VMCountRefresh();
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1090,10 +1104,11 @@ namespace _86boxManager
                             btnConfigure.Enabled = true;
                         }
                     }
+
+                    VMCountRefresh();
                 }
                 else if (m.WParam.ToInt32() == 0) //VM was resumed
                 {
-                    Console.WriteLine(m.Msg + ": VM was resumed");
                     foreach (ListViewItem lvi in lstVMs.Items)
                     {
                         VM vm = (VM)lvi.Tag;
@@ -1114,13 +1129,14 @@ namespace _86boxManager
                             btnConfigure.Enabled = true;
                         }
                     }
+
+                    VMCountRefresh();
                 }
             }
             if (m.Msg == 0x8896)
             {
                 if (m.WParam.ToInt32() == 1)  //A dialog was opened
                 {
-                    Console.WriteLine(m.Msg + ": a dialog was opened");
                     foreach (ListViewItem lvi in lstVMs.Items)
                     {
                         VM vm = (VM)lvi.Tag;
@@ -1142,10 +1158,11 @@ namespace _86boxManager
                             btnCtrlAltDel.Enabled = false;
                         }
                     }
+
+                    VMCountRefresh();
                 }
                 else if (m.WParam.ToInt32() == 0) //A dialog was closed
                 {
-                    Console.WriteLine(m.Msg + ": a dialog was closed");
                     foreach (ListViewItem lvi in lstVMs.Items)
                     {
                         VM vm = (VM)lvi.Tag;
@@ -1171,12 +1188,13 @@ namespace _86boxManager
                             btnCtrlAltDel.Enabled = true;
                         }
                     }
+
+                    VMCountRefresh();
                 }
             }
 
             if (m.Msg == 0x8897) //Shutdown confirmed
             {
-                Console.WriteLine(m.Msg + ": shutdown was confirmed");
                 foreach (ListViewItem lvi in lstVMs.Items)
                 {
                     VM vm = (VM)lvi.Tag;
@@ -1227,6 +1245,8 @@ namespace _86boxManager
                         }
                     }
                 }
+
+                VMCountRefresh();
             }
             //This is the WM_COPYDATA message, used here to pass command line args to an already running instance
             //NOTE: This code will have to be modified in case more command line arguments are added in the future.
@@ -1471,7 +1491,9 @@ namespace _86boxManager
                     }
                 }
             }
+
             VMSort(sortColumn, sortOrder);
+            VMCountRefresh();
         }
 
         private void killToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1632,6 +1654,9 @@ namespace _86boxManager
             {
                 VMConfigure();
             }
+
+            VMSort(sortColumn, sortOrder);
+            VMCountRefresh();
         }
 
         private void cloneToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1639,6 +1664,29 @@ namespace _86boxManager
             VM vm = (VM)lstVMs.SelectedItems[0].Tag;
             dlgCloneVM dc = new dlgCloneVM(vm.Path);
             dc.ShowDialog();
+        }
+
+        //Refreshes the VM counter in the status bar
+        private void VMCountRefresh()
+        {
+            int runningVMs = 0;
+            int pausedVMs = 0;
+            int waitingVMs = 0;
+            int stoppedVMs = 0;
+
+            foreach(ListViewItem lvi in lstVMs.Items)
+            {
+                VM vm = (VM)lvi.Tag;
+                switch (vm.Status)
+                {
+                    case VM.STATUS_PAUSED: pausedVMs++; break;
+                    case VM.STATUS_RUNNING: runningVMs++; break;
+                    case VM.STATUS_STOPPED: stoppedVMs++; break;
+                    case VM.STATUS_WAITING: waitingVMs++; break;
+                }
+            }
+
+            lblVMCount.Text = "Total VMs: " + lstVMs.Items.Count + " | Running: " + runningVMs + " | Paused: " + pausedVMs + " | Waiting: " + waitingVMs + " | Stopped: " + stoppedVMs;
         }
     }
 }
