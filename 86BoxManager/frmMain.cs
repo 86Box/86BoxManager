@@ -513,10 +513,11 @@ namespace _86boxManager
                             lvi.Focused = true;
                             lvi.Selected = true;
                             VMForceStop(); //Tell the VM to shut down without asking for user confirmation
+                            Process p = Process.GetProcessById(vm.Pid);
+                            p.WaitForExit(500); //Wait 500 milliseconds for each VM to close
                         }
                     }
 
-                    Thread.Sleep(vmCount * 500); //Wait just a bit to make sure everything goes as planned
                 }
                 else if (DialogResult == DialogResult.Cancel)
                 {
@@ -605,9 +606,12 @@ namespace _86boxManager
 
                     p.Start();
                     vm.Pid = p.Id;
+
                     bool initSuccess = p.WaitForInputIdle(launchTimeout); //Wait for the specified amount of time so hWnd can be obtained
 
-                    if (!p.MainWindowHandle.Equals(IntPtr.Zero) && initSuccess)
+                    //initSuccess is ignored for now because WaitForInputIdle() likes to return false more often now that
+                    //86Box is compiled with GCC 9.3.0...
+                    if (!p.MainWindowHandle.Equals(IntPtr.Zero) /*&& initSuccess*/)
                     {
                         vm.hWnd = p.MainWindowHandle; //Get the window handle of the newly created process
                         vm.Status = VM.STATUS_RUNNING;
