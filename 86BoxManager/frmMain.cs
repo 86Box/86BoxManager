@@ -1101,7 +1101,6 @@ namespace _86boxManager
                 }
                 else if (m.WParam.ToInt32() == 0) //VM was resumed
                 {
-                    Console.WriteLine(m.Msg + ": VM was resumed");
                     foreach (ListViewItem lvi in lstVMs.Items)
                     {
                         VM vm = (VM)lvi.Tag;
@@ -1128,7 +1127,6 @@ namespace _86boxManager
             {
                 if (m.WParam.ToInt32() == 1)  //A dialog was opened
                 {
-                    Console.WriteLine(m.Msg + ": a dialog was opened");
                     foreach (ListViewItem lvi in lstVMs.Items)
                     {
                         VM vm = (VM)lvi.Tag;
@@ -1153,7 +1151,6 @@ namespace _86boxManager
                 }
                 else if (m.WParam.ToInt32() == 0) //A dialog was closed
                 {
-                    Console.WriteLine(m.Msg + ": a dialog was closed");
                     foreach (ListViewItem lvi in lstVMs.Items)
                     {
                         VM vm = (VM)lvi.Tag;
@@ -1184,7 +1181,6 @@ namespace _86boxManager
 
             if (m.Msg == 0x8897) //Shutdown confirmed
             {
-                Console.WriteLine(m.Msg + ": shutdown was confirmed");
                 foreach (ListViewItem lvi in lstVMs.Items)
                 {
                     VM vm = (VM)lvi.Tag;

@@ -152,8 +152,6 @@ namespace _86boxManager
                 regkey.Close();
 
                 settingsChanged = CheckForChanges();
-
-                MessageBox.Show("Settings were successfully saved.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
