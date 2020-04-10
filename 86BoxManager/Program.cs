@@ -45,12 +45,18 @@ namespace _86boxManager
         [DllImport("shell32.dll", SetLastError = true)]
         static extern void SetCurrentProcessExplicitAppUserModelID([MarshalAs(UnmanagedType.LPWStr)] string AppID);
 
+        [DllImport("user32.dll")]
+        private static extern bool SetProcessDPIAware();
+
         private static readonly string AppID = "86Box.86Box"; //For grouping windows together in Win7+ taskbar
         private static Mutex mutex = null;
 
         [STAThread]
         static void Main()
         {
+            if (Environment.OSVersion.Version.Major >= 6)
+                SetProcessDPIAware();
+
             SetCurrentProcessExplicitAppUserModelID(AppID);
             const string name = "86Box Manager";
 
