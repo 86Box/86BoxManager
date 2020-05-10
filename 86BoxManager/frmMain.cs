@@ -895,6 +895,10 @@ namespace _86boxManager
             MessageBox.Show("Virtual machine \"" + newVM.Name + "\" was successfully created!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             //Select the newly created VM
+            foreach(ListViewItem lvi in lstVMs.SelectedItems)
+            {
+                lvi.Selected = false;
+            }
             newLvi.Focused = true;
             newLvi.Selected = true;
 
@@ -1646,6 +1650,10 @@ namespace _86boxManager
             }
 
             //Select the newly created VM
+            foreach(ListViewItem lvi in lstVMs.SelectedItems)
+            {
+                lvi.Selected = false;
+            }
             newLvi.Focused = true;
             newLvi.Selected = true;
 
@@ -1669,7 +1677,7 @@ namespace _86boxManager
             dlgCloneVM dc = new dlgCloneVM(vm.Path);
             dc.ShowDialog();
         }
-
+		
         //Refreshes the VM counter in the status bar
         private void VMCountRefresh()
         {
@@ -1691,6 +1699,27 @@ namespace _86boxManager
             }
 
             lblVMCount.Text = "Total VMs: " + lstVMs.Items.Count + " | Running: " + runningVMs + " | Paused: " + pausedVMs + " | Waiting: " + waitingVMs + " | Stopped: " + stoppedVMs;
+		}
+		
+        private void openConfigFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            VMOpenConfig();
+        }
+
+        private void VMOpenConfig()
+        {
+            foreach (ListViewItem lvi in lstVMs.SelectedItems)
+            {
+                VM vm = (VM)lvi.Tag;
+                try
+                {
+                    Process.Start(vm.Path + Path.DirectorySeparatorChar + "86box.cfg");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("The config file for the virtual machine \"" + vm.Name + "\" could not be opened. Make sure it still exists and that you have sufficient privileges to access it.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }

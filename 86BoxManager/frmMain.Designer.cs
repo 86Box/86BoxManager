@@ -69,6 +69,7 @@
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblVMCount = new System.Windows.Forms.ToolStripStatusLabel();
+            this.openConfigFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsVM.SuspendLayout();
             this.cmsTrayIcon.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -190,10 +191,11 @@
             this.cloneToolStripMenuItem,
             this.deleteToolStripMenuItem,
             this.openFolderToolStripMenuItem,
+            this.openConfigFileToolStripMenuItem,
             this.createADesktopShortcutToolStripMenuItem});
             this.cmsVM.Name = "cmsVM";
             this.cmsVM.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.cmsVM.Size = new System.Drawing.Size(210, 280);
+            this.cmsVM.Size = new System.Drawing.Size(210, 324);
             this.cmsVM.Opening += new System.ComponentModel.CancelEventHandler(this.cmsVM_Opening);
             // 
             // startToolStripMenuItem
@@ -449,6 +451,12 @@
             this.lblVMCount.Name = "lblVMCount";
             this.lblVMCount.Size = new System.Drawing.Size(121, 17);
             this.lblVMCount.Text = "# of virtual machines:";
+            // openConfigFileToolStripMenuItem
+            // 
+            this.openConfigFileToolStripMenuItem.Name = "openConfigFileToolStripMenuItem";
+            this.openConfigFileToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.openConfigFileToolStripMenuItem.Text = "Open config file";
+            this.openConfigFileToolStripMenuItem.Click += new System.EventHandler(this.openConfigFileToolStripMenuItem_Click);
             // 
             // frmMain
             // 
@@ -526,6 +534,7 @@
         private System.Windows.Forms.ToolStripMenuItem cloneToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel lblVMCount;
+        private System.Windows.Forms.ToolStripMenuItem openConfigFileToolStripMenuItem;
     }
 }
 
