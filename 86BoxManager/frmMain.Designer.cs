@@ -68,6 +68,7 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.openConfigFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsVM.SuspendLayout();
             this.cmsTrayIcon.SuspendLayout();
             this.SuspendLayout();
@@ -202,10 +203,11 @@
             this.cloneToolStripMenuItem,
             this.deleteToolStripMenuItem,
             this.openFolderToolStripMenuItem,
+            this.openConfigFileToolStripMenuItem,
             this.createADesktopShortcutToolStripMenuItem});
             this.cmsVM.Name = "cmsVM";
             this.cmsVM.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.cmsVM.Size = new System.Drawing.Size(210, 280);
+            this.cmsVM.Size = new System.Drawing.Size(210, 324);
             this.cmsVM.Opening += new System.ComponentModel.CancelEventHandler(this.cmsVM_Opening);
             // 
             // startToolStripMenuItem
@@ -444,6 +446,13 @@
             this.exitToolStripMenuItem.ToolTipText = "Close 86Box Manager";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // openConfigFileToolStripMenuItem
+            // 
+            this.openConfigFileToolStripMenuItem.Name = "openConfigFileToolStripMenuItem";
+            this.openConfigFileToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.openConfigFileToolStripMenuItem.Text = "Open config file";
+            this.openConfigFileToolStripMenuItem.Click += new System.EventHandler(this.openConfigFileToolStripMenuItem_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -516,6 +525,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem wipeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cloneToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openConfigFileToolStripMenuItem;
     }
 }
 
