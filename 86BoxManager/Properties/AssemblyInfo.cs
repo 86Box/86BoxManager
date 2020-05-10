@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("86Box Manager")]
-[assembly: AssemblyDescription("A configuration manager for 86Box")]
+[assembly: AssemblyDescription("A configuration manager for 86Box emulator")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("David Simunič and others")]
 [assembly: AssemblyProduct("86Box Manager")]
-[assembly: AssemblyCopyright("Copyright © 2018-2019 David Simunič and others")]
+[assembly: AssemblyCopyright("Copyright © 2018-2020 David Simunič and others")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
