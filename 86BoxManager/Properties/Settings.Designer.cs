@@ -58,5 +58,53 @@ namespace _86boxManager.Properties {
                 this["WindowState"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("184")]
+        public int NameColWidth {
+            get {
+                return ((int)(this["NameColWidth"]));
+            }
+            set {
+                this["NameColWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("107")]
+        public int StatusColWidth {
+            get {
+                return ((int)(this["StatusColWidth"]));
+            }
+            set {
+                this["StatusColWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("144")]
+        public int DescColWidth {
+            get {
+                return ((int)(this["DescColWidth"]));
+            }
+            set {
+                this["DescColWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("217")]
+        public int PathColWidth {
+            get {
+                return ((int)(this["PathColWidth"]));
+            }
+            set {
+                this["PathColWidth"] = value;
+            }
+        }
     }
 }

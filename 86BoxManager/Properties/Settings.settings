@@ -11,5 +11,17 @@
     <Setting Name="WindowState" Type="System.Windows.Forms.FormWindowState" Scope="User">
       <Value Profile="(Default)">Normal</Value>
     </Setting>
+    <Setting Name="NameColWidth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">184</Value>
+    </Setting>
+    <Setting Name="StatusColWidth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">107</Value>
+    </Setting>
+    <Setting Name="DescColWidth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">144</Value>
+    </Setting>
+    <Setting Name="PathColWidth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">217</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

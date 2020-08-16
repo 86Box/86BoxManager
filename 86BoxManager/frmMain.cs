@@ -67,6 +67,12 @@ namespace _86boxManager
             Size = Settings.Default.WindowSize;
             Location = Settings.Default.WindowPosition;
 
+            //Load listview column widths
+            clmName.Width = Settings.Default.NameColWidth;
+            clmStatus.Width = Settings.Default.StatusColWidth;
+            clmDesc.Width = Settings.Default.DescColWidth;
+            clmPath.Width = Settings.Default.PathColWidth;
+
             //Convert the current window handle to a form that's expected by 86Box
             hWndHex = string.Format("{0:X}", Handle.ToInt64());
             hWndHex = hWndHex.PadLeft(16, '0');
@@ -208,9 +214,6 @@ namespace _86boxManager
         {
             dlgEditVM dlg = new dlgEditVM();
             dlg.ShowDialog();
-
-            if (dlg.DialogResult == DialogResult.OK)
-                LoadVMs();
         }
 
         //Load the settings from the registry
@@ -317,7 +320,6 @@ namespace _86boxManager
                     ListViewItem newLvi = new ListViewItem(vm.Name)
                     {
                         Tag = vm,
-                        //ToolTipText = vm.Desc,
                         ImageIndex = 0
                     };
                     newLvi.SubItems.Add(new ListViewItem.ListViewSubItem(newLvi, vm.GetStatusString()));
@@ -531,6 +533,13 @@ namespace _86boxManager
             Settings.Default.WindowState = WindowState;
             Settings.Default.WindowSize = Size;
             Settings.Default.WindowPosition = Location;
+
+            //Save listview column widths
+            Settings.Default.NameColWidth = clmName.Width;
+            Settings.Default.StatusColWidth = clmStatus.Width;
+            Settings.Default.DescColWidth = clmDesc.Width;
+            Settings.Default.PathColWidth = clmPath.Width;
+
             Settings.Default.Save();
         }
 
@@ -619,7 +628,7 @@ namespace _86boxManager
 
                     //initSuccess is ignored for now because WaitForInputIdle() likes to return false more often now that
                     //86Box is compiled with GCC 9.3.0...
-                    if (!p.MainWindowHandle.Equals(IntPtr.Zero) /*&& initSuccess*/)
+                    if (!p.MainWindowHandle.Equals(IntPtr.Zero) && initSuccess)
                     {
                         vm.hWnd = p.MainWindowHandle; //Get the window handle of the newly created process
                         vm.Status = VM.STATUS_RUNNING;
@@ -889,6 +898,7 @@ namespace _86boxManager
                 ImageIndex = 0
             };
             newLvi.SubItems.Add(new ListViewItem.ListViewSubItem(newLvi, newVM.GetStatusString()));
+            newLvi.SubItems.Add(new ListViewItem.ListViewSubItem(newLvi, newVM.Desc));
             newLvi.SubItems.Add(new ListViewItem.ListViewSubItem(newLvi, newVM.Path));
             lstVMs.Items.Add(newLvi);
             Directory.CreateDirectory(cfgpath + newVM.Name);
@@ -967,11 +977,8 @@ namespace _86boxManager
                 }
                 vm.Name = name;
                 vm.Path = cfgpath + vm.Name;
-                lstVMs.SelectedItems[0].Text = name;
-                lstVMs.SelectedItems[0].SubItems[2].Text = vm.Path;
             }
             vm.Desc = desc;
-            lstVMs.SelectedItems[0].ToolTipText = desc;
 
             //Create a new registry value with new info, delete the old one
             regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box\Virtual Machines", true);
@@ -988,6 +995,7 @@ namespace _86boxManager
 
             MessageBox.Show("Virtual machine \"" + vm.Name + "\" was successfully modified. Please update its configuration so that any folder paths (e.g. for hard disk images) point to the new folder.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             VMSort(sortColumn, sortOrder);
+            LoadVMs();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -1067,9 +1075,6 @@ namespace _86boxManager
         {
             dlgEditVM dlg = new dlgEditVM();
             dlg.ShowDialog();
-
-            if (dlg.DialogResult == DialogResult.OK)
-                LoadVMs();
         }
 
         private void btnCtrlAltDel_Click(object sender, EventArgs e)
@@ -1617,7 +1622,6 @@ namespace _86boxManager
             ListViewItem newLvi = new ListViewItem(newVM.Name)
             {
                 Tag = newVM,
-                ToolTipText = newVM.Desc,
                 ImageIndex = 0
             };
             newLvi.SubItems.Add(new ListViewItem.ListViewSubItem(newLvi, newVM.GetStatusString()));
@@ -1711,7 +1715,7 @@ namespace _86boxManager
                 }
             }
 
-            lblVMCount.Text = "Total VMs: " + lstVMs.Items.Count + " | Running: " + runningVMs + " | Paused: " + pausedVMs + " | Waiting: " + waitingVMs + " | Stopped: " + stoppedVMs;
+            lblVMCount.Text = "All VMs: " + lstVMs.Items.Count + " | Running: " + runningVMs + " | Paused: " + pausedVMs + " | Waiting: " + waitingVMs + " | Stopped: " + stoppedVMs;
 		}
 		
         private void openConfigFileToolStripMenuItem_Click(object sender, EventArgs e)

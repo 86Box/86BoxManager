@@ -30,12 +30,6 @@ namespace _86boxManager
             lblPath1.Text = vm.Path;
         }
 
-        //Save the new data back to the VM
-        private void VMSaveData()
-        {
-            main.VMEdit(txtName.Text, txtDesc.Text);
-        }
-
         private void btnCancel_Click(object sender, EventArgs e)
         {
             Close();
@@ -54,7 +48,7 @@ namespace _86boxManager
             }
             else
             {
-                VMSaveData();
+                main.VMEdit(txtName.Text, txtDesc.Text);
                 Close();
             }
         }

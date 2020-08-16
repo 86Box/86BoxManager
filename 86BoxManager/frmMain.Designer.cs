@@ -86,6 +86,7 @@
             this.btnEdit.Size = new System.Drawing.Size(45, 30);
             this.btnEdit.TabIndex = 1;
             this.btnEdit.Text = "Edit";
+            this.toolTip.SetToolTip(this.btnEdit, "Edit the properties of this virtual machine");
             this.btnEdit.UseVisualStyleBackColor = true;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
@@ -99,6 +100,7 @@
             this.btnDelete.Size = new System.Drawing.Size(60, 30);
             this.btnDelete.TabIndex = 2;
             this.btnDelete.Text = "Remove";
+            this.toolTip.SetToolTip(this.btnDelete, "Remove this virtual machine");
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
@@ -112,6 +114,7 @@
             this.btnStart.Size = new System.Drawing.Size(45, 30);
             this.btnStart.TabIndex = 3;
             this.btnStart.Text = "Start";
+            this.toolTip.SetToolTip(this.btnStart, "Start this virtual machine");
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
@@ -201,7 +204,7 @@
             this.configureToolStripMenuItem.Name = "configureToolStripMenuItem";
             this.configureToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.configureToolStripMenuItem.Text = "Configure";
-            this.configureToolStripMenuItem.ToolTipText = "Open settings for this virtual machine";
+            this.configureToolStripMenuItem.ToolTipText = "Change configuration for this virtual machine";
             this.configureToolStripMenuItem.Click += new System.EventHandler(this.configureToolStripMenuItem_Click);
             // 
             // pauseToolStripMenuItem
@@ -291,6 +294,7 @@
             this.openConfigFileToolStripMenuItem.Name = "openConfigFileToolStripMenuItem";
             this.openConfigFileToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.openConfigFileToolStripMenuItem.Text = "Open config file";
+            this.openConfigFileToolStripMenuItem.ToolTipText = "Open the config file for this virtual machine";
             this.openConfigFileToolStripMenuItem.Click += new System.EventHandler(this.openConfigFileToolStripMenuItem_Click);
             // 
             // createADesktopShortcutToolStripMenuItem
@@ -318,6 +322,7 @@
             this.btnAdd.Size = new System.Drawing.Size(40, 30);
             this.btnAdd.TabIndex = 0;
             this.btnAdd.Text = "Add";
+            this.toolTip.SetToolTip(this.btnAdd, "Add a new or an existing virtual machine");
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
@@ -331,6 +336,7 @@
             this.btnConfigure.Size = new System.Drawing.Size(70, 30);
             this.btnConfigure.TabIndex = 4;
             this.btnConfigure.Text = "Configure";
+            this.toolTip.SetToolTip(this.btnConfigure, "Change the configuration of this virtual machine");
             this.btnConfigure.UseVisualStyleBackColor = true;
             this.btnConfigure.Click += new System.EventHandler(this.btnConfigure_Click);
             // 
@@ -350,6 +356,7 @@
             this.btnPause.Size = new System.Drawing.Size(55, 30);
             this.btnPause.TabIndex = 5;
             this.btnPause.Text = "Pause";
+            this.toolTip.SetToolTip(this.btnPause, "Pause this virtual machine");
             this.btnPause.UseVisualStyleBackColor = true;
             this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
             // 
@@ -363,6 +370,7 @@
             this.btnCtrlAltDel.Size = new System.Drawing.Size(60, 30);
             this.btnCtrlAltDel.TabIndex = 6;
             this.btnCtrlAltDel.Text = "C+A+D";
+            this.toolTip.SetToolTip(this.btnCtrlAltDel, "Send the CTRL+ALT+DEL keystroke to this virtual machine");
             this.btnCtrlAltDel.UseVisualStyleBackColor = true;
             this.btnCtrlAltDel.Click += new System.EventHandler(this.btnCtrlAltDel_Click);
             // 
@@ -376,6 +384,7 @@
             this.btnReset.Size = new System.Drawing.Size(50, 30);
             this.btnReset.TabIndex = 7;
             this.btnReset.Text = "Reset";
+            this.toolTip.SetToolTip(this.btnReset, "Reset this virtual machine by simulating a power cycle");
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
@@ -454,6 +463,7 @@
             this.btnSettings.Size = new System.Drawing.Size(65, 30);
             this.btnSettings.TabIndex = 8;
             this.btnSettings.Text = "Settings";
+            this.toolTip.SetToolTip(this.btnSettings, "Open 86Box Manager settings");
             this.btnSettings.UseVisualStyleBackColor = true;
             this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
             // 
