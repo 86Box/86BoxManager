@@ -1,4 +1,5 @@
 ﻿#if !NETCOREAPP // COM references require .NET framework for now
+using _86boxManager.Properties;
 using IWshRuntimeLibrary;
 #endif
 using Microsoft.Win32;
@@ -16,17 +17,9 @@ namespace _86boxManager
     public partial class frmMain : Form
     {
         //Win32 API imports
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool IsWindow(IntPtr hWnd); //Checks if hWnd belongs to an existing window
-
         //Posts a message to the window with specified handle - DOES NOT WAIT FOR THE RECIPIENT TO PROCESS THE MESSAGE!!!
         [DllImport("user32.dll")]
         public static extern int PostMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
-
-        //Sends a message to the window with specified handle - WAITS FOR THE RECIPIENT TO PROCESS THE MESSAGE!!!
-        [DllImport("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
 
         //Focus a window
         [DllImport("user32.dll")]
@@ -69,6 +62,11 @@ namespace _86boxManager
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+            //Load main window's state, size and position
+            WindowState = Settings.Default.WindowState;
+            Size = Settings.Default.WindowSize;
+            Location = Settings.Default.WindowPosition;
+
             //Convert the current window handle to a form that's expected by 86Box
             hWndHex = string.Format("{0:X}", Handle.ToInt64());
             hWndHex = hWndHex.PadLeft(16, '0');
@@ -210,6 +208,9 @@ namespace _86boxManager
         {
             dlgEditVM dlg = new dlgEditVM();
             dlg.ShowDialog();
+
+            if (dlg.DialogResult == DialogResult.OK)
+                LoadVMs();
         }
 
         //Load the settings from the registry
@@ -299,6 +300,8 @@ namespace _86boxManager
         //Load the VMs from the registry
         private void LoadVMs()
         {
+            lstVMs.Items.Clear();
+            VMCountRefresh();
             try
             {
                 regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box\Virtual Machines");
@@ -314,10 +317,11 @@ namespace _86boxManager
                     ListViewItem newLvi = new ListViewItem(vm.Name)
                     {
                         Tag = vm,
-                        ToolTipText = vm.Desc,
+                        //ToolTipText = vm.Desc,
                         ImageIndex = 0
                     };
                     newLvi.SubItems.Add(new ListViewItem.ListViewSubItem(newLvi, vm.GetStatusString()));
+                    newLvi.SubItems.Add(new ListViewItem.ListViewSubItem(newLvi, vm.Desc));
                     newLvi.SubItems.Add(new ListViewItem.ListViewSubItem(newLvi, vm.Path));
                     lstVMs.Items.Add(newLvi);
                 }
@@ -522,6 +526,12 @@ namespace _86boxManager
 
                 e.Cancel = false;
             }
+
+            //Save main window's state, size and position
+            Settings.Default.WindowState = WindowState;
+            Settings.Default.WindowSize = Size;
+            Settings.Default.WindowPosition = Location;
+            Settings.Default.Save();
         }
 
         private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
@@ -740,6 +750,7 @@ namespace _86boxManager
             if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
             {
                 PostMessage(vm.hWnd, 0x8889, IntPtr.Zero, IntPtr.Zero);
+                SetForegroundWindow(vm.hWnd);
             }
             else if (vm.Status == VM.STATUS_STOPPED)
             {
@@ -875,7 +886,6 @@ namespace _86boxManager
             ListViewItem newLvi = new ListViewItem(newVM.Name)
             {
                 Tag = newVM,
-                ToolTipText = newVM.Desc,
                 ImageIndex = 0
             };
             newLvi.SubItems.Add(new ListViewItem.ListViewSubItem(newLvi, newVM.GetStatusString()));
@@ -1057,6 +1067,9 @@ namespace _86boxManager
         {
             dlgEditVM dlg = new dlgEditVM();
             dlg.ShowDialog();
+
+            if (dlg.DialogResult == DialogResult.OK)
+                LoadVMs();
         }
 
         private void btnCtrlAltDel_Click(object sender, EventArgs e)

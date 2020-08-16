@@ -53,13 +53,12 @@
             this.lblEXEdir = new System.Windows.Forms.Label();
             this.btnBrowse1 = new System.Windows.Forms.Button();
             this.tabAdvanced = new System.Windows.Forms.TabPage();
+            this.gbxLogging = new System.Windows.Forms.GroupBox();
+            this.cbxLogging = new System.Windows.Forms.CheckBox();
+            this.txtLogPath = new System.Windows.Forms.TextBox();
+            this.btnBrowse3 = new System.Windows.Forms.Button();
             this.gbxMisc = new System.Windows.Forms.GroupBox();
             this.cbxGrid = new System.Windows.Forms.CheckBox();
-            this.btnBrowse3 = new System.Windows.Forms.Button();
-            this.txtLogPath = new System.Windows.Forms.TextBox();
-            this.cbxLogging = new System.Windows.Forms.CheckBox();
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.gbxLogging = new System.Windows.Forms.GroupBox();
             this.tabAbout = new System.Windows.Forms.TabPage();
             this.lnkGithub = new System.Windows.Forms.LinkLabel();
             this.imgLogo = new System.Windows.Forms.PictureBox();
@@ -69,14 +68,15 @@
             this.lblVersion = new System.Windows.Forms.Label();
             this.lblDesc = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.pnlBottom.SuspendLayout();
             this.tbcSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.gbxBehaviour.SuspendLayout();
             this.gbxPaths.SuspendLayout();
             this.tabAdvanced.SuspendLayout();
-            this.gbxMisc.SuspendLayout();
             this.gbxLogging.SuspendLayout();
+            this.gbxMisc.SuspendLayout();
             this.tabAbout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgLogo)).BeginInit();
             this.SuspendLayout();
@@ -112,6 +112,7 @@
             // btnOK
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnOK.Location = new System.Drawing.Point(495, 11);
             this.btnOK.Margin = new System.Windows.Forms.Padding(2);
@@ -371,6 +372,51 @@
             this.tabAdvanced.Text = "Advanced";
             this.tabAdvanced.UseVisualStyleBackColor = true;
             // 
+            // gbxLogging
+            // 
+            this.gbxLogging.Controls.Add(this.cbxLogging);
+            this.gbxLogging.Controls.Add(this.txtLogPath);
+            this.gbxLogging.Controls.Add(this.btnBrowse3);
+            this.gbxLogging.Location = new System.Drawing.Point(6, 6);
+            this.gbxLogging.Name = "gbxLogging";
+            this.gbxLogging.Size = new System.Drawing.Size(669, 93);
+            this.gbxLogging.TabIndex = 18;
+            this.gbxLogging.TabStop = false;
+            this.gbxLogging.Text = "Logging";
+            // 
+            // cbxLogging
+            // 
+            this.cbxLogging.AutoSize = true;
+            this.cbxLogging.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cbxLogging.Location = new System.Drawing.Point(9, 23);
+            this.cbxLogging.Margin = new System.Windows.Forms.Padding(2);
+            this.cbxLogging.Name = "cbxLogging";
+            this.cbxLogging.Size = new System.Drawing.Size(207, 24);
+            this.cbxLogging.TabIndex = 9;
+            this.cbxLogging.Text = "Enable 86Box logging to file:";
+            this.cbxLogging.UseVisualStyleBackColor = true;
+            this.cbxLogging.CheckedChanged += new System.EventHandler(this.cbxLogging_CheckedChanged);
+            // 
+            // txtLogPath
+            // 
+            this.txtLogPath.Location = new System.Drawing.Point(9, 52);
+            this.txtLogPath.Name = "txtLogPath";
+            this.txtLogPath.Size = new System.Drawing.Size(580, 25);
+            this.txtLogPath.TabIndex = 10;
+            this.txtLogPath.TextChanged += new System.EventHandler(this.txt_TextChanged);
+            // 
+            // btnBrowse3
+            // 
+            this.btnBrowse3.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnBrowse3.Location = new System.Drawing.Point(594, 49);
+            this.btnBrowse3.Margin = new System.Windows.Forms.Padding(2);
+            this.btnBrowse3.Name = "btnBrowse3";
+            this.btnBrowse3.Size = new System.Drawing.Size(70, 30);
+            this.btnBrowse3.TabIndex = 11;
+            this.btnBrowse3.Text = "Browse...";
+            this.btnBrowse3.UseVisualStyleBackColor = true;
+            this.btnBrowse3.Click += new System.EventHandler(this.btnBrowse3_Click);
+            // 
             // gbxMisc
             // 
             this.gbxMisc.Controls.Add(this.cbxGrid);
@@ -396,51 +442,6 @@
             this.cbxGrid.Text = "Enable grid lines in virtual machines list";
             this.cbxGrid.UseVisualStyleBackColor = true;
             this.cbxGrid.CheckedChanged += new System.EventHandler(this.cbx_CheckedChanged);
-            // 
-            // btnBrowse3
-            // 
-            this.btnBrowse3.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnBrowse3.Location = new System.Drawing.Point(594, 49);
-            this.btnBrowse3.Margin = new System.Windows.Forms.Padding(2);
-            this.btnBrowse3.Name = "btnBrowse3";
-            this.btnBrowse3.Size = new System.Drawing.Size(70, 30);
-            this.btnBrowse3.TabIndex = 11;
-            this.btnBrowse3.Text = "Browse...";
-            this.btnBrowse3.UseVisualStyleBackColor = true;
-            this.btnBrowse3.Click += new System.EventHandler(this.btnBrowse3_Click);
-            // 
-            // txtLogPath
-            // 
-            this.txtLogPath.Location = new System.Drawing.Point(9, 52);
-            this.txtLogPath.Name = "txtLogPath";
-            this.txtLogPath.Size = new System.Drawing.Size(580, 25);
-            this.txtLogPath.TabIndex = 10;
-            this.txtLogPath.TextChanged += new System.EventHandler(this.txt_TextChanged);
-            // 
-            // cbxLogging
-            // 
-            this.cbxLogging.AutoSize = true;
-            this.cbxLogging.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cbxLogging.Location = new System.Drawing.Point(9, 23);
-            this.cbxLogging.Margin = new System.Windows.Forms.Padding(2);
-            this.cbxLogging.Name = "cbxLogging";
-            this.cbxLogging.Size = new System.Drawing.Size(207, 24);
-            this.cbxLogging.TabIndex = 9;
-            this.cbxLogging.Text = "Enable 86Box logging to file:";
-            this.cbxLogging.UseVisualStyleBackColor = true;
-            this.cbxLogging.CheckedChanged += new System.EventHandler(this.cbxLogging_CheckedChanged);
-            // 
-            // gbxLogging
-            // 
-            this.gbxLogging.Controls.Add(this.cbxLogging);
-            this.gbxLogging.Controls.Add(this.txtLogPath);
-            this.gbxLogging.Controls.Add(this.btnBrowse3);
-            this.gbxLogging.Location = new System.Drawing.Point(6, 6);
-            this.gbxLogging.Name = "gbxLogging";
-            this.gbxLogging.Size = new System.Drawing.Size(669, 93);
-            this.gbxLogging.TabIndex = 18;
-            this.gbxLogging.TabStop = false;
-            this.gbxLogging.Text = "Logging";
             // 
             // tabAbout
             // 
@@ -576,10 +577,10 @@
             this.gbxPaths.ResumeLayout(false);
             this.gbxPaths.PerformLayout();
             this.tabAdvanced.ResumeLayout(false);
-            this.gbxMisc.ResumeLayout(false);
-            this.gbxMisc.PerformLayout();
             this.gbxLogging.ResumeLayout(false);
             this.gbxLogging.PerformLayout();
+            this.gbxMisc.ResumeLayout(false);
+            this.gbxMisc.PerformLayout();
             this.tabAbout.ResumeLayout(false);
             this.tabAbout.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgLogo)).EndInit();

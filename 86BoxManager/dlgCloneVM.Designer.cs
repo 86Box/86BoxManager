@@ -136,6 +136,7 @@
             // btnClone
             // 
             this.btnClone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClone.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnClone.Enabled = false;
             this.btnClone.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnClone.Location = new System.Drawing.Point(439, 11);
