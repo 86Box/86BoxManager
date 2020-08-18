@@ -628,7 +628,7 @@ namespace _86boxManager
 
                     //initSuccess is ignored for now because WaitForInputIdle() likes to return false more often now that
                     //86Box is compiled with GCC 9.3.0...
-                    if (!p.MainWindowHandle.Equals(IntPtr.Zero) && initSuccess)
+                    if (!p.MainWindowHandle.Equals(IntPtr.Zero) /*&& initSuccess*/)
                     {
                         vm.hWnd = p.MainWindowHandle; //Get the window handle of the newly created process
                         vm.Status = VM.STATUS_RUNNING;
