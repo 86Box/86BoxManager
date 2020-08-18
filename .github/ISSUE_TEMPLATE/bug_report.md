@@ -25,9 +25,10 @@ If applicable, add screenshots to help explain your problem.
 
 **Environment (please complete the following information):**
  - Host OS: [e.g. WIndows 10 version 2004]
- - 86Box build [e.g. 2529]
+ - 86Box build number and type [e.g. 2529 regular, 2515 dev, etc.]
  - 86Box Manager Version [e.g. 1.7.1]
  - VM config file (86box.cfg) if applicable
+ - VM name and full path if applicable
 
 **Additional context**
 Add any other context about the problem here.
