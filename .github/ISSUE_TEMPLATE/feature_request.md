@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest an idea for this project
+about: Use this template only for feature requests.
 title: "[Feature]"
 labels: enhancement
 assignees: daviunic
