@@ -1622,6 +1622,7 @@ namespace _86boxManager
                 ImageIndex = 0
             };
             newLvi.SubItems.Add(new ListViewItem.ListViewSubItem(newLvi, newVM.GetStatusString()));
+            newLvi.SubItems.Add(new ListViewItem.ListViewSubItem(newLvi, newVM.Desc));
             newLvi.SubItems.Add(new ListViewItem.ListViewSubItem(newLvi, newVM.Path));
             lstVMs.Items.Add(newLvi);
             Directory.CreateDirectory(cfgpath + newVM.Name);
