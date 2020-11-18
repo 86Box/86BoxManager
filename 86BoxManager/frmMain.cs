@@ -381,6 +381,8 @@ namespace _86boxManager
                     }
                 }
             }
+
+            VMCountRefresh();
         }
 
         //Enable/disable relevant menu items depending on selected VM's status
@@ -687,7 +689,7 @@ namespace _86boxManager
             }
 
             VMSort(sortColumn, sortOrder);
-
+            VMCountRefresh();
         }
 
         //Sends a running/pause VM a request to stop without asking the user for confirmation
@@ -1130,7 +1132,6 @@ namespace _86boxManager
                             btnConfigure.Enabled = true;
                         }
                     }
-
                     VMCountRefresh();
                 }
                 else if (m.WParam.ToInt32() == 0) //VM was resumed
@@ -1155,7 +1156,6 @@ namespace _86boxManager
                             btnConfigure.Enabled = true;
                         }
                     }
-
                     VMCountRefresh();
                 }
             }
@@ -1184,7 +1184,6 @@ namespace _86boxManager
                             btnCtrlAltDel.Enabled = false;
                         }
                     }
-
                     VMCountRefresh();
                 }
                 else if (m.WParam.ToInt32() == 0) //A dialog was closed
@@ -1214,7 +1213,6 @@ namespace _86boxManager
                             btnCtrlAltDel.Enabled = true;
                         }
                     }
-
                     VMCountRefresh();
                 }
             }
@@ -1271,7 +1269,6 @@ namespace _86boxManager
                         }
                     }
                 }
-
                 VMCountRefresh();
             }
             //This is the WM_COPYDATA message, used here to pass command line args to an already running instance
