@@ -107,7 +107,7 @@ namespace _86boxManager
                     lbl86BoxVer1.ForeColor = Color.Red;
                 }
             }
-            catch(FileNotFoundException ex)
+            catch (FileNotFoundException ex)
             {
                 lbl86BoxVer1.Text = "86Box.exe not found";
                 lbl86BoxVer1.ForeColor = Color.Gray;
@@ -224,6 +224,11 @@ namespace _86boxManager
             }
             catch (Exception ex)
             {
+#if DEBUG
+                MessageBox.Show($"Exception! {ex.Message}\n\n{ex.StackTrace}");
+#else
+                MessageBox.Show("An error has occurred. Please provide the following information to the developer:\n" + ex.Message + "\n" + ex.StackTrace, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+#endif
                 txtCFGdir.Text = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\86Box VMs";
                 txtEXEdir.Text = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + @"\86Box";
                 cbxMinimize.Checked = false;
@@ -423,6 +428,16 @@ namespace _86boxManager
         {
             lnkGithub.LinkVisited = true;
             Process.Start("https://github.com/86Box/86BoxManager");
+        }
+
+        /// <summary>
+        /// Runs the exporter class code. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ExportSettingsFile_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
