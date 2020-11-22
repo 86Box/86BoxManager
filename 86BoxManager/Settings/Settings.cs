@@ -141,7 +141,7 @@ namespace _86boxManager
             LogPath = "";
         }
 
-        private static bool SaveSettings()
+        public static bool SaveSettings()
         {
             if (EnableLogging && string.IsNullOrWhiteSpace(LogPath))
             {
@@ -201,18 +201,13 @@ namespace _86boxManager
         }
 
         /// <summary>
-        /// Returns the 86Box build number.
+        /// Returns the 86Box build number as a 
         /// </summary>
         /// <returns></returns>
-        public static int Get86BoxVersion()
-        {
-            FileVersionInfo FVI = FileVersionInfo.GetVersionInfo(EXEDir);
-
-            return FVI.FilePrivatePart;
-        }
+        public static FileVersionInfo Get86BoxVersion() => FileVersionInfo.GetVersionInfo(EXEDir);
 
         //Checks if all controls match the currently saved settings to determine if any changes were made
-        private static bool CheckForChanges()
+        public static bool CheckForChanges()
         {
             RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box");
 

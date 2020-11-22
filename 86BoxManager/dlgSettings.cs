@@ -18,7 +18,7 @@ namespace _86boxManager
 
         private void dlgSettings_Load(object sender, EventArgs e)
         {
-            LoadSettings();
+            ApplicationSettings.LoadSettings();
             Get86BoxVersion();
 
             lblVersion1.Text = Application.ProductVersion.Substring(0, Application.ProductVersion.Length - 2);
@@ -37,7 +37,8 @@ namespace _86boxManager
                 DialogResult result = MessageBox.Show("Would you like to save the changes you've made to the settings?", "Unsaved changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
-                    SaveSettings();
+                    ApplicationSettings.SaveSettings();
+                    
                 }
                 if (result != DialogResult.Cancel)
                 {
@@ -68,6 +69,7 @@ namespace _86boxManager
             {
                 SaveSettings();
             }
+
             Close();
         }
 
@@ -80,7 +82,7 @@ namespace _86boxManager
             }
             else
             {
-                settingsChanged = CheckForChanges();
+                settingsChanged = ApplicationSettings.CheckForChanges();
                 btnApply.Enabled = settingsChanged;
             }
         }
@@ -90,6 +92,8 @@ namespace _86boxManager
         {
             try
             {
+                FileVersionInfo VI = ApplicationSettings.Get86BoxVersion(); 
+
                 FileVersionInfo vi = FileVersionInfo.GetVersionInfo(txtEXEdir.Text + @"\86Box.exe");
                 if (vi.FilePrivatePart >= 2008) //Officially supported builds
                 {
@@ -173,6 +177,8 @@ namespace _86boxManager
 
         //TODO: Rewrite
         //Read the settings from the registry
+
+        /*
         private void LoadSettings()
         {
             try
@@ -242,7 +248,7 @@ namespace _86boxManager
                 txtLogPath.Enabled = false;
                 btnBrowse3.Enabled = false;
             }
-        }
+        }*/
 
 // .NET Core implements the better Vista-style folder browse dialog in the stock FolderBrowserDialog
 #if NETCOREAPP
@@ -436,6 +442,11 @@ namespace _86boxManager
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ExportSettingsFile_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ExportZipButton_CheckedChanged(object sender, EventArgs e)
         {
 
         }
