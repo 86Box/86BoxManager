@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _86boxManager.Exporter
+namespace _86boxManager
 {
-    class SettingsExporter
+    /// <summary>
+    /// 2020-11-22  Connor Hyde (starfrost)
+    /// </summary>
+    public class SettingsExporter
     {
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics; 
 using System.IO;
 using System.Linq;
 using System.Reflection; 
@@ -18,7 +19,7 @@ namespace _86boxManager
     /// I moved the settings loading code to this small static class. This allows the settings to be referred to anywhere in 86Box Manager
     /// easier.
     /// </summary>
-    public static class Settings
+    public static class ApplicationSettings
     {
         /// <summary>
         /// Directory of 86Box.exe
@@ -162,6 +163,7 @@ namespace _86boxManager
             {
                 RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true); //Try to open the key first (in read-write mode) to see if it already exists
                 if (regkey == null) //Regkey doesn't exist yet, must be created first and then reopened
+
                 {
                     Registry.CurrentUser.CreateSubKey(@"SOFTWARE\86Box");
                     regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true);
@@ -182,7 +184,8 @@ namespace _86boxManager
                 regkey.SetValue("EnableGridLines", EnableGridLines, RegistryValueKind.DWord);
                 regkey.Close();
 
-                settingsChanged = CheckForChanges();
+                // this has been moved to dlgSettings, as we return a success code
+                //bool SettingsChanged = CheckForChanges();
             }
             catch (Exception ex)
             {
@@ -193,6 +196,7 @@ namespace _86boxManager
             {
                 Get86BoxVersion(); //Get the new exe version in any case
             }
+
             return true;
         }
 
@@ -202,7 +206,44 @@ namespace _86boxManager
         /// <returns></returns>
         public static int Get86BoxVersion()
         {
+            FileVersionInfo FVI = FileVersionInfo.GetVersionInfo(EXEDir);
 
+            return FVI.FilePrivatePart;
         }
+
+        //Checks if all controls match the currently saved settings to determine if any changes were made
+        private static bool CheckForChanges()
+        {
+            RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box");
+
+            bool Result;
+
+            try
+            {
+                Result = (
+                    EXEDir != regkey.GetValue("EXEdir").ToString() ||
+                    CFGDir != regkey.GetValue("CFGdir").ToString() ||
+                    LogPath != regkey.GetValue("LogPath").ToString() ||
+                    LaunchTimeout != regkey.GetValue("LaunchTimeout").ToString() ||
+                    MinimizeOnVMStart != Convert.ToBoolean(regkey.GetValue("MinimizeOnVMStart")) ||
+                    ShowConsole != Convert.ToBoolean(regkey.GetValue("ShowConsole")) ||
+                    MinimizeToTray != Convert.ToBoolean(regkey.GetValue("MinimizeToTray")) ||
+                    CloseToTray != Convert.ToBoolean(regkey.GetValue("CloseToTray")) ||
+                    EnableLogging != Convert.ToBoolean(regkey.GetValue("EnableLogging")) ||
+                    EnableGridLines != Convert.ToBoolean(regkey.GetValue("EnableGridLines")));
+
+                return Result;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+                return true; //For now let's just return true if anything goes wrong
+            }
+            finally
+            {
+                regkey.Close();
+            }
+        }
+
     }
 }
