@@ -24,7 +24,7 @@ namespace _86boxManager
             SaveFileDialog SFD = new SaveFileDialog();
             
             // If the user has chosen to zip up the reg file, modify the dialog accordingly
-            if (ZipUpRegFile)
+            if (!ZipUpRegFile)
             {
                 SFD.Title = "Export to Registry File";
                 SFD.Filter = "Registry file (*.reg)|*.reg";
@@ -149,6 +149,7 @@ namespace _86boxManager
                 }
 
                 SW.Close();
+
                 return true; 
             }
 
@@ -259,12 +260,32 @@ namespace _86boxManager
             SW.Write("\n"); 
         }
 
+        /// <summary>
+        /// this is really bad because im lazy and am running out of time today
+        /// </summary>
+        /// <param name="RegFileName"></param>
+        /// <returns></returns>
         private bool CompressRegFile(string RegFileName)
         {
+            string CompressedPreFolder = $@"{RegFileName}_compressed";
+            string FileDest = $"{CompressedPreFolder}\\{RegFileName}";
+
+            string[] CompressedPreFolderArray = CompressedPreFolder.Split('\\');
+            CompressedPreFolder = CompressedPreFolderArray[CompressedPreFolderArray.Length - 1]; 
+
+            // dumb hack 
+            string[] RegFileNameArray = FileDest.Split('\\');
+            RegFileName = RegFileNameArray[RegFileNameArray.Length - 1];
+
+            FileDest = $"{CompressedPreFolder}\\{RegFileName}";
             // lazy
-            Directory.CreateDirectory(RegFileName);
-            File.Copy(RegFileName, $@"{RegFileName}\{RegFileName}");
-            ZipFile.CreateFromDirectory(RegFileName, $"{RegFileName}_compressed.zip");
+            Directory.CreateDirectory(CompressedPreFolder);
+
+            File.Copy(RegFileName, FileDest);
+            ZipFile.CreateFromDirectory(CompressedPreFolder, $"{RegFileName}_archive.zip");
+            File.Delete($@"{RegFileName}");
+            Directory.Delete(CompressedPreFolder);
+            File.Delete(RegFileName); 
             return true; 
         }
     }
