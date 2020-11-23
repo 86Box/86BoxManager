@@ -143,7 +143,7 @@ namespace _86boxManager
                 {
                     RegistryKey BoxSubkey = BoxKey.OpenSubKey(BoxSubkeyName);
 
-                    SW.WriteLine($@"[{BoxRoot}\{BoxSubkeyName}]");
+                    SW.WriteLine($@"[HKEY_CURRENT_USER\{BoxRoot}\{BoxSubkeyName}]");
 
                     WriteRegKeyValues(SW, BoxSubkey); 
                 }
@@ -218,7 +218,7 @@ namespace _86boxManager
         /// <param name="SW"></param>
         /// <param name="KeyName"></param>
         /// <param name="KeyValue"></param>
-        private void WriteRegFileStringValue(StreamWriter SW, string KeyName, string KeyValue) => SW.Write($"\"{KeyName}\"=\"{KeyValue}\"");
+        private void WriteRegFileStringValue(StreamWriter SW, string KeyName, string KeyValue) => SW.Write($"\"{KeyName}\"=\"{KeyValue}\"\n");
 
         private bool CompressRegFile(string RegFileName)
         {
