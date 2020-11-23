@@ -159,7 +159,7 @@ namespace _86boxManager
             foreach (string BoxValueName in BoxKey.GetValueNames())
             {
                 object BoxValue = BoxKey.GetValue(BoxValueName);
-
+                // switch statement looks nicer here probably
                 if (BoxValue is int)
                 {
                     // write a DWORD
@@ -168,6 +168,17 @@ namespace _86boxManager
                 else if (BoxValue is string)
                 {
                     WriteRegFileStringValue(SW, BoxValueName, (string)BoxValue);
+                }
+                else if (BoxValue is byte[])
+                {
+                    WriteRegFileBinaryValue(SW, BoxValueName, (byte[])BoxValue); 
+                }
+                else
+                {
+#if DEBUG
+                    MessageBox.Show("Unknown registry data type encountered! Skipping..."); 
+#endif
+                    continue;
                 }
             }
         }
@@ -178,9 +189,9 @@ namespace _86boxManager
         /// <summary>
         /// Write a registry file dword value.
         /// </summary>
-        /// <param name="SW"></param>
-        /// <param name="KeyName"></param>
-        /// <param name="DWordValue"></param>
+        /// <param name="SW">The stream to use for writing.</param>
+        /// <param name="KeyName">The key name to write.</param>
+        /// <param name="DWordValue">The DWord value to write.</param>
         /// <returns></returns>
         private bool WriteRegFileDwordValue(StreamWriter SW, string KeyName, int DWordValue)
         {
@@ -219,6 +230,28 @@ namespace _86boxManager
         /// <param name="KeyName"></param>
         /// <param name="KeyValue"></param>
         private void WriteRegFileStringValue(StreamWriter SW, string KeyName, string KeyValue) => SW.Write($"\"{KeyName}\"=\"{KeyValue}\"\n");
+
+        private void WriteRegFileBinaryValue(StreamWriter SW, string KeyName, byte[] KeyData)
+        {
+            SW.Write($"\"{KeyName}\"=hex:");
+
+            for (int i = 0; i < KeyData.Length; i++)
+            {
+                byte KeyDataByte = KeyData[i]; 
+                // X = hexadecimal format
+                string KeyDataString = KeyDataByte.ToString("X");
+
+                KeyDataString = KeyDataString.ToLower();
+
+                SW.Write($"{KeyDataString}");
+                
+                // do not write if last byte of hex data
+                if ((i - KeyData.Length) >= 2) SW.Write(',');
+                
+            }
+
+            SW.Write("\n"); 
+        }
 
         private bool CompressRegFile(string RegFileName)
         {
