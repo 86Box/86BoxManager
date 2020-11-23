@@ -44,7 +44,7 @@ namespace _86boxManager
             else
             {
                 // Export to .reg
-                if (ZipUpRegFile)
+                if (!ZipUpRegFile)
                 {
                     ExportReg(SFD.FileName);
                 }
@@ -264,7 +264,7 @@ namespace _86boxManager
             // lazy
             Directory.CreateDirectory(RegFileName);
             File.Copy(RegFileName, $@"{RegFileName}\{RegFileName}");
-            ZipFile.CreateFromDirectory(RegFileName, $"{RegFileName}.zip");
+            ZipFile.CreateFromDirectory(RegFileName, $"{RegFileName}_compressed.zip");
             return true; 
         }
     }
