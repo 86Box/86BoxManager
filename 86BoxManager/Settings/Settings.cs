@@ -122,13 +122,12 @@ namespace _86boxManager
 
             if (CreateSettings)
             {
-
-                RegistryKey RegKey = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\86Box");
-                RegKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true);
-                RegKey.CreateSubKey("Virtual Machines");
+                if (!CreateSettingsKey())
+                {
+                    MessageBox.Show("An error occurred creating settings.", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
-
-
+            
             CFGDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\86Box VMs\";
             EXEDir = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + @"\86Box\";
             MinimizeOnVMStart = false;
@@ -139,6 +138,43 @@ namespace _86boxManager
             LaunchTimeout = "5000";
             EnableGridLines = false;
             LogPath = "";
+        }
+
+        /// <summary>
+        /// Create the settings keys.
+        /// </summary>
+        /// <returns>BOOL - success code</returns>
+        private static bool CreateSettingsKey()
+        {
+            try
+            {
+                RegistryKey RegKey = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\86Box");
+
+                // 2020-11-23   Connor Hyde (starfrost) add additional error checking
+
+                if (RegKey == null) return false;
+
+                RegKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true);
+
+                if (RegKey == null) return false;
+
+                RegKey.CreateSubKey("Virtual Machines");
+                return true; 
+            }
+            catch (ArgumentNullException err)
+            {
+#if DEBUG
+                MessageBox.Show($"86Box Manager [Debug] ArgumentNullException occurred in Settings.CreateSettingsKey() [static] (bug?): {err.Message} \n\n{err.StackTrace}");
+#endif
+                return false;
+            }
+            catch (IOException err)
+            {
+#if DEBUG
+                MessageBox.Show($"86Box Manager [Debug] IOException occurred in Settings.CreateSettingsKey() [static]: {err.Message} \n\n{err.StackTrace}");
+#endif
+                return false;
+            }
         }
 
         public static bool SaveSettings()
@@ -162,8 +198,8 @@ namespace _86boxManager
             try
             {
                 RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true); //Try to open the key first (in read-write mode) to see if it already exists
+                
                 if (regkey == null) //Regkey doesn't exist yet, must be created first and then reopened
-
                 {
                     Registry.CurrentUser.CreateSubKey(@"SOFTWARE\86Box");
                     regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true);
@@ -184,17 +220,11 @@ namespace _86boxManager
                 regkey.SetValue("EnableGridLines", EnableGridLines, RegistryValueKind.DWord);
                 regkey.Close();
 
-                // this has been moved to dlgSettings, as we return a success code
-                //bool SettingsChanged = CheckForChanges();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("An error has occurred. Please provide the following information to the developer:\n" + ex.Message + "\n" + ex.StackTrace, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
-            }
-            finally
-            {
-                Get86BoxVersion(); //Get the new exe version in any case
             }
 
             return true;
@@ -204,7 +234,7 @@ namespace _86boxManager
         /// Returns the 86Box build number as a 
         /// </summary>
         /// <returns></returns>
-        public static FileVersionInfo Get86BoxVersion() => FileVersionInfo.GetVersionInfo(EXEDir);
+        public static FileVersionInfo Get86BoxVersion() => FileVersionInfo.GetVersionInfo($@"{EXEDir}\86Box.exe");
 
         //Checks if all controls match the currently saved settings to determine if any changes were made
         public static bool CheckForChanges()
@@ -240,5 +270,6 @@ namespace _86boxManager
             }
         }
 
+        
     }
 }

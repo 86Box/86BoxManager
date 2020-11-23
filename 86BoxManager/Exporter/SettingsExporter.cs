@@ -11,5 +11,11 @@ namespace _86boxManager
     /// </summary>
     public class SettingsExporter
     {
+        public bool ZipUpRegFile { get; set; }
+        
+        public bool ExportSettings()
+        {
+
+        }
     }
 }
