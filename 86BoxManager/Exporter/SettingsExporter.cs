@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression; 
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,18 +59,62 @@ namespace _86boxManager
 
         private bool ExportReg(string FileName)
         {
-            string RegFileName = WriteRegFile(FileName);
-
-            return RegFileName == null;
+            return WriteRegFile(FileName);
         }
 
         private bool ExportZip(string FileName)
         {
+            try
+            {
+                bool Result = WriteRegFile(FileName);
 
-            bool Result = WriteRegFile(FileName);
-
-
-            return CompressRegFile(FileName);
+                if (!Result)
+                {
+                    return false;
+                }
+                else
+                {
+                    try
+                    {
+                        return CompressRegFile(FileName);
+                    }
+                    // some more specific error messages for specific scenarios...
+                    catch (DirectoryNotFoundException)
+                    {
+                        MessageBox.Show($"Directory not found!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return false;
+                    }
+                    catch (PathTooLongException)
+                    {
+                        MessageBox.Show($"Path too long - please make sure the path to the file is less than 260 characters!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return false;
+                    }
+                    catch (IOException err)
+                    {
+#if DEBUG
+                        MessageBox.Show($"[Debug] An error occurred while exporting: {err.Message}\n\n{err.StackTrace}");
+#endif
+                        return false;
+                    }
+                }
+            }
+            catch (DirectoryNotFoundException)
+            {
+                MessageBox.Show($"Directory not found!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            catch (PathTooLongException)
+            {
+                MessageBox.Show($"Path too long - please make sure the path to the file is less than 260 characters!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            catch (IOException err)
+            {
+#if DEBUG
+                MessageBox.Show($"[Debug] An error occurred while exporting: {err.Message}\n\n{err.StackTrace}");
+#endif
+                return false;
+            }
         }
      
         /// <summary>
@@ -89,34 +134,52 @@ namespace _86boxManager
 
                 SW.WriteLine($@"[HKEY_CURRENT_USER\{BoxRoot}]");
                 // 86box main key
-                foreach (string BoxValueName in BoxKey.GetValueNames())
+
+                WriteRegKeyValues(SW, BoxKey);
+
+                // loop through all subkeys of the 86box key    
+
+                foreach (string BoxSubkeyName in BoxKey.GetSubKeyNames())
                 {
-                    object BoxValue = BoxKey.GetValue(BoxValueName); 
+                    RegistryKey BoxSubkey = BoxKey.OpenSubKey(BoxSubkeyName);
 
-                    if (BoxValue is int)
-                    {
-                        // write a DWORD
-                        WriteRegFileDwordValue(SW, BoxValueName, (int)BoxValue); 
-                    }
-                    else if (BoxValue is string)
-                    {
+                    SW.WriteLine($@"[{BoxRoot}\{BoxSubkeyName}]");
 
-                    }
-                } 
+                    WriteRegKeyValues(SW, BoxSubkey); 
+                }
+
+                SW.Close();
+                return true; 
             }
 
+        }
+
+        private void WriteRegKeyValues(StreamWriter SW, RegistryKey BoxKey)
+        {
+            foreach (string BoxValueName in BoxKey.GetValueNames())
+            {
+                object BoxValue = BoxKey.GetValue(BoxValueName);
+
+                if (BoxValue is int)
+                {
+                    // write a DWORD
+                    WriteRegFileDwordValue(SW, BoxValueName, (int)BoxValue);
+                }
+                else if (BoxValue is string)
+                {
+                    WriteRegFileStringValue(SW, BoxValueName, (string)BoxValue);
+                }
+            }
         }
 
         // maybe best not in this class? idk
         private void WriteRegFileHeader(StreamWriter SW) => SW.WriteLine("Windows Registry Editor Version 5.00\n");
 
-        private void WriteRegFileLocation(string RegistryLocation)
-        { 
-        }
-
         /// <summary>
         /// Write a registry file dword value.
         /// </summary>
+        /// <param name="SW"></param>
+        /// <param name="KeyName"></param>
         /// <param name="DWordValue"></param>
         /// <returns></returns>
         private bool WriteRegFileDwordValue(StreamWriter SW, string KeyName, int DWordValue)
@@ -149,14 +212,21 @@ namespace _86boxManager
 
         }
 
-        private void WriteRegFileStringValue()
-        {
-
-        }
+        /// <summary>
+        /// Writes a string value to a .reg file. 
+        /// </summary>
+        /// <param name="SW"></param>
+        /// <param name="KeyName"></param>
+        /// <param name="KeyValue"></param>
+        private void WriteRegFileStringValue(StreamWriter SW, string KeyName, string KeyValue) => SW.Write($"\"{KeyName}\"=\"{KeyValue}\"");
 
         private bool CompressRegFile(string RegFileName)
         {
-
+            // lazy
+            Directory.CreateDirectory(RegFileName);
+            File.Copy(RegFileName, $@"{RegFileName}\{RegFileName}");
+            ZipFile.CreateFromDirectory(RegFileName, $"{RegFileName}.zip");
+            return true; 
         }
     }
 }

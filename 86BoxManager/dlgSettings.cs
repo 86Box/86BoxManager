@@ -233,40 +233,6 @@ namespace _86boxManager
             }
         }
 
-
-        //Checks if all controls match the currently saved settings to determine if any changes were made
-        /*
-        private bool CheckForChanges()
-        {
-            RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box");
-
-            try
-            {
-                btnApply.Enabled = (
-                    txtEXEdir.Text != regkey.GetValue("EXEdir").ToString() ||
-                    txtCFGdir.Text != regkey.GetValue("CFGdir").ToString() ||
-                    txtLogPath.Text != regkey.GetValue("LogPath").ToString() ||
-                    txtLaunchTimeout.Text != regkey.GetValue("LaunchTimeout").ToString() ||
-                    cbxMinimize.Checked != Convert.ToBoolean(regkey.GetValue("MinimizeOnVMStart")) ||
-                    cbxShowConsole.Checked != Convert.ToBoolean(regkey.GetValue("ShowConsole")) ||
-                    cbxMinimizeTray.Checked != Convert.ToBoolean(regkey.GetValue("MinimizeToTray")) ||
-                    cbxCloseTray.Checked != Convert.ToBoolean(regkey.GetValue("CloseToTray")) || 
-                    cbxLogging.Checked != Convert.ToBoolean(regkey.GetValue("EnableLogging")) ||
-                    cbxGrid.Checked != Convert.ToBoolean(regkey.GetValue("EnableGridLines")));
-
-                return btnApply.Enabled;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message);
-                return true; //For now let's just return true if anything goes wrong
-            }
-            finally
-            {
-                regkey.Close();
-            }
-        }
-        */
         private void cbx_CheckedChanged(object sender, EventArgs e)
         {
             settingsChanged = ApplicationSettings.CheckForChanges();
@@ -313,12 +279,18 @@ namespace _86boxManager
         /// <param name="e"></param>
         private void ExportSettingsFile_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void ExportZipButton_CheckedChanged(object sender, EventArgs e)
-        {
-
+            SettingsExporter SEX = new SettingsExporter();
+            SEX.ZipUpRegFile = ExportZipButton.Checked;
+            
+            if (!SEX.ExportSettings())
+            {
+                MessageBox.Show("An error occurred exporting settings.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return; 
+            } 
+            else
+            {
+                return;
+            }
         }
     }
 }

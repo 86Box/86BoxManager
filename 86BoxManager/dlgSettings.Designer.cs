@@ -178,7 +178,6 @@
             this.ExportZipButton.TabIndex = 19;
             this.ExportZipButton.Text = "Zip Settings";
             this.ExportZipButton.UseVisualStyleBackColor = true;
-            this.ExportZipButton.CheckedChanged += new System.EventHandler(this.ExportZipButton_CheckedChanged);
             // 
             // ExportSettingsFile
             // 

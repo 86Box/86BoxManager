@@ -190,6 +190,7 @@ namespace _86boxManager
             if (!File.Exists(EXEDir + "86Box.exe") && !File.Exists(EXEDir + @"\86Box.exe"))
             {
                 DialogResult result = MessageBox.Show("86Box.exe could not be found in the directory you specified, so you won't be able to use any virtual machines. Are you sure you want to use this path?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                
                 if (result == DialogResult.No)
                 {
                     return false;
