@@ -241,12 +241,18 @@ namespace _86boxManager
                 // X = hexadecimal format
                 string KeyDataString = KeyDataByte.ToString("X");
 
+                // this is dumb and a method would better serve this but i don't have that much time rn (starfrost, 2020-11-23)
+                if (KeyDataString.Length == 1)
+                {
+                    KeyDataString = $"0{KeyDataString}";
+                }
+
                 KeyDataString = KeyDataString.ToLower();
 
                 SW.Write($"{KeyDataString}");
                 
                 // do not write if last byte of hex data
-                if ((i - KeyData.Length) >= 2) SW.Write(',');
+                if ((KeyData.Length - i) >= 2) SW.Write(',');
                 
             }
 
