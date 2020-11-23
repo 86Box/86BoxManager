@@ -19,9 +19,9 @@ namespace _86boxManager
         private void dlgSettings_Load(object sender, EventArgs e)
         {
             ApplicationSettings.LoadSettings();
-            ApplicationSettings.Get86BoxVersion();
-            Display86BoxVersion(); 
 
+            UpdateControlsToFitSettings();
+            Display86BoxVersion();
             lblVersion1.Text = Application.ProductVersion.Substring(0, Application.ProductVersion.Length - 2);
 
             #if DEBUG
@@ -34,13 +34,23 @@ namespace _86boxManager
         /// </summary>
         private void UpdateControlsToFitSettings()
         {
-
+            // Would this work with WinForms' limited data binding?
+            txtEXEdir.Text = ApplicationSettings.EXEDir;
+            txtCFGdir.Text = ApplicationSettings.CFGDir;
+            txtLogPath.Text = ApplicationSettings.LogPath;
+            txtLaunchTimeout.Text = ApplicationSettings.LaunchTimeout;
+            cbxMinimize.Checked = ApplicationSettings.MinimizeToTray;
+            cbxShowConsole.Checked = ApplicationSettings.ShowConsole;
+            cbxMinimizeTray.Checked = ApplicationSettings.MinimizeToTray;
+            cbxCloseTray.Checked = ApplicationSettings.CloseToTray;
+            cbxLogging.Checked = ApplicationSettings.EnableLogging;
+            cbxGrid.Checked = ApplicationSettings.EnableGridLines;
         }
 
         private void dlgSettings_FormClosing(object sender, FormClosingEventArgs e)
         {
             //Unsaved changes, ask the user to confirm
-            if (settingsChanged == true)
+            if (settingsChanged)
             {
                 e.Cancel = true;
                 DialogResult result = MessageBox.Show("Would you like to save the changes you've made to the settings?", "Unsaved changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
@@ -97,6 +107,8 @@ namespace _86boxManager
             }
             else
             {
+                // may need to be done
+                ApplicationSettings.LaunchTimeout = txtLaunchTimeout.Text;
                 settingsChanged = ApplicationSettings.CheckForChanges();
                 btnApply.Enabled = settingsChanged;
             }
@@ -128,7 +140,7 @@ namespace _86boxManager
             }
             catch (FileNotFoundException)
             {
-                lbl86BoxVer1.Text = "86Box.exe not found";
+                lbl86BoxVer1.Text = "86Box.exe not found!";
                 lbl86BoxVer1.ForeColor = Color.Gray;
             }
         }
@@ -221,10 +233,9 @@ namespace _86boxManager
             }
         }
 
-        //Resets the settings to their default values
-        
 
         //Checks if all controls match the currently saved settings to determine if any changes were made
+        /*
         private bool CheckForChanges()
         {
             RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box");
@@ -255,15 +266,15 @@ namespace _86boxManager
                 regkey.Close();
             }
         }
-
+        */
         private void cbx_CheckedChanged(object sender, EventArgs e)
         {
-            settingsChanged = CheckForChanges();
+            settingsChanged = ApplicationSettings.CheckForChanges();
         }
 
         private void cbxLogging_CheckedChanged(object sender, EventArgs e)
         {
-            settingsChanged = CheckForChanges();
+            settingsChanged = ApplicationSettings.CheckForChanges();
             txt_TextChanged(sender, e); //Needed so the Apply button doesn't get enabled on an empty logpath textbox. Too lazy to write a duplicated empty check...
             txtLogPath.Enabled = cbxLogging.Checked;
             btnBrowse3.Enabled = cbxLogging.Checked;
