@@ -109,6 +109,8 @@ namespace _86boxManager
             {
                 // may need to be done
                 ApplicationSettings.LaunchTimeout = txtLaunchTimeout.Text;
+                ApplicationSettings.EXEDir = txtEXEdir.Text;
+                ApplicationSettings.CFGDir = txtCFGdir.Text; 
                 settingsChanged = ApplicationSettings.CheckForChanges();
                 btnApply.Enabled = settingsChanged;
             }

@@ -66,6 +66,8 @@ namespace _86boxManager
         {
             try
             {
+                // UI moment
+                FileName = FileName.Replace(".zip", ".reg");
                 bool Result = WriteRegFile(FileName);
 
                 if (!Result)
@@ -276,16 +278,47 @@ namespace _86boxManager
         {
             // force path to be relative
 
-            string[] RegFileNameArray = RegFileName.Split('\\');
-            RegFileName = RegFileNameArray[RegFileNameArray.Length - 1];
+            RegFileName = GetSafeFileName(RegFileName); 
 
-            using (ZipArchive ZA = new ZipArchive(new FileStream($"{RegFileName}_c.zip", FileMode.Create)))
+            string ZipFileName = $"{RegFileName}_c.zip";
+
+            using (ZipArchive ZA = new ZipArchive(new FileStream(ZipFileName, FileMode.Create), ZipArchiveMode.Create))
             {
-                ZipArchiveEntry RegEntry = ZA.CreateEntryFromFile(RegFileName, RegFileName); 
+                ZipArchiveEntry RegEntry = ZA.CreateEntryFromFile(RegFileName, RegFileName);
+
+                // Compress the VMs folder
+                //RecursiveAddition(ZA, ZipFileName); 
+
+                ZA.Dispose(); 
             }
 
+
+
+            File.Delete(RegFileName);
             
             return true; 
+        }
+
+        // should be moved to a utilities class
+        private string GetSafeFileName(string FileName)
+        {
+            char[] InvalidCharacters = Path.GetInvalidFileNameChars();
+
+            string Final = null;
+
+            foreach (char InvalidCharacter in InvalidCharacters)
+            {
+                Final = FileName.Replace(InvalidCharacter.ToString(), ""); 
+            }
+
+            if (Final == null) throw new Exception("BUGBUG: Somehow, we failed to enumerate invalid file name characters.");
+
+            return Final;
+        }
+
+        private bool RecursiveAddition(ZipArchive ZA, string FileName)
+        {
+            throw new NotImplementedException(); 
         }
     }
 }
