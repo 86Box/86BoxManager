@@ -84,6 +84,13 @@ namespace _86boxManager
                         MessageBox.Show($"Directory not found!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
+                    catch (ObjectDisposedException err)
+                    {
+#if DEBUG
+                        MessageBox.Show($"Likely a bug - {err.Message}\n\n{err.StackTrace}");
+#endif
+                        return false; 
+                    }
                     catch (PathTooLongException)
                     {
                         MessageBox.Show($"Path too long - please make sure the path to the file is less than 260 characters!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -261,31 +268,23 @@ namespace _86boxManager
         }
 
         /// <summary>
-        /// this is really bad because im lazy and am running out of time today
+        /// Compress a registry file.
         /// </summary>
         /// <param name="RegFileName"></param>
         /// <returns></returns>
         private bool CompressRegFile(string RegFileName)
         {
-            string CompressedPreFolder = $@"{RegFileName}_compressed";
-            string FileDest = $"{CompressedPreFolder}\\{RegFileName}";
+            // force path to be relative
 
-            string[] CompressedPreFolderArray = CompressedPreFolder.Split('\\');
-            CompressedPreFolder = CompressedPreFolderArray[CompressedPreFolderArray.Length - 1]; 
-
-            // dumb hack 
-            string[] RegFileNameArray = FileDest.Split('\\');
+            string[] RegFileNameArray = RegFileName.Split('\\');
             RegFileName = RegFileNameArray[RegFileNameArray.Length - 1];
 
-            FileDest = $"{CompressedPreFolder}\\{RegFileName}";
-            // lazy
-            Directory.CreateDirectory(CompressedPreFolder);
+            using (ZipArchive ZA = new ZipArchive(new FileStream($"{RegFileName}_c.zip", FileMode.Create)))
+            {
+                ZipArchiveEntry RegEntry = ZA.CreateEntryFromFile(RegFileName, RegFileName); 
+            }
 
-            File.Copy(RegFileName, FileDest);
-            ZipFile.CreateFromDirectory(CompressedPreFolder, $"{RegFileName}_archive.zip");
-            File.Delete($@"{RegFileName}");
-            Directory.Delete(CompressedPreFolder);
-            File.Delete(RegFileName); 
+            
             return true; 
         }
     }
