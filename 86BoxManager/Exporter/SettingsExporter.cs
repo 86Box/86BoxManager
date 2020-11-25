@@ -46,11 +46,11 @@ namespace _86boxManager
                 // Export to .reg
                 if (!ZipUpRegFile)
                 {
-                    ExportReg(SFD.FileName);
+                    return ExportReg(SFD.FileName);
                 }
                 else
                 {
-                    ExportZip(SFD.FileName); 
+                    return ExportZip(SFD.FileName); 
                 }
             }
 
@@ -291,17 +291,10 @@ namespace _86boxManager
                 ZipArchiveEntry RegEntry = ZA.CreateEntryFromFile(RegFileName, InArchiveFileName);
 
                 // Get directory name
-                string DirName = Path.GetDirectoryName(RegFileName); 
+                string DirName = ApplicationSettings.CFGDir;
                 // Compress the VMs folder
-                
-                foreach (string DirectoryName in Directory.GetDirectories(DirName))
-                {
-                    foreach (string FileName in Directory.GetFiles(DirectoryName))
-                    {
-                        RecursiveAddition(ZA, FileName); 
-                    }
-                }
-                //RecursiveAddition(ZA, ZipFileName); 
+
+                RecursiveAddition(ZA, DirName);
 
                 ZA.Dispose(); 
             }
@@ -330,15 +323,30 @@ namespace _86boxManager
             return Final;
         }
 
-        private bool RecursiveAddition(ZipArchive ZA, string FileName)
+        private bool RecursiveAddition(ZipArchive ZA, string DirName)
         {
-            // just to be safe
-            FileName = GetSafeFileName(FileName); 
 
-            string[] InArchiveFileNames = FileName.Split('\\');
-            string InArchiveFileName = InArchiveFileNames[InArchiveFileNames.Length - 1];
 
-            ZA.CreateEntryFromFile(FileName, InArchiveFileName);
+            foreach (string DirectoryName in Directory.GetDirectories(DirName))
+            {
+                foreach (string FileName in Directory.GetFiles(DirectoryName))
+                {
+                    // just to be safe
+                    string OperationFileName = GetSafeFileName(FileName);
+
+                    string InArchiveFileName = FileName.Replace($@"{ApplicationSettings.CFGDir}", "");
+
+
+                    ZA.CreateEntryFromFile(OperationFileName, InArchiveFileName);
+
+                    if (Directory.GetDirectories(DirectoryName).Length > 0)
+                    {
+                        string SDirName = GetSafeFileName(DirectoryName); 
+                        RecursiveAddition(ZA, SDirName); 
+                    }
+                }
+            }
+
 
             return true; 
         }

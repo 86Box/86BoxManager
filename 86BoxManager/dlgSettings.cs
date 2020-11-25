@@ -291,6 +291,7 @@ namespace _86boxManager
             } 
             else
             {
+                MessageBox.Show("Successfully exported settings.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
         }
