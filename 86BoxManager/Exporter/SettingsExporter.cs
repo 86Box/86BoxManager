@@ -284,9 +284,23 @@ namespace _86boxManager
 
             using (ZipArchive ZA = new ZipArchive(new FileStream(ZipFileName, FileMode.Create), ZipArchiveMode.Create))
             {
-                ZipArchiveEntry RegEntry = ZA.CreateEntryFromFile(RegFileName, RegFileName);
 
+                string[] InArchiveFileNames = RegFileName.Split('\\');
+                string InArchiveFileName = InArchiveFileNames[InArchiveFileNames.Length - 1]; 
+                
+                ZipArchiveEntry RegEntry = ZA.CreateEntryFromFile(RegFileName, InArchiveFileName);
+
+                // Get directory name
+                string DirName = Path.GetDirectoryName(RegFileName); 
                 // Compress the VMs folder
+                
+                foreach (string DirectoryName in Directory.GetDirectories(DirName))
+                {
+                    foreach (string FileName in Directory.GetFiles(DirectoryName))
+                    {
+                        RecursiveAddition(ZA, FileName); 
+                    }
+                }
                 //RecursiveAddition(ZA, ZipFileName); 
 
                 ZA.Dispose(); 
@@ -299,7 +313,7 @@ namespace _86boxManager
             return true; 
         }
 
-        // should be moved to a utilities class
+        // should be moved to a utilities class and mdae an extension method
         private string GetSafeFileName(string FileName)
         {
             char[] InvalidCharacters = Path.GetInvalidFileNameChars();
@@ -318,7 +332,15 @@ namespace _86boxManager
 
         private bool RecursiveAddition(ZipArchive ZA, string FileName)
         {
-            throw new NotImplementedException(); 
+            // just to be safe
+            FileName = GetSafeFileName(FileName); 
+
+            string[] InArchiveFileNames = FileName.Split('\\');
+            string InArchiveFileName = InArchiveFileNames[InArchiveFileNames.Length - 1];
+
+            ZA.CreateEntryFromFile(FileName, InArchiveFileName);
+
+            return true; 
         }
     }
 }
