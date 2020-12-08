@@ -112,6 +112,7 @@
       <DependentUpon>dlgSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Exporter\SettingsExporter.cs" />
+    <Compile Include="Exporter\SettingsExportResult.cs" />
     <Compile Include="FolderSelectDialog.cs" />
     <Compile Include="ListViewItemComparer.cs" />
     <Compile Include="Settings\Settings.cs" />

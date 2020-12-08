@@ -37,9 +37,9 @@ namespace _86boxManager
             // Would this work with WinForms' limited data binding?
             txtEXEdir.Text = ApplicationSettings.EXEDir;
             txtCFGdir.Text = ApplicationSettings.CFGDir;
-
             btnBrowse3.Enabled = ApplicationSettings.EnableLogging;
             txtLogPath.Enabled = ApplicationSettings.EnableLogging;
+            cbxLogging.Checked = ApplicationSettings.EnableLogging;
 
             if (ApplicationSettings.EnableLogging)
             {
@@ -51,7 +51,7 @@ namespace _86boxManager
             cbxShowConsole.Checked = ApplicationSettings.ShowConsole;
             cbxMinimizeTray.Checked = ApplicationSettings.MinimizeToTray;
             cbxCloseTray.Checked = ApplicationSettings.CloseToTray;
-            cbxLogging.Checked = ApplicationSettings.EnableLogging;
+
             cbxGrid.Checked = ApplicationSettings.EnableGridLines;
         }
 
@@ -264,6 +264,8 @@ namespace _86boxManager
 
         private void cbxLogging_CheckedChanged(object sender, EventArgs e)
         {
+            ApplicationSettings.EnableLogging = cbxLogging.Checked;
+            if (ApplicationSettings.EnableLogging) ApplicationSettings.LogPath = txtLogPath.Text;
             settingsChanged = ApplicationSettings.CheckForChanges();
             txt_TextChanged(sender, e); //Needed so the Apply button doesn't get enabled on an empty logpath textbox. Too lazy to write a duplicated empty check...
             txtLogPath.Enabled = cbxLogging.Checked;
