@@ -52,7 +52,7 @@ namespace _86boxManager
         public frmMain()
         {
             InitializeComponent();
-            LoadSettings();
+            ApplicationSettings.LoadSettings();
             LoadVMs();
 
 #if NETCOREAPP
@@ -100,6 +100,7 @@ namespace _86boxManager
         private void btnStart_Click(object sender, EventArgs e)
         {
             VM vm = (VM)lstVMs.SelectedItems[0].Tag;
+
             if (vm.Status == VM.STATUS_STOPPED)
             {
                 VMStart();
@@ -119,7 +120,7 @@ namespace _86boxManager
         {
             dlgSettings dlg = new dlgSettings();
             dlg.ShowDialog();
-            LoadSettings(); //Reload the settings due to potential changes    
+            ApplicationSettings.LoadSettings(); //Reload the settings due to potential changes    
         }
 
         private void lstVMs_SelectedIndexChanged(object sender, EventArgs e)
@@ -216,89 +217,7 @@ namespace _86boxManager
             dlg.ShowDialog();
         }
 
-        //Load the settings from the registry
-        private void LoadSettings()
-        {
-            regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true);
-
-            //Try to load the settings from registry, if it fails fallback to default values
-            try
-            {
-                exepath = regkey.GetValue("EXEdir").ToString();
-                cfgpath = regkey.GetValue("CFGdir").ToString();
-                minimize = Convert.ToBoolean(regkey.GetValue("MinimizeOnVMStart"));
-                showConsole = Convert.ToBoolean(regkey.GetValue("ShowConsole"));
-                minimizeTray = Convert.ToBoolean(regkey.GetValue("MinimizeToTray"));
-                closeTray = Convert.ToBoolean(regkey.GetValue("CloseToTray"));
-                launchTimeout = (int)regkey.GetValue("LaunchTimeout");
-                logpath = regkey.GetValue("LogPath").ToString();
-                logging = Convert.ToBoolean(regkey.GetValue("EnableLogging"));
-                gridlines = Convert.ToBoolean(regkey.GetValue("EnableGridLines"));
-                sortColumn = (int)regkey.GetValue("SortColumn");
-                sortOrder = (SortOrder)regkey.GetValue("SortOrder");
-
-                lstVMs.GridLines = gridlines;
-                VMSort(sortColumn, sortOrder);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("86Box Manager settings could not be loaded. This is normal if you're running 86Box Manager for the first time. Default values will be used.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                //If the key doesn't exist, create it and then reopen it
-                if (regkey == null)
-                {
-                    Registry.CurrentUser.CreateSubKey(@"SOFTWARE\86Box");
-                    regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true);
-                    regkey.CreateSubKey("Virtual Machines");
-                }
-
-                cfgpath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\86Box VMs\";
-                exepath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + @"\86Box\";
-                minimize = false;
-                showConsole = true;
-                minimizeTray = false;
-                closeTray = false;
-                launchTimeout = 5000;
-                logging = false;
-                logpath = "";
-                gridlines = false;
-                sortColumn = 0;
-                sortOrder = SortOrder.Ascending;
-
-                lstVMs.GridLines = false;
-                VMSort(sortColumn, sortOrder);
-
-                //Defaults must also be written to the registry
-                regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true);
-                regkey.SetValue("EXEdir", exepath, RegistryValueKind.String);
-                regkey.SetValue("CFGdir", cfgpath, RegistryValueKind.String);
-                regkey.SetValue("MinimizeOnVMStart", minimize, RegistryValueKind.DWord);
-                regkey.SetValue("ShowConsole", showConsole, RegistryValueKind.DWord);
-                regkey.SetValue("MinimizeToTray", minimizeTray, RegistryValueKind.DWord);
-                regkey.SetValue("CloseToTray", closeTray, RegistryValueKind.DWord);
-                regkey.SetValue("LaunchTimeout", launchTimeout, RegistryValueKind.DWord);
-                regkey.SetValue("EnableLogging", logging, RegistryValueKind.DWord);
-                regkey.SetValue("LogPath", logpath, RegistryValueKind.String);
-                regkey.SetValue("EnableGridLines", gridlines, RegistryValueKind.DWord);
-                regkey.SetValue("SortColumn", sortColumn, RegistryValueKind.DWord);
-                regkey.SetValue("SortOrder", sortOrder, RegistryValueKind.DWord);
-            }
-            finally
-            {
-                //To make sure there's a trailing backslash at the end, as other code using these strings expects it!
-                if (!exepath.EndsWith(@"\"))
-                {
-                    exepath += @"\";
-                }
-                if (!cfgpath.EndsWith(@"\"))
-                {
-                    cfgpath += @"\";
-                }
-            }
-
-            regkey.Close();
-        }
-
+        
         //TODO: Rewrite
         //Load the VMs from the registry
         private void LoadVMs()
@@ -1458,7 +1377,7 @@ namespace _86boxManager
             trayIcon.Visible = false;
             dlgSettings ds = new dlgSettings();
             ds.ShowDialog();
-            LoadSettings();
+            ApplicationSettings.LoadSettings();
         }
 
         //Kills the process associated with the selected VM

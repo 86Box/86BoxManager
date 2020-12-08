@@ -62,6 +62,7 @@ namespace _86boxManager
             {
                 e.Cancel = true;
                 DialogResult result = MessageBox.Show("Would you like to save the changes you've made to the settings?", "Unsaved changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                
                 if (result == DialogResult.Yes)
                 {
                     ApplicationSettings.SaveSettings();
@@ -211,6 +212,7 @@ namespace _86boxManager
                 if (!txtEXEdir.Text.EndsWith(@"\")) //Just in case
                 {
                     txtEXEdir.Text += @"\";
+                    ApplicationSettings.EXEDir = txtEXEdir.Text; // databinding?
                 }
             }
         }
@@ -226,9 +228,11 @@ namespace _86boxManager
             if (dialog.Show(Handle))
             {
                 txtCFGdir.Text = dialog.FileName;
+
                 if (!txtCFGdir.Text.EndsWith(@"\")) //Just in case
                 {
                     txtCFGdir.Text += @"\";
+                    ApplicationSettings.CFGDir = txtCFGdir.Text; // databinding?
                 }
             }
         }
@@ -237,6 +241,7 @@ namespace _86boxManager
         private void btnDefaults_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("All settings will be reset to their default values. Do you wish to continue?", "Settings will be reset", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            
             if (result == DialogResult.Yes)
             {
                 ApplicationSettings.RestoreToDefaults(false);
@@ -245,7 +250,16 @@ namespace _86boxManager
 
         private void cbx_CheckedChanged(object sender, EventArgs e)
         {
+            ApplicationSettings.CloseToTray = cbxCloseTray.Checked;
+            ApplicationSettings.EnableGridLines = cbxGrid.Checked;
+            ApplicationSettings.EnableLogging = cbxLogging.Checked;
+            ApplicationSettings.MinimizeOnVMStart = cbxMinimize.Checked;
+            ApplicationSettings.MinimizeToTray = cbxMinimizeTray.Checked;
+            ApplicationSettings.ShowConsole = cbxShowConsole.Checked;
+
             settingsChanged = ApplicationSettings.CheckForChanges();
+            btnApply.Enabled = settingsChanged;
+
         }
 
         private void cbxLogging_CheckedChanged(object sender, EventArgs e)
