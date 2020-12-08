@@ -411,6 +411,8 @@ namespace _86boxManager
             {
                 txtLogPath.Text = ofd.FileName;
             }
+
+            ofd.Dispose();
         }
 
         private void lnkGithub2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

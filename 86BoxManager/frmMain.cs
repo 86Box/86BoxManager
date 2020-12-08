@@ -120,6 +120,7 @@ namespace _86boxManager
             dlgSettings dlg = new dlgSettings();
             dlg.ShowDialog();
             LoadSettings(); //Reload the settings due to potential changes    
+            dlg.Dispose();
         }
 
         private void lstVMs_SelectedIndexChanged(object sender, EventArgs e)
@@ -208,12 +209,14 @@ namespace _86boxManager
         {
             dlgAddVM dlg = new dlgAddVM();
             dlg.ShowDialog();
+            dlg.Dispose();
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
             dlgEditVM dlg = new dlgEditVM();
             dlg.ShowDialog();
+            dlg.Dispose();
         }
 
         //Load the settings from the registry
@@ -1077,6 +1080,7 @@ namespace _86boxManager
         {
             dlgEditVM dlg = new dlgEditVM();
             dlg.ShowDialog();
+            dlg.Dispose();
         }
 
         private void btnCtrlAltDel_Click(object sender, EventArgs e)
@@ -1459,6 +1463,7 @@ namespace _86boxManager
             dlgSettings ds = new dlgSettings();
             ds.ShowDialog();
             LoadSettings();
+            ds.Dispose();
         }
 
         //Kills the process associated with the selected VM
@@ -1691,6 +1696,7 @@ namespace _86boxManager
             VM vm = (VM)lstVMs.SelectedItems[0].Tag;
             dlgCloneVM dc = new dlgCloneVM(vm.Path);
             dc.ShowDialog();
+            dc.Dispose();
         }
 		
         //Refreshes the VM counter in the status bar
