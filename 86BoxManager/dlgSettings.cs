@@ -37,7 +37,15 @@ namespace _86boxManager
             // Would this work with WinForms' limited data binding?
             txtEXEdir.Text = ApplicationSettings.EXEDir;
             txtCFGdir.Text = ApplicationSettings.CFGDir;
-            txtLogPath.Text = ApplicationSettings.LogPath;
+
+            btnBrowse3.Enabled = ApplicationSettings.EnableLogging;
+            txtLogPath.Enabled = ApplicationSettings.EnableLogging;
+
+            if (ApplicationSettings.EnableLogging)
+            {
+                txtLogPath.Text = ApplicationSettings.LogPath;
+            }
+
             txtLaunchTimeout.Text = ApplicationSettings.LaunchTimeout;
             cbxMinimize.Checked = ApplicationSettings.MinimizeToTray;
             cbxShowConsole.Checked = ApplicationSettings.ShowConsole;
