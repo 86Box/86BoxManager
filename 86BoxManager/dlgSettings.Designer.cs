@@ -172,17 +172,17 @@
             this.ExportZipButton.AutoSize = true;
             this.ExportZipButton.Checked = true;
             this.ExportZipButton.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ExportZipButton.Location = new System.Drawing.Point(390, 16);
+            this.ExportZipButton.Location = new System.Drawing.Point(154, 16);
             this.ExportZipButton.Name = "ExportZipButton";
-            this.ExportZipButton.Size = new System.Drawing.Size(100, 23);
+            this.ExportZipButton.Size = new System.Drawing.Size(79, 23);
             this.ExportZipButton.TabIndex = 19;
-            this.ExportZipButton.Text = "Zip Settings";
+            this.ExportZipButton.Text = "Zip VMs";
             this.ExportZipButton.UseVisualStyleBackColor = true;
             // 
             // ExportSettingsFile
             // 
             this.ExportSettingsFile.Cursor = System.Windows.Forms.Cursors.Default;
-            this.ExportSettingsFile.Location = new System.Drawing.Point(307, 11);
+            this.ExportSettingsFile.Location = new System.Drawing.Point(81, 11);
             this.ExportSettingsFile.Name = "ExportSettingsFile";
             this.ExportSettingsFile.Size = new System.Drawing.Size(67, 30);
             this.ExportSettingsFile.TabIndex = 18;
