@@ -303,19 +303,25 @@ namespace _86boxManager
         /// <param name="e"></param>
         private void ExportSettingsFile_Click(object sender, EventArgs e)
         {
-            SettingsExporter SEX = new SettingsExporter();
-            SEX.ZipUpRegFile = ExportZipButton.Checked;
-            
-            if (!SEX.ExportSettings())
+            SettingsExporter Exporter = new SettingsExporter();
+            Exporter.ZipUpRegFile = ExportZipButton.Checked;
+
+            SettingsExportResult SER = Exporter.ExportSettings();
+
+            switch (SER)
             {
-                MessageBox.Show("An error occurred exporting settings.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return; 
-            } 
-            else
-            {
-                MessageBox.Show("Successfully exported settings.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
+                case SettingsExportResult.OK:
+                    MessageBox.Show("Successfully exported settings.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+
+                case SettingsExportResult.Cancel:
+                    return;
+
+                case SettingsExportResult.Error:
+                    MessageBox.Show("An error occurred exporting settings.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
             }
+
         }
     }
 }

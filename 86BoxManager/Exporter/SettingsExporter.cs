@@ -19,7 +19,7 @@ namespace _86boxManager
         
         // we probably need input validation support and result classes,
         // but i already wrote too much code for this pull request
-        public bool ExportSettings()
+        public SettingsExportResult ExportSettings()
         {
             SaveFileDialog SFD = new SaveFileDialog();
             
@@ -35,26 +35,41 @@ namespace _86boxManager
                 SFD.Filter = "ZIP archive (*.zip)|*.zip";
             }
 
-            SFD.ShowDialog();
+            if (SFD.ShowDialog() == DialogResult.Cancel)
+            {
+                return SettingsExportResult.Cancel;
+            }
 
             if (SFD.FileName == "")
             {
-                return true;
+                return SettingsExportResult.Cancel;
             }
             else
             {
                 // Export to .reg
                 if (!ZipUpRegFile)
                 {
-                    return ExportReg(SFD.FileName);
+                    if (!ExportReg(SFD.FileName))
+                    {
+                        return SettingsExportResult.Error;
+                    }
+                    else
+                    {
+                        return SettingsExportResult.OK;
+                    }
                 }
                 else
                 {
-                    return ExportZip(SFD.FileName); 
+                    if (!ExportZip(SFD.FileName))
+                    {
+                        return SettingsExportResult.Error;
+                    }
+                    else
+                    {
+                        return SettingsExportResult.OK;
+                    }
                 }
             }
-
-            return false; 
         }
 
         private bool ExportReg(string FileName)
