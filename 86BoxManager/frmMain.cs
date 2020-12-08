@@ -331,6 +331,15 @@ namespace _86boxManager
                     lstVMs.Items.Add(newLvi);
                 }
 
+                lstVMs.SelectedItems.Clear();
+                btnStart.Enabled = false;
+                btnPause.Enabled = false;
+                btnEdit.Enabled = false;
+                btnDelete.Enabled = false;
+                btnConfigure.Enabled = false;
+                btnCtrlAltDel.Enabled = false;
+                btnReset.Enabled = false;
+
                 VMCountRefresh();
             }
             catch (Exception ex)
@@ -998,7 +1007,7 @@ namespace _86boxManager
             }
             regkey.Close();
 
-            MessageBox.Show("Virtual machine \"" + vm.Name + "\" was successfully modified. Please update its configuration so that any folder paths (e.g. for hard disk images) point to the new folder.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Virtual machine \"" + vm.Name + "\" was successfully modified. Please update its configuration so that any absolute paths (e.g. for hard disk images) point to the new folder.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             VMSort(sortColumn, sortOrder);
             LoadVMs();
         }
