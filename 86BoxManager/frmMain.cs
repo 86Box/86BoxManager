@@ -52,8 +52,6 @@ namespace _86boxManager
         public frmMain()
         {
             InitializeComponent();
-            LoadSettings();
-            LoadVMs();
 
 #if NETCOREAPP
             createADesktopShortcutToolStripMenuItem.Enabled = false; // Requires the original .NET framework
@@ -62,6 +60,9 @@ namespace _86boxManager
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+            LoadSettings();
+            LoadVMs();
+
             //Load main window's state, size and position
             WindowState = Settings.Default.WindowState;
             Size = Settings.Default.WindowSize;
