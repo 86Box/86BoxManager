@@ -1,0 +1,27 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="_86boxManager.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="WindowSize" Type="System.Drawing.Size" Scope="User">
+      <Value Profile="(Default)">700, 534</Value>
+    </Setting>
+    <Setting Name="WindowPosition" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">200, 200</Value>
+    </Setting>
+    <Setting Name="WindowState" Type="System.Windows.Forms.FormWindowState" Scope="User">
+      <Value Profile="(Default)">Normal</Value>
+    </Setting>
+    <Setting Name="NameColWidth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">184</Value>
+    </Setting>
+    <Setting Name="StatusColWidth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">107</Value>
+    </Setting>
+    <Setting Name="DescColWidth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">144</Value>
+    </Setting>
+    <Setting Name="PathColWidth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">217</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
