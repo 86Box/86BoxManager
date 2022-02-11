@@ -67,7 +67,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\86Box.ico</ApplicationIcon>
+    <ApplicationIcon>86Box-gray.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -164,7 +164,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="86Box-gray.ico" />
     <Content Include="Resources\86Box.ico" />
+    <None Include="Resources\86Box.png" />
     <Content Include="Resources\86box_16x16.png" />
     <Content Include="Resources\86box_16x16_green.png" />
     <Content Include="Resources\86box_16x16_yellow.png" />

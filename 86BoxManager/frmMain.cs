@@ -626,6 +626,7 @@ namespace _86boxManager
                     Process p = new Process();
                     p.StartInfo.FileName = exepath + "86Box.exe";
                     p.StartInfo.Arguments = "-P \"" + lstVMs.SelectedItems[0].SubItems[3].Text + "\" -H " + ZEROID + "," + hWndHex;
+
                     if (logging)
                     {
                         p.StartInfo.Arguments += " -L \"" + logpath + "\"";
