@@ -625,11 +625,11 @@ namespace _86boxManager
                 {
                     Process p = new Process();
                     p.StartInfo.FileName = exepath + "86Box.exe";
-                    p.StartInfo.Arguments = "-P \"" + lstVMs.SelectedItems[0].SubItems[3].Text + "\" -H " + ZEROID + "," + hWndHex;
+                    p.StartInfo.Arguments = "--vmpath \"" + lstVMs.SelectedItems[0].SubItems[3].Text + "\" --hwnd " + ZEROID + "," + hWndHex;
 
                     if (logging)
                     {
-                        p.StartInfo.Arguments += " -L \"" + logpath + "\"";
+                        p.StartInfo.Arguments += " --logfile \"" + logpath + "\"";
                     }
                     if (!showConsole)
                     {
@@ -783,7 +783,7 @@ namespace _86boxManager
                 {
                     Process p = new Process();
                     p.StartInfo.FileName = exepath + "86Box.exe";
-                    p.StartInfo.Arguments = "-S -P \"" + lstVMs.SelectedItems[0].SubItems[3].Text + "\"";
+                    p.StartInfo.Arguments = "--settings --vmpath \"" + lstVMs.SelectedItems[0].SubItems[3].Text + "\"";
                     if (!showConsole)
                     {
                         p.StartInfo.RedirectStandardOutput = true;
