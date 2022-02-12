@@ -191,7 +191,7 @@
             this.tbcSettings.Controls.Add(this.tabAdvanced);
             this.tbcSettings.Controls.Add(this.tabAbout);
             this.tbcSettings.Location = new System.Drawing.Point(15, 15);
-            this.tbcSettings.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbcSettings.Margin = new System.Windows.Forms.Padding(4);
             this.tbcSettings.Name = "tbcSettings";
             this.tbcSettings.SelectedIndex = 0;
             this.tbcSettings.Size = new System.Drawing.Size(861, 329);
@@ -202,9 +202,9 @@
             this.tabGeneral.Controls.Add(this.gbxBehaviour);
             this.tabGeneral.Controls.Add(this.gbxPaths);
             this.tabGeneral.Location = new System.Drawing.Point(4, 32);
-            this.tabGeneral.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabGeneral.Margin = new System.Windows.Forms.Padding(4);
             this.tabGeneral.Name = "tabGeneral";
-            this.tabGeneral.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabGeneral.Padding = new System.Windows.Forms.Padding(4);
             this.tabGeneral.Size = new System.Drawing.Size(853, 293);
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "General";
@@ -216,9 +216,9 @@
             this.gbxBehaviour.Controls.Add(this.cbxCloseTray);
             this.gbxBehaviour.Controls.Add(this.cbxMinimize);
             this.gbxBehaviour.Location = new System.Drawing.Point(8, 176);
-            this.gbxBehaviour.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbxBehaviour.Margin = new System.Windows.Forms.Padding(4);
             this.gbxBehaviour.Name = "gbxBehaviour";
-            this.gbxBehaviour.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbxBehaviour.Padding = new System.Windows.Forms.Padding(4);
             this.gbxBehaviour.Size = new System.Drawing.Size(836, 108);
             this.gbxBehaviour.TabIndex = 6;
             this.gbxBehaviour.TabStop = false;
@@ -274,9 +274,9 @@
             this.gbxPaths.Controls.Add(this.lblEXEdir);
             this.gbxPaths.Controls.Add(this.btnBrowse1);
             this.gbxPaths.Location = new System.Drawing.Point(8, 8);
-            this.gbxPaths.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbxPaths.Margin = new System.Windows.Forms.Padding(4);
             this.gbxPaths.Name = "gbxPaths";
-            this.gbxPaths.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbxPaths.Padding = new System.Windows.Forms.Padding(4);
             this.gbxPaths.Size = new System.Drawing.Size(836, 161);
             this.gbxPaths.TabIndex = 5;
             this.gbxPaths.TabStop = false;
@@ -372,9 +372,9 @@
             this.tabAdvanced.Controls.Add(this.gbxLogging);
             this.tabAdvanced.Controls.Add(this.gbxMisc);
             this.tabAdvanced.Location = new System.Drawing.Point(4, 32);
-            this.tabAdvanced.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabAdvanced.Margin = new System.Windows.Forms.Padding(4);
             this.tabAdvanced.Name = "tabAdvanced";
-            this.tabAdvanced.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabAdvanced.Padding = new System.Windows.Forms.Padding(4);
             this.tabAdvanced.Size = new System.Drawing.Size(853, 293);
             this.tabAdvanced.TabIndex = 1;
             this.tabAdvanced.Text = "Advanced";
@@ -386,9 +386,9 @@
             this.gbxLogging.Controls.Add(this.txtLogPath);
             this.gbxLogging.Controls.Add(this.btnBrowse3);
             this.gbxLogging.Location = new System.Drawing.Point(8, 8);
-            this.gbxLogging.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbxLogging.Margin = new System.Windows.Forms.Padding(4);
             this.gbxLogging.Name = "gbxLogging";
-            this.gbxLogging.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbxLogging.Padding = new System.Windows.Forms.Padding(4);
             this.gbxLogging.Size = new System.Drawing.Size(836, 116);
             this.gbxLogging.TabIndex = 18;
             this.gbxLogging.TabStop = false;
@@ -410,7 +410,7 @@
             // txtLogPath
             // 
             this.txtLogPath.Location = new System.Drawing.Point(11, 65);
-            this.txtLogPath.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtLogPath.Margin = new System.Windows.Forms.Padding(4);
             this.txtLogPath.Name = "txtLogPath";
             this.txtLogPath.Size = new System.Drawing.Size(724, 30);
             this.txtLogPath.TabIndex = 10;
@@ -435,9 +435,9 @@
             this.gbxMisc.Controls.Add(this.cbxShowConsole);
             this.gbxMisc.Controls.Add(this.lblLaunchTimeout);
             this.gbxMisc.Location = new System.Drawing.Point(8, 131);
-            this.gbxMisc.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbxMisc.Margin = new System.Windows.Forms.Padding(4);
             this.gbxMisc.Name = "gbxMisc";
-            this.gbxMisc.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbxMisc.Padding = new System.Windows.Forms.Padding(4);
             this.gbxMisc.Size = new System.Drawing.Size(836, 152);
             this.gbxMisc.TabIndex = 17;
             this.gbxMisc.TabStop = false;
@@ -467,9 +467,9 @@
             this.tabAbout.Controls.Add(this.lblDesc);
             this.tabAbout.Controls.Add(this.lblTitle);
             this.tabAbout.Location = new System.Drawing.Point(4, 32);
-            this.tabAbout.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabAbout.Margin = new System.Windows.Forms.Padding(4);
             this.tabAbout.Name = "tabAbout";
-            this.tabAbout.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabAbout.Padding = new System.Windows.Forms.Padding(4);
             this.tabAbout.Size = new System.Drawing.Size(853, 293);
             this.tabAbout.TabIndex = 2;
             this.tabAbout.Text = "About";
@@ -532,7 +532,7 @@
             this.lblCopyright.Name = "lblCopyright";
             this.lblCopyright.Size = new System.Drawing.Size(458, 69);
             this.lblCopyright.TabIndex = 15;
-            this.lblCopyright.Text = "Copyright © 2018-2020 David Simunič\r\nLicensed under the MIT license. See the LICE" +
+            this.lblCopyright.Text = "Copyright © 2018-2022 David Simunič\r\nLicensed under the MIT license. See the LICE" +
     "NSE file for\r\nlicense information and AUTHORS for a list of contributors.";
             // 
             // lblVersion
@@ -581,7 +581,7 @@
             this.Controls.Add(this.pnlBottom);
             this.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "dlgSettings";

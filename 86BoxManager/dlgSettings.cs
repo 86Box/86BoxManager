@@ -91,19 +91,19 @@ namespace _86boxManager
             try
             {
                 FileVersionInfo vi = FileVersionInfo.GetVersionInfo(txtEXEdir.Text + @"\86Box.exe");
-                if (vi.FilePrivatePart >= 2008) //Officially supported builds
+                if (vi.FilePrivatePart >= 3541) //Officially supported builds
                 {
-                    lbl86BoxVer1.Text = vi.FileMajorPart.ToString() + "." + vi.FileMinorPart.ToString() + "." + vi.FileBuildPart.ToString() + "." + vi.FilePrivatePart.ToString() + " - supported";
+                    lbl86BoxVer1.Text = vi.FileMajorPart.ToString() + "." + vi.FileMinorPart.ToString() + "." + vi.FileBuildPart.ToString() + "." + vi.FilePrivatePart.ToString() + " - fully compatible";
                     lbl86BoxVer1.ForeColor = Color.ForestGreen;
                 }
-                else if (vi.FilePrivatePart >= 1763 && vi.FilePrivatePart < 2008) //Should mostly work...
+                else if (vi.FilePrivatePart >= 3333 && vi.FilePrivatePart < 3541) //Should mostly work...
                 {
-                    lbl86BoxVer1.Text = vi.FileMajorPart.ToString() + "." + vi.FileMinorPart.ToString() + "." + vi.FileBuildPart.ToString() + "." + vi.FilePrivatePart.ToString() + " - partially supported";
+                    lbl86BoxVer1.Text = vi.FileMajorPart.ToString() + "." + vi.FileMinorPart.ToString() + "." + vi.FileBuildPart.ToString() + "." + vi.FilePrivatePart.ToString() + " - partially compatible";
                     lbl86BoxVer1.ForeColor = Color.Orange;
                 }
                 else //Completely unsupported, since version info can't be obtained anyway
                 {
-                    lbl86BoxVer1.Text = "Unknown - not supported";
+                    lbl86BoxVer1.Text = "Unknown - may not be compatible";
                     lbl86BoxVer1.ForeColor = Color.Red;
                 }
             }
