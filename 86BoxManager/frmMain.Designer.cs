@@ -82,7 +82,7 @@
             this.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnEdit.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.btnEdit.Location = new System.Drawing.Point(72, 15);
-            this.btnEdit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnEdit.Margin = new System.Windows.Forms.Padding(4);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(56, 38);
             this.btnEdit.TabIndex = 1;
@@ -97,7 +97,7 @@
             this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnDelete.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.btnDelete.Location = new System.Drawing.Point(136, 15);
-            this.btnDelete.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(4);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 38);
             this.btnDelete.TabIndex = 2;
@@ -112,7 +112,7 @@
             this.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnStart.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.btnStart.Location = new System.Drawing.Point(246, 15);
-            this.btnStart.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnStart.Margin = new System.Windows.Forms.Padding(4);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(56, 38);
             this.btnStart.TabIndex = 3;
@@ -137,7 +137,7 @@
             this.lstVMs.FullRowSelect = true;
             this.lstVMs.HideSelection = false;
             this.lstVMs.Location = new System.Drawing.Point(15, 60);
-            this.lstVMs.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lstVMs.Margin = new System.Windows.Forms.Padding(4);
             this.lstVMs.Name = "lstVMs";
             this.lstVMs.ShowGroups = false;
             this.lstVMs.ShowItemToolTips = true;
@@ -314,16 +314,16 @@
             // 
             this.img86box.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("img86box.ImageStream")));
             this.img86box.TransparentColor = System.Drawing.Color.Transparent;
-            this.img86box.Images.SetKeyName(0, "86box_16x16.png");
-            this.img86box.Images.SetKeyName(1, "86box_16x16_green.png");
-            this.img86box.Images.SetKeyName(2, "86box_16x16_yellow.png");
+            this.img86box.Images.SetKeyName(0, "status_stopped.png");
+            this.img86box.Images.SetKeyName(1, "status_running.png");
+            this.img86box.Images.SetKeyName(2, "status_paused.png");
             // 
             // btnAdd
             // 
             this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnAdd.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.btnAdd.Location = new System.Drawing.Point(15, 15);
-            this.btnAdd.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAdd.Margin = new System.Windows.Forms.Padding(4);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(50, 38);
             this.btnAdd.TabIndex = 0;
@@ -338,7 +338,7 @@
             this.btnConfigure.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnConfigure.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.btnConfigure.Location = new System.Drawing.Point(310, 15);
-            this.btnConfigure.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnConfigure.Margin = new System.Windows.Forms.Padding(4);
             this.btnConfigure.Name = "btnConfigure";
             this.btnConfigure.Size = new System.Drawing.Size(88, 38);
             this.btnConfigure.TabIndex = 4;
@@ -359,7 +359,7 @@
             this.btnPause.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnPause.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.btnPause.Location = new System.Drawing.Point(405, 15);
-            this.btnPause.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnPause.Margin = new System.Windows.Forms.Padding(4);
             this.btnPause.Name = "btnPause";
             this.btnPause.Size = new System.Drawing.Size(69, 38);
             this.btnPause.TabIndex = 5;
@@ -374,7 +374,7 @@
             this.btnCtrlAltDel.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnCtrlAltDel.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.btnCtrlAltDel.Location = new System.Drawing.Point(481, 15);
-            this.btnCtrlAltDel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCtrlAltDel.Margin = new System.Windows.Forms.Padding(4);
             this.btnCtrlAltDel.Name = "btnCtrlAltDel";
             this.btnCtrlAltDel.Size = new System.Drawing.Size(75, 38);
             this.btnCtrlAltDel.TabIndex = 6;
@@ -389,7 +389,7 @@
             this.btnReset.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnReset.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.btnReset.Location = new System.Drawing.Point(564, 15);
-            this.btnReset.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnReset.Margin = new System.Windows.Forms.Padding(4);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(62, 38);
             this.btnReset.TabIndex = 7;
@@ -472,7 +472,7 @@
             this.btnSettings.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnSettings.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.btnSettings.Location = new System.Drawing.Point(759, 15);
-            this.btnSettings.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSettings.Margin = new System.Windows.Forms.Padding(4);
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new System.Drawing.Size(81, 38);
             this.btnSettings.TabIndex = 8;
@@ -500,7 +500,7 @@
             this.Controls.Add(this.btnEdit);
             this.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Margin = new System.Windows.Forms.Padding(5);
             this.MinimumSize = new System.Drawing.Size(870, 613);
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

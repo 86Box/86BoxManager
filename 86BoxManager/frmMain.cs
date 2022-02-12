@@ -576,7 +576,6 @@ namespace _86boxManager
         {
             VM vm = (VM)lstVMs.SelectedItems[0].Tag;
             PostMessage(vm.hWnd, 0x8890, IntPtr.Zero, IntPtr.Zero);
-            Debug.WriteLine("Sent WM 0x8890(0,0) to VM \"" + vm.Name + "\" with hWnd " + vm.hWnd);
             lstVMs.SelectedItems[0].SubItems[1].Text = vm.GetStatusString();
             lstVMs.SelectedItems[0].ImageIndex = 2;
             pauseToolStripMenuItem.Text = "Resume";
@@ -599,7 +598,6 @@ namespace _86boxManager
         {
             VM vm = (VM)lstVMs.SelectedItems[0].Tag;
             PostMessage(vm.hWnd, 0x8890, IntPtr.Zero, IntPtr.Zero);
-            Debug.WriteLine("Sent WM 0x8890(0,0) to VM \"" + vm.Name + "\" with hWnd " + vm.hWnd);
             vm.Status = VM.STATUS_RUNNING;
             lstVMs.SelectedItems[0].SubItems[1].Text = vm.GetStatusString();
             lstVMs.SelectedItems[0].ImageIndex = 1;
@@ -638,8 +636,6 @@ namespace _86boxManager
                     id = (uint)tempid;
 
                 string idString = string.Format("{0:X}", id).PadLeft(16, '0');
-
-                Debug.WriteLine("Started VM \"" + vm.Name + "\" with ID " + id + " and idString " + idString);
 
                 if (vm.Status == VM.STATUS_STOPPED)
                 {
@@ -719,7 +715,6 @@ namespace _86boxManager
                 if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
                 {
                     PostMessage(vm.hWnd, 0x8893, new IntPtr(1), IntPtr.Zero);
-                    Debug.WriteLine("Sent WM 0x0002(0,0) to VM \"" + vm.Name + "\" with hWnd " + vm.hWnd);
                 }
             }
             catch (Exception ex)
@@ -740,7 +735,6 @@ namespace _86boxManager
                 if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
                 {
                     PostMessage(vm.hWnd, 0x8893, IntPtr.Zero, IntPtr.Zero);
-                    Debug.WriteLine("Sent WM 0x8893(0,0) to VM \"" + vm.Name + "\" with hWnd " + vm.hWnd);
                     SetForegroundWindow(vm.hWnd);
                 }
             }
@@ -777,15 +771,10 @@ namespace _86boxManager
         {
             VM vm = (VM)lstVMs.SelectedItems[0].Tag;
 
-
-            Debug.WriteLine("VM " + vm.Name + " has hWnd of " + vm.hWnd);
-
             //If the VM is already running, only send the message to open the settings window. Otherwise, start the VM with the -S parameter
             if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
             {
                 PostMessage(vm.hWnd, 0x8889, IntPtr.Zero, IntPtr.Zero);
-
-                Debug.WriteLine("Sent WM 0x8889(0,0) to VM \"" + vm.Name + "\" with hWnd " + vm.hWnd);
                 SetForegroundWindow(vm.hWnd);
             }
             else if (vm.Status == VM.STATUS_STOPPED)
@@ -864,7 +853,6 @@ namespace _86boxManager
             if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
             {
                 PostMessage(vm.hWnd, 0x8894, IntPtr.Zero, IntPtr.Zero);
-                Debug.WriteLine("Sent WM 0x8894(0,0) to VM \"" + vm.Name + "\" with hWnd " + vm.hWnd);
                 vm.Status = VM.STATUS_RUNNING;
                 lstVMs.SelectedItems[0].SubItems[1].Text = vm.GetStatusString();
                 btnPause.Text = "Pause";
@@ -887,7 +875,6 @@ namespace _86boxManager
             if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
             {
                 PostMessage(vm.hWnd, 0x8892, IntPtr.Zero, IntPtr.Zero);
-                Debug.WriteLine("Sent WM 0x8892(0,0) to VM \"" + vm.Name + "\" with hWnd " + vm.hWnd);
                 SetForegroundWindow(vm.hWnd);
             }
             VMCountRefresh();
@@ -1150,15 +1137,10 @@ namespace _86boxManager
                             id = (uint)(tempid + int.MaxValue);
                         else
                             id = (uint)tempid;
-                        
-                        if (id == (uint)m.WParam.ToInt32())
-                           
-                        {
-                            Debug.WriteLine(m.WParam.ToString());
-                            Debug.WriteLine((uint)m.WParam.ToInt32());
-                            vm.hWnd = m.LParam;
 
-                            Debug.WriteLine("VM \"" + vm.Name + "\" with ID " + (int)m.WParam.ToInt64() + " now has hWnd of " + vm.hWnd);
+                        if (id == (uint)m.WParam.ToInt32())
+                        {
+                            vm.hWnd = m.LParam;
                             break;
                         }
                     }
