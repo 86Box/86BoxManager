@@ -36,8 +36,6 @@
             this.cbxShowConsole = new System.Windows.Forms.CheckBox();
             this.btnDefaults = new System.Windows.Forms.Button();
             this.pnlBottom = new System.Windows.Forms.Panel();
-            this.lblLaunchTimeout = new System.Windows.Forms.Label();
-            this.txtLaunchTimeout = new System.Windows.Forms.TextBox();
             this.tbcSettings = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
             this.gbxBehaviour = new System.Windows.Forms.GroupBox();
@@ -163,27 +161,6 @@
             this.pnlBottom.Name = "pnlBottom";
             this.pnlBottom.Size = new System.Drawing.Size(886, 65);
             this.pnlBottom.TabIndex = 14;
-            // 
-            // lblLaunchTimeout
-            // 
-            this.lblLaunchTimeout.AutoSize = true;
-            this.lblLaunchTimeout.Location = new System.Drawing.Point(5, 80);
-            this.lblLaunchTimeout.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblLaunchTimeout.Name = "lblLaunchTimeout";
-            this.lblLaunchTimeout.Size = new System.Drawing.Size(317, 23);
-            this.lblLaunchTimeout.TabIndex = 15;
-            this.lblLaunchTimeout.Text = "Launch timeout:                   miliseconds";
-            // 
-            // txtLaunchTimeout
-            // 
-            this.txtLaunchTimeout.Location = new System.Drawing.Point(145, 76);
-            this.txtLaunchTimeout.Margin = new System.Windows.Forms.Padding(2);
-            this.txtLaunchTimeout.MaxLength = 5;
-            this.txtLaunchTimeout.Name = "txtLaunchTimeout";
-            this.txtLaunchTimeout.Size = new System.Drawing.Size(69, 30);
-            this.txtLaunchTimeout.TabIndex = 8;
-            this.txtLaunchTimeout.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtLaunchTimeout.TextChanged += new System.EventHandler(this.txt_TextChanged);
             // 
             // tbcSettings
             // 
@@ -431,14 +408,12 @@
             // gbxMisc
             // 
             this.gbxMisc.Controls.Add(this.cbxGrid);
-            this.gbxMisc.Controls.Add(this.txtLaunchTimeout);
             this.gbxMisc.Controls.Add(this.cbxShowConsole);
-            this.gbxMisc.Controls.Add(this.lblLaunchTimeout);
             this.gbxMisc.Location = new System.Drawing.Point(8, 131);
             this.gbxMisc.Margin = new System.Windows.Forms.Padding(4);
             this.gbxMisc.Name = "gbxMisc";
             this.gbxMisc.Padding = new System.Windows.Forms.Padding(4);
-            this.gbxMisc.Size = new System.Drawing.Size(836, 152);
+            this.gbxMisc.Size = new System.Drawing.Size(836, 71);
             this.gbxMisc.TabIndex = 17;
             this.gbxMisc.TabStop = false;
             this.gbxMisc.Text = "Miscellaneous";
@@ -618,8 +593,6 @@
         private System.Windows.Forms.CheckBox cbxShowConsole;
         private System.Windows.Forms.Button btnDefaults;
         private System.Windows.Forms.Panel pnlBottom;
-        private System.Windows.Forms.Label lblLaunchTimeout;
-        private System.Windows.Forms.TextBox txtLaunchTimeout;
         private System.Windows.Forms.TabControl tbcSettings;
         private System.Windows.Forms.TabPage tabGeneral;
         private System.Windows.Forms.GroupBox gbxBehaviour;

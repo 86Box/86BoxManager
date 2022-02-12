@@ -44,7 +44,6 @@ namespace _86boxManager
         private const string ZEROID = "0000000000000000"; //Used for the id parameter of 86Box -H
         private int sortColumn = 0; //The column for sorting
         private SortOrder sortOrder = SortOrder.Ascending; //Sorting order
-        private int launchTimeout = 5000; //Timeout for waiting for 86Box.exe to initialize
         private bool logging = false; //Logging enabled for 86Box.exe (-L parameter)?
         private string logpath = ""; //Path to log file
         private bool gridlines = false; //Are grid lines enabled for VM list?
@@ -234,7 +233,6 @@ namespace _86boxManager
                 showConsole = Convert.ToBoolean(regkey.GetValue("ShowConsole"));
                 minimizeTray = Convert.ToBoolean(regkey.GetValue("MinimizeToTray"));
                 closeTray = Convert.ToBoolean(regkey.GetValue("CloseToTray"));
-                launchTimeout = (int)regkey.GetValue("LaunchTimeout");
                 logpath = regkey.GetValue("LogPath").ToString();
                 logging = Convert.ToBoolean(regkey.GetValue("EnableLogging"));
                 gridlines = Convert.ToBoolean(regkey.GetValue("EnableGridLines"));
@@ -262,7 +260,6 @@ namespace _86boxManager
                 showConsole = true;
                 minimizeTray = false;
                 closeTray = false;
-                launchTimeout = 5000;
                 logging = false;
                 logpath = "";
                 gridlines = false;
@@ -280,7 +277,6 @@ namespace _86boxManager
                 regkey.SetValue("ShowConsole", showConsole, RegistryValueKind.DWord);
                 regkey.SetValue("MinimizeToTray", minimizeTray, RegistryValueKind.DWord);
                 regkey.SetValue("CloseToTray", closeTray, RegistryValueKind.DWord);
-                regkey.SetValue("LaunchTimeout", launchTimeout, RegistryValueKind.DWord);
                 regkey.SetValue("EnableLogging", logging, RegistryValueKind.DWord);
                 regkey.SetValue("LogPath", logpath, RegistryValueKind.String);
                 regkey.SetValue("EnableGridLines", gridlines, RegistryValueKind.DWord);

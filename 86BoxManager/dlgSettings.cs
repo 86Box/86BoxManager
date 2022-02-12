@@ -73,8 +73,7 @@ namespace _86boxManager
 
         private void txt_TextChanged(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtEXEdir.Text) || string.IsNullOrWhiteSpace(txtCFGdir.Text) ||
-                string.IsNullOrWhiteSpace(txtLaunchTimeout.Text))
+            if (string.IsNullOrWhiteSpace(txtEXEdir.Text) || string.IsNullOrWhiteSpace(txtCFGdir.Text))
             {
                 btnApply.Enabled = false;
             }
@@ -151,7 +150,6 @@ namespace _86boxManager
                 regkey.SetValue("ShowConsole", cbxShowConsole.Checked, RegistryValueKind.DWord);
                 regkey.SetValue("MinimizeToTray", cbxMinimizeTray.Checked, RegistryValueKind.DWord);
                 regkey.SetValue("CloseToTray", cbxCloseTray.Checked, RegistryValueKind.DWord);
-                regkey.SetValue("LaunchTimeout", Convert.ToInt32(txtLaunchTimeout.Text), RegistryValueKind.DWord);
                 regkey.SetValue("EnableLogging", cbxLogging.Checked, RegistryValueKind.DWord);
                 regkey.SetValue("LogPath", txtLogPath.Text, RegistryValueKind.String);
                 regkey.SetValue("EnableGridLines", cbxGrid.Checked, RegistryValueKind.DWord);
@@ -196,7 +194,6 @@ namespace _86boxManager
                     cbxMinimizeTray.Checked = false;
                     cbxCloseTray.Checked = false;
                     cbxLogging.Checked = false;
-                    txtLaunchTimeout.Text = "5000";
                     txtLogPath.Text = "";
                     cbxGrid.Checked = false;
                     btnBrowse3.Enabled = false;
@@ -208,7 +205,6 @@ namespace _86boxManager
                 {
                     txtEXEdir.Text = regkey.GetValue("EXEdir").ToString();
                     txtCFGdir.Text = regkey.GetValue("CFGdir").ToString();
-                    txtLaunchTimeout.Text = regkey.GetValue("LaunchTimeout").ToString();
                     txtLogPath.Text = regkey.GetValue("LogPath").ToString();
                     cbxMinimize.Checked = Convert.ToBoolean(regkey.GetValue("MinimizeOnVMStart"));
                     cbxShowConsole.Checked = Convert.ToBoolean(regkey.GetValue("ShowConsole"));
@@ -231,7 +227,6 @@ namespace _86boxManager
                 cbxMinimizeTray.Checked = false;
                 cbxCloseTray.Checked = false;
                 cbxLogging.Checked = false;
-                txtLaunchTimeout.Text = "5000";
                 txtLogPath.Text = "";
                 cbxGrid.Checked = false;
                 txtLogPath.Enabled = false;
@@ -345,7 +340,6 @@ namespace _86boxManager
             cbxMinimizeTray.Checked = false;
             cbxCloseTray.Checked = false;
             cbxLogging.Checked = false;
-            txtLaunchTimeout.Text = "5000";
             txtLogPath.Text = "";
             cbxGrid.Checked = false;
             txtLogPath.Enabled = false;
@@ -365,7 +359,6 @@ namespace _86boxManager
                     txtEXEdir.Text != regkey.GetValue("EXEdir").ToString() ||
                     txtCFGdir.Text != regkey.GetValue("CFGdir").ToString() ||
                     txtLogPath.Text != regkey.GetValue("LogPath").ToString() ||
-                    txtLaunchTimeout.Text != regkey.GetValue("LaunchTimeout").ToString() ||
                     cbxMinimize.Checked != Convert.ToBoolean(regkey.GetValue("MinimizeOnVMStart")) ||
                     cbxShowConsole.Checked != Convert.ToBoolean(regkey.GetValue("ShowConsole")) ||
                     cbxMinimizeTray.Checked != Convert.ToBoolean(regkey.GetValue("MinimizeToTray")) ||
