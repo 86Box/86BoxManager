@@ -529,7 +529,7 @@ namespace _86boxManager
                         {
                             lvi.Focused = true;
                             lvi.Selected = true;
-                            VMForceStop(); //Tell the VM to shut down without asking for user confirmation
+                            VMForceStop(); //Tell the VM to shut down without confirmation
                             Process p = Process.GetProcessById(vm.Pid);
                             p.WaitForExit(500); //Wait 500 milliseconds for each VM to close
                         }
@@ -576,6 +576,7 @@ namespace _86boxManager
         {
             VM vm = (VM)lstVMs.SelectedItems[0].Tag;
             PostMessage(vm.hWnd, 0x8890, IntPtr.Zero, IntPtr.Zero);
+            Debug.WriteLine("Sent WM 0x8890(0,0) to VM \"" + vm.Name + "\" with hWnd " + vm.hWnd);
             lstVMs.SelectedItems[0].SubItems[1].Text = vm.GetStatusString();
             lstVMs.SelectedItems[0].ImageIndex = 2;
             pauseToolStripMenuItem.Text = "Resume";
@@ -598,6 +599,7 @@ namespace _86boxManager
         {
             VM vm = (VM)lstVMs.SelectedItems[0].Tag;
             PostMessage(vm.hWnd, 0x8890, IntPtr.Zero, IntPtr.Zero);
+            Debug.WriteLine("Sent WM 0x8890(0,0) to VM \"" + vm.Name + "\" with hWnd " + vm.hWnd);
             vm.Status = VM.STATUS_RUNNING;
             lstVMs.SelectedItems[0].SubItems[1].Text = vm.GetStatusString();
             lstVMs.SelectedItems[0].ImageIndex = 1;
@@ -621,11 +623,29 @@ namespace _86boxManager
             try
             {
                 VM vm = (VM)lstVMs.SelectedItems[0].Tag;
+
+                /* This generates a VM ID on the fly from the VM path. The reason it's done this way is it doesn't break existing VMs and doesn't require
+                 * extensive modifications to this legacy version for it to work with newer 86Box versions...
+                 * 
+                 * IDs also have to be unsigned for 86Box, but GetHashCode() returns signed and result can be negative, so shift it up by int.MaxValue to
+                 * ensure it's always positive. */
+                int tempid = vm.Path.GetHashCode();
+                uint id = 0;
+
+                if (tempid < 0)
+                    id = (uint)(tempid + int.MaxValue);
+                else
+                    id = (uint)tempid;
+
+                string idString = string.Format("{0:X}", id).PadLeft(16, '0');
+
+                Debug.WriteLine("Started VM \"" + vm.Name + "\" with ID " + id + " and idString " + idString);
+
                 if (vm.Status == VM.STATUS_STOPPED)
                 {
                     Process p = new Process();
                     p.StartInfo.FileName = exepath + "86Box.exe";
-                    p.StartInfo.Arguments = "--vmpath \"" + lstVMs.SelectedItems[0].SubItems[3].Text + "\" --hwnd " + ZEROID + "," + hWndHex;
+                    p.StartInfo.Arguments = "--vmpath \"" + lstVMs.SelectedItems[0].SubItems[3].Text + "\" --hwnd " + idString + "," + hWndHex;
 
                     if (logging)
                     {
@@ -639,54 +659,38 @@ namespace _86boxManager
 
                     p.Start();
                     vm.Pid = p.Id;
+                    vm.Status = VM.STATUS_RUNNING;
+                    lstVMs.SelectedItems[0].SubItems[1].Text = vm.GetStatusString();
+                    lstVMs.SelectedItems[0].ImageIndex = 1;
 
-                    bool initSuccess = p.WaitForInputIdle(launchTimeout); //Wait for the specified amount of time so hWnd can be obtained
-
-                    //initSuccess is ignored for now because WaitForInputIdle() likes to return false more often now that
-                    //86Box is compiled with GCC 9.3.0...
-                    if (!p.MainWindowHandle.Equals(IntPtr.Zero) /*&& initSuccess*/)
+                    //Minimize the main window if the user wants this
+                    if (minimize)
                     {
-                        vm.hWnd = p.MainWindowHandle; //Get the window handle of the newly created process
-                        vm.Status = VM.STATUS_RUNNING;
-                        lstVMs.SelectedItems[0].SubItems[1].Text = vm.GetStatusString();
-                        lstVMs.SelectedItems[0].ImageIndex = 1;
-
-                        //Minimize the main window if the user wants this
-                        if (minimize)
-                        {
-                            WindowState = FormWindowState.Minimized;
-                        }
-
-                        //Create a new background worker which will wait for the VM's window to close, so it can update the UI accordingly
-                        BackgroundWorker bgw = new BackgroundWorker
-                        {
-                            WorkerReportsProgress = false,
-                            WorkerSupportsCancellation = false
-                        };
-                        bgw.DoWork += new DoWorkEventHandler(backgroundWorker_DoWork);
-                        bgw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backgroundWorker_RunWorkerCompleted);
-                        bgw.RunWorkerAsync(vm);
-
-                        btnStart.Enabled = true;
-                        btnStart.Text = "Stop";
-                        toolTip.SetToolTip(btnStart, "Stop this virtual machine");
-                        btnEdit.Enabled = false;
-                        btnDelete.Enabled = false;
-                        btnPause.Enabled = true;
-                        btnPause.Text = "Pause";
-                        btnReset.Enabled = true;
-                        btnCtrlAltDel.Enabled = true;
-                        btnConfigure.Enabled = true;
-
-                        VMCountRefresh();
+                        WindowState = FormWindowState.Minimized;
                     }
-                    else
-                    { //Inform the user what happened
-                        MessageBox.Show("The 86Box process did not initialize in time. This usually happens due to poor system performance.\n\nIf you see this message often, consider increasing the timeout value in the settings. It's recommended that you kill the associated 86Box process now.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                        //And try to stop the process so we don't end up in limbo land...
-                        VMKill();
-                    }
+                    //Create a new background worker which will wait for the VM's window to close, so it can update the UI accordingly
+                    BackgroundWorker bgw = new BackgroundWorker
+                    {
+                        WorkerReportsProgress = false,
+                        WorkerSupportsCancellation = false
+                    };
+                    bgw.DoWork += new DoWorkEventHandler(backgroundWorker_DoWork);
+                    bgw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backgroundWorker_RunWorkerCompleted);
+                    bgw.RunWorkerAsync(vm);
+
+                    btnStart.Enabled = true;
+                    btnStart.Text = "Stop";
+                    toolTip.SetToolTip(btnStart, "Stop this virtual machine");
+                    btnEdit.Enabled = false;
+                    btnDelete.Enabled = false;
+                    btnPause.Enabled = true;
+                    btnPause.Text = "Pause";
+                    btnReset.Enabled = true;
+                    btnCtrlAltDel.Enabled = true;
+                    btnConfigure.Enabled = true;
+
+                    VMCountRefresh();
                 }
             }
             catch (InvalidOperationException ex)
@@ -714,7 +718,8 @@ namespace _86boxManager
             {
                 if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
                 {
-                    PostMessage(vm.hWnd, 0x0002, IntPtr.Zero, IntPtr.Zero);
+                    PostMessage(vm.hWnd, 0x8893, new IntPtr(1), IntPtr.Zero);
+                    Debug.WriteLine("Sent WM 0x0002(0,0) to VM \"" + vm.Name + "\" with hWnd " + vm.hWnd);
                 }
             }
             catch (Exception ex)
@@ -735,6 +740,7 @@ namespace _86boxManager
                 if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
                 {
                     PostMessage(vm.hWnd, 0x8893, IntPtr.Zero, IntPtr.Zero);
+                    Debug.WriteLine("Sent WM 0x8893(0,0) to VM \"" + vm.Name + "\" with hWnd " + vm.hWnd);
                     SetForegroundWindow(vm.hWnd);
                 }
             }
@@ -771,10 +777,15 @@ namespace _86boxManager
         {
             VM vm = (VM)lstVMs.SelectedItems[0].Tag;
 
+
+            Debug.WriteLine("VM " + vm.Name + " has hWnd of " + vm.hWnd);
+
             //If the VM is already running, only send the message to open the settings window. Otherwise, start the VM with the -S parameter
             if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
             {
                 PostMessage(vm.hWnd, 0x8889, IntPtr.Zero, IntPtr.Zero);
+
+                Debug.WriteLine("Sent WM 0x8889(0,0) to VM \"" + vm.Name + "\" with hWnd " + vm.hWnd);
                 SetForegroundWindow(vm.hWnd);
             }
             else if (vm.Status == VM.STATUS_STOPPED)
@@ -853,6 +864,7 @@ namespace _86boxManager
             if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
             {
                 PostMessage(vm.hWnd, 0x8894, IntPtr.Zero, IntPtr.Zero);
+                Debug.WriteLine("Sent WM 0x8894(0,0) to VM \"" + vm.Name + "\" with hWnd " + vm.hWnd);
                 vm.Status = VM.STATUS_RUNNING;
                 lstVMs.SelectedItems[0].SubItems[1].Text = vm.GetStatusString();
                 btnPause.Text = "Pause";
@@ -875,6 +887,7 @@ namespace _86boxManager
             if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
             {
                 PostMessage(vm.hWnd, 0x8892, IntPtr.Zero, IntPtr.Zero);
+                Debug.WriteLine("Sent WM 0x8892(0,0) to VM \"" + vm.Name + "\" with hWnd " + vm.hWnd);
                 SetForegroundWindow(vm.hWnd);
             }
             VMCountRefresh();
@@ -931,7 +944,7 @@ namespace _86boxManager
             MessageBox.Show("Virtual machine \"" + newVM.Name + "\" was successfully created!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             //Select the newly created VM
-            foreach(ListViewItem lvi in lstVMs.SelectedItems)
+            foreach (ListViewItem lvi in lstVMs.SelectedItems)
             {
                 lvi.Selected = false;
             }
@@ -1120,9 +1133,37 @@ namespace _86boxManager
         //This function monitors recieved window messages
         protected override void WndProc(ref Message m)
         {
+            // 0x8891 - Main window init complete, wparam = VM ID, lparam = VM window handle
             // 0x8895 - VM paused/resumed, wparam = 1: VM paused, wparam = 0: VM resumed
             // 0x8896 - Dialog opened/closed, wparam = 1: opened, wparam = 0: closed
             // 0x8897 - Shutdown confirmed
+            if (m.Msg == 0x8891)
+            {
+                if (m.LParam != IntPtr.Zero && m.WParam.ToInt64() >= 0)
+                {
+                    foreach (ListViewItem lvi in lstVMs.Items)
+                    {
+                        VM vm = (VM)lvi.Tag;
+                        int tempid = vm.Path.GetHashCode(); //This can return negative integers, which is a no-no for 86Box, hence the shift up by int.MaxValue
+                        uint id = 0;
+                        if (tempid < 0)
+                            id = (uint)(tempid + int.MaxValue);
+                        else
+                            id = (uint)tempid;
+                        
+                        if (id == (uint)m.WParam.ToInt32())
+                           
+                        {
+                            Debug.WriteLine(m.WParam.ToString());
+                            Debug.WriteLine((uint)m.WParam.ToInt32());
+                            vm.hWnd = m.LParam;
+
+                            Debug.WriteLine("VM \"" + vm.Name + "\" with ID " + (int)m.WParam.ToInt64() + " now has hWnd of " + vm.hWnd);
+                            break;
+                        }
+                    }
+                }
+            }
             if (m.Msg == 0x8895)
             {
                 if (m.WParam.ToInt32() == 1) //VM was paused
@@ -1681,7 +1722,7 @@ namespace _86boxManager
             }
 
             //Select the newly created VM
-            foreach(ListViewItem lvi in lstVMs.SelectedItems)
+            foreach (ListViewItem lvi in lstVMs.SelectedItems)
             {
                 lvi.Selected = false;
             }
@@ -1709,7 +1750,7 @@ namespace _86boxManager
             dc.ShowDialog();
             dc.Dispose();
         }
-		
+
         //Refreshes the VM counter in the status bar
         private void VMCountRefresh()
         {
@@ -1718,7 +1759,7 @@ namespace _86boxManager
             int waitingVMs = 0;
             int stoppedVMs = 0;
 
-            foreach(ListViewItem lvi in lstVMs.Items)
+            foreach (ListViewItem lvi in lstVMs.Items)
             {
                 VM vm = (VM)lvi.Tag;
                 switch (vm.Status)
@@ -1731,8 +1772,8 @@ namespace _86boxManager
             }
 
             lblVMCount.Text = "All VMs: " + lstVMs.Items.Count + " | Running: " + runningVMs + " | Paused: " + pausedVMs + " | Waiting: " + waitingVMs + " | Stopped: " + stoppedVMs;
-		}
-		
+        }
+
         private void openConfigFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             VMOpenConfig();
