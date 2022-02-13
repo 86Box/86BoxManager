@@ -41,7 +41,6 @@ namespace _86boxManager
         private bool minimizeTray = false; //Minimize the Manager window to tray icon?
         private bool closeTray = false; //Close the Manager Window to tray icon?
         private string hWndHex = "";  //Window handle of this window  
-        private const string ZEROID = "0000000000000000"; //Used for the id parameter of 86Box -H
         private int sortColumn = 0; //The column for sorting
         private SortOrder sortOrder = SortOrder.Ascending; //Sorting order
         private bool logging = false; //Logging enabled for 86Box.exe (-L parameter)?
