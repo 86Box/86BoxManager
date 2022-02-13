@@ -1,7 +1,7 @@
 ﻿#if !NETCOREAPP // COM references require .NET framework for now
-using _86boxManager.Properties;
 using IWshRuntimeLibrary;
 #endif
+using _86boxManager.Properties;
 using Microsoft.Win32;
 using System;
 using System.ComponentModel;

@@ -1,15 +1,15 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <RootNamespace>_86BoxManager</RootNamespace>
     <UseWindowsForms>true</UseWindowsForms>
 
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AssemblyName>86Manager</AssemblyName>
 
-    <ApplicationIcon>..\86BoxManager\Resources\86Box.ico</ApplicationIcon>
+    <ApplicationIcon>..\86BoxManager\Resources\86Box-gray.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
