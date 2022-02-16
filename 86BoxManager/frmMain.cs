@@ -62,9 +62,10 @@ namespace _86boxManager
             LoadVMs();
 
             //Load main window's state, size and position
-            WindowState = Settings.Default.WindowState;
+            //BUGBUG: Restoring these causes anchor problems, so we're not doing it anymore...
+            /*WindowState = Settings.Default.WindowState;
             Size = Settings.Default.WindowSize;
-            Location = Settings.Default.WindowPosition;
+            Location = Settings.Default.WindowPosition;*/
 
             //Load listview column widths
             clmName.Width = Settings.Default.NameColWidth;
@@ -540,9 +541,10 @@ namespace _86boxManager
             }
 
             //Save main window's state, size and position
-            Settings.Default.WindowState = WindowState;
+            //BUGBUG: Restoring these on startup causes anchor problems, so we're not doing it anymore...
+            /*Settings.Default.WindowState = WindowState;
             Settings.Default.WindowSize = Size;
-            Settings.Default.WindowPosition = Location;
+            Settings.Default.WindowPosition = Location;*/
 
             //Save listview column widths
             Settings.Default.NameColWidth = clmName.Width;
