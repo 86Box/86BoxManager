@@ -20,16 +20,13 @@ namespace _86boxManager
             if (main.VMCheckIfExists(txtName.Text))
             {
                 MessageBox.Show("A virtual machine with this name already exists. Please pick a different name.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            if (txtName.Text.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
-            {
-                MessageBox.Show("There are invalid characters in the name you specified. You can't use the following characters: \\ / : * ? \" < > |", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                DialogResult = DialogResult.None;
                 return;
             }
             if (existingVM && string.IsNullOrWhiteSpace(txtImportPath.Text))
             {
                 MessageBox.Show("If you wish to import VM files, you must specify a path.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                DialogResult = DialogResult.None;
                 return;
             }
 
