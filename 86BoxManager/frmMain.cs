@@ -341,7 +341,7 @@ namespace _86boxManager
             }
             catch (Exception ex)
             {
-                //Ignore for now
+                MessageBox.Show("The Virtual Machines registry key could not be opened, so no stored virtual machines can be used. Make sure you have the required permissions and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
