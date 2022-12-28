@@ -1,7 +1,5 @@
-﻿#if !NETCOREAPP // COM references require .NET framework for now
-using _86boxManager.Properties;
+﻿using _86boxManager.Properties;
 using IWshRuntimeLibrary;
-#endif
 using Microsoft.Win32;
 using System;
 using System.ComponentModel;
@@ -33,7 +31,7 @@ namespace _86boxManager
             public IntPtr lpData;
         }
 
-        private static RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true); //Registry key for accessing the settings and VM list
+        //private static RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true); //Registry key for accessing the settings and VM list
         public string exepath = ""; //Path to 86box.exe and the romset
         public string cfgpath = ""; //Path to the virtual machines folder (configs, nvrs, etc.)
         private bool minimize = false; //Minimize the main window when a VM is started?
@@ -50,10 +48,6 @@ namespace _86boxManager
         public frmMain()
         {
             InitializeComponent();
-
-#if NETCOREAPP
-            createADesktopShortcutToolStripMenuItem.Enabled = false; // Requires the original .NET framework
-#endif
         }
 
         private void frmMain_Load(object sender, EventArgs e)
@@ -222,69 +216,69 @@ namespace _86boxManager
         //Load the settings from the registry
         private void LoadSettings()
         {
-            regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true);
-
-            //Try to load the settings from registry, if it fails fallback to default values
             try
             {
-                exepath = regkey.GetValue("EXEdir").ToString();
-                cfgpath = regkey.GetValue("CFGdir").ToString();
-                minimize = Convert.ToBoolean(regkey.GetValue("MinimizeOnVMStart"));
-                showConsole = Convert.ToBoolean(regkey.GetValue("ShowConsole"));
-                minimizeTray = Convert.ToBoolean(regkey.GetValue("MinimizeToTray"));
-                closeTray = Convert.ToBoolean(regkey.GetValue("CloseToTray"));
-                logpath = regkey.GetValue("LogPath").ToString();
-                logging = Convert.ToBoolean(regkey.GetValue("EnableLogging"));
-                gridlines = Convert.ToBoolean(regkey.GetValue("EnableGridLines"));
-                sortColumn = (int)regkey.GetValue("SortColumn");
-                sortOrder = (SortOrder)regkey.GetValue("SortOrder");
+                //Try to load the settings from registry, if it fails fallback to default values
+                RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true);
 
-                lstVMs.GridLines = gridlines;
-                VMSort(sortColumn, sortOrder);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("86Box Manager settings could not be loaded. This is normal if you're running 86Box Manager for the first time. Default values will be used.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                //If the key doesn't exist, create it and then reopen it
                 if (regkey == null)
                 {
+                    MessageBox.Show("86Box Manager settings could not be loaded. This is normal if you're running 86Box Manager for the first time. Default values will be used.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    //Create the key and reopen it for write access
                     Registry.CurrentUser.CreateSubKey(@"SOFTWARE\86Box");
                     regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true);
                     regkey.CreateSubKey("Virtual Machines");
+
+                    cfgpath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\86Box VMs\";
+                    exepath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + @"\86Box\";
+                    minimize = false;
+                    showConsole = true;
+                    minimizeTray = false;
+                    closeTray = false;
+                    logging = false;
+                    logpath = "";
+                    gridlines = false;
+                    sortColumn = 0;
+                    sortOrder = SortOrder.Ascending;
+
+                    lstVMs.GridLines = false;
+                    VMSort(sortColumn, sortOrder);
+
+                    //Defaults must also be written to the registry
+                    regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true);
+                    regkey.SetValue("EXEdir", exepath, RegistryValueKind.String);
+                    regkey.SetValue("CFGdir", cfgpath, RegistryValueKind.String);
+                    regkey.SetValue("MinimizeOnVMStart", minimize, RegistryValueKind.DWord);
+                    regkey.SetValue("ShowConsole", showConsole, RegistryValueKind.DWord);
+                    regkey.SetValue("MinimizeToTray", minimizeTray, RegistryValueKind.DWord);
+                    regkey.SetValue("CloseToTray", closeTray, RegistryValueKind.DWord);
+                    regkey.SetValue("EnableLogging", logging, RegistryValueKind.DWord);
+                    regkey.SetValue("LogPath", logpath, RegistryValueKind.String);
+                    regkey.SetValue("EnableGridLines", gridlines, RegistryValueKind.DWord);
+                    regkey.SetValue("SortColumn", sortColumn, RegistryValueKind.DWord);
+                    regkey.SetValue("SortOrder", sortOrder, RegistryValueKind.DWord);
+                }
+                else
+                {
+                    exepath = regkey.GetValue("EXEdir").ToString();
+                    cfgpath = regkey.GetValue("CFGdir").ToString();
+                    minimize = Convert.ToBoolean(regkey.GetValue("MinimizeOnVMStart"));
+                    showConsole = Convert.ToBoolean(regkey.GetValue("ShowConsole"));
+                    minimizeTray = Convert.ToBoolean(regkey.GetValue("MinimizeToTray"));
+                    closeTray = Convert.ToBoolean(regkey.GetValue("CloseToTray"));
+                    logpath = regkey.GetValue("LogPath").ToString();
+                    logging = Convert.ToBoolean(regkey.GetValue("EnableLogging"));
+                    gridlines = Convert.ToBoolean(regkey.GetValue("EnableGridLines"));
+                    sortColumn = (int)regkey.GetValue("SortColumn");
+                    sortOrder = (SortOrder)regkey.GetValue("SortOrder");
+
+                    lstVMs.GridLines = gridlines;
+                    VMSort(sortColumn, sortOrder);
                 }
 
-                cfgpath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\86Box VMs\";
-                exepath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + @"\86Box\";
-                minimize = false;
-                showConsole = true;
-                minimizeTray = false;
-                closeTray = false;
-                logging = false;
-                logpath = "";
-                gridlines = false;
-                sortColumn = 0;
-                sortOrder = SortOrder.Ascending;
+                regkey.Close();
 
-                lstVMs.GridLines = false;
-                VMSort(sortColumn, sortOrder);
-
-                //Defaults must also be written to the registry
-                regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true);
-                regkey.SetValue("EXEdir", exepath, RegistryValueKind.String);
-                regkey.SetValue("CFGdir", cfgpath, RegistryValueKind.String);
-                regkey.SetValue("MinimizeOnVMStart", minimize, RegistryValueKind.DWord);
-                regkey.SetValue("ShowConsole", showConsole, RegistryValueKind.DWord);
-                regkey.SetValue("MinimizeToTray", minimizeTray, RegistryValueKind.DWord);
-                regkey.SetValue("CloseToTray", closeTray, RegistryValueKind.DWord);
-                regkey.SetValue("EnableLogging", logging, RegistryValueKind.DWord);
-                regkey.SetValue("LogPath", logpath, RegistryValueKind.String);
-                regkey.SetValue("EnableGridLines", gridlines, RegistryValueKind.DWord);
-                regkey.SetValue("SortColumn", sortColumn, RegistryValueKind.DWord);
-                regkey.SetValue("SortOrder", sortOrder, RegistryValueKind.DWord);
-            }
-            finally
-            {
                 //To make sure there's a trailing backslash at the end, as other code using these strings expects it!
                 if (!exepath.EndsWith(@"\"))
                 {
@@ -295,8 +289,11 @@ namespace _86boxManager
                     cfgpath += @"\";
                 }
             }
-
-            regkey.Close();
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occured trying to load the 86Box Manager registry keys and/or values. Make sure you have the required permissions and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);                
+                Application.Exit();
+            }
         }
 
         //TODO: Rewrite
@@ -307,7 +304,7 @@ namespace _86boxManager
             VMCountRefresh();
             try
             {
-                regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box\Virtual Machines");
+                RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box\Virtual Machines");
                 VM vm = new VM();
 
                 foreach (var value in regkey.GetValueNames())
@@ -921,7 +918,8 @@ namespace _86boxManager
                 var formatter = new BinaryFormatter();
                 formatter.Serialize(ms, newVM);
                 var data = ms.ToArray();
-                regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box\Virtual Machines", true);
+
+                RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box\Virtual Machines", true);
                 regkey.SetValue(newVM.Name, data, RegistryValueKind.Binary);
             }
 
@@ -952,24 +950,32 @@ namespace _86boxManager
         //Checks if a VM with this name already exists
         public bool VMCheckIfExists(string name)
         {
-            regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box\Virtual Machines", true);
-            if (regkey == null) //Regkey doesn't exist yet
+            try
             {
-                regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true);
-                regkey.CreateSubKey(@"Virtual Machines");
-                return false;
-            }
+                RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box\Virtual Machines", true);
+                if (regkey == null) //Regkey doesn't exist yet
+                {
+                    regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true);
+                    regkey.CreateSubKey(@"Virtual Machines");
+                    return false;
+                }
 
-            //VM's registry value doesn't exist yet
-            if (regkey.GetValue(name) == null)
-            {
-                regkey.Close();
-                return false;
+                //VM's registry value doesn't exist yet
+                if (regkey.GetValue(name) == null)
+                {
+                    regkey.Close();
+                    return false;
+                }
+                else
+                {
+                    regkey.Close();
+                    return true;
+                }
             }
-            else
+            catch(Exception ex)
             {
-                regkey.Close();
-                return true;
+                MessageBox.Show("Could not load the virtual machine information from the registry. Make sure you have the required permissions and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
         }
 
@@ -994,7 +1000,7 @@ namespace _86boxManager
             vm.Desc = desc;
 
             //Create a new registry value with new info, delete the old one
-            regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box\Virtual Machines", true);
+            RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box\Virtual Machines", true);
             using (var ms = new MemoryStream())
             {
                 regkey.DeleteValue(oldname);
@@ -1034,7 +1040,7 @@ namespace _86boxManager
                     try
                     {
                         lstVMs.Items.Remove(lvi);
-                        regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box\Virtual Machines", true);
+                        RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box\Virtual Machines", true);
                         regkey.DeleteValue(vm.Name);
                         regkey.Close();
                     }
@@ -1367,7 +1373,6 @@ namespace _86boxManager
 
         private void createADesktopShortcutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-#if !NETCOREAPP // Requires the original .NET Framework
             foreach (ListViewItem lvi in lstVMs.SelectedItems)
             {
                 VM vm = (VM)lvi.Tag;
@@ -1389,7 +1394,6 @@ namespace _86boxManager
                     MessageBox.Show("A desktop shortcut for the virtual machine \"" + vm.Name + "\" could not be created.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-#endif
         }
 
         //Starts/stops selected VM when enter is pressed
@@ -1594,10 +1598,17 @@ namespace _86boxManager
             lstVMs.ListViewItemSorter = new ListViewItemComparer(sortColumn, sortOrder);
 
             //Save the new column and order to the registry
-            regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true);
-            regkey.SetValue("SortColumn", sortColumn, RegistryValueKind.DWord);
-            regkey.SetValue("SortOrder", sortOrder, RegistryValueKind.DWord);
-            regkey.Close();
+            try
+            {
+                RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box", true);
+                regkey.SetValue("SortColumn", sortColumn, RegistryValueKind.DWord);
+                regkey.SetValue("SortOrder", sortOrder, RegistryValueKind.DWord);
+                regkey.Close();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Could not save the column sorting state to the registry. Make sure you have the required permissions and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         //Handles the click event for the listview column headers, allowing to sort the items by columns
@@ -1687,7 +1698,7 @@ namespace _86boxManager
                 var formatter = new BinaryFormatter();
                 formatter.Serialize(ms, newVM);
                 var data = ms.ToArray();
-                regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box\Virtual Machines", true);
+                RegistryKey regkey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\86Box\Virtual Machines", true);
                 regkey.SetValue(newVM.Name, data, RegistryValueKind.Binary);
             }
 
