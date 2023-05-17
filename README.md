@@ -15,7 +15,7 @@ It's written in C# with Windows Forms. Please see the [wiki](https://github.com/
 System requirements are the same as for 86Box. Additionally, the following is required:  
 
 * [86Box 3.0](https://github.com/86Box/86Box/releases) or later (earlier builds don't support all the features the Manager expects)
-* [.NET Framework 4.6](https://dotnet.microsoft.com/download/dotnet-framework/net46)
+* [.NET 6.0](https://dotnet.microsoft.com/download/dotnet/6.0)
 
 ## Support
 If you have any issues, questions, suggestions, etc., please follow the [troubleshooting steps](https://github.com/86Box/86BoxManager/wiki/Troubleshooting-steps) or visit the official 86Box support channels on IRC and Discord (see the main 86Box repo for links). Lead developer, daviunic, is often idling there under the name Overdoze.
