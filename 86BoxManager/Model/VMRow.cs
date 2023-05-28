@@ -58,14 +58,19 @@ namespace _86boxManager.Model
 
         public bool Focused
         {
-            get => throw new System.NotImplementedException();
-            set => throw new System.NotImplementedException();
+            set => Selected = value;
         }
 
         public bool Selected
         {
-            get => throw new System.NotImplementedException();
-            set => throw new System.NotImplementedException();
+            set
+            {
+                var ui = Program.Root;
+                if (value)
+                    ui.lstVMs.Selection.SelectIter(_it);
+                else
+                    ui.lstVMs.Selection.UnselectIter(_it);
+            }
         }
     }
 }
