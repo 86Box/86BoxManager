@@ -55,18 +55,22 @@ namespace _86boxManager
         private static bool CheckRunningManagerAndAbort(string[] args)
         {
             const string name = "86Box Manager";
+            const string handleName = "86Box Manager Secret";
+
             var firstInstance = Platforms.Manager.IsFirstInstance(name);
             if (!firstInstance)
             {
-                var hWnd = Platforms.Manager.RestoreAndFocus(name);
+                var hWnd = Platforms.Manager.RestoreAndFocus(name, handleName);
 
-                //If this second instance comes from a VM shortcut, we need to pass on the command line arguments so the VM will start
-                //in the existing instance.
-                //NOTE: This code will have to be modified in case more command line arguments are added in the future.
-                if (args.Length == 3 && args[1] == "-S" && args[2] != null)
+                // If this second instance comes from a VM shortcut, we need to pass on the
+                // command line arguments so the VM will start in the existing instance.
+                // NOTE: This code will have to be modified in case more
+                // command line arguments are added in the future.
+                if (args.Length == 2 && args[0] == "-S" && args[1] != null)
                 {
-                    var message = args[2];
-                    Platforms.Manager.StartVmInside(message, hWnd);
+                    var message = args[1];
+                    var sender = Platforms.Manager.GetSender();
+                    sender.DoManagerStartVm(hWnd, message);
                 }
                 return true;
             }

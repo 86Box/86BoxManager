@@ -20,44 +20,9 @@ namespace _86BoxManager.Windows
             shortcut.Save();
         }
 
-        public void ForceStop(IntPtr hWnd)
-        {
-            PostMessage(hWnd, 0x8893, new IntPtr(1), IntPtr.Zero);
-        }
-
-        public void RequestStop(IntPtr hWnd)
-        {
-            PostMessage(hWnd, 0x8893, IntPtr.Zero, IntPtr.Zero);
-        }
-
         public void PushToForeground(IntPtr hWnd)
         {
             SetForegroundWindow(hWnd);
-        }
-
-        public void Resume(IntPtr hWnd)
-        {
-            PostMessage(hWnd, 0x8890, IntPtr.Zero, IntPtr.Zero);
-        }
-
-        public void Pause(IntPtr hWnd)
-        {
-            PostMessage(hWnd, 0x8890, IntPtr.Zero, IntPtr.Zero);
-        }
-
-        public void Configure(IntPtr hWnd)
-        {
-            PostMessage(hWnd, 0x8889, IntPtr.Zero, IntPtr.Zero);
-        }
-
-        public void HardReset(IntPtr hWnd)
-        {
-            PostMessage(hWnd, 0x8892, IntPtr.Zero, IntPtr.Zero);
-        }
-
-        public void CtrlAltDel(IntPtr hWnd)
-        {
-            PostMessage(hWnd, 0x8894, IntPtr.Zero, IntPtr.Zero);
         }
 
         public void PrepareAppId(string appId)

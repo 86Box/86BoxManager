@@ -6,18 +6,16 @@ namespace _86BoxManager.API
     {
         bool IsFirstInstance(string name);
 
-        IntPtr RestoreAndFocus(string title);
-
-        void StartVmInside(string message, IntPtr hWnd);
+        IntPtr RestoreAndFocus(string title, string handleTitle);
 
         bool IsProcessRunning(string name);
-
-        string GetVmName(object raw);
 
         IVerInfo GetBoxVersion(string exeDir);
 
         string FormatBoxArgs(string vmPath, string idString, string hWndHex);
 
-        IMessageLoop GetLoop(IMessageHandler callback);
+        IMessageLoop GetLoop(IMessageReceiver callback);
+
+        IMessageSender GetSender();
     }
 }

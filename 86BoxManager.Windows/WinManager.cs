@@ -20,23 +20,16 @@ namespace _86BoxManager.Windows
             return firstInstance;
         }
 
-        public IntPtr RestoreAndFocus(string windowTitle)
+        public IntPtr RestoreAndFocus(string windowTitle, string handleTitle)
         {
             //Finds the existing window, unhides it, restores it and sets focus to it
             var hWnd = FindWindow(null, windowTitle);
             ShowWindow(hWnd, ShowWindowEnum.Show);
             ShowWindow(hWnd, ShowWindowEnum.Restore);
             SetForegroundWindow(hWnd);
-            return hWnd;
-        }
 
-        public void StartVmInside(string message, IntPtr hWnd)
-        {
-            COPYDATASTRUCT cds;
-            cds.dwData = IntPtr.Zero;
-            cds.lpData = Marshal.StringToHGlobalAnsi(message);
-            cds.cbData = message.Length;
-            SendMessage(hWnd, WM_COPYDATA, IntPtr.Zero, ref cds);
+            hWnd = FindWindow(null, handleTitle);
+            return hWnd;
         }
 
         public bool IsProcessRunning(string name)
@@ -65,9 +58,15 @@ namespace _86BoxManager.Windows
             return $@"--vmpath ""{vmPath}"" --hwnd {idString},{hWndHex}";
         }
 
-        public IMessageLoop GetLoop(IMessageHandler callback)
+        public IMessageLoop GetLoop(IMessageReceiver callback)
         {
             var loop = new WinLoop(callback);
+            return loop;
+        }
+
+        public IMessageSender GetSender()
+        {
+            var loop = new WinLoop(null);
             return loop;
         }
     }

@@ -104,9 +104,9 @@ namespace _86boxManager.Model
 
         public static VMRow FindItemWithText(this TreeView view, string vmName)
         {
-
-
-            throw new System.NotImplementedException();
+            var rows = view.GetAllItems();
+            var row = rows.FirstOrDefault(r => r.Tag.Name.Equals(vmName));
+            return row;
         }
     }
 }

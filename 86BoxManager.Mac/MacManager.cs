@@ -30,7 +30,12 @@ namespace _86BoxManager.Mac
             return $@"--vmpath ""{vmPath}""";
         }
 
-        public IMessageLoop GetLoop(IMessageHandler callback)
+        public IMessageLoop GetLoop(IMessageReceiver callback)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IMessageSender GetSender()
         {
             throw new NotImplementedException();
         }
@@ -52,7 +57,7 @@ namespace _86BoxManager.Mac
             return false;
         }
 
-        public IntPtr RestoreAndFocus(string title)
+        public IntPtr RestoreAndFocus(string windowTitle, string handleTitle)
         {
             throw new NotImplementedException();
         }

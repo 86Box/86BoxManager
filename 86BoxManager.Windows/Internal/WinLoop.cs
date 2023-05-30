@@ -6,12 +6,13 @@ using static _86BoxManager.Windows.Internal.Win32Imports;
 
 namespace _86BoxManager.Windows.Internal
 {
-    internal sealed class WinLoop : Form, IMessageLoop
+    internal sealed class WinLoop : Form, IMessageLoop, IMessageSender
     {
-        private readonly IMessageHandler _callback;
+        private readonly IMessageReceiver _callback;
 
-        public WinLoop(IMessageHandler callback)
+        public WinLoop(IMessageReceiver callback)
         {
+            Text = "86Box Manager Secret";
             _callback = callback;
         }
 
@@ -85,6 +86,53 @@ namespace _86BoxManager.Windows.Internal
         {
             var native = Handle;
             return native;
+        }
+
+        public void DoVmRequestStop(IntPtr hWnd)
+        {
+            PostMessage(hWnd, 0x8893, IntPtr.Zero, IntPtr.Zero);
+            SetForegroundWindow(hWnd);
+        }
+
+        public void DoVmForceStop(IntPtr hWnd)
+        {
+            PostMessage(hWnd, 0x8893, new IntPtr(1), IntPtr.Zero);
+        }
+
+        public void DoVmPause(IntPtr hWnd)
+        {
+            PostMessage(hWnd, 0x8890, IntPtr.Zero, IntPtr.Zero);
+        }
+
+        public void DoVmResume(IntPtr hWnd)
+        {
+            PostMessage(hWnd, 0x8890, IntPtr.Zero, IntPtr.Zero);
+        }
+
+        public void DoVmCtrlAltDel(IntPtr hWnd)
+        {
+            PostMessage(hWnd, 0x8894, IntPtr.Zero, IntPtr.Zero);
+        }
+
+        public void DoVmHardReset(IntPtr hWnd)
+        {
+            PostMessage(hWnd, 0x8892, IntPtr.Zero, IntPtr.Zero);
+            SetForegroundWindow(hWnd);
+        }
+
+        public void DoVmConfigure(IntPtr hWnd)
+        {
+            PostMessage(hWnd, 0x8889, IntPtr.Zero, IntPtr.Zero);
+            SetForegroundWindow(hWnd);
+        }
+
+        public void DoManagerStartVm(IntPtr hWnd, string vmName)
+        {
+            COPYDATASTRUCT cds;
+            cds.dwData = IntPtr.Zero;
+            cds.lpData = Marshal.StringToHGlobalAnsi(vmName);
+            cds.cbData = vmName.Length;
+            SendMessage(hWnd, WM_COPYDATA, IntPtr.Zero, ref cds);
         }
     }
 }

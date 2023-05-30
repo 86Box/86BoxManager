@@ -210,7 +210,7 @@ namespace _86boxManager.View
             if (cancel.Cancel)
                 return;
 
-            var rect = new Gdk.Rectangle((int)e.X, (int)e.Y + 24, 1, 1);
+            var rect = new Rectangle((int)e.X, (int)e.Y + 24, 1, 1);
             lstVMpop.RelativeTo = lstVMs;
             lstVMpop.PointingTo = rect;
             lstVMpop.ShowAll();
@@ -355,7 +355,7 @@ namespace _86boxManager.View
         internal string logpath = ""; //Path to log file
         private bool gridlines = false; //Are grid lines enabled for VM list?
 
-        private IMessageHandler msgHandler;
+        private IMessageReceiver msgHandler;
         private IMessageLoop msgSink;
 
         private void frmMain_Load(object sender, EventArgs e)

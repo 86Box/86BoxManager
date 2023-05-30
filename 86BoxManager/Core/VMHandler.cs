@@ -1,13 +1,13 @@
 ﻿using System;
+using _86BoxManager.API;
 using _86boxManager.Model;
 using _86boxManager.Tools;
-using _86BoxManager.API;
 using Gtk;
 
 // ReSharper disable InconsistentNaming
 namespace _86boxManager.Core
 {
-    internal sealed class VMHandler : IMessageHandler
+    internal sealed class VMHandler : IMessageReceiver
     {
         public void OnEmulatorInit(IntPtr hWnd, uint vmId)
         {

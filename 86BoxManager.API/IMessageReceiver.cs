@@ -2,7 +2,7 @@
 
 namespace _86BoxManager.API
 {
-    public interface IMessageHandler
+    public interface IMessageReceiver
     {
         void OnEmulatorInit(IntPtr hWnd, uint vmId);
         void OnEmulatorShutdown(IntPtr hWnd);
@@ -13,6 +13,6 @@ namespace _86BoxManager.API
         void OnDialogOpened(IntPtr hWnd);
         void OnDialogClosed(IntPtr hWnd);
 
-        void OnManagerStartVm(string message);
+        void OnManagerStartVm(string vmName);
     }
 }
