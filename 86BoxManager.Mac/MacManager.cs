@@ -30,6 +30,11 @@ namespace _86BoxManager.Mac
             return $@"--vmpath ""{vmPath}""";
         }
 
+        public IMessageLoop GetLoop(IMessageHandler callback)
+        {
+            throw new NotImplementedException();
+        }
+
         public string GetVmName(object raw)
         {
             throw new NotImplementedException();

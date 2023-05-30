@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using _86BoxManager.API;
 using _86boxManager.Core;
 using _86boxManager.Model;
 using _86boxManager.Registry;
@@ -353,14 +354,21 @@ namespace _86boxManager.View
         internal bool logging = false; //Logging enabled for 86Box.exe (-L parameter)?
         internal string logpath = ""; //Path to log file
         private bool gridlines = false; //Are grid lines enabled for VM list?
-        
+
+        private IMessageHandler msgHandler;
+        private IMessageLoop msgSink;
+
         private void frmMain_Load(object sender, EventArgs e)
         {
             LoadSettings();
             LoadVMs();
 
+            msgHandler = new VMHandler();
+            msgSink = Platforms.Manager.GetLoop(msgHandler);
+            var handle = msgSink.GetHandle();
+
             //Convert the current window handle to a form that's expected by 86Box
-            hWndHex = $"{Handle.ToInt64():X}";
+            hWndHex = $"{handle.ToInt64():X}";
             hWndHex = hWndHex.PadLeft(16, '0');
 
             //Check if command line arguments for starting a VM are OK

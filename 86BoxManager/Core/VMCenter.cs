@@ -510,7 +510,7 @@ namespace _86boxManager.Core
                 {
                     var info = new ProcessStartInfo
                     {
-                        FileName = Path.Combine(exepath, exeName),
+                        FileName = IOPath.Combine(exepath, exeName),
                         Arguments = Platforms.Manager.FormatBoxArgs(vmPath, idString, hWndHex)
                     };
                     if (ui.logging)

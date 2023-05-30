@@ -62,5 +62,10 @@ namespace _86BoxManager.Linux
         {
             return $@"--vmpath ""{vmPath}""";
         }
+
+        public IMessageLoop GetLoop(IMessageHandler callback)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

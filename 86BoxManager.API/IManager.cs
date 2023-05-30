@@ -15,7 +15,9 @@ namespace _86BoxManager.API
         string GetVmName(object raw);
 
         IVerInfo GetBoxVersion(string exeDir);
-        
+
         string FormatBoxArgs(string vmPath, string idString, string hWndHex);
+
+        IMessageLoop GetLoop(IMessageHandler callback);
     }
 }

@@ -64,5 +64,11 @@ namespace _86BoxManager.Windows
         {
             return $@"--vmpath ""{vmPath}"" --hwnd {idString},{hWndHex}";
         }
+
+        public IMessageLoop GetLoop(IMessageHandler callback)
+        {
+            var loop = new WinLoop(callback);
+            return loop;
+        }
     }
 }

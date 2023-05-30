@@ -101,5 +101,12 @@ namespace _86boxManager.Model
 
             return _tags[key] = new VMRow(vm, it, model);
         }
+
+        public static VMRow FindItemWithText(this TreeView view, string vmName)
+        {
+
+
+            throw new System.NotImplementedException();
+        }
     }
 }
