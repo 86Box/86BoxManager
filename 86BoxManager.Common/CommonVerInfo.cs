@@ -2,7 +2,7 @@ using _86BoxManager.API;
 
 namespace _86BoxManager.Common
 {
-    public sealed class UnixVerInfo : IVerInfo
+    public sealed class CommonVerInfo : IVerInfo
     {
         public int FilePrivatePart { get; set; }
 

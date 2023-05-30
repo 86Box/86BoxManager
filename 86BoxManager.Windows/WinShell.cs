@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
-using _86BoxManager.API;
+using _86BoxManager.Common;
 using IWshRuntimeLibrary;
 using static _86BoxManager.Windows.Internal.Win32Imports;
 
 namespace _86BoxManager.Windows
 {
-    public sealed class WinShell : IShell
+    public sealed class WinShell : CommonShell
     {
-        public void CreateShortcut(string address, string name, string desc, string startup)
+        public override void CreateShortcut(string address, string name, string desc, string startup)
         {
             dynamic shell = new WshShell();
             dynamic shortcut = (IWshShortcut)shell.CreateShortcut(address);
@@ -20,33 +19,17 @@ namespace _86BoxManager.Windows
             shortcut.Save();
         }
 
-        public void PushToForeground(IntPtr hWnd)
+        public override void PushToForeground(IntPtr hWnd)
         {
             SetForegroundWindow(hWnd);
         }
 
-        public void PrepareAppId(string appId)
+        public override void PrepareAppId(string appId)
         {
             if (Environment.OSVersion.Version.Major >= 6)
                 SetProcessDPIAware();
 
             SetCurrentProcessExplicitAppUserModelID(appId);
-        }
-
-        public void OpenFolder(string folder)
-        {
-            Process.Start(new ProcessStartInfo(folder)
-            {
-                UseShellExecute = true
-            });
-        }
-
-        public void EditFile(string file)
-        {
-            Process.Start(new ProcessStartInfo(file)
-            {
-                UseShellExecute = true
-            });
         }
     }
 }

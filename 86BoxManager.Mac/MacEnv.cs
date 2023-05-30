@@ -4,7 +4,7 @@ using System.IO;
 
 namespace _86BoxManager.Mac
 {
-    public class MacEnv : IEnv
+    public sealed class MacEnv : IEnv
     {
         public MacEnv()
         {
@@ -18,9 +18,9 @@ namespace _86BoxManager.Mac
             ExeNames = new[] { "86Box" };
         }
 
+        public string[] ExeNames { get; }
         public string MyComputer { get; }
         public string UserProfile { get; }
-        public string[] ExeNames { get; }
         public string MyDocuments { get; }
         public string Desktop { get; }
 

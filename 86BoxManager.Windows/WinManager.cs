@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Threading;
 using _86BoxManager.API;
 using _86BoxManager.Windows.Internal;
@@ -36,14 +35,6 @@ namespace _86BoxManager.Windows
         {
             var pname = Process.GetProcessesByName(name);
             return pname.Length > 0;
-        }
-
-        public string GetVmName(object raw)
-        {
-            dynamic m = raw;
-            var ds = (COPYDATASTRUCT)m.GetLParam(typeof(COPYDATASTRUCT));
-            var vmName = Marshal.PtrToStringAnsi(ds.lpData, ds.cbData);
-            return vmName;
         }
 
         public IVerInfo GetBoxVersion(string exeDir)

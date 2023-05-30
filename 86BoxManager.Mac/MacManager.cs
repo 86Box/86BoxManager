@@ -16,7 +16,7 @@ namespace _86BoxManager.Mac
             var bit = bip.Last().Split("<string>", 2);
             var bi = bit.Last().Split("</", 2).First();
             var bv = Version.Parse(bi);
-            return new UnixVerInfo
+            return new CommonVerInfo
             {
                 FileMajorPart = bv.Major,
                 FileMinorPart = bv.Minor,

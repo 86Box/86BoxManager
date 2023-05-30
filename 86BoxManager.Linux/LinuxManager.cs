@@ -39,7 +39,7 @@ namespace _86BoxManager.Linux
         {
             if (string.IsNullOrWhiteSpace(exeDir) || !Directory.Exists(exeDir))
                 return null;
-            var info = new UnixVerInfo();
+            var info = new CommonVerInfo();
             var appImage = Directory.GetFiles(exeDir, "86Box-*.AppImage").FirstOrDefault();
             if (appImage != null)
             {

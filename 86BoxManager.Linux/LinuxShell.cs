@@ -1,14 +1,12 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
+﻿using System.IO;
 using System.Text;
-using _86BoxManager.API;
+using _86BoxManager.Common;
 
 namespace _86BoxManager.Linux
 {
-    public sealed class LinuxShell : IShell
+    public sealed class LinuxShell : CommonShell
     {
-        public void CreateShortcut(string address, string name, string desc, string startup)
+        public override void CreateShortcut(string address, string name, string desc, string startup)
         {
             var fileName = address.Replace(".lnk", ".desktop");
             var myExe = Path.Combine(startup, "86Manager");
@@ -29,67 +27,6 @@ namespace _86BoxManager.Linux
             };
             var bom = new UTF8Encoding(false);
             File.WriteAllLines(fileName, lines, bom);
-        }
-
-        public void ForceStop(IntPtr window)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RequestStop(IntPtr window)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void PushToForeground(IntPtr window)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Resume(IntPtr window)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Pause(IntPtr window)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Configure(IntPtr window)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void HardReset(IntPtr window)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CtrlAltDel(IntPtr window)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void PrepareAppId(string appId)
-        {
-            // NO-OP
-        }
-
-        public void OpenFolder(string folder)
-        {
-            Process.Start(new ProcessStartInfo(folder)
-            {
-                UseShellExecute = true
-            });
-        }
-
-        public void EditFile(string file)
-        {
-            Process.Start(new ProcessStartInfo(file)
-            {
-                UseShellExecute = true
-            });
         }
     }
 }
