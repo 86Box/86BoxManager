@@ -372,10 +372,10 @@ namespace _86boxManager.View
             hWndHex = hWndHex.PadLeft(16, '0');
 
             //Check if command line arguments for starting a VM are OK
-            if (Program.Args.Length == 3 && Program.Args[1] == "-S" && Program.Args[2] != null)
+            if (Program.GetVmArg(Program.Args, out var invVmName))
             {
                 //Find the VM with given name
-                var lvi = Cache.FindItemWithText(Program.Args[2]);
+                var lvi = Cache.FindItemWithText(invVmName);
 
                 //Then select and start it if it's found
                 if (lvi != null)
@@ -386,7 +386,7 @@ namespace _86boxManager.View
                     return;
                 }
 
-                Dialogs.ShowMessageBox($@"The virtual machine ""{Program.Args[2]}"" could not be found. " +
+                Dialogs.ShowMessageBox($@"The virtual machine ""{invVmName}"" could not be found. " +
                                        "It may have been removed or the specified name is incorrect.",
                     MessageType.Error, ButtonsType.Ok, "Virtual machine not found");
             }

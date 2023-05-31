@@ -66,14 +66,24 @@ namespace _86boxManager
                 // command line arguments so the VM will start in the existing instance.
                 // NOTE: This code will have to be modified in case more
                 // command line arguments are added in the future.
-                if (args.Length == 2 && args[0] == "-S" && args[1] != null)
+                if (GetVmArg(args, out var message))
                 {
-                    var message = args[1];
                     var sender = Platforms.Manager.GetSender();
                     sender.DoManagerStartVm(hWnd, message);
                 }
                 return true;
             }
+            return false;
+        }
+
+        internal static bool GetVmArg(string[] args, out string vmName)
+        {
+            if (args.Length == 2 && args[0] == "-S" && args[1] != null)
+            {
+                vmName = args[1];
+                return true;
+            }
+            vmName = default;
             return false;
         }
 
