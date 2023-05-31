@@ -40,11 +40,6 @@ namespace _86BoxManager.Mac
             throw new NotImplementedException();
         }
 
-        public string GetVmName(object raw)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool IsFirstInstance(string name)
         {
             // TODO : Fix
@@ -58,11 +53,6 @@ namespace _86BoxManager.Mac
         }
 
         public IntPtr RestoreAndFocus(string windowTitle, string handleTitle)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void StartVmInside(string message, IntPtr hWnd)
         {
             throw new NotImplementedException();
         }

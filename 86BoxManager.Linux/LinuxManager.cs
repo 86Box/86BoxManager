@@ -1,41 +1,13 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using _86BoxManager.API;
 using _86BoxManager.Common;
 
 namespace _86BoxManager.Linux
 {
-    public sealed class LinuxManager : IManager
+    public sealed class LinuxManager : CommonManager
     {
-        public bool IsFirstInstance(string name)
-        {
-            // TODO : Fix
-            return true;
-        }
-
-        public IntPtr RestoreAndFocus(string windowTitle, string handleTitle)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void StartVmInside(string message, IntPtr hWnd)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool IsProcessRunning(string name)
-        {
-            // TODO : Fix
-            return false;
-        }
-
-        public string GetVmName(object raw)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IVerInfo GetBoxVersion(string exeDir)
+        public override IVerInfo GetBoxVersion(string exeDir)
         {
             if (string.IsNullOrWhiteSpace(exeDir) || !Directory.Exists(exeDir))
                 return null;
@@ -58,19 +30,21 @@ namespace _86BoxManager.Linux
             return info;
         }
 
-        public string FormatBoxArgs(string vmPath, string idString, string hWndHex)
+        public override string FormatBoxArgs(string vmPath, string idString, string hWndHex)
         {
             return $@"--vmpath ""{vmPath}""";
         }
 
-        public IMessageLoop GetLoop(IMessageReceiver callback)
+        public override IMessageLoop GetLoop(IMessageReceiver callback)
         {
-            throw new NotImplementedException();
+            var loop = new LinuxLoop(callback);
+            return loop;
         }
 
-        public IMessageSender GetSender()
+        public override IMessageSender GetSender()
         {
-            throw new NotImplementedException();
+            var loop = new LinuxLoop(null);
+            return loop;
         }
     }
 }

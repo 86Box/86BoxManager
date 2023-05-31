@@ -226,6 +226,11 @@ namespace _86boxManager.Core
 
         public void OnManagerStartVm(string vmName)
         {
+            Application.Invoke(delegate { OnManagerStartVmGtk(vmName); });
+        }
+
+        private void OnManagerStartVmGtk(string vmName)
+        {
             var ui = Program.Root;
             var lstVMs = ui.lstVMs;
 

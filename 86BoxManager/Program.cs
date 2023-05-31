@@ -79,7 +79,8 @@ namespace _86boxManager
 
         private static bool CheckRunningEmulatorAndAbort()
         {
-            var isRunning = Platforms.Manager.IsProcessRunning("86box");
+            var isRunning = Platforms.Manager.IsProcessRunning("86box") ||
+                            Platforms.Manager.IsProcessRunning("86Box");
             if (isRunning)
             {
                 var result = Dialogs.ShowMessageBox("At least one instance of 86Box is already running. " +
