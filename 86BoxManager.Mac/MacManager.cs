@@ -3,12 +3,13 @@ using System.IO;
 using System.Linq;
 using _86BoxManager.API;
 using _86BoxManager.Common;
+using _86BoxManager.Unix;
 
 namespace _86BoxManager.Mac
 {
-    public class MacManager : IManager
+    public sealed class MacManager : UnixManager
     {
-        public IVerInfo GetBoxVersion(string exeDir)
+        public override IVerInfo GetBoxVersion(string exeDir)
         {
             var info = Path.Combine(exeDir, "..", "Info.plist");
             var text = File.ReadAllText(info);
@@ -25,36 +26,9 @@ namespace _86BoxManager.Mac
             };
         }
 
-        public string FormatBoxArgs(string vmPath, string idString, string hWndHex)
+        public override string FormatBoxArgs(string vmPath, string idString, string hWndHex)
         {
             return $@"--vmpath ""{vmPath}""";
-        }
-
-        public IMessageLoop GetLoop(IMessageReceiver callback)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IMessageSender GetSender()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool IsFirstInstance(string name)
-        {
-            // TODO : Fix
-            return true;
-        }
-
-        public bool IsProcessRunning(string name)
-        {
-            // TODO : Fix
-            return false;
-        }
-
-        public IntPtr RestoreAndFocus(string windowTitle, string handleTitle)
-        {
-            throw new NotImplementedException();
         }
     }
 }

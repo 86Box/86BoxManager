@@ -2,10 +2,11 @@
 using System.Linq;
 using _86BoxManager.API;
 using _86BoxManager.Common;
+using _86BoxManager.Unix;
 
 namespace _86BoxManager.Linux
 {
-    public sealed class LinuxManager : CommonManager
+    public sealed class LinuxManager : UnixManager
     {
         public override IVerInfo GetBoxVersion(string exeDir)
         {
@@ -33,18 +34,6 @@ namespace _86BoxManager.Linux
         public override string FormatBoxArgs(string vmPath, string idString, string hWndHex)
         {
             return $@"--vmpath ""{vmPath}""";
-        }
-
-        public override IMessageLoop GetLoop(IMessageReceiver callback)
-        {
-            var loop = new LinuxLoop(callback);
-            return loop;
-        }
-
-        public override IMessageSender GetSender()
-        {
-            var loop = new LinuxLoop(null);
-            return loop;
         }
     }
 }

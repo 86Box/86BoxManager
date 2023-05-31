@@ -1,21 +1,21 @@
 using System;
+using _86BoxManager.API;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
-using _86BoxManager.API;
 using Mono.Unix.Native;
 
 #pragma warning disable CA1416
 
 namespace _86BoxManager.Unix
 {
-    public abstract class PosixSender : IMessageSender, IDisposable, IMessageLoop
+    public sealed class UnixLoop : IMessageLoop, IMessageSender, IDisposable
     {
         private readonly IMessageReceiver _callback;
         private readonly PosixSignalRegistration _posix;
 
-        protected PosixSender(IMessageReceiver callback)
+        public UnixLoop(IMessageReceiver callback)
         {
             _callback = callback;
             _posix = PosixSignalRegistration.Create(PosixSignal.SIGCONT, OnPosixStop);
@@ -26,10 +26,25 @@ namespace _86BoxManager.Unix
             _posix.Dispose();
         }
 
-        ~PosixSender()
+        ~UnixLoop()
         {
             Dispose();
         }
+
+        private void SendCommand(IntPtr hWnd, string message)
+        {
+            throw new InvalidOperationException("TODO");
+        }
+
+        public void DoVmRequestStop(IntPtr hWnd) => SendCommand(hWnd, "shutdown");
+        public void DoVmForceStop(IntPtr hWnd) => SendCommand(hWnd, "shutdownnoprompt");
+        public void DoVmPause(IntPtr hWnd) => SendCommand(hWnd, "pause");
+        public void DoVmResume(IntPtr hWnd) => DoVmPause(hWnd);
+        public void DoVmCtrlAltDel(IntPtr hWnd) => SendCommand(hWnd, "cad");
+        public void DoVmHardReset(IntPtr hWnd) => SendCommand(hWnd, "reset");
+        public void DoVmConfigure(IntPtr hWnd) => SendCommand(hWnd, "showsettings");
+
+        public IntPtr GetHandle() => new(Environment.ProcessId);
 
         private void OnPosixStop(PosixSignalContext obj)
         {
@@ -63,19 +78,5 @@ namespace _86BoxManager.Unix
             var fileMsg = Path.Combine(fileDir, $"p_{pid}.tmp");
             return fileMsg;
         }
-
-        public IntPtr GetHandle()
-        {
-            var proc = Process.GetCurrentProcess();
-            return new IntPtr(proc.Id);
-        }
-
-        public abstract void DoVmRequestStop(IntPtr hWnd);
-        public abstract void DoVmForceStop(IntPtr hWnd);
-        public abstract void DoVmPause(IntPtr hWnd);
-        public abstract void DoVmResume(IntPtr hWnd);
-        public abstract void DoVmCtrlAltDel(IntPtr hWnd);
-        public abstract void DoVmHardReset(IntPtr hWnd);
-        public abstract void DoVmConfigure(IntPtr hWnd);
     }
 }

@@ -39,9 +39,9 @@ namespace _86BoxManager.Common
             return processes.Length > 0;
         }
 
-        public abstract IMessageLoop GetLoop(IMessageReceiver callback);
         public abstract IVerInfo GetBoxVersion(string exeDir);
         public abstract string FormatBoxArgs(string vmPath, string idString, string hWndHex);
+        public abstract IMessageLoop GetLoop(IMessageReceiver callback);
         public abstract IMessageSender GetSender();
     }
 }
