@@ -26,7 +26,12 @@ namespace _86boxManager.Core
         {
             var cfgPath = IOPath.Combine(Platforms.Env.UserProfile, "86Box VMs").CheckTrail();
             var exeFolders = Platforms.Env.GetProgramFiles("86Box");
-            var exePath = Search.Find(exeFolders, Platforms.Env.ExeNames).CheckTrail();
+            var exeFound = Search.Find(exeFolders, Platforms.Env.ExeNames);
+            if (exeFound == null) {
+                // The old code did that, so... reproduce
+                exeFound = exeFolders.First();
+            }
+            var exePath = exeFound.CheckTrail();
             return (cfgPath, exePath);
         }
         

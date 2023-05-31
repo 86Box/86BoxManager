@@ -12,6 +12,11 @@ namespace _86BoxManager.Mac
         public override IVerInfo GetBoxVersion(string exeDir)
         {
             var info = Path.Combine(exeDir, "..", "Info.plist");
+            if (!File.Exists(info))
+            {
+                // Not found!
+                return null;
+            }
             var text = File.ReadAllText(info);
             var bip = text.Split("CFBundleVersion", 2);
             var bit = bip.Last().Split("<string>", 2);

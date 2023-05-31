@@ -55,8 +55,15 @@ namespace _86BoxManager.Unix
         private void OnSocketConnect(IAsyncResult result)
         {
             var (server, name) = (ValueTuple<Socket, string>)result.AsyncState!;
-            var client = server.EndAccept(result);
-            _runningVm[name].Client = client;
+            try
+            {
+                var client = server.EndAccept(result);
+                _runningVm[name].Client = client;
+            }
+            catch
+            {
+                // Simply ignore!
+            }
         }
 
         private void OnVmExit(IVm vm)
