@@ -7,9 +7,9 @@ namespace _86BoxManager.Unix
     {
         private readonly UnixExecutor _exec;
 
-        protected UnixManager()
+        protected UnixManager(string tempDir)
         {
-            _exec = new UnixExecutor();
+            _exec = new UnixExecutor(tempDir);
         }
 
         public override IMessageLoop GetLoop(IMessageReceiver callback)

@@ -4,11 +4,14 @@ using System.Linq;
 using _86BoxManager.API;
 using _86BoxManager.Common;
 using _86BoxManager.Unix;
+using E = System.Environment;
 
 namespace _86BoxManager.Mac
 {
     public sealed class MacManager : UnixManager
     {
+        public MacManager() : base(GetTmpDir()) { }
+
         public override IVerInfo GetBoxVersion(string exeDir)
         {
             var info = Path.Combine(exeDir, "..", "Info.plist");
@@ -30,5 +33,7 @@ namespace _86BoxManager.Mac
                 FilePrivatePart = bv.Revision
             };
         }
+
+        public static string GetTmpDir() => E.GetEnvironmentVariable("TMPDIR");
     }
 }

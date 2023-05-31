@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Sockets;
@@ -9,10 +10,12 @@ namespace _86BoxManager.Unix
 {
     public sealed class UnixExecutor : CommonExecutor, IDisposable
     {
+        private readonly string _tempDir;
         private readonly IDictionary<string, SocketInfo> _runningVm;
 
-        public UnixExecutor()
+        public UnixExecutor(string tempDir)
         {
+            _tempDir = tempDir;
             _runningVm = new Dictionary<string, SocketInfo>();
         }
 
@@ -36,7 +39,7 @@ namespace _86BoxManager.Unix
             var socketName = name + Environment.ProcessId;
 
             var server = new Socket(AddressFamily.Unix, SocketType.Stream, ProtocolType.Unspecified);
-            var socketPath = $"/tmp/{socketName}";
+            var socketPath = Path.Combine(_tempDir, socketName);
             server.Bind(new UnixDomainSocketEndPoint(socketPath));
             server.Listen();
 

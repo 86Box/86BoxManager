@@ -8,6 +8,8 @@ namespace _86BoxManager.Linux
 {
     public sealed class LinuxManager : UnixManager
     {
+        public LinuxManager() : base(GetTmpDir()) { }
+
         public override IVerInfo GetBoxVersion(string exeDir)
         {
             if (string.IsNullOrWhiteSpace(exeDir) || !Directory.Exists(exeDir))
@@ -30,5 +32,7 @@ namespace _86BoxManager.Linux
             }
             return info;
         }
+
+        public static string GetTmpDir() => "/tmp";
     }
 }
