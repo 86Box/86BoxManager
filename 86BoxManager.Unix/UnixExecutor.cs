@@ -1,0 +1,73 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Sockets;
+using _86BoxManager.API;
+using _86BoxManager.Common;
+
+namespace _86BoxManager.Unix
+{
+    public sealed class UnixExecutor : CommonExecutor, IDisposable
+    {
+        private readonly IDictionary<string, SocketInfo> _runningVm;
+
+        public UnixExecutor()
+        {
+            _runningVm = new Dictionary<string, SocketInfo>();
+        }
+
+        public void Dispose()
+        {
+            foreach (var info in _runningVm.Values)
+                info.Dispose();
+            _runningVm.Clear();
+        }
+
+        ~UnixExecutor()
+        {
+            Dispose();
+        }
+
+        public override ProcessStartInfo BuildStartInfo(IExecVars args)
+        {
+            var info = base.BuildStartInfo(args);
+
+            var name = args.VmName;
+            var socketName = name + Environment.ProcessId;
+
+            var server = new Socket(AddressFamily.Unix, SocketType.Stream, ProtocolType.Unspecified);
+            var socketPath = $"/tmp/{socketName}";
+            server.Bind(new UnixDomainSocketEndPoint(socketPath));
+            server.Listen();
+
+            _runningVm[name] = new SocketInfo { Server = server };
+
+            var opEnv = info.Environment;
+            opEnv["86BOX_MANAGER_SOCKET"] = socketName;
+
+            if (server.IsBound)
+                server.BeginAccept(OnSocketConnect, (server, name));
+
+            return info;
+        }
+
+        private void OnSocketConnect(IAsyncResult result)
+        {
+            var (server, name) = (ValueTuple<Socket, string>)result.AsyncState!;
+            var client = server.EndAccept(result);
+            _runningVm[name].Client = client;
+        }
+
+        private sealed class SocketInfo : IDisposable
+        {
+            public Socket Server { get; set; }
+            public Socket Client { get; set; }
+
+            public void Dispose()
+            {
+                Server?.Dispose();
+                Client?.Dispose();
+            }
+        }
+    }
+}

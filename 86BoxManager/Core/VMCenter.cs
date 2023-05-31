@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using _86BoxManager.API;
+using _86BoxManager.Common;
 using _86boxManager.Model;
 using _86boxManager.Registry;
 using _86boxManager.Tools;
@@ -375,13 +377,10 @@ namespace _86boxManager.Core
         public static void Configure()
         {
             var ui = Program.Root;
-            var exepath = ui.exepath;
-            var exeName = Platforms.Env.ExeNames.First();
 
             var selected = ui.lstVMs.GetSelItems();
             var row = selected[0];
             var vm = row.Tag;
-            var vmPath = vm.Path;
 
             // If the VM is already running, only send the message to open the settings window. 
             // Otherwise, start the VM with the -S parameter
@@ -394,11 +393,8 @@ namespace _86boxManager.Core
             {
                 try
                 {
-                    var info = new ProcessStartInfo
-                    {
-                        FileName = Path.Combine(exepath, exeName),
-                        Arguments = $@"--settings --vmpath ""{vmPath}"""
-                    };
+                    var exec = Platforms.Manager.GetExecutor();
+                    var info = exec.BuildConfigInfo(GetExecArgs(ui, vm, null));
                     if (!ui.showConsole)
                     {
                         info.RedirectStandardOutput = true;
@@ -492,31 +488,20 @@ namespace _86boxManager.Core
         {
             var ui = Program.Root;
             var lstVMs = ui.lstVMs;
-            var exepath = ui.exepath;
-            var exeName = Platforms.Env.ExeNames.First();
-            var hWndHex = ui.hWndHex;
 
             try
             {
                 var selected = lstVMs.GetSelItems();
                 var row = selected[0];
                 var vm = row.Tag;
-                var vmPath = vm.Path;
 
                 var id = VMWatch.GetTempId(vm);
                 var idString = $"{id:X}".PadLeft(16, '0');
 
                 if (vm.Status == VM.STATUS_STOPPED)
                 {
-                    var info = new ProcessStartInfo
-                    {
-                        FileName = IOPath.Combine(exepath, exeName),
-                        Arguments = Platforms.Manager.FormatBoxArgs(vmPath, idString, hWndHex)
-                    };
-                    if (ui.logging)
-                    {
-                        info.Arguments += $@" --logfile ""{ui.logpath}""";
-                    }
+                    var exec = Platforms.Manager.GetExecutor();
+                    var info = exec.BuildStartInfo(GetExecArgs(ui, vm, idString));
                     if (!ui.showConsole)
                     {
                         info.RedirectStandardOutput = true;
@@ -526,8 +511,8 @@ namespace _86boxManager.Core
                     if (p == null)
                         throw new InvalidOperationException($"Could not start: {info.FileName}");
 
-                    vm.Pid = p.Id;
                     vm.Status = VM.STATUS_RUNNING;
+                    vm.Pid = p.Id;
 
                     row.SetStatus(vm.GetStatusString());
                     row.SetIcon(1);
@@ -585,6 +570,25 @@ namespace _86boxManager.Core
 
             Sort(ui.sortColumn, ui.sortOrder);
             CountRefresh();
+        }
+
+        private static IExecVars GetExecArgs(frmMain ui, VM vm, string idString)
+        {
+            var hWndHex = ui.hWndHex;
+            var vmName = vm.Name;
+            var vmPath = vm.Path;
+            var exePath = ui.exepath;
+            var exeName = Platforms.Env.ExeNames.First();
+
+            var vars = new CommonExecVars
+            {
+                FileName = IOPath.Combine(exePath, exeName),
+                VmPath = vmPath,
+                VmName = vmName,
+                LogFile = ui.logging ? ui.logpath : null,
+                Handle = idString != null ? (idString, hWndHex) : null
+            };
+            return vars;
         }
 
         // Sort the VM list by specified column and order

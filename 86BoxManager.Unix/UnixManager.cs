@@ -16,5 +16,11 @@ namespace _86BoxManager.Unix
             var loop = new UnixLoop(null);
             return loop;
         }
+
+        public override IExecutor GetExecutor()
+        {
+            var exec = new UnixExecutor();
+            return exec;
+        }
     }
 }

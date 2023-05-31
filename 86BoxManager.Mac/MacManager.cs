@@ -25,10 +25,5 @@ namespace _86BoxManager.Mac
                 FilePrivatePart = bv.Revision
             };
         }
-
-        public override string FormatBoxArgs(string vmPath, string idString, string hWndHex)
-        {
-            return $@"--vmpath ""{vmPath}""";
-        }
     }
 }

@@ -12,10 +12,10 @@ namespace _86BoxManager.API
 
         IVerInfo GetBoxVersion(string exeDir);
 
-        string FormatBoxArgs(string vmPath, string idString, string hWndHex);
-
         IMessageLoop GetLoop(IMessageReceiver callback);
 
         IMessageSender GetSender();
+
+        IExecutor GetExecutor();
     }
 }

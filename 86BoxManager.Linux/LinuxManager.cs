@@ -30,10 +30,5 @@ namespace _86BoxManager.Linux
             }
             return info;
         }
-
-        public override string FormatBoxArgs(string vmPath, string idString, string hWndHex)
-        {
-            return $@"--vmpath ""{vmPath}""";
-        }
     }
 }

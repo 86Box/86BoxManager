@@ -39,11 +39,6 @@ namespace _86BoxManager.Windows
             return new WinVerInfo(vi);
         }
 
-        public override string FormatBoxArgs(string vmPath, string idString, string hWndHex)
-        {
-            return $@"--vmpath ""{vmPath}"" --hwnd {idString},{hWndHex}";
-        }
-
         public override IMessageLoop GetLoop(IMessageReceiver callback)
         {
             var loop = new WinLoop(callback);
@@ -54,6 +49,12 @@ namespace _86BoxManager.Windows
         {
             var loop = new WinLoop(null);
             return loop;
+        }
+
+        public override IExecutor GetExecutor()
+        {
+            var exec = new WinExecutor();
+            return exec;
         }
     }
 }

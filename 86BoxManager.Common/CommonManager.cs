@@ -40,8 +40,8 @@ namespace _86BoxManager.Common
         }
 
         public abstract IVerInfo GetBoxVersion(string exeDir);
-        public abstract string FormatBoxArgs(string vmPath, string idString, string hWndHex);
         public abstract IMessageLoop GetLoop(IMessageReceiver callback);
         public abstract IMessageSender GetSender();
+        public abstract IExecutor GetExecutor();
     }
 }
