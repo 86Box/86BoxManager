@@ -11,7 +11,7 @@
         string MyDocuments { get; }
 
         string Desktop { get; }
-        
+
         string[] GetProgramFiles(string appName);
     }
 }

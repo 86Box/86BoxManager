@@ -4,16 +4,16 @@ namespace _86BoxManager.API
 {
     public interface IMessageSender
     {
-        void DoVmRequestStop(IntPtr hWnd);
-        void DoVmForceStop(IntPtr hWnd);
+        void DoVmRequestStop(IVm vm);
+        void DoVmForceStop(IVm vm);
 
-        void DoVmPause(IntPtr hWnd);
-        void DoVmResume(IntPtr hWnd);
+        void DoVmPause(IVm vm);
+        void DoVmResume(IVm vm);
 
-        void DoVmCtrlAltDel(IntPtr hWnd);
-        void DoVmHardReset(IntPtr hWnd);
+        void DoVmCtrlAltDel(IVm vm);
+        void DoVmHardReset(IVm vm);
 
-        void DoVmConfigure(IntPtr hWnd);
+        void DoVmConfigure(IVm vm);
 
         void DoManagerStartVm(IntPtr hWnd, string vmName);
     }

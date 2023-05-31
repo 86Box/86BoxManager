@@ -32,7 +32,7 @@ namespace _86BoxManager.Unix
         {
             var info = base.BuildStartInfo(args);
 
-            var name = args.VmName;
+            var name = args.Vm.Name;
             var socketName = name + Environment.ProcessId;
 
             var server = new Socket(AddressFamily.Unix, SocketType.Stream, ProtocolType.Unspecified);
@@ -41,6 +41,7 @@ namespace _86BoxManager.Unix
             server.Listen();
 
             _runningVm[name] = new SocketInfo { Server = server };
+            args.Vm.OnExit = OnVmExit;
 
             var opEnv = info.Environment;
             opEnv["86BOX_MANAGER_SOCKET"] = socketName;
@@ -58,6 +59,15 @@ namespace _86BoxManager.Unix
             _runningVm[name].Client = client;
         }
 
+        private void OnVmExit(IVm vm)
+        {
+            var name = vm.Name;
+            if (!_runningVm.TryGetValue(name, out var info))
+                return;
+            info.Dispose();
+            _runningVm.Remove(name);
+        }
+
         private sealed class SocketInfo : IDisposable
         {
             public Socket Server { get; set; }
@@ -68,6 +78,11 @@ namespace _86BoxManager.Unix
                 Server?.Dispose();
                 Client?.Dispose();
             }
+        }
+
+        internal Socket GetClient(string name)
+        {
+            return _runningVm.TryGetValue(name, out var info) ? info.Client : null;
         }
     }
 }

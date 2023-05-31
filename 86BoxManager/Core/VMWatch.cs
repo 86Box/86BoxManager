@@ -69,6 +69,12 @@ namespace _86boxManager.Core
                     item.SetStatus(vm.GetStatusString());
                     item.SetIcon(vm.Status);
 
+                    if (vm.OnExit != null)
+                    {
+                        vm.OnExit(vm);
+                        vm.OnExit = null;
+                    }
+
                     if (selected.Count > 0 && selected[0].Equals(item))
                     {
                         ui.btnEdit.Sensitive = true;

@@ -88,40 +88,47 @@ namespace _86BoxManager.Windows.Internal
             return native;
         }
 
-        public void DoVmRequestStop(IntPtr hWnd)
+        public void DoVmRequestStop(IVm vm)
         {
+            var hWnd = vm.hWnd;
             PostMessage(hWnd, 0x8893, IntPtr.Zero, IntPtr.Zero);
             SetForegroundWindow(hWnd);
         }
 
-        public void DoVmForceStop(IntPtr hWnd)
+        public void DoVmForceStop(IVm vm)
         {
+            var hWnd = vm.hWnd;
             PostMessage(hWnd, 0x8893, new IntPtr(1), IntPtr.Zero);
         }
 
-        public void DoVmPause(IntPtr hWnd)
+        public void DoVmPause(IVm vm)
         {
+            var hWnd = vm.hWnd;
             PostMessage(hWnd, 0x8890, IntPtr.Zero, IntPtr.Zero);
         }
 
-        public void DoVmResume(IntPtr hWnd)
+        public void DoVmResume(IVm vm)
         {
+            var hWnd = vm.hWnd;
             PostMessage(hWnd, 0x8890, IntPtr.Zero, IntPtr.Zero);
         }
 
-        public void DoVmCtrlAltDel(IntPtr hWnd)
+        public void DoVmCtrlAltDel(IVm vm)
         {
+            var hWnd = vm.hWnd;
             PostMessage(hWnd, 0x8894, IntPtr.Zero, IntPtr.Zero);
         }
 
-        public void DoVmHardReset(IntPtr hWnd)
+        public void DoVmHardReset(IVm vm)
         {
+            var hWnd = vm.hWnd;
             PostMessage(hWnd, 0x8892, IntPtr.Zero, IntPtr.Zero);
             SetForegroundWindow(hWnd);
         }
 
-        public void DoVmConfigure(IntPtr hWnd)
+        public void DoVmConfigure(IVm vm)
         {
+            var hWnd = vm.hWnd;
             PostMessage(hWnd, 0x8889, IntPtr.Zero, IntPtr.Zero);
             SetForegroundWindow(hWnd);
         }

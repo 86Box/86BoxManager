@@ -13,11 +13,13 @@ namespace _86BoxManager.Unix
     public sealed class UnixLoop : IMessageLoop, IMessageSender, IDisposable
     {
         private readonly IMessageReceiver _callback;
+        private readonly UnixExecutor _executor;
         private readonly PosixSignalRegistration _posix;
 
-        public UnixLoop(IMessageReceiver callback)
+        public UnixLoop(IMessageReceiver callback, UnixExecutor executor)
         {
             _callback = callback;
+            _executor = executor;
             _posix = PosixSignalRegistration.Create(PosixSignal.SIGCONT, OnPosixStop);
         }
 
@@ -31,18 +33,24 @@ namespace _86BoxManager.Unix
             Dispose();
         }
 
-        private void SendCommand(IntPtr hWnd, string message)
+        private void SendCommand(IVm vm, string message)
         {
-            throw new InvalidOperationException("TODO");
+            var vmName = vm.Name;
+            var client = _executor.GetClient(vmName);
+            if (client == null)
+                return;
+            var text = message + "\n";
+            var block = Encoding.UTF8.GetBytes(text);
+            client.Send(block);
         }
 
-        public void DoVmRequestStop(IntPtr hWnd) => SendCommand(hWnd, "shutdown");
-        public void DoVmForceStop(IntPtr hWnd) => SendCommand(hWnd, "shutdownnoprompt");
-        public void DoVmPause(IntPtr hWnd) => SendCommand(hWnd, "pause");
-        public void DoVmResume(IntPtr hWnd) => DoVmPause(hWnd);
-        public void DoVmCtrlAltDel(IntPtr hWnd) => SendCommand(hWnd, "cad");
-        public void DoVmHardReset(IntPtr hWnd) => SendCommand(hWnd, "reset");
-        public void DoVmConfigure(IntPtr hWnd) => SendCommand(hWnd, "showsettings");
+        public void DoVmRequestStop(IVm vm) => SendCommand(vm, "shutdown");
+        public void DoVmForceStop(IVm vm) => SendCommand(vm, "shutdownnoprompt");
+        public void DoVmPause(IVm vm) => SendCommand(vm, "pause");
+        public void DoVmResume(IVm vm) => DoVmPause(vm);
+        public void DoVmCtrlAltDel(IVm vm) => SendCommand(vm, "cad");
+        public void DoVmHardReset(IVm vm) => SendCommand(vm, "reset");
+        public void DoVmConfigure(IVm vm) => SendCommand(vm, "showsettings");
 
         public IntPtr GetHandle() => new(Environment.ProcessId);
 

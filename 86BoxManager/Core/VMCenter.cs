@@ -234,7 +234,7 @@ namespace _86boxManager.Core
             {
                 if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
                 {
-                    Platforms.Manager.GetSender().DoVmForceStop(vm.hWnd);
+                    Platforms.Manager.GetSender().DoVmForceStop(vm);
                 }
             }
             catch (Exception)
@@ -386,7 +386,7 @@ namespace _86boxManager.Core
             // Otherwise, start the VM with the -S parameter
             if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
             {
-                Platforms.Manager.GetSender().DoVmConfigure(vm.hWnd);
+                Platforms.Manager.GetSender().DoVmConfigure(vm);
                 Platforms.Shell.PushToForeground(vm.hWnd);
             }
             else if (vm.Status == VM.STATUS_STOPPED)
@@ -469,7 +469,7 @@ namespace _86boxManager.Core
             {
                 if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
                 {
-                    Platforms.Manager.GetSender().DoVmRequestStop(vm.hWnd);
+                    Platforms.Manager.GetSender().DoVmRequestStop(vm);
                     Platforms.Shell.PushToForeground(vm.hWnd);
                 }
             }
@@ -575,7 +575,6 @@ namespace _86boxManager.Core
         private static IExecVars GetExecArgs(frmMain ui, VM vm, string idString)
         {
             var hWndHex = ui.hWndHex;
-            var vmName = vm.Name;
             var vmPath = vm.Path;
             var exePath = ui.exepath;
             var exeName = Platforms.Env.ExeNames.First();
@@ -584,7 +583,7 @@ namespace _86boxManager.Core
             {
                 FileName = IOPath.Combine(exePath, exeName),
                 VmPath = vmPath,
-                VmName = vmName,
+                Vm = vm,
                 LogFile = ui.logging ? ui.logpath : null,
                 Handle = idString != null ? (idString, hWndHex) : null
             };
@@ -631,7 +630,7 @@ namespace _86boxManager.Core
         {
             var row = selected[0];
             var vm = row.Tag;
-            Platforms.Manager.GetSender().DoVmResume(vm.hWnd);
+            Platforms.Manager.GetSender().DoVmResume(vm);
             vm.Status = VM.STATUS_RUNNING;
             row.SetStatus(vm.GetStatusString());
             row.SetIcon(1);
@@ -654,7 +653,7 @@ namespace _86boxManager.Core
         {
             var row = selected[0];
             var vm = row.Tag;
-            Platforms.Manager.GetSender().DoVmPause(vm.hWnd);
+            Platforms.Manager.GetSender().DoVmPause(vm);
             row.SetStatus(vm.GetStatusString());
             row.SetIcon(2);
             ui.pauseToolStripMenuItem.Text = "Resume";
@@ -678,7 +677,7 @@ namespace _86boxManager.Core
             var vm = selected[0].Tag;
             if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
             {
-                Platforms.Manager.GetSender().DoVmHardReset(vm.hWnd);
+                Platforms.Manager.GetSender().DoVmHardReset(vm);
                 Platforms.Shell.PushToForeground(vm.hWnd);
             }
             CountRefresh();
@@ -798,7 +797,7 @@ namespace _86boxManager.Core
             var vm = row.Tag;
             if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
             {
-                Platforms.Manager.GetSender().DoVmCtrlAltDel(vm.hWnd);
+                Platforms.Manager.GetSender().DoVmCtrlAltDel(vm);
                 vm.Status = VM.STATUS_RUNNING;
                 row.SetStatus(vm.GetStatusString());
                 ui.btnPause.Label = "Pause";

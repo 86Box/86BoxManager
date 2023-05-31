@@ -5,22 +5,28 @@ namespace _86BoxManager.Unix
 {
     public abstract class UnixManager : CommonManager
     {
+        private readonly UnixExecutor _exec;
+
+        protected UnixManager()
+        {
+            _exec = new UnixExecutor();
+        }
+
         public override IMessageLoop GetLoop(IMessageReceiver callback)
         {
-            var loop = new UnixLoop(callback);
+            var loop = new UnixLoop(callback, _exec);
             return loop;
         }
 
         public override IMessageSender GetSender()
         {
-            var loop = new UnixLoop(null);
+            var loop = new UnixLoop(null, _exec);
             return loop;
         }
 
         public override IExecutor GetExecutor()
         {
-            var exec = new UnixExecutor();
-            return exec;
+            return _exec;
         }
     }
 }

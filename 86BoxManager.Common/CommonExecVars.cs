@@ -12,7 +12,7 @@ namespace _86BoxManager.Common
 
         public string VmPath { get; set; }
 
-        public string VmName { get; set; }
+        public IVm Vm { get; set; }
 
         public (string id, string hWnd)? Handle { get; set; }
     }

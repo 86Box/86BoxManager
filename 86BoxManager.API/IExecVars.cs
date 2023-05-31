@@ -10,7 +10,7 @@ namespace _86BoxManager.API
 
         string VmPath { get; }
 
-        string VmName { get; }
+        IVm Vm { get; }
 
         (string id, string hWnd)? Handle { get; }
     }

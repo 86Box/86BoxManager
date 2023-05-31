@@ -1,11 +1,12 @@
 ﻿using System;
+using _86BoxManager.API;
 
 // ReSharper disable InconsistentNaming
 
 namespace _86boxManager.Model
 {
     [Serializable] //For serializing VMs so they can be stored in the registry
-    public class VM
+    public class VM : IVm
     {
         public IntPtr hWnd { get; set; } //Window handle for the VM once it's started
         public string Name { get; set; } //Name of the virtual machine
@@ -53,5 +54,7 @@ namespace _86boxManager.Model
                 default: return "Invalid status";
             }
         }
+
+        public Action<IVm> OnExit { get; set; }
     }
 }
