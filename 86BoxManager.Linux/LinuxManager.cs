@@ -13,7 +13,10 @@ namespace _86BoxManager.Linux
         public override IVerInfo GetBoxVersion(string exeDir)
         {
             if (string.IsNullOrWhiteSpace(exeDir) || !Directory.Exists(exeDir))
+            {
+                // Not found!
                 return null;
+            }
             var info = new CommonVerInfo();
             var appImage = Directory.GetFiles(exeDir, "86Box-*.AppImage").FirstOrDefault();
             if (appImage != null)

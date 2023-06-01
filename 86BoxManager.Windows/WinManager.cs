@@ -35,6 +35,11 @@ namespace _86BoxManager.Windows
         public override IVerInfo GetBoxVersion(string exeDir)
         {
             var exePath = Path.Combine(exeDir, "86Box.exe");
+            if (!File.Exists(exePath))
+            {
+                // Not found!
+                return null;
+            }
             var vi = FileVersionInfo.GetVersionInfo(exePath);
             return new WinVerInfo(vi);
         }
