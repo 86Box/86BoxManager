@@ -39,3 +39,7 @@ If you have any issues, questions, suggestions, etc., please follow the [trouble
 1. /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 2. brew install gtk+3
 3. brew install gtksourceview4
+
+## Notes for Windows
+1. Download https://github.com/GtkSharp/Dependencies/raw/master/gtk-3.24.24.zip
+2. Unzip it into %LOCALAPPDATA%\Gtk\3.24.24
