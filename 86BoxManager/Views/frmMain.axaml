@@ -3,6 +3,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
+        xmlns:vm="clr-namespace:_86boxManager.ViewModels"
+        x:DataType="vm:MainModel"
         d:DesignWidth="700" d:DesignHeight="450"
         Width="700" Height="450"
         x:Class="_86boxManager.Views.frmMain"
@@ -10,6 +12,9 @@
         Title="86Box Manager"
         Opened="Main_OnOpened"
         Closing="Window_OnClosing">
+	<Design.DataContext>
+		<vm:MainModel/>
+	</Design.DataContext>
 	<DockPanel>
 		<StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="12" Spacing="3">
 			<Button Name="btnAdd" Click="btnAdd_Click">Add</Button>
@@ -26,13 +31,22 @@
 			<Label Name="lblVMCount" Margin="10" Content="# of virtual machines:" />
 		</StackPanel>
 		<StackPanel Margin="10,0,10,0">
-			<DataGrid Name="lstVMs" Items="{Binding People}" AutoGenerateColumns="False" >
+			<DataGrid Name="lstVMs" Items="{Binding Path=Machines}" AutoGenerateColumns="False">
 				<DataGrid.Columns>
-					<DataGridTextColumn Width="2*" Header="Name" Binding="{Binding Name}" />
-					<DataGridTextColumn Width="2*" Header="Status"  Binding="{Binding Status}"/>
-					<DataGridTextColumn Width="2*" Header="Description" Binding="{Binding Description}" />
+                    <DataGridTemplateColumn Header="">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate DataType="vm:VMRow">
+								<StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding Icon}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Width="2*" Header="Name" Binding="{Binding Name}" />
+                    <DataGridTextColumn Width="2*" Header="Status" Binding="{Binding Status}" />
+					<DataGridTextColumn Width="2*" Header="Description" Binding="{Binding Desc}" />
 					<DataGridTextColumn Width="2*" Header="Path" Binding="{Binding Path}" />
-				</DataGrid.Columns>
+                </DataGrid.Columns>
 			</DataGrid>
 		</StackPanel>
 	</DockPanel>

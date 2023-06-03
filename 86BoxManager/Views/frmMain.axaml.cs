@@ -9,6 +9,7 @@ using _86BoxManager.API;
 using _86boxManager.Core;
 using _86boxManager.Registry;
 using _86boxManager.Tools;
+using _86boxManager.ViewModels;
 using _86boxManager.Xplat;
 using IOPath = System.IO.Path;
 using RegistryValueKind = _86boxManager.Registry.ValueKind;

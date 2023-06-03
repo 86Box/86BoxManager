@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using _86boxManager.ViewModels;
 using Avalonia.Controls;
 
 namespace _86boxManager.Models

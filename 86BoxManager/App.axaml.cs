@@ -1,3 +1,4 @@
+using _86boxManager.ViewModels;
 using _86boxManager.Views;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -16,7 +17,10 @@ namespace _86boxManager
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                desktop.MainWindow = new frmMain();
+                desktop.MainWindow = new frmMain
+                {
+                    DataContext = new MainModel()
+                };
             }
 
             base.OnFrameworkInitializationCompleted();

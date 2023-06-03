@@ -3,6 +3,7 @@ using System.Linq;
 using _86boxManager.Models;
 using _86boxManager.Registry;
 using _86boxManager.Tools;
+using _86boxManager.ViewModels;
 using _86boxManager.Views;
 using _86boxManager.Xplat;
 using ButtonsType = MessageBox.Avalonia.Enums.ButtonEnum;

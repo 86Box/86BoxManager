@@ -3,6 +3,7 @@ using _86boxManager.Tools;
 using _86boxManager.Views;
 using _86boxManager.Xplat;
 using Avalonia;
+using Avalonia.ReactiveUI;
 using JetBrains.Annotations;
 using ButtonsType = MessageBox.Avalonia.Enums.ButtonEnum;
 using MessageType = MessageBox.Avalonia.Enums.Icon;
@@ -53,7 +54,8 @@ namespace _86boxManager
         {
             var bld = AppBuilder.Configure<App>()
                 .UsePlatformDetect()
-                .LogToTrace();
+                .LogToTrace()
+                .UseReactiveUI();
             return withLife ? bld.SetupWithClassicDesktopLifetime(args) : (bld, null);
         }
 
