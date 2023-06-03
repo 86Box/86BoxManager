@@ -48,10 +48,10 @@ namespace _86boxManager.Models
             throw new System.NotImplementedException();
         }
 
-        public static void RemoveItem(this DataGrid view, object item)
+        public static void RemoveItem(this DataGrid view, VMRow item)
         {
-            // TODO
-            throw new System.NotImplementedException();
+            var model = (ObservableCollection<VMRow>)view.Items;
+            model.Remove(item);
         }
 
         public static VMRow FindItemWithText(this DataGrid view, string vmName)
