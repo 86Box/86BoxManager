@@ -38,12 +38,12 @@ namespace _86boxManager.Views
             btnBrowse.IsEnabled = btnBrowse.Focusable = status;
         }
 
-        private void btnBrowse_Click(object sender, RoutedEventArgs e)
+        private async void btnBrowse_Click(object sender, RoutedEventArgs e)
         {
             var initDir = Platforms.Env.MyComputer;
             var text = "Select a folder where your virtual machine (configs, nvr folders, etc.) will be located";
 
-            var fileName = Dialogs.SelectFolder(text, initDir, this);
+            var fileName = await Dialogs.SelectFolder(text, initDir, this);
 
             if (!string.IsNullOrWhiteSpace(fileName))
             {

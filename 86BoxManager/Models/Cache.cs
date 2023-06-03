@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using _86boxManager.ViewModels;
 using Avalonia.Controls;
 
@@ -16,7 +17,8 @@ namespace _86boxManager.Models
 
         public static IList<VMRow> GetSelItems(this DataGrid view)
         {
-            throw new System.NotImplementedException();
+            var items = view.SelectedItems.OfType<VMRow>().ToList();
+            return items;
         }
 
         public static IList<VMRow> GetAllItems(this DataGrid view)
@@ -27,15 +29,16 @@ namespace _86boxManager.Models
 
         public static void ClearSelect(this DataGrid view)
         {
-            // TODO
+            view.SelectedIndex = -1;
         }
 
         public static void ClearAll(this DataGrid view)
         {
-            // TODO
+            var model = (ObservableCollection<VMRow>)view.Items;
+            // TODO model.Clear();
         }
 
-        public static void Insert(this DataGrid view, string vmName, VM vm)
+        public static VMRow Insert(this DataGrid view, string vmName, VM vm)
         {
             throw new System.NotImplementedException();
         }
@@ -43,6 +46,19 @@ namespace _86boxManager.Models
         public static VMRow FindItemWithText(string invVmName)
         {
             throw new System.NotImplementedException();
+        }
+
+        public static void RemoveItem(this DataGrid view, object item)
+        {
+            // TODO
+            throw new System.NotImplementedException();
+        }
+
+        public static VMRow FindItemWithText(this DataGrid view, string vmName)
+        {
+            var rows = view.GetAllItems();
+            var row = rows.FirstOrDefault(r => r.Tag.Name.Equals(vmName));
+            return row;
         }
     }
 }

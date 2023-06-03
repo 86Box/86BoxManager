@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Threading.Tasks;
 using Avalonia;
@@ -6,6 +8,10 @@ using Avalonia.Controls;
 using MessageBox.Avalonia;
 using MessageBox.Avalonia.Enums;
 using MessageBox.Avalonia.DTO;
+using System.Linq;
+using ButtonsType = MessageBox.Avalonia.Enums.ButtonEnum;
+using MessageType = MessageBox.Avalonia.Enums.Icon;
+using ResponseType = MessageBox.Avalonia.Enums.ButtonResult;
 
 namespace _86boxManager.Tools
 {
@@ -36,21 +42,59 @@ namespace _86boxManager.Tools
             return res;
         }
 
-        public static string SelectFolder(string text, string initDir, Window parent)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public static string SaveFile(string title, string dir, string filter, Window parent)
-        {
-            throw new System.NotImplementedException();
-        }
-
+        [SuppressMessage("ReSharper", "SuspiciousTypeConversion.Global")]
         public static async Task RunDialog(this Window parent, Window dialog, Action func = null)
         {
             var raw = dialog.ShowDialog(parent);
-            func?.Invoke();
             await raw;
+            func?.Invoke();
+            (dialog as IDisposable)?.Dispose();
+        }
+
+        public static async Task<string> SelectFolder(string title, string dir, Window parent)
+        {
+            var dialog = new OpenFolderDialog
+            {
+                Title = title, Directory = dir
+            };
+
+            string result = null;
+            var raw = dialog.ShowAsync(parent);
+            var res = await raw;
+
+            if (!string.IsNullOrWhiteSpace(res))
+            {
+                result = res;
+            }
+            return result;
+        }
+
+        public static async Task<string> SaveFile(string title, string dir, string filter,
+            Window parent, string ext = null)
+        {
+            var dialog = new SaveFileDialog
+            {
+                Title = title, Directory = dir, DefaultExtension = ext
+            };
+
+            if (filter != null)
+            {
+                var tmp = filter.Split('|', 2);
+                dialog.Filters = new List<FileDialogFilter>
+                {
+                    new() { Name = tmp.First(), Extensions = new List<string> { tmp.Last() } }
+                };
+            }
+
+            string result = null;
+            var raw = dialog.ShowAsync(parent);
+            var res = await raw;
+
+            if (!string.IsNullOrWhiteSpace(res))
+            {
+                result = res;
+            }
+            return result;
         }
     }
 }

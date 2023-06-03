@@ -37,5 +37,15 @@ namespace _86boxManager.ViewModels
         public string Status => Tag.GetStatusString();
         public string Desc => Tag.Desc;
         public string Path => Tag.Path;
+
+        public void SetStatus(string getStatusString)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void SetIcon(int i)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -74,13 +74,13 @@ namespace _86boxManager.Views
             Close(ResponseType.Ok);
         }
 
-        private void btnBrowse3_Click(object sender, RoutedEventArgs e)
+        private async void btnBrowse3_Click(object sender, RoutedEventArgs e)
         {
             var dir = Platforms.Env.MyComputer;
             var title = "Select a file where 86Box logs will be saved";
             var filter = "Log files (*.log)|*.log";
 
-            var fileName = Dialogs.SaveFile(title, dir, filter, parent: this);
+            var fileName = await Dialogs.SaveFile(title, dir, filter, parent: this, ext: ".log");
 
             if (!string.IsNullOrWhiteSpace(fileName))
             {
@@ -127,12 +127,12 @@ namespace _86boxManager.Views
             settingsChanged = CheckForChanges();
         }
 
-        private void btnBrowse1_Click(object sender, RoutedEventArgs e)
+        private async void btnBrowse1_Click(object sender, RoutedEventArgs e)
         {
             var initDir = Platforms.Env.MyComputer;
             var text = "Select a folder where 86Box program files and the roms folder are located";
 
-            var fileName = Dialogs.SelectFolder(initDir, text, parent: this);
+            var fileName = await Dialogs.SelectFolder(initDir, text, parent: this);
 
             if (!string.IsNullOrWhiteSpace(fileName))
             {
@@ -144,12 +144,12 @@ namespace _86boxManager.Views
             }
         }
 
-        private void btnBrowse2_Click(object sender, RoutedEventArgs e)
+        private async void btnBrowse2_Click(object sender, RoutedEventArgs e)
         {
             var initDir = Platforms.Env.MyComputer;
             var text = "Select a folder where your virtual machines (configs, nvr folders, etc.) will be located";
 
-            var fileName = Dialogs.SelectFolder(initDir, text, parent: this);
+            var fileName = await Dialogs.SelectFolder(initDir, text, parent: this);
 
             if (!string.IsNullOrWhiteSpace(fileName))
             {

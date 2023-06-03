@@ -13,5 +13,10 @@ namespace _86boxManager.Tools
             box.IsReadOnly = !value;
             return value;
         }
+
+        public static void Iconify(this Window window)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

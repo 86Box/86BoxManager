@@ -54,7 +54,46 @@ namespace _86boxManager.Core
         // Update the UI once the VM's window is closed
         private void background_RunCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            throw new NotImplementedException();
+            var ui = Program.Root;
+            var lstVMs = ui.lstVMs;
+            var vm = e.Result as VM;
+
+            var allItems = lstVMs.GetAllItems();
+            var selected = lstVMs.GetSelItems();
+
+            // Go through the listview, find the item representing the VM and update things accordingly
+            foreach (var item in allItems)
+            {
+                if (item.Tag.Equals(vm))
+                {
+                    vm.Status = VM.STATUS_STOPPED;
+                    vm.hWnd = IntPtr.Zero;
+                    item.SetStatus(vm.GetStatusString());
+                    item.SetIcon(vm.Status);
+
+                    if (vm.OnExit != null)
+                    {
+                        vm.OnExit(vm);
+                        vm.OnExit = null;
+                    }
+
+                    if (selected.Count > 0 && selected[0].Equals(item))
+                    {
+                        ui.btnEdit.IsEnabled = true;
+                        ui.btnDelete.IsEnabled = true;
+                        ui.btnStart.IsEnabled = true;
+                        ui.btnStart.Content = "Start";
+                        ui.btnStart.SetToolTip("Start this virtual machine");
+                        ui.btnConfigure.IsEnabled = true;
+                        ui.btnPause.IsEnabled = false;
+                        ui.btnPause.Content = "Pause";
+                        ui.btnCtrlAltDel.IsEnabled = false;
+                        ui.btnReset.IsEnabled = false;
+                    }
+                }
+            }
+
+            VMCenter.CountRefresh();
         }
 
         public static bool TryWaitForInputIdle(Process process, int forceDelay)
