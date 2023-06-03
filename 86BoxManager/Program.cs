@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using _86boxManager.Tools;
 using _86boxManager.Views;
 using _86boxManager.Xplat;
