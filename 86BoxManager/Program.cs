@@ -3,6 +3,7 @@ using _86boxManager.Tools;
 using _86boxManager.Views;
 using _86boxManager.Xplat;
 using Avalonia;
+using JetBrains.Annotations;
 using ButtonsType = MessageBox.Avalonia.Enums.ButtonEnum;
 using MessageType = MessageBox.Avalonia.Enums.Icon;
 using ResponseType = MessageBox.Avalonia.Enums.ButtonResult;
@@ -25,7 +26,7 @@ namespace _86boxManager
             Args = args;
 
             Platforms.Shell.PrepareAppId(AppId);
-            var startIt = BuildAvaloniaApp(args);
+            var (_, startIt) = BuildAvaloniaApp(args);
 
             //Check if it is the very first and only instance running.
             //If it's not, we need to restore and focus the existing window, 
@@ -41,12 +42,20 @@ namespace _86boxManager
             return code;
         }
 
-        private static Func<int> BuildAvaloniaApp(string[] args)
-            => AppBuilder.Configure<App>()
+        /// <summary>
+        /// Used by visual designer
+        /// </summary>
+        [UsedImplicitly]
+        public static AppBuilder BuildAvaloniaApp()
+            => BuildAvaloniaApp(Args, false).builder;
+
+        private static (AppBuilder builder, Func<int> after) BuildAvaloniaApp(string[] args, bool withLife = true)
+        {
+            var bld = AppBuilder.Configure<App>()
                 .UsePlatformDetect()
-                .LogToTrace()
-                .SetupWithClassicDesktopLifetime(args)
-                .after;
+                .LogToTrace();
+            return withLife ? bld.SetupWithClassicDesktopLifetime(args) : (bld, null);
+        }
 
         private static bool CheckRunningManagerAndAbort(string[] args)
         {
