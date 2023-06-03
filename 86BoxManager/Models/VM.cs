@@ -1,16 +1,20 @@
 ﻿using System;
+using _86BoxManager.API;
 
-namespace _86boxManager
+// ReSharper disable InconsistentNaming
+
+namespace _86boxManager.Models
 {
     [Serializable] //For serializing VMs so they can be stored in the registry
-    public class VM
+    public class VM : IVm
     {
         public IntPtr hWnd { get; set; } //Window handle for the VM once it's started
         public string Name { get; set; } //Name of the virtual machine
         public string Desc { get; set; } //Description
         public string Path { get; set; } //Path to config, nvr, etc.
         public int Status { get; set; } //Status
-        public int Pid { get; set; } //Process ID of 86box.exe running the VM
+        public int Pid { get; set; } //Process ID of 86box executable running the VM
+
         public const int STATUS_STOPPED = 0; //VM is not running
         public const int STATUS_RUNNING = 1; //VM is running
         public const int STATUS_WAITING = 2; //VM is waiting for user response
@@ -35,7 +39,7 @@ namespace _86boxManager
 
         public override string ToString()
         {
-            return "Name: " + Name + ", description: " + Desc + ", path: " + Path + ", status: " + Status;
+            return $"Name: {Name}, description: {Desc}, path: {Path}, status: {Status}";
         }
 
         //Returns a lovely status string for use in UI
@@ -50,5 +54,7 @@ namespace _86boxManager
                 default: return "Invalid status";
             }
         }
+
+        public Action<IVm> OnExit { get; set; }
     }
 }

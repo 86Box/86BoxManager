@@ -1,0 +1,37 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        d:DesignWidth="700" d:DesignHeight="450"
+        Width="700" Height="450"
+        x:Class="_86boxManager.Views.frmMain"
+        Icon="/Assets/86Box-gray.ico"
+        Title="86Box Manager">
+	<DockPanel>
+		<StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="12" Spacing="3">
+			<Button>Add</Button>
+			<Button>Edit</Button>
+			<Button>Remove</Button>
+			<Button Margin="20,0,0,0">Start</Button>
+			<Button>Configure</Button>
+			<Button>Pause</Button>
+			<Button>C+A+D</Button>
+			<Button>Reset</Button>
+			<Button Margin="50,0,0,0">Settings</Button>
+		</StackPanel>
+		<StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Background="#f0f0f0">
+			<Label Margin="10" Content="# of virtual machines:" />
+		</StackPanel>
+		<StackPanel Margin="10,0,10,0">
+			<DataGrid Name="MyDataGrid" Items="{Binding People}" AutoGenerateColumns="False" >
+				<DataGrid.Columns>
+					<DataGridTextColumn Width="2*" Header="Name" Binding="{Binding Name}" />
+					<DataGridTextColumn Width="2*" Header="Status"  Binding="{Binding Status}"/>
+					<DataGridTextColumn Width="2*" Header="Description" Binding="{Binding Description}" />
+					<DataGridTextColumn Width="2*" Header="Path" Binding="{Binding Path}" />
+				</DataGrid.Columns>
+			</DataGrid>
+		</StackPanel>
+	</DockPanel>
+</Window>

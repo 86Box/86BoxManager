@@ -1,108 +1,97 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Threading;
-using System.Windows.Forms;
+using _86boxManager.Views;
+using _86boxManager.Xplat;
+using Avalonia;
 
 namespace _86boxManager
 {
-    static class Program
+    internal static class Program
     {
-        public static string[] args = Environment.GetCommandLineArgs(); //Get command line arguments
+        //Get command line arguments
+        public static string[] Args;
 
-        private enum ShowWindowEnum
-        {
-            Hide = 0,
-            ShowNormal = 1, ShowMinimized = 2, ShowMaximized = 3,
-            Maximize = 3, ShowNormalNoActivate = 4, Show = 5,
-            Minimize = 6, ShowMinNoActivate = 7, ShowNoActivate = 8,
-            Restore = 9, ShowDefault = 10, ForceMinimized = 11
-        };
+        //For grouping windows together in Win7+ taskbar
+        private static readonly string AppId = "86Box.86Box";
 
-        [StructLayout(LayoutKind.Sequential)]
-        public struct COPYDATASTRUCT
-        {
-            public IntPtr dwData;
-            public int cbData;
-            public IntPtr lpData;
-        }
-
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool ShowWindow(IntPtr hWnd, ShowWindowEnum flags);
-
-        [DllImport("user32.dll")]
-        private static extern int SetForegroundWindow(IntPtr hwnd);
-
-        [DllImport("user32.dll")]
-        public static extern IntPtr FindWindow(string className, string windowTitle);
-
-        public const int WM_COPYDATA = 0x004A;
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern int SendMessage(IntPtr hwnd, int wMsg, IntPtr wParam, ref COPYDATASTRUCT lParam);
-
-        [DllImport("shell32.dll", SetLastError = true)]
-        static extern void SetCurrentProcessExplicitAppUserModelID([MarshalAs(UnmanagedType.LPWStr)] string AppID);
-
-        [DllImport("user32.dll")]
-        private static extern bool SetProcessDPIAware();
-
-        private static readonly string AppID = "86Box.86Box"; //For grouping windows together in Win7+ taskbar
-        private static Mutex mutex = null;
+        internal static frmMain Root;
 
         [STAThread]
-        static void Main()
+        private static void Main(string[] args)
         {
-            if (Environment.OSVersion.Version.Major >= 6)
-                SetProcessDPIAware();
+            Args = args;
 
-            SetCurrentProcessExplicitAppUserModelID(AppID);
+            Platforms.Shell.PrepareAppId(AppId);
+
+            //Check if it is the very first and only instance running.
+            //If it's not, we need to restore and focus the existing window, 
+            //as well as pass on any potential command line arguments
+            if (CheckRunningManagerAndAbort(args))
+                return;
+
+            //Then check if any instances of 86Box are already running and warn the user
+            if (CheckRunningEmulatorAndAbort())
+                return;
+
+            var app = BuildAvaloniaApp();
+            app.StartWithClassicDesktopLifetime(args);
+        }
+
+        private static AppBuilder BuildAvaloniaApp()
+            => AppBuilder.Configure<App>()
+                .UsePlatformDetect()
+                .LogToTrace();
+
+        private static bool CheckRunningManagerAndAbort(string[] args)
+        {
             const string name = "86Box Manager";
+            const string handleName = "86Box Manager Secret";
 
-            //Use a mutex to check if this is the first instance of Manager
-            mutex = new Mutex(true, name, out bool firstInstance);
-
-            //If it's not, we need to restore and focus the existing window, as well as pass on any potential command line arguments
+            var firstInstance = Platforms.Manager.IsFirstInstance(name);
             if (!firstInstance)
             {
-                //Finds the existing window, unhides it, restores it and sets focus to it
-                IntPtr hWnd = FindWindow(null, "86Box Manager");
-                ShowWindow(hWnd, ShowWindowEnum.Show);
-                ShowWindow(hWnd, ShowWindowEnum.Restore);
-                SetForegroundWindow(hWnd);
+                var hWnd = Platforms.Manager.RestoreAndFocus(name, handleName);
 
-                //If this second instance comes from a VM shortcut, we need to pass on the command line arguments so the VM will start
-                //in the existing instance.
-                //NOTE: This code will have to be modified in case more command line arguments are added in the future.
-                if (args.Length == 3 && args[1] == "-S" && args[2] != null)
+                // If this second instance comes from a VM shortcut, we need to pass on the
+                // command line arguments so the VM will start in the existing instance.
+                // NOTE: This code will have to be modified in case more
+                // command line arguments are added in the future.
+                if (GetVmArg(args, out var message))
                 {
-                    string message = args[2];
-                    COPYDATASTRUCT cds;
-                    cds.dwData = IntPtr.Zero;
-                    cds.lpData = Marshal.StringToHGlobalAnsi(message);
-                    cds.cbData = message.Length;
-                    SendMessage(hWnd, WM_COPYDATA, IntPtr.Zero, ref cds);
+                    var sender = Platforms.Manager.GetSender();
+                    sender.DoManagerStartVm(hWnd, message);
                 }
-
-                return;
+                return true;
             }
-            else
+            return false;
+        }
+
+        internal static bool GetVmArg(string[] args, out string vmName)
+        {
+            if (args.Length == 2 && args[0] == "-S" && args[1] != null)
             {
-                //Then check if any instances of 86Box are already running and warn the user
-                Process[] pname = Process.GetProcessesByName("86box");
-                if (pname.Length > 0)
-                {
-                    DialogResult result = MessageBox.Show("At least one instance of 86Box.exe is already running. It's not recommended that you run 86Box.exe directly outside of Manager. Do you want to continue at your own risk?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                    if (result == DialogResult.No)
-                    {
-                        return;
-                    }
-                }
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new frmMain());
+                vmName = args[1];
+                return true;
             }
+            vmName = default;
+            return false;
+        }
+
+        private static bool CheckRunningEmulatorAndAbort()
+        {
+            var isRunning = Platforms.Manager.IsProcessRunning("86box") ||
+                            Platforms.Manager.IsProcessRunning("86Box");
+            if (isRunning)
+            {
+                /*var result = Dialogs.ShowMessageBox("At least one instance of 86Box is already running. " +
+                                                    "It's not recommended that you run 86Box directly " +
+                                                    "outside of Manager. Do you want to continue at your own risk?",
+                    MessageType.Warning, ButtonsType.YesNo, "Warning");
+                if (result == (int)ResponseType.No)
+                {
+                    return true;
+                }*/ // TODO 
+            }
+            return false;
         }
     }
 }
