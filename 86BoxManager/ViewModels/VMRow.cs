@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using _86boxManager.Models;
 using Avalonia.Media.Imaging;
+using ReactiveUI;
 using static _86boxManager.Tools.Resources;
 
 // ReSharper disable InconsistentNaming
 
 namespace _86boxManager.ViewModels
 {
-    internal sealed class VMRow
+    internal sealed class VMRow : ReactiveObject
     {
         private static readonly IDictionary<int, Bitmap> _icons;
 
@@ -27,10 +28,29 @@ namespace _86boxManager.ViewModels
             };
         }
 
+        public VMRow(VM real)
+        {
+            Tag = real;
+        }
+
         internal VM Tag { get; set; }
 
-        internal bool Focused { get; set; }
-        internal bool Selected { get; set; }
+        public bool Focused
+        {
+            set => Selected = value;
+        }
+
+        public bool Selected
+        {
+            set
+            {
+                var ui = Program.Root;
+                if (value)
+                    ui.lstVMs.SelectedItems.Add(this);
+                else
+                    ui.lstVMs.SelectedItems.Remove(this);
+            }
+        }
 
         public Bitmap Icon => _icons[Tag.Status];
         public string Name => Tag.Name;
@@ -38,14 +58,17 @@ namespace _86boxManager.ViewModels
         public string Desc => Tag.Desc;
         public string Path => Tag.Path;
 
-        public void SetStatus(string getStatusString)
+        public void SetStatus(string _)
         {
-            throw new System.NotImplementedException();
+            // NO OP
         }
 
-        public void SetIcon(int i)
+        public void SetIcon(int status)
         {
-            throw new System.NotImplementedException();
+            Tag.Status = status;
+            this.RaisePropertyChanged(nameof(Icon));
+            this.RaisePropertyChanged(nameof(Status));
+            this.RaisePropertyChanged(nameof(Tag));
         }
     }
 }

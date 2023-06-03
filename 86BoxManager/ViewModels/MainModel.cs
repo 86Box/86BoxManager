@@ -11,10 +11,10 @@ namespace _86boxManager.ViewModels
             // TODO
             Machines = new ObservableCollection<VMRow>
             {
-                new VMRow { Tag = new VM("Hello", "First time", "/unix/a") { Status = 0 } },
-                new VMRow { Tag = new VM("Goodbye", "Second time", "/unix/b") { Status = 1 } },
-                new VMRow { Tag = new VM("Thanks", "Third time", "/unix/c") { Status = 2 } },
-                new VMRow { Tag = new VM("Gracias", "Fourth time", "/unix/d") { Status = 3 } }
+                new VMRow( new VM("Hello", "First time", "/unix/a") { Status = 0 } ),
+                new VMRow(  new VM("Goodbye", "Second time", "/unix/b") { Status = 1 } ),
+                new VMRow(  new VM("Thanks", "Third time", "/unix/c") { Status = 2 } ),
+                new VMRow(  new VM("Gracias", "Fourth time", "/unix/d") { Status = 3 } )
             };
             // TODO
         }
