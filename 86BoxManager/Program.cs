@@ -1,7 +1,12 @@
 ﻿using System;
+using System.Threading.Tasks;
+using _86boxManager.Tools;
 using _86boxManager.Views;
 using _86boxManager.Xplat;
 using Avalonia;
+using ButtonsType = MessageBox.Avalonia.Enums.ButtonEnum;
+using MessageType = MessageBox.Avalonia.Enums.Icon;
+using ResponseType = MessageBox.Avalonia.Enums.ButtonResult;
 
 namespace _86boxManager
 {
@@ -16,30 +21,33 @@ namespace _86boxManager
         internal static frmMain Root;
 
         [STAThread]
-        private static void Main(string[] args)
+        private static int Main(string[] args)
         {
             Args = args;
 
             Platforms.Shell.PrepareAppId(AppId);
+            var startIt = BuildAvaloniaApp(args);
 
             //Check if it is the very first and only instance running.
             //If it's not, we need to restore and focus the existing window, 
             //as well as pass on any potential command line arguments
             if (CheckRunningManagerAndAbort(args))
-                return;
+                return -1;
 
             //Then check if any instances of 86Box are already running and warn the user
             if (CheckRunningEmulatorAndAbort())
-                return;
+                return -2;
 
-            var app = BuildAvaloniaApp();
-            app.StartWithClassicDesktopLifetime(args);
+            var code = startIt();
+            return code;
         }
 
-        private static AppBuilder BuildAvaloniaApp()
+        private static Func<int> BuildAvaloniaApp(string[] args)
             => AppBuilder.Configure<App>()
                 .UsePlatformDetect()
-                .LogToTrace();
+                .LogToTrace()
+                .SetupWithClassicDesktopLifetime(args)
+                .after;
 
         private static bool CheckRunningManagerAndAbort(string[] args)
         {
@@ -82,14 +90,14 @@ namespace _86boxManager
                             Platforms.Manager.IsProcessRunning("86Box");
             if (isRunning)
             {
-                /*var result = Dialogs.ShowMessageBox("At least one instance of 86Box is already running. " +
-                                                    "It's not recommended that you run 86Box directly " +
-                                                    "outside of Manager. Do you want to continue at your own risk?",
+                var result = Dialogs.ShowMessageBox("At least one instance of 86Box is already running. It's\n" +
+                                                    "not recommended that you run 86Box directly outside of\n" +
+                                                    "Manager. Do you want to continue at your own risk?",
                     MessageType.Warning, ButtonsType.YesNo, "Warning");
-                if (result == (int)ResponseType.No)
+                if (result == ResponseType.No)
                 {
                     return true;
-                }*/ // TODO 
+                }
             }
             return false;
         }
