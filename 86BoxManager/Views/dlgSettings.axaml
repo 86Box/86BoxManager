@@ -5,7 +5,9 @@
         xmlns:controls="clr-namespace:HyperText.Avalonia.Controls;assembly=HyperText.Avalonia"
         mc:Ignorable="d" d:DesignWidth="620" d:DesignHeight="490"
         x:Class="_86boxManager.Views.dlgSettings"
-        Title="Settings">
+        Title="Settings"
+        Opened="dlgSettings_Load"
+        Closing="dlgSettings_FormClosing">
 	<StackPanel Orientation="Vertical" Spacing="2">
 		<TabControl SelectedIndex="0">
 			<TabItem Header="General">
@@ -15,8 +17,8 @@
 							<TextBlock Text="Paths" FontWeight="Bold" Margin="5"/>
 							<StackPanel Orientation="Horizontal" Margin="5" Spacing="5">
 								<Label Margin="9" Content="86Box path:"/>
-								<TextBox Width="360" Name="txtEXEdir" Margin="0,0,10,0"/>
-								<Button Name="btnBrowse1">Browse...</Button>
+								<TextBox Width="360" Name="txtEXEdir" Margin="0,0,10,0" TextInput="txt_TextChanged"/>
+								<Button Click="btnBrowse1_Click" Name="btnBrowse1">Browse...</Button>
 							</StackPanel>
 							<StackPanel Orientation="Horizontal" Margin="5" Spacing="5">
 								<Label Margin="9" Content="86Box version:"/>
@@ -25,8 +27,8 @@
 							</StackPanel>
 							<StackPanel Orientation="Horizontal" Margin="5,5,5,25" Spacing="5">
 								<Label Margin="9" Content="VM path:"/>
-								<TextBox Width="360" Name="txtCFGdir" Margin="0,0,10,0"/>
-								<Button Name="btnBrowse2">Browse...</Button>
+								<TextBox Width="360" Name="txtCFGdir" Margin="0,0,10,0" TextInput="txt_TextChanged"/>
+								<Button Click="btnBrowse2_Click" Name="btnBrowse2">Browse...</Button>
 							</StackPanel>
 						</StackPanel>
 					</Border>
@@ -34,11 +36,11 @@
 						<StackPanel Orientation="Vertical">
 							<TextBlock Text="Behaviour" FontWeight="Bold" Margin="5"/>
 							<StackPanel Orientation="Horizontal">
-								<CheckBox Content="Minimize 86Box Manager to tray icon" Margin="12" />
-								<CheckBox Content="Close 86Box Manager to tray icon" Margin="12" />
+								<CheckBox Name="cbxMinimizeTray" Content="Minimize 86Box Manager to tray icon" Margin="12" Checked="cbx_CheckedChanged" />
+								<CheckBox Name="cbxCloseTray" Content="Close 86Box Manager to tray icon" Margin="12" Checked="cbx_CheckedChanged" />
 							</StackPanel>
 							<StackPanel Orientation="Horizontal">
-								<CheckBox Content="Minimize 86Box Manager when a VM is started" Margin="12" />
+								<CheckBox Name="cbxMinimize" Content="Minimize 86Box Manager when a VM is started" Margin="12" Checked="cbx_CheckedChanged" />
 							</StackPanel>
 						</StackPanel>
 					</Border>
@@ -50,10 +52,10 @@
 						<StackPanel Orientation="Vertical">
 							<TextBlock Text="Logging" FontWeight="Bold" Margin="5"/>
 							<StackPanel Orientation="Vertical">
-								<CheckBox Content="Enable 86Box logging to file" Margin="12,12,12,5" />
+								<CheckBox Name="cbxLogging" Content="Enable 86Box logging to file" Margin="12,12,12,5" Checked="cbxLogging_CheckedChanged" />
 								<StackPanel Orientation="Horizontal" Margin="12,1,12,32">
-									<TextBox VerticalAlignment="Center" Width="460" Margin="0,0,10,0" />
-									<Button Content="Browse..." />
+									<TextBox Name="txtLogPath" VerticalAlignment="Center" Width="460" Margin="0,0,10,0" />
+									<Button Name="btnBrowse3" Content="Browse..." Click="btnBrowse3_Click" />
 								</StackPanel>
 							</StackPanel>
 						</StackPanel>
@@ -62,8 +64,8 @@
 						<StackPanel Orientation="Vertical">
 							<TextBlock Text="Miscellaneous" FontWeight="Bold" Margin="5"/>
 							<StackPanel Orientation="Horizontal">
-								<CheckBox Content="Enable grid lines in virtual machines list" Margin="12" />
-								<CheckBox Content="Enable 86Box console window" Margin="12" />
+								<CheckBox Name="cbxGrid" Content="Enable grid lines in virtual machines list" Margin="12" Checked="cbx_CheckedChanged" />
+								<CheckBox Name="cbxShowConsole" Content="Enable 86Box console window" Margin="12" Checked="cbx_CheckedChanged" />
 							</StackPanel>
 						</StackPanel>
 					</Border>
@@ -72,32 +74,33 @@
 			<TabItem Header="About">
 				<StackPanel Margin="0,0,0,50">
 					<StackPanel Orientation="Horizontal">
-						<Image Margin="8" Source="/Assets/86Box-gray.sm.png" Width="48" Height="48" />
+						<Image Name="aboutImg" Margin="8" Source="/Assets/86Box-gray.sm.png" Width="48" Height="48" />
 						<TextBlock Margin="8,8,8,8" VerticalAlignment="Center" FontSize="18" FontWeight="Bold">86Box Manager</TextBlock>
 					</StackPanel>
 					<TextBlock Margin="11" Text="A configuration manager for the 86Box emulator" />
-					<TextBlock Margin="11,13,11,2" Text="Version: &lt;version goes here&gt;" />
+					<TextBlock Name="lblVersion1" Margin="11,13,11,2" Text="Version: &lt;version goes here&gt;" />
 					<TextBlock Margin="11,28,8,4" Text="Copyright © 2018-2022 David Simunič" />
 					<TextBlock Margin="11,4,8,4" Text="Licensed under the MIT License. See the LICENSE file for" />
 					<TextBlock Margin="11,4,8,28" Text="license information and AUTHORS for a list of contributors." />
-					<controls:Hyperlink Margin="11" Url="https://github.com/86Box/86Box" />
-					<controls:Hyperlink Margin="11,4,11,11" Url="https://github.com/xafero/86BoxManager" />
+					<controls:Hyperlink PointerPressed="lnkGithub_LinkClicked" Name="lnkGithub" Margin="11" Url="https://github.com/86Box/86Box" />
+					<controls:Hyperlink PointerPressed="lnkGithub2_LinkClicked" Name="lnkGithub2" Margin="11,4,11,11" Url="https://github.com/xafero/86BoxManager" />
 				</StackPanel>
 			</TabItem>
 		</TabControl>
 		<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,20,0" Spacing="4">
 			<Button Name="btnDefaults" Content="Defaults"
 					HorizontalAlignment="Stretch" VerticalAlignment="Center"
-					IsDefault="False" Margin="0,0,40,0" />
+					IsDefault="False" Margin="0,0,40,0" 
+                    Click="btnDefaults_Click"/>
 			<Button Name="btnOK" Content="OK"
 					HorizontalAlignment="Stretch" VerticalAlignment="Center"
-					IsDefault="False"/>
+					IsDefault="False" Click="btnOK_Click"/>
 			<Button Name="btnCancel" Content="Cancel"
 					HorizontalAlignment="Stretch" VerticalAlignment="Center"
 					IsDefault="True"/>
 			<Button Name="btnApply" Content="Apply"
 					HorizontalAlignment="Stretch" VerticalAlignment="Center"
-					IsDefault="False"/>
+					IsDefault="False" Click="btnApply_Click"/>
 		</StackPanel>
 	</StackPanel>
 </Window>

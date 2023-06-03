@@ -9,7 +9,8 @@ namespace _86boxManager.Tools
 {
     internal static class Dialogs
     {
-        public static ButtonResult ShowMessageBox(string msg, Icon icon, ButtonEnum buttons, string title)
+        public static ButtonResult ShowMessageBox(string msg, Icon icon,
+            ButtonEnum buttons = ButtonEnum.Ok, string title = "Attention")
         {
             var opts = new MessageBoxStandardParams
             {
@@ -34,6 +35,11 @@ namespace _86boxManager.Tools
         }
 
         public static string SelectFolder(string text, string initDir, Window parent)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public static string SaveFile(string title, string dir, string filter, Window parent)
         {
             throw new System.NotImplementedException();
         }
