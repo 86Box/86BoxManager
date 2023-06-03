@@ -32,5 +32,10 @@ namespace _86boxManager.Tools
             var res = raw.GetAwaiter().GetResult();
             return res;
         }
+
+        public static string SelectFolder(string text, string initDir, Window parent)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

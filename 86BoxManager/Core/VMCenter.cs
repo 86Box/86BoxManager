@@ -3,6 +3,7 @@ using System.Linq;
 using _86boxManager.Models;
 using _86boxManager.Registry;
 using _86boxManager.Tools;
+using _86boxManager.Views;
 using _86boxManager.Xplat;
 using ButtonsType = MessageBox.Avalonia.Enums.ButtonEnum;
 using MessageType = MessageBox.Avalonia.Enums.Icon;
@@ -103,6 +104,21 @@ namespace _86boxManager.Core
                         MessageType.Error, ButtonsType.Ok, "Error");
                 }
             }
+        }
+
+        public static void Import(string name, string desc, string path, bool openCfg, bool startVm, frmMain ui)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public static void Edit(string name, string desc)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public static void Add(string name, string desc, bool openCfg, bool startVm)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

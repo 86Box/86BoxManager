@@ -4,15 +4,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="320" d:DesignHeight="245"
         x:Class="_86boxManager.Views.dlgEditVM"
-        Title="Edit a virtual machine">
+        Title="Edit a virtual machine"
+        Opened="dlgEditVM_Load">
 	<StackPanel Margin="12">
 		<TextBlock Text="Name:"/>
-		<TextBox Name="txtName" Watermark="Enter name" Margin="0,10,0,0"/>
+		<TextBox Name="txtName" Watermark="Enter name" Margin="0,10,0,0" TextInput="txtName_TextChanged"/>
 		<TextBlock Text="Description:" Margin="0,10,0,0"/>
 		<TextBox Name="txtDesc" Watermark="Enter description" Margin="0,10,0,0"/>
 		<TextBlock Name="lblPath1" Text="Path: &lt;path goes here&gt;" Margin="0,20,0,0"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
-            <Button Name="btnApply" Content="Apply" HorizontalAlignment="Stretch"/>
+            <Button Name="btnApply" Content="Apply" HorizontalAlignment="Stretch" Click="btnApply_Click" />
             <Button Name="btnCancel" Content="Cancel" HorizontalAlignment="Stretch" IsDefault="True"/>
         </StackPanel>
 	</StackPanel>

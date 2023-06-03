@@ -6,6 +6,6 @@ namespace _86boxManager.Models
 {
     internal sealed class VMRow
     {
-        public VM Tag { get; }
+        public VM Tag { get; set; }
     }
 }

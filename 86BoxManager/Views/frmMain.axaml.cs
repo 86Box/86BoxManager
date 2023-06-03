@@ -1,4 +1,5 @@
 using System;
+using _86boxManager.Models;
 using Avalonia.Controls;
 
 namespace _86boxManager.Views
@@ -22,6 +23,14 @@ namespace _86boxManager.Views
         private void Main_OnOpened_FirstBoot()
         {
             // TODO
+        }
+
+        public string CfgPath { get; }
+
+        internal VMRow GetFocusedVm()
+        {
+            // TODO
+            return new VMRow { Tag = new VM("Demo", "Something", "hell") };
         }
     }
 }

@@ -4,22 +4,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="330" d:DesignHeight="395"
         x:Class="_86boxManager.Views.dlgAddVM"
-        Title="Add a virtual machine">
+        Title="Add a virtual machine"
+        Opened="dlgAddVM_Load">
 	<StackPanel Margin="12">
-		<CheckBox Name="cbxImport" Content="Import VM files from:" />
+		<CheckBox Name="cbxImport" Content="Import VM files from:" Checked="cbxImport_CheckedChanged" />
 		<StackPanel Orientation="Horizontal" Margin="0,0,0,30">
 			<TextBox Name="txtImportPath" Watermark="Enter path" Width="230" />
-			<Button Name="btnBrowse" Content="Browse..." />
+			<Button Name="btnBrowse" Content="Browse..." Click="btnBrowse_Click" />
 		</StackPanel>
 		<TextBlock Text="Name:" Margin="2" />
-		<TextBox Name="txtName" Watermark="Enter name" />
+		<TextBox Name="txtName" Watermark="Enter name" TextInput="txtName_TextChanged" />
 		<TextBlock Text="Description:" Margin="2" />
 		<TextBox Name="txtDescription" Watermark="Enter description" />
 		<TextBlock Name="lblPath1" Margin="3" Text="Path: &lt;path goes here&gt;" />
 		<CheckBox Name="cbxStartVM" Content="Start this virtual machine now" Margin="0,20,0,0" />
 		<CheckBox Name="cbxOpenCFG" Content="Configure this virtual machine now" Margin="0,0,0,10" />
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12">
-            <Button Name="btnAdd" Content="Add" />
+            <Button Name="btnAdd" Content="Add" Click="btnAdd_Click" />
             <Button Name="btnCancel" Content="Cancel" />
         </StackPanel>
 	</StackPanel>
