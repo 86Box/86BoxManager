@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using _86boxManager.Model;
 
 namespace _86boxManager.Models
 {

@@ -1,8 +1,8 @@
-﻿using _86boxManager.Models;
+﻿
 
 // ReSharper disable InconsistentNaming
 
-namespace _86boxManager.Model
+namespace _86boxManager.Models
 {
     internal sealed class VMRow
     {

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using _86boxManager.Models;
 using _86boxManager.Registry;
 using _86boxManager.Tools;
 using _86boxManager.Xplat;
-using _86boxManager.Model;
 using ButtonsType = MessageBox.Avalonia.Enums.ButtonEnum;
 using MessageType = MessageBox.Avalonia.Enums.Icon;
 using ResponseType = MessageBox.Avalonia.Enums.ButtonResult;
