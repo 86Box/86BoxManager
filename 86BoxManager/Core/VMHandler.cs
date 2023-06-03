@@ -60,12 +60,12 @@ namespace _86boxManager.Core
                 lvi.SetIcon(0);
 
                 ui.btnStart.Content = "Start";
-                // TODO ui.startToolStripMenuItem.Text = "Start";
-                // TODO ui.startToolStripMenuItem.SetToolTip("Start this virtual machine");
+                ui.startToolStripMenuItem.Header = "Start";
+                ui.startToolStripMenuItem.SetToolTip("Start this virtual machine");
                 ui.btnStart.SetToolTip("Start this virtual machine");
                 ui.btnPause.Content = "Pause";
-                // TODO ui.pauseToolStripMenuItem.SetToolTip("Pause this virtual machine");
-                // TODO ui.pauseToolStripMenuItem.Text = "Pause";
+                ui.pauseToolStripMenuItem.SetToolTip("Pause this virtual machine");
+                ui.pauseToolStripMenuItem.Header = "Pause";
                 ui.btnPause.SetToolTip("Pause this virtual machine");
 
                 var selectedItems = lstVMs.GetSelItems();
@@ -119,14 +119,14 @@ namespace _86boxManager.Core
                 vm.Status = VM.STATUS_PAUSED;
                 lvi.SetStatus(vm.GetStatusString());
                 lvi.SetIcon(2);
-                // TODO ui.pauseToolStripMenuItem.Text = "Resume";
+                ui.pauseToolStripMenuItem.Header = "Resume";
                 ui.btnPause.Content = "Resume";
-                // TODO ui.pauseToolStripMenuItem.SetToolTip("Resume this virtual machine");
+                ui.pauseToolStripMenuItem.SetToolTip("Resume this virtual machine");
                 ui.btnPause.SetToolTip("Resume this virtual machine");
                 ui.btnStart.IsEnabled = true;
                 ui.btnStart.Content = "Stop";
-                // TODO ui.startToolStripMenuItem.Text = "Stop";
-                // TODO ui.startToolStripMenuItem.SetToolTip("Stop this virtual machine");
+                ui.startToolStripMenuItem.Header = "Stop";
+                ui.startToolStripMenuItem.SetToolTip("Stop this virtual machine");
                 ui.btnStart.SetToolTip("Stop this virtual machine");
                 ui.btnConfigure.IsEnabled = true;
             }
@@ -148,15 +148,15 @@ namespace _86boxManager.Core
                 vm.Status = VM.STATUS_RUNNING;
                 lvi.SetStatus(vm.GetStatusString());
                 lvi.SetIcon(1);
-                // TODO ui.pauseToolStripMenuItem.Text = "Pause";
+                ui.pauseToolStripMenuItem.Header = "Pause";
                 ui.btnPause.Content = "Pause";
                 ui.btnPause.SetToolTip("Pause this virtual machine");
-                // TODO ui.pauseToolStripMenuItem.SetToolTip("Pause this virtual machine");
+                ui.pauseToolStripMenuItem.SetToolTip("Pause this virtual machine");
                 ui.btnStart.IsEnabled = true;
                 ui.btnStart.Content = "Stop";
                 ui.btnStart.SetToolTip("Stop this virtual machine");
-                // TODO ui.startToolStripMenuItem.Text = "Stop";
-                // TODO ui.startToolStripMenuItem.SetToolTip("Stop this virtual machine");
+                ui.startToolStripMenuItem.Header = "Stop";
+                ui.startToolStripMenuItem.SetToolTip("Stop this virtual machine");
                 ui.btnConfigure.IsEnabled = true;
             }
             VMCenter.CountRefresh();
@@ -180,8 +180,8 @@ namespace _86boxManager.Core
                 ui.btnStart.IsEnabled = false;
                 ui.btnStart.Content = "Stop";
                 ui.btnStart.SetToolTip("Stop this virtual machine");
-                // TODO ui.startToolStripMenuItem.Text = "Stop";
-                // TODO ui.startToolStripMenuItem.SetToolTip("Stop this virtual machine");
+                ui.startToolStripMenuItem.Header = "Stop";
+                ui.startToolStripMenuItem.SetToolTip("Stop this virtual machine");
                 ui.btnEdit.IsEnabled = false;
                 ui.btnDelete.IsEnabled = false;
                 ui.btnConfigure.IsEnabled = false;
@@ -210,16 +210,16 @@ namespace _86boxManager.Core
                 ui.btnStart.IsEnabled = true;
                 ui.btnStart.Content = "Stop";
                 ui.btnStart.SetToolTip("Stop this virtual machine");
-                // TODO ui.startToolStripMenuItem.Text = "Stop";
-                // TODO ui.startToolStripMenuItem.SetToolTip("Stop this virtual machine");
+                ui.startToolStripMenuItem.Header = "Stop";
+                ui.startToolStripMenuItem.SetToolTip("Stop this virtual machine");
                 ui.btnEdit.IsEnabled = false;
                 ui.btnDelete.IsEnabled = false;
                 ui.btnConfigure.IsEnabled = true;
                 ui.btnReset.IsEnabled = true;
                 ui.btnPause.IsEnabled = true;
                 ui.btnPause.Content = "Pause";
-                // TODO ui.pauseToolStripMenuItem.Text = "Pause";
-                // TODO ui.pauseToolStripMenuItem.SetToolTip("Pause this virtual machine");
+                ui.pauseToolStripMenuItem.Header = "Pause";
+                ui.pauseToolStripMenuItem.SetToolTip("Pause this virtual machine");
                 ui.btnPause.SetToolTip("Pause this virtual machine");
                 ui.btnCtrlAltDel.IsEnabled = true;
             }

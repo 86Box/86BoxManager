@@ -450,8 +450,8 @@ namespace _86boxManager.Core
                 row.SetStatus(vm.GetStatusString());
                 ui.btnPause.Content = "Pause";
                 ui.btnPause.SetToolTip("Pause this virtual machine");
-                // TODO ui.pauseToolStripMenuItem.Text = "Pause";
-                // TODO ui.pauseToolStripMenuItem.SetToolTip("Pause this virtual machine");
+                ui.pauseToolStripMenuItem.Header = "Pause";
+                ui.pauseToolStripMenuItem.SetToolTip("Pause this virtual machine");
             }
             CountRefresh();
         }
@@ -563,15 +563,15 @@ namespace _86boxManager.Core
             Platforms.Manager.GetSender().DoVmPause(vm);
             row.SetStatus(vm.GetStatusString());
             row.SetIcon(2);
-            // TODO ui.pauseToolStripMenuItem.Text = "Resume";
+            ui.pauseToolStripMenuItem.Header = "Resume";
             ui.btnPause.Content = "Resume";
             ui.btnStart.SetToolTip("Stop this virtual machine");
             ui.btnStart.IsEnabled = true;
             ui.btnStart.Content = "Stop";
-            // TODO ui.startToolStripMenuItem.Text = "Stop";
-            // TODO ui.startToolStripMenuItem.SetToolTip("Stop this virtual machine");
+            ui.startToolStripMenuItem.Header = "Stop";
+            ui.startToolStripMenuItem.SetToolTip("Stop this virtual machine");
             ui.btnConfigure.IsEnabled = true;
-            // TODO ui.pauseToolStripMenuItem.SetToolTip("Resume this virtual machine");
+            ui.pauseToolStripMenuItem.SetToolTip("Resume this virtual machine");
             ui.btnPause.SetToolTip("Resume this virtual machine");
 
             Sort(ui.sortColumn, ui.sortOrder);
@@ -587,13 +587,13 @@ namespace _86boxManager.Core
             vm.Status = VM.STATUS_RUNNING;
             row.SetStatus(vm.GetStatusString());
             row.SetIcon(1);
-            // TODO ui.pauseToolStripMenuItem.Text = "Pause";
+            ui.pauseToolStripMenuItem.Header = "Pause";
             ui.btnPause.Content = "Pause";
             ui.btnStart.IsEnabled = true;
-            // TODO ui.startToolStripMenuItem.Text = "Stop";
-            // TODO ui.startToolStripMenuItem.SetToolTip("Stop this virtual machine");
+            ui.startToolStripMenuItem.Header = "Stop";
+            ui.startToolStripMenuItem.SetToolTip("Stop this virtual machine");
             ui.btnConfigure.IsEnabled = true;
-            // TODO ui.pauseToolStripMenuItem.SetToolTip("Pause this virtual machine");
+            ui.pauseToolStripMenuItem.SetToolTip("Pause this virtual machine");
             ui.btnStart.SetToolTip("Stop this virtual machine");
             ui.btnPause.SetToolTip("Pause this virtual machine");
 
@@ -817,8 +817,8 @@ namespace _86boxManager.Core
                     ui.btnStart.IsEnabled = false;
                     ui.btnStart.Content = "Stop";
                     ui.btnStart.SetToolTip("Stop this virtual machine");
-                    // TODO ui.startToolStripMenuItem.Text = "Stop";
-                    // TODO ui.startToolStripMenuItem.SetToolTip("Stop this virtual machine");
+                    ui.startToolStripMenuItem.Header = "Stop";
+                    ui.startToolStripMenuItem.SetToolTip("Stop this virtual machine");
                     ui.btnEdit.IsEnabled = false;
                     ui.btnDelete.IsEnabled = false;
                     ui.btnConfigure.IsEnabled = false;
@@ -826,8 +826,8 @@ namespace _86boxManager.Core
                     ui.btnPause.IsEnabled = false;
                     ui.btnPause.Content = "Pause";
                     ui.btnPause.SetToolTip("Pause this virtual machine");
-                    // TODO ui.pauseToolStripMenuItem.Text = "Pause";
-                    // TODO ui.pauseToolStripMenuItem.SetToolTip("Pause this virtual machine");
+                    ui.pauseToolStripMenuItem.Header = "Pause";
+                    ui.pauseToolStripMenuItem.SetToolTip("Pause this virtual machine");
                     ui.btnCtrlAltDel.IsEnabled = false;
                 }
                 catch (Win32Exception)
