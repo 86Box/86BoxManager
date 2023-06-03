@@ -147,9 +147,40 @@ namespace _86boxManager.Core
             // TODO 
         }
 
+        // Refreshes the VM counter in the status bar
         public static void CountRefresh()
         {
-            // TODO
+            var ui = Program.Root;
+
+            var runningVMs = 0;
+            var pausedVMs = 0;
+            var waitingVMs = 0;
+            var stoppedVMs = 0;
+
+            var vms = ui.lstVMs.GetAllItems();
+            foreach (var item in vms)
+            {
+                var vm = item.Tag;
+                switch (vm.Status)
+                {
+                    case VM.STATUS_PAUSED:
+                        pausedVMs++;
+                        break;
+                    case VM.STATUS_RUNNING:
+                        runningVMs++;
+                        break;
+                    case VM.STATUS_STOPPED:
+                        stoppedVMs++;
+                        break;
+                    case VM.STATUS_WAITING:
+                        waitingVMs++;
+                        break;
+                }
+            }
+
+            var model = ui.Model;
+            model.VmCount = "All VMs: " + vms.Count + " | Running: " + runningVMs + " | Paused: " + pausedVMs +
+                            " | Waiting: " + waitingVMs + " | Stopped: " + stoppedVMs;
         }
     }
 }

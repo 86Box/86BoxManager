@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using _86boxManager.ViewModels;
 using Avalonia.Controls;
 
@@ -20,8 +21,8 @@ namespace _86boxManager.Models
 
         public static IList<VMRow> GetAllItems(this DataGrid view)
         {
-            // TODO
-            return new List<VMRow>();
+            var model = (ObservableCollection<VMRow>)view.Items;
+            return model;
         }
 
         public static void ClearSelect(this DataGrid view)

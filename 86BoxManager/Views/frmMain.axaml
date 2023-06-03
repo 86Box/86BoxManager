@@ -28,7 +28,7 @@
 			<Button Name="btnSettings" Click="btnSettings_Click" Margin="50,0,0,0">Settings</Button>
 		</StackPanel>
 		<StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Background="#f0f0f0">
-			<Label Name="lblVMCount" Margin="10" Content="# of virtual machines:" />
+			<Label Name="lblVMCount" Margin="10" Content="{Binding Path=VmCount}" />
 		</StackPanel>
 		<StackPanel Margin="10,0,10,0">
 			<DataGrid Name="lstVMs" Items="{Binding Path=Machines}" AutoGenerateColumns="False">

@@ -19,6 +19,22 @@ namespace _86boxManager.ViewModels
             // TODO
         }
 
+
+
+
+
         public ObservableCollection<VMRow> Machines { get; }
+
+        private string _vmCount = "# of virtual machines:";
+
+        public string VmCount
+        {
+            get => _vmCount;
+            set
+            {
+                _vmCount = value;
+                this.RaisePropertyChanged();
+            }
+        }
     }
 }

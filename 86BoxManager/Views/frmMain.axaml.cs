@@ -26,6 +26,8 @@ namespace _86boxManager.Views
             InitializeComponent();
         }
 
+        internal MainModel Model => (MainModel)DataContext;
+
         private void Main_OnOpened(object sender, EventArgs e)
         {
             if (Program.Root == null)
