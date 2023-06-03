@@ -81,14 +81,14 @@ namespace _86boxManager.Views
             this.BringIntoView();
         }
 
-        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        private async void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            this.RunDialog(new dlgAddVM());
+            await this.RunDialog(new dlgAddVM());
         }
 
-        private void btnEdit_Click(object sender, RoutedEventArgs e)
+        private async void btnEdit_Click(object sender, RoutedEventArgs e)
         {
-            this.RunDialog(new dlgEditVM());
+            await this.RunDialog(new dlgEditVM());
         }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
@@ -105,9 +105,9 @@ namespace _86boxManager.Views
             }
         }
 
-        private void btnSettings_Click(object sender, RoutedEventArgs e)
+        private async void btnSettings_Click(object sender, RoutedEventArgs e)
         {
-            this.RunDialog(new dlgSettings(), () =>
+            await this.RunDialog(new dlgSettings(), () =>
             {
                 //Reload the settings due to potential changes
                 LoadSettings();

@@ -105,5 +105,10 @@ namespace _86boxManager.Views
 
             Close(ResponseType.Ok);
         }
+
+        private void btnCancel_OnClick(object sender, RoutedEventArgs e)
+        {
+            Close(ResponseType.Cancel);
+        }
     }
 }

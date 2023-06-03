@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using MessageBox.Avalonia;
@@ -45,11 +46,11 @@ namespace _86boxManager.Tools
             throw new System.NotImplementedException();
         }
 
-        public static void RunDialog(this Window parent, Window dialog, Action func = null)
+        public static async Task RunDialog(this Window parent, Window dialog, Action func = null)
         {
             var raw = dialog.ShowDialog(parent);
             func?.Invoke();
-            raw.GetAwaiter().GetResult();
+            await raw;
         }
     }
 }

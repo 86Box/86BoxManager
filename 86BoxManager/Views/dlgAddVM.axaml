@@ -2,7 +2,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="330" d:DesignHeight="395"
+        mc:Ignorable="d" 
+        d:DesignWidth="330" d:DesignHeight="395"
+        Width="330" Height="395"
         x:Class="_86boxManager.Views.dlgAddVM"
         Title="Add a virtual machine"
         Opened="dlgAddVM_Load">
@@ -21,7 +23,7 @@
 		<CheckBox Name="cbxOpenCFG" Content="Configure this virtual machine now" Margin="0,0,0,10" />
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12">
             <Button Name="btnAdd" Content="Add" Click="btnAdd_Click" />
-            <Button Name="btnCancel" Content="Cancel" />
+            <Button Name="btnCancel" Content="Cancel" Click="btnCancel_OnClick" />
         </StackPanel>
 	</StackPanel>
 </Window>

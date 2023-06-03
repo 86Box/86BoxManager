@@ -3,7 +3,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:HyperText.Avalonia.Controls;assembly=HyperText.Avalonia"
-        mc:Ignorable="d" d:DesignWidth="620" d:DesignHeight="490"
+        mc:Ignorable="d" 
+        d:DesignWidth="620" d:DesignHeight="490"
+        Width="620" Height="490"
         x:Class="_86boxManager.Views.dlgSettings"
         Title="Settings"
         Opened="dlgSettings_Load"
@@ -83,7 +85,7 @@
 					<TextBlock Margin="11,4,8,4" Text="Licensed under the MIT License. See the LICENSE file for" />
 					<TextBlock Margin="11,4,8,28" Text="license information and AUTHORS for a list of contributors." />
 					<controls:Hyperlink PointerPressed="lnkGithub_LinkClicked" Name="lnkGithub" Margin="11" Url="https://github.com/86Box/86Box" />
-					<controls:Hyperlink PointerPressed="lnkGithub2_LinkClicked" Name="lnkGithub2" Margin="11,4,11,11" Url="https://github.com/xafero/86BoxManager" />
+					<controls:Hyperlink PointerPressed="lnkGithub2_LinkClicked" Name="lnkGithub2" Margin="11,4,11,11" Url="https://github.com/RetBox/86BoxManagerX" />
 				</StackPanel>
 			</TabItem>
 		</TabControl>
