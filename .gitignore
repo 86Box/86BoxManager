@@ -334,3 +334,4 @@ ASALocalRun/
 .localhistory/
 /dist
 /pub
+.DS_Store
