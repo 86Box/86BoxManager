@@ -357,5 +357,119 @@ namespace _86boxManager.Views
         {
             VMCenter.Remove(lstVMs.GetSelItems(), this);
         }
+
+        private void openConfigFileToolStripMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var selected = lstVMs.GetSelItems();
+            VMCenter.OpenConfig(selected);
+        }
+
+        private void killToolStripMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var selected = lstVMs.GetSelItems();
+            VMCenter.Kill(selected, this);
+        }
+
+        private void wipeToolStripMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var selected = lstVMs.GetSelItems();
+            VMCenter.Wipe(selected);
+        }
+
+        private async void cloneToolStripMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var selected = lstVMs.GetSelItems();
+            var vm = selected[0].Tag;
+
+            await this.RunDialog(new dlgCloneVM(vm.Path));
+        }
+
+        private void pauseToolStripMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var vm = lstVMs.GetSelItems()[0].Tag;
+            if (vm.Status == VM.STATUS_PAUSED)
+            {
+                VMCenter.Resume(lstVMs.GetSelItems(), this);
+            }
+            else if (vm.Status == VM.STATUS_RUNNING)
+            {
+                VMCenter.Pause(lstVMs.GetSelItems(), this);
+            }
+        }
+
+        private void hardResetToolStripMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            VMCenter.HardReset(lstVMs.GetSelItems());
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            VMCenter.Remove(lstVMs.GetSelItems(), this);
+        }
+
+        private async void editToolStripMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            await this.RunDialog(new dlgEditVM());
+        }
+
+        private void openFolderToolStripMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var selected = lstVMs.GetSelItems();
+            VMCenter.OpenFolder(selected);
+        }
+
+        private void configureToolStripMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            VMCenter.Configure();
+        }
+
+        private void resetCTRLALTDELETEToolStripMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            VMCenter.CtrlAltDel(lstVMs.GetSelItems(), this);
+        }
+
+        // Start VM if it's stopped or stop it if it's running/paused
+        private void startToolStripMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var selected = lstVMs.GetSelItems();
+            var vm = selected[0].Tag;
+            if (vm.Status == VM.STATUS_STOPPED)
+            {
+                VMCenter.Start();
+            }
+            else if (vm.Status == VM.STATUS_RUNNING || vm.Status == VM.STATUS_PAUSED)
+            {
+                VMCenter.RequestStop(lstVMs.GetSelItems(), this);
+            }
+        }
+
+        private void createADesktopShortcutToolStripMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var selected = lstVMs.GetSelItems();
+            foreach (var lvi in selected)
+            {
+                var vm = lvi.Tag;
+                try
+                {
+                    var desktop = Platforms.Env.Desktop;
+                    var shortcutAddress = IOPath.Combine(desktop, $"{vm.Name}.lnk");
+                    var shortcutDesc = vm.Desc;
+                    var vmName = vm.Name;
+                    var startupPath = CurrentApp.StartupPath;
+
+                    Platforms.Shell.CreateShortcut(shortcutAddress, vmName, shortcutDesc, startupPath);
+
+                    Dialogs.ShowMessageBox($@"A desktop shortcut for the virtual machine ""{vm.Name}"" " +
+                                           "was successfully created.",
+                        MessageType.Info, ButtonsType.Ok, "Success");
+                }
+                catch
+                {
+                    Dialogs.ShowMessageBox($@"A desktop shortcut for the virtual machine ""{vm.Name}"" could" +
+                                           " not be created.",
+                        MessageType.Error, ButtonsType.Ok, "Error");
+                }
+            }
+        }
     }
 }

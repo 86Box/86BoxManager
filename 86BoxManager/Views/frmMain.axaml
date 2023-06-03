@@ -47,6 +47,25 @@
 					<DataGridTextColumn Width="2*" Header="Description" Binding="{Binding Desc}" />
 					<DataGridTextColumn Width="2*" Header="Path" Binding="{Binding Path}" />
                 </DataGrid.Columns>
+				<DataGrid.ContextMenu>
+                    <ContextMenu Name="lstVMpop">
+                        <MenuItem Name="startToolStripMenuItem" Header="Start" Click="startToolStripMenuItem_Click" IsEnabled="True" />
+						<MenuItem Name="configureToolStripMenuItem" Header="Configure" Click="configureToolStripMenuItem_Click" IsEnabled="True" />
+						<MenuItem Name="pauseToolStripMenuItem" Header="Pause" Click="pauseToolStripMenuItem_Click" IsEnabled="True" />
+						<MenuItem Name="resetCTRLALTDELETEToolStripMenuItem" Header="Send CTRL+ALT+DEL" Click="resetCTRLALTDELETEToolStripMenuItem_Click" IsEnabled="True" />
+						<MenuItem Name="hardResetToolStripMenuItem" Header="Hard reset" Click="hardResetToolStripMenuItem_Click" IsEnabled="True" />
+						<Separator />
+						<MenuItem Name="killToolStripMenuItem" Header="Kill" Click="killToolStripMenuItem_Click" IsEnabled="True" />
+						<MenuItem Name="wipeToolStripMenuItem" Header="Wipe" Click="wipeToolStripMenuItem_Click" IsEnabled="True" />
+						<Separator />
+						<MenuItem Name="editToolStripMenuItem" Header="Edit" Click="editToolStripMenuItem_Click" IsEnabled="True" />
+						<MenuItem Name="cloneToolStripMenuItem" Header="Clone" Click="cloneToolStripMenuItem_Click" IsEnabled="True" />
+						<MenuItem Name="deleteToolStripMenuItem" Header="Remove" Click="deleteToolStripMenuItem_Click" IsEnabled="True" />
+						<MenuItem Name="openFolderToolStripMenuItem" Header="Open folder in Explorer" Click="openFolderToolStripMenuItem_Click" IsEnabled="True" />
+						<MenuItem Name="openConfigFileToolStripMenuItem" Header="Open config file" Click="openConfigFileToolStripMenuItem_Click" IsEnabled="True" />
+						<MenuItem Name="createADesktopShortcutToolStripMenuItem" Header="Create a desktop shortcut" Click="createADesktopShortcutToolStripMenuItem_Click" IsEnabled="True" />
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
 			</DataGrid>
 		</StackPanel>
 	</DockPanel>
