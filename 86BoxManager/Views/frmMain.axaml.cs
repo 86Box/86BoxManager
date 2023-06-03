@@ -252,26 +252,6 @@ namespace _86boxManager.Views
             VMCenter.Configure();
         }
 
-        private void btnCtrlAltDel_Click(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void btnReset_Click(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void btnPause_Click(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void btnDelete_Click(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         private void Window_OnClosing(object sender, CancelEventArgs e)
         {
             var cancelQuit = default(bool?);
@@ -347,6 +327,35 @@ namespace _86boxManager.Views
 
                 cancel = false;
             }
+        }
+
+        private void btnCtrlAltDel_Click(object sender, RoutedEventArgs e)
+        {
+            VMCenter.CtrlAltDel(lstVMs.GetSelItems(), this);
+        }
+
+        private void btnReset_Click(object sender, RoutedEventArgs e)
+        {
+            VMCenter.HardReset(lstVMs.GetSelItems());
+        }
+
+        private void btnPause_Click(object sender, RoutedEventArgs e)
+        {
+            var selected = lstVMs.GetSelItems();
+            var vm = selected[0].Tag;
+            if (vm.Status == VM.STATUS_PAUSED)
+            {
+                VMCenter.Resume(lstVMs.GetSelItems(), this);
+            }
+            else if (vm.Status == VM.STATUS_RUNNING)
+            {
+                VMCenter.Pause(lstVMs.GetSelItems(), this);
+            }
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            VMCenter.Remove(lstVMs.GetSelItems(), this);
         }
     }
 }
