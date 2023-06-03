@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using Avalonia;
 using Avalonia.Controls;
@@ -23,7 +24,7 @@ namespace _86boxManager.Tools
             };
             var window = MessageBoxManager.GetMessageBoxStandardWindow(opts);
             var raw = window.Show();
-            if (Program.Root == null && Application.Current is var app)
+            if (Application.Current is var app)
             {
                 var flags = BindingFlags.NonPublic | BindingFlags.Instance;
                 var windowField = window.GetType().GetField("_window", flags)!;
@@ -42,6 +43,13 @@ namespace _86boxManager.Tools
         public static string SaveFile(string title, string dir, string filter, Window parent)
         {
             throw new System.NotImplementedException();
+        }
+
+        public static void RunDialog(this Window parent, Window dialog, Action func = null)
+        {
+            var raw = dialog.ShowDialog(parent);
+            func?.Invoke();
+            raw.GetAwaiter().GetResult();
         }
     }
 }

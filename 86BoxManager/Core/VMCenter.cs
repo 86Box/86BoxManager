@@ -120,5 +120,35 @@ namespace _86boxManager.Core
         {
             throw new System.NotImplementedException();
         }
+
+        public static void Start()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public static void RequestStop(IList<VMRow> getSelItems, frmMain frmMain)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public static void Configure()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public static void ForceStop(IList<VMRow> getSelItems, frmMain frmMain)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public static void Sort(int sortColumn, SortType sortOrder)
+        {
+            // TODO 
+        }
+
+        public static void CountRefresh()
+        {
+            // TODO
+        }
     }
 }

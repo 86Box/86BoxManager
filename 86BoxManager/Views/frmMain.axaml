@@ -8,24 +8,25 @@
         x:Class="_86boxManager.Views.frmMain"
         Icon="/Assets/86Box-gray.ico"
         Title="86Box Manager"
-        Opened="Main_OnOpened">
+        Opened="Main_OnOpened"
+        Closing="Window_OnClosing">
 	<DockPanel>
 		<StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="12" Spacing="3">
-			<Button>Add</Button>
-			<Button>Edit</Button>
-			<Button>Remove</Button>
-			<Button Margin="20,0,0,0">Start</Button>
-			<Button>Configure</Button>
-			<Button>Pause</Button>
-			<Button>C+A+D</Button>
-			<Button>Reset</Button>
-			<Button Margin="50,0,0,0">Settings</Button>
+			<Button Name="btnAdd" Click="btnAdd_Click">Add</Button>
+			<Button Name="btnEdit" Click="btnEdit_Click">Edit</Button>
+			<Button Name="btnDelete" Click="btnDelete_Click">Remove</Button>
+			<Button Name="btnStart" Click="btnStart_Click" Margin="20,0,0,0">Start</Button>
+			<Button Name="btnConfigure" Click="btnConfigure_Click">Configure</Button>
+			<Button Name="btnPause" Click="btnPause_Click">Pause</Button>
+			<Button Name="btnCtrlAltDel" Click="btnCtrlAltDel_Click">C+A+D</Button>
+			<Button Name="btnReset" Click="btnReset_Click">Reset</Button>
+			<Button Name="btnSettings" Click="btnSettings_Click" Margin="50,0,0,0">Settings</Button>
 		</StackPanel>
 		<StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Background="#f0f0f0">
-			<Label Margin="10" Content="# of virtual machines:" />
+			<Label Name="lblVMCount" Margin="10" Content="# of virtual machines:" />
 		</StackPanel>
 		<StackPanel Margin="10,0,10,0">
-			<DataGrid Name="MyDataGrid" Items="{Binding People}" AutoGenerateColumns="False" >
+			<DataGrid Name="lstVMs" Items="{Binding People}" AutoGenerateColumns="False" >
 				<DataGrid.Columns>
 					<DataGridTextColumn Width="2*" Header="Name" Binding="{Binding Name}" />
 					<DataGridTextColumn Width="2*" Header="Status"  Binding="{Binding Status}"/>
