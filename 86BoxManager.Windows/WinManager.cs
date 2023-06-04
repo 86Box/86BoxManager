@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 using System.Threading;
 using _86BoxManager.API;
 using _86BoxManager.Common;
@@ -13,28 +11,6 @@ namespace _86BoxManager.Windows
 {
     public sealed class WinManager : CommonManager, IManager
     {
-        static WinManager()
-        {
-            _extraDlls = new Dictionary<string, Assembly>();
-            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-        }
-
-        private static readonly Dictionary<string, Assembly> _extraDlls;
-
-        private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
-        {
-            var ass = args.RequestingAssembly!;
-            var dir = Path.GetDirectoryName(Path.GetFullPath(ass.Location))!;
-            var name = new AssemblyName(args.Name);
-            var key = name.Name!;
-            if (_extraDlls.TryGetValue(key, out var found))
-                return found;
-            var file = $"{Path.Combine(dir, "lib", name.Name!)}.dll";
-            var loaded = Assembly.LoadFile(file);
-            _extraDlls[key] = loaded;
-            return loaded;
-        }
-
         private static Mutex mutex = null;
 
         public override bool IsFirstInstance(string name)

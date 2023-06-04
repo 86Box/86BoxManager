@@ -1,5 +1,4 @@
-﻿using _86boxManager.Models;
-using ReactiveUI;
+﻿using ReactiveUI;
 using System.Collections.ObjectModel;
 
 namespace _86boxManager.ViewModels

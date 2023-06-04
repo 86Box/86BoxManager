@@ -13,27 +13,6 @@
     <Reference Include="Interop.IWshRuntimeLibrary">
       <HintPath>lib\Interop.IWshRuntimeLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="Accessibility">
-      <HintPath>lib\Accessibility.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Win32.SystemEvents">
-      <HintPath>lib\Microsoft.Win32.SystemEvents.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Drawing.Common">
-      <HintPath>lib\System.Drawing.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Forms">
-      <HintPath>lib\System.Windows.Forms.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Forms.Primitives">
-      <HintPath>lib\System.Windows.Forms.Primitives.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="lib\System.Drawing.Common.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>
