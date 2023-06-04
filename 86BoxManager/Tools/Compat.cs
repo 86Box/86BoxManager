@@ -1,6 +1,10 @@
-﻿using Avalonia.Controls;
+﻿using System;
+using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Input;
 using Avalonia.Media;
+using AvaloniaEdit.Document;
 
 namespace _86boxManager.Tools
 {
@@ -33,6 +37,12 @@ namespace _86boxManager.Tools
             label.Foreground = color;
             label.FontWeight = weight;
             label.Content = text;
+        }
+
+        public static void OnTextChanged(this TextBox txtBox, Action<object, TextInputEventArgs> handler)
+        {
+            var observable = txtBox.GetObservable(TextBox.TextProperty);
+            observable.Subscribe(text => handler(txtBox, new TextInputEventArgs { Text = text }));
         }
     }
 }

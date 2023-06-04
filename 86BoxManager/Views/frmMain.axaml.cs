@@ -76,7 +76,7 @@ namespace _86boxManager.Views
             }
         }
 
-        public string CfgPath { get; }
+        public string CfgPath => cfgpath;
 
         internal VMRow GetFocusedVm()
         {

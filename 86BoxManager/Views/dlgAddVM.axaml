@@ -9,13 +9,13 @@
         Title="Add a virtual machine"
         Opened="dlgAddVM_Load">
 	<StackPanel Margin="12">
-		<CheckBox Name="cbxImport" Content="Import VM files from:" Checked="cbxImport_CheckedChanged" />
+		<CheckBox Name="cbxImport" Content="Import VM files from:" Click="cbxImport_CheckedChanged" />
 		<StackPanel Orientation="Horizontal" Margin="0,0,0,30">
 			<TextBox Name="txtImportPath" Watermark="Enter path" Width="230" />
 			<Button Name="btnBrowse" Content="Browse..." Click="btnBrowse_Click" />
 		</StackPanel>
 		<TextBlock Text="Name:" Margin="2" />
-		<TextBox Name="txtName" Watermark="Enter name" TextInput="txtName_TextChanged" />
+		<TextBox Name="txtName" Watermark="Enter name" />
 		<TextBlock Text="Description:" Margin="2" />
 		<TextBox Name="txtDescription" Watermark="Enter description" />
 		<TextBlock Name="lblPath1" Margin="3" Text="Path: &lt;path goes here&gt;" />

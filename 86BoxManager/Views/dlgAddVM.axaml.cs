@@ -17,6 +17,7 @@ namespace _86boxManager.Views
         public dlgAddVM()
         {
             InitializeComponent();
+            txtName.OnTextChanged(txtName_TextChanged);
         }
 
         private bool existingVM = false; // Is this importing an existing VM or not
