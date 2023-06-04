@@ -153,7 +153,7 @@ namespace _86boxManager.Views
                     sortColumn = 0;
                     sortOrder = SortType.Ascending;
 
-                    // TODO lstVMs.EnableGridLines = TreeViewGridLines.None;
+                    lstVMs.EnableGridLines(false);
                     VMCenter.Sort(sortColumn, sortOrder);
 
                     //Defaults must also be written to the registry
@@ -184,7 +184,7 @@ namespace _86boxManager.Views
                     sortColumn = (int)regkey.GetValue("SortColumn");
                     sortOrder = (SortType)regkey.GetValue("SortOrder");
 
-                    // TODO lstVMs.EnableGridLines = gridlines ? TreeViewGridLines.Both : TreeViewGridLines.None;
+                    lstVMs.EnableGridLines(gridlines);
                     VMCenter.Sort(sortColumn, sortOrder);
                 }
 
@@ -284,7 +284,7 @@ namespace _86boxManager.Views
             if (closeTray)
             {
                 cancel = true;
-                // TODO trayIcon.MakeVisible(true);
+                trayIcon.MakeVisible(true);
                 Hide();
             }
             else
@@ -481,14 +481,14 @@ namespace _86boxManager.Views
         {
             Show();
             BringToFront();
-            // TODO trayIcon.MakeVisible(false);
+            trayIcon.MakeVisible(false);
         }
 
         internal async void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Show();
             BringToFront();
-            // TODO trayIcon.MakeVisible(false);
+            trayIcon.MakeVisible(false);
 
             await this.RunDialog(new dlgSettings(), () => LoadSettings());
         }
@@ -586,19 +586,13 @@ namespace _86boxManager.Views
             if (trayIcon is { Menu: { } })
             {
                 cmsTrayIcon = trayIcon.Menu;
-                cmsTrayIcon.Opening += Menu_NeedsUpdate;
             }
-        }
-
-        private void Menu_NeedsUpdate(object sender, EventArgs e)
-        {
-            // TODO
         }
 
         // Handles the click event for the listview column headers, allowing to sort the items by columns
         private void lstVMs_ColumnClick(object sender, Avalonia.AvaloniaPropertyChangedEventArgs e)
         {
-            // TODO
+            // TODO Sorting?!
             // var source = (TreeViewColumn)sender;
             // var column = source.SortColumnId;
             // var order = source.SortOrder;

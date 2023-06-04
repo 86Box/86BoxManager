@@ -16,7 +16,14 @@ namespace _86boxManager.Tools
 
         public static void Iconify(this Window window)
         {
-            throw new System.NotImplementedException();
+            window.WindowState = WindowState.Minimized;
+        }
+
+        public static void EnableGridLines(this DataGrid view, bool value)
+        {
+            view.GridLinesVisibility = value
+                ? DataGridGridLinesVisibility.All
+                : DataGridGridLinesVisibility.None;
         }
     }
 }
