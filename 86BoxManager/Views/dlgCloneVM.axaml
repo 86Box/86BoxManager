@@ -11,7 +11,7 @@
 	<StackPanel Margin="12">
 		<TextBlock Name="lblOldVM" Text="Virtual Machine &quot;&lt;name here&gt;&quot; will be cloned into:" Margin="0,5,0,10"/>
 		<TextBlock Text="Name:" Margin="2"/>
-		<TextBox Name="txtName" Watermark="Enter name" TextInput="txtName_TextChanged"/>
+		<TextBox Name="txtName" Watermark="Enter name" />
 		<TextBlock Text="Description:" Margin="2"/>
 		<TextBox Name="txtDescription" Watermark="Enter description"/>
 		<TextBlock Name="lblPath1" Text="Path: &lt;path goes here&gt;" Margin="5" />
@@ -19,7 +19,7 @@
 		<CheckBox Name="cbxOpenCFG" Content="Configure this virtual machine now" Margin="0,0,0,10"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Name="btnClone" Content="Clone" HorizontalAlignment="Stretch" Click="btnClone_Click"/>
-            <Button Name="btnCancel" Content="Cancel" HorizontalAlignment="Stretch" IsDefault="True"/>
+            <Button Name="btnCancel" Content="Cancel" HorizontalAlignment="Stretch" Click="btnCancel_Click" IsDefault="True"/>
         </StackPanel>
     </StackPanel>
 </Window>

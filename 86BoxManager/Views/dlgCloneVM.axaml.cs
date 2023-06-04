@@ -19,6 +19,7 @@ namespace _86boxManager.Views
         public dlgCloneVM()
         {
             InitializeComponent();
+            txtName.OnTextChanged(txtName_TextChanged);
         }
 
         public dlgCloneVM(string oldPath) : this()
@@ -79,6 +80,11 @@ namespace _86boxManager.Views
                 cbxStartVM.IsActive(), Program.Root);
 
             Close(ResponseType.Ok);
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            Close(ResponseType.Cancel);
         }
     }
 }
