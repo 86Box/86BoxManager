@@ -2,6 +2,7 @@
 using _86BoxManager.API;
 using _86boxManager.Models;
 using _86boxManager.Tools;
+using Avalonia.Threading;
 using ButtonsType = MessageBox.Avalonia.Enums.ButtonEnum;
 using MessageType = MessageBox.Avalonia.Enums.Icon;
 using ResponseType = MessageBox.Avalonia.Enums.ButtonResult;
@@ -214,6 +215,17 @@ namespace _86boxManager.Core
         }
 
         public void OnManagerStartVm(string vmName)
+        {
+            if (Dispatcher.UIThread.CheckAccess())
+            {
+                OnManagerStartVmInternal(vmName);
+                return;
+            }
+            const DispatcherPriority lvl = DispatcherPriority.Background;
+            Dispatcher.UIThread.Post(() => OnManagerStartVmInternal(vmName), lvl);
+        }
+
+        private void OnManagerStartVmInternal(string vmName)
         {
             var ui = Program.Root;
             var lstVMs = ui.lstVMs;
