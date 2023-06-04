@@ -1,23 +1,36 @@
 ﻿using System.Runtime.InteropServices;
 using System;
-using System.Windows.Forms;
 using _86BoxManager.API;
 using static _86BoxManager.Windows.Internal.Win32Imports;
+using System.ComponentModel;
+
+// ReSharper disable NotAccessedField.Local
 
 namespace _86BoxManager.Windows.Internal
 {
-    internal sealed class WinLoop : Form, IMessageLoop, IMessageSender
+    internal sealed class WinLoop : IMessageLoop, IMessageSender
     {
         private readonly IMessageReceiver _callback;
+        private readonly IntPtr _hwnd;
+        private readonly WndProc wndProcDelegate;
 
-        public WinLoop(IMessageReceiver callback)
+        public WinLoop(IMessageReceiver callback, string title = "86Box Manager Secret")
         {
-            Text = "86Box Manager Secret";
             _callback = callback;
+            if (_callback == null)
+                return;
+            _hwnd = CreateMessageWindow(title, wndProcDelegate = WndProc);
+        }
+
+        private IntPtr WndProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam)
+        {
+            var message = Message.Create(hWnd, msg, wParam, lParam);
+            WndProc(ref message);
+            return DefWindowProc(hWnd, msg, wParam, lParam);
         }
 
         // This function monitors received window messages
-        protected override void WndProc(ref Message m)
+        private void WndProc(ref Message m)
         {
             // 0x8891 - Main window init complete, wparam = VM ID, lparam = VM window handle
             // 0x8895 - VM paused/resumed, wparam = 1: VM paused, wparam = 0: VM resumed
@@ -78,13 +91,11 @@ namespace _86BoxManager.Windows.Internal
 
                 _callback.OnManagerStartVm(vmName);
             }
-
-            base.WndProc(ref m);
         }
 
         public IntPtr GetHandle()
         {
-            var native = Handle;
+            var native = _hwnd;
             return native;
         }
 
@@ -140,6 +151,42 @@ namespace _86BoxManager.Windows.Internal
             cds.lpData = Marshal.StringToHGlobalAnsi(vmName);
             cds.cbData = vmName.Length;
             SendMessage(hWnd, WM_COPYDATA, IntPtr.Zero, ref cds);
+        }
+
+        private static IntPtr CreateMessageWindow(string title, WndProc proc)
+        {
+            var wndClassEx = new WNDCLASSEX
+            {
+                cbSize = Marshal.SizeOf<WNDCLASSEX>(),
+                lpfnWndProc = proc,
+                hInstance = GetModuleHandle(null),
+                lpszClassName = title
+            };
+            var atom = RegisterClassEx(ref wndClassEx);
+            if (atom == 0)
+                throw new Win32Exception();
+            var hwnd = CreateWindowEx(0, atom, null, 0, 0, 0, 0,
+                0, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
+            if (hwnd == IntPtr.Zero)
+                throw new Win32Exception();
+            var ok = SetWindowText(hwnd, title);
+            if (!ok)
+                throw new Win32Exception();
+            return hwnd;
+        }
+
+        public struct Message
+        {
+            public IntPtr HWnd { get; set; }
+            public uint Msg { get; set; }
+            public IntPtr WParam { get; set; }
+            public IntPtr LParam { get; set; }
+            public IntPtr Result { get; set; }
+
+            public object GetLParam(Type cls) => Marshal.PtrToStructure(LParam, cls);
+
+            public static Message Create(IntPtr hWnd, uint msg, IntPtr wparam, IntPtr lparam)
+                => new() { HWnd = hWnd, Msg = msg, WParam = wparam, LParam = lparam, Result = IntPtr.Zero };
         }
     }
 }
