@@ -23,6 +23,8 @@ namespace _86boxManager.Views
         public dlgSettings()
         {
             InitializeComponent();
+            txtEXEdir.OnTextChanged(txt_TextChanged);
+            txtCFGdir.OnTextChanged(txt_TextChanged);
         }
 
         private bool settingsChanged = false; // Keeps track of unsaved changes
@@ -46,7 +48,7 @@ namespace _86boxManager.Views
                 return;
 
             // Unsaved changes, ask the user to confirm
-            var result = (ResponseType)Dialogs.ShowMessageBox(
+            var result = Dialogs.ShowMessageBox(
                 "Would you like to save the changes you've made to the settings?",
                 MessageType.Question, ButtonsType.YesNo, "Unsaved changes");
             if (result == ResponseType.Yes)
@@ -160,14 +162,6 @@ namespace _86boxManager.Views
                     txtCFGdir.Text += IOPath.DirectorySeparatorChar;
                 }
             }
-        }
-
-        private void lnkGithub_LinkClicked(object sender, PointerPressedEventArgs e)
-        {
-        }
-
-        private void lnkGithub2_LinkClicked(object sender, PointerPressedEventArgs e)
-        {
         }
 
         private void txt_TextChanged(object sender, TextInputEventArgs e)
@@ -402,6 +396,11 @@ namespace _86boxManager.Views
             {
                 regkey.Close();
             }
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            Close(ResponseType.Cancel);
         }
     }
 }
