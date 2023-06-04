@@ -11,19 +11,6 @@ namespace _86boxManager.Core
 {
     internal sealed class VMHandler : IMessageReceiver
     {
-        private static uint GetTempId(VM vm)
-        {
-            // This can return negative integers, which is a no-no for 86Box,
-            // hence the shift up by int.MaxValue
-            var tempId = vm.Path.GetHashCode();
-            uint id;
-            if (tempId < 0)
-                id = (uint)(tempId + int.MaxValue);
-            else
-                id = (uint)tempId;
-            return id;
-        }
-
         public void OnEmulatorInit(IntPtr hWnd, uint vmId)
         {
             var ui = Program.Root;
@@ -33,7 +20,7 @@ namespace _86boxManager.Core
             foreach (var lvi in items)
             {
                 var vm = lvi.Tag;
-                var id = GetTempId(vm);
+                var id = VMWatch.GetTempId(vm);
                 if (id != vmId)
                     continue;
 

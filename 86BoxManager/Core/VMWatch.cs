@@ -118,7 +118,7 @@ namespace _86boxManager.Core
                  * can be negative, so shift it up by int.MaxValue to ensure it's always positive. */
 
             var tempid = vm.Path.GetHashCode();
-            uint id = 0;
+            uint id;
 
             if (tempid < 0)
                 id = (uint)(tempid + int.MaxValue);
