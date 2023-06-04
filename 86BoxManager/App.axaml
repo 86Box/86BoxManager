@@ -8,4 +8,19 @@
         <FluentTheme Mode="Light"/>
         <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
 	</Application.Styles>
+
+    <TrayIcon.Icons>
+            <TrayIcons>
+				<TrayIcon Icon="/Assets/86Box-gray.ico" ToolTipText="86Box Manager">
+                    <TrayIcon.Menu>
+                        <NativeMenu>
+                            <NativeMenuItem Header="Show 86Box Manager" Click="open86BoxManagerToolStripMenuItem_Click" />
+                            <NativeMenuItem Header="Settings" Click="settingsToolStripMenuItem_Click" />
+							<NativeMenuItemSeparator />
+                            <NativeMenuItem Header="Exit" Click="exitToolStripMenuItem_Click" />
+                        </NativeMenu>
+                    </TrayIcon.Menu>
+                </TrayIcon>
+            </TrayIcons>
+    </TrayIcon.Icons>
 </Application>

@@ -1,3 +1,4 @@
+using System;
 using _86boxManager.ViewModels;
 using _86boxManager.Views;
 using Avalonia;
@@ -25,5 +26,14 @@ namespace _86boxManager
 
             base.OnFrameworkInitializationCompleted();
         }
+
+        private void open86BoxManagerToolStripMenuItem_Click(object sender, EventArgs e)
+            => Program.Root.open86BoxManagerToolStripMenuItem_Click(sender, e);
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+            => Program.Root.settingsToolStripMenuItem_Click(sender, e);
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+            => Program.Root.exitToolStripMenuItem_Click(sender, e);
     }
 }

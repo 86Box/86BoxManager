@@ -16,6 +16,7 @@ using RegistryValueKind = _86boxManager.Registry.ValueKind;
 using ButtonsType = MessageBox.Avalonia.Enums.ButtonEnum;
 using MessageType = MessageBox.Avalonia.Enums.Icon;
 using ResponseType = MessageBox.Avalonia.Enums.ButtonResult;
+using System.Threading;
 
 namespace _86boxManager.Views
 {
@@ -237,7 +238,7 @@ namespace _86boxManager.Views
         internal bool showConsole = true; //Show the console window when a VM is started?
         private bool minimizeTray = false; //Minimize the Manager window to tray icon?
         private bool closeTray = false; //Close the Manager Window to tray icon?
-        internal string hWndHex = "";  //Window handle of this window
+        internal string hWndHex = ""; //Window handle of this window
         internal int sortColumn = 0; //The column for sorting
         internal SortType sortOrder = SortType.Ascending; //Sorting order
         internal bool logging = false; //Logging enabled for 86Box.exe (-L parameter)?
@@ -470,6 +471,68 @@ namespace _86boxManager.Views
                         MessageType.Error, ButtonsType.Ok, "Error");
                 }
             }
+        }
+
+        internal void open86BoxManagerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Show();
+            BringToFront();
+            // TODO trayIcon.MakeVisible(false);
+        }
+
+        internal async void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Show();
+            BringToFront();
+            // TODO trayIcon.MakeVisible(false);
+
+            await this.RunDialog(new dlgSettings(), () => LoadSettings());
+        }
+
+        internal void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var vmCount = 0;
+            foreach (var item in lstVMs.GetAllItems())
+            {
+                var vm = item.Tag;
+                if (vm.Status != VM.STATUS_STOPPED)
+                {
+                    vmCount++;
+                }
+            }
+
+            // If there are running VMs, display the warning and stop the VMs if user says so
+            if (vmCount > 0)
+            {
+                var result = Dialogs.ShowMessageBox("Some virtual machines are still running. " +
+                                                    "It's recommended you stop them first before " +
+                                                    "closing 86Box Manager. Do you want to stop them now?",
+                    MessageType.Warning, ButtonsType.YesNo, "Virtual machines are still running");
+                if (result == ResponseType.Yes)
+                {
+                    foreach (var lvi in lstVMs.GetAllItems())
+                    {
+                        var vm = lvi.Tag;
+                        lstVMs.ClearSelect();
+                        if (vm.Status != VM.STATUS_STOPPED)
+                        {
+                            lvi.Focused = true;
+                            lvi.Selected = true;
+
+                            // Tell the VMs to stop without asking for user confirmation
+                            VMCenter.ForceStop(lstVMs.GetSelItems(), this);
+                        }
+                    }
+
+                    // Wait just a bit to make sure everything goes as planned
+                    Thread.Sleep(vmCount * 500);
+                }
+                else if (result == ResponseType.Cancel)
+                {
+                    return;
+                }
+            }
+            Quit();
         }
     }
 }
