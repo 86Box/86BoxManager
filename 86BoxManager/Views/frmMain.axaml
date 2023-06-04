@@ -31,7 +31,9 @@
 			<Label Name="lblVMCount" Margin="10" Content="{Binding Path=VmCount}" />
 		</StackPanel>
 		<StackPanel Margin="10,0,10,0">
-			<DataGrid Name="lstVMs" Items="{Binding Path=Machines}" AutoGenerateColumns="False">
+			<DataGrid Name="lstVMs" Items="{Binding Path=Machines}" AutoGenerateColumns="False" 
+                      SelectionChanged="lstVMs_SelectedIndexChanged" KeyDown="lstVMs_KeyDown"
+                      CellPointerPressed="lstVMs_MouseDoubleClick" PointerReleased="OnTreeButtonRelease">
 				<DataGrid.Columns>
                     <DataGridTemplateColumn Header="">
                         <DataGridTemplateColumn.CellTemplate>

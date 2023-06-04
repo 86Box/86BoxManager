@@ -6,12 +6,12 @@ namespace _86boxManager.Tools
     {
         public static void SetToolTip(this Control widget, string text)
         {
-            // TODO
+            ToolTip.SetTip(widget, text);
         }
 
         public static void UnsetToolTip(this Control widget)
         {
-            // TODO
+            ToolTip.SetTip(widget, null);
         }
     }
 }

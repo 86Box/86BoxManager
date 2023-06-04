@@ -35,5 +35,8 @@ namespace _86boxManager
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
             => Program.Root.exitToolStripMenuItem_Click(sender, e);
+
+        private void trayIcon_MouseClick(object sender, EventArgs e)
+            => Program.Root.trayIcon_MouseClick(sender, e);
     }
 }

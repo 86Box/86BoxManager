@@ -11,7 +11,7 @@
 
     <TrayIcon.Icons>
             <TrayIcons>
-				<TrayIcon Icon="/Assets/86Box-gray.ico" ToolTipText="86Box Manager">
+				<TrayIcon Icon="/Assets/86Box-gray.ico" ToolTipText="86Box Manager" Clicked="trayIcon_MouseClick">
                     <TrayIcon.Menu>
                         <NativeMenu>
                             <NativeMenuItem Header="Show 86Box Manager" Click="open86BoxManagerToolStripMenuItem_Click" />

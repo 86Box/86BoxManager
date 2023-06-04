@@ -17,6 +17,9 @@ using ButtonsType = MessageBox.Avalonia.Enums.ButtonEnum;
 using MessageType = MessageBox.Avalonia.Enums.Icon;
 using ResponseType = MessageBox.Avalonia.Enums.ButtonResult;
 using System.Threading;
+using Avalonia;
+using Avalonia.Input;
+using Avalonia.VisualTree;
 
 namespace _86boxManager.Views
 {
@@ -37,9 +40,10 @@ namespace _86boxManager.Views
                 frmMain_Load(sender, e);
             }
         }
-
+        
         private void frmMain_Load(object sender, EventArgs e)
         {
+            PrepareUi();
             LoadSettings();
             LoadVMs();
 
@@ -55,7 +59,7 @@ namespace _86boxManager.Views
             if (Program.GetVmArg(Program.Args, out var invVmName))
             {
                 //Find the VM with given name
-                var lvi = Cache.FindItemWithText(invVmName);
+                var lvi = lstVMs.FindItemWithText(invVmName);
 
                 //Then select and start it if it's found
                 if (lvi != null)
@@ -533,6 +537,317 @@ namespace _86boxManager.Views
                 }
             }
             Quit();
+        }
+
+        // Handles things when WindowState changes
+        protected override void HandleWindowStateChanged(WindowState state)
+        {
+            base.HandleWindowStateChanged(state);
+
+            if (state == WindowState.Minimized && minimizeTray)
+            {
+                trayIcon.MakeVisible(true);
+                Hide();
+                return;
+            }
+
+            if (state == WindowState.Normal)
+            {
+                Show();
+                trayIcon.MakeVisible(false);
+            }
+        }
+
+        private DataGridColumn clmIcon;
+        private DataGridColumn clmName;
+        private DataGridColumn clmStatus;
+        private DataGridColumn clmDesc;
+        private DataGridColumn clmPath;
+        private TrayIcon trayIcon;
+        private NativeMenu cmsTrayIcon;
+
+        private void PrepareUi()
+        {
+            var columns = lstVMs.Columns;
+            clmIcon = columns[0];
+            clmName = columns[1];
+            clmStatus = columns[2];
+            clmDesc = columns[3];
+            clmPath = columns[4];
+
+            clmIcon.PropertyChanged += lstVMs_ColumnClick;
+            clmName.PropertyChanged += lstVMs_ColumnClick;
+            clmStatus.PropertyChanged += lstVMs_ColumnClick;
+            clmDesc.PropertyChanged += lstVMs_ColumnClick;
+            clmPath.PropertyChanged += lstVMs_ColumnClick;
+
+            var app = Application.Current;
+            trayIcon = app?.GetValue(TrayIcon.IconsProperty).FirstOrDefault();
+            if (trayIcon is { Menu: { } })
+            {
+                cmsTrayIcon = trayIcon.Menu;
+                cmsTrayIcon.Opening += Menu_NeedsUpdate;
+            }
+        }
+
+        private void Menu_NeedsUpdate(object sender, EventArgs e)
+        {
+            // TODO
+        }
+
+        // Handles the click event for the listview column headers, allowing to sort the items by columns
+        private void lstVMs_ColumnClick(object sender, Avalonia.AvaloniaPropertyChangedEventArgs e)
+        {
+            // TODO
+            // var source = (TreeViewColumn)sender;
+            // var column = source.SortColumnId;
+            // var order = source.SortOrder;
+            // VMCenter.Sort(column, order);
+        }
+
+        internal void trayIcon_MouseClick(object sender, EventArgs e)
+        {
+            if (IsVisible)
+                return;
+
+            //Restore the window and hide the tray icon
+            Show();
+            BringToFront();
+            trayIcon.MakeVisible(false);
+        }
+
+        private void lstVMs_SelectedIndexChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var select = (DataGrid)sender;
+            var selected = select.GetSelItems();
+
+            // Disable relevant buttons if no VM is selected
+            if (selected.Count == 0)
+            {
+                btnConfigure.IsEnabled = false;
+                btnStart.IsEnabled = false;
+                btnEdit.IsEnabled = false;
+                btnDelete.IsEnabled = false;
+                btnReset.IsEnabled = false;
+                btnCtrlAltDel.IsEnabled = false;
+                btnPause.IsEnabled = false;
+                return;
+            }
+
+            if (selected.Count == 1)
+            {
+                //Disable relevant buttons if VM is running
+                var vm = selected[0].Tag;
+                if (vm.Status == VM.STATUS_RUNNING)
+                {
+                    btnStart.IsEnabled = true;
+                    btnStart.Content = "Stop";
+                    btnStart.SetToolTip("Stop this virtual machine");
+                    btnEdit.IsEnabled = false;
+                    btnDelete.IsEnabled = false;
+                    btnConfigure.IsEnabled = true;
+                    btnPause.IsEnabled = true;
+                    btnPause.Content = "Pause";
+                    btnReset.IsEnabled = true;
+                    btnCtrlAltDel.IsEnabled = true;
+                }
+                else if (vm.Status == VM.STATUS_STOPPED)
+                {
+                    btnStart.IsEnabled = true;
+                    btnStart.Content = "Start";
+                    btnStart.SetToolTip("Start this virtual machine");
+                    btnEdit.IsEnabled = true;
+                    btnDelete.IsEnabled = true;
+                    btnConfigure.IsEnabled = true;
+                    btnPause.IsEnabled = false;
+                    btnPause.Content = "Pause";
+                    btnReset.IsEnabled = false;
+                    btnCtrlAltDel.IsEnabled = false;
+                }
+                else if (vm.Status == VM.STATUS_PAUSED)
+                {
+                    btnStart.IsEnabled = true;
+                    btnStart.Content = "Stop";
+                    btnStart.SetToolTip("Stop this virtual machine");
+                    btnEdit.IsEnabled = false;
+                    btnDelete.IsEnabled = false;
+                    btnConfigure.IsEnabled = true;
+                    btnPause.IsEnabled = true;
+                    btnPause.Content = "Resume";
+                    btnReset.IsEnabled = true;
+                    btnCtrlAltDel.IsEnabled = true;
+                }
+                else if (vm.Status == VM.STATUS_WAITING)
+                {
+                    btnStart.IsEnabled = false;
+                    btnStart.Content = "Stop";
+                    btnStart.SetToolTip("Stop this virtual machine");
+                    btnEdit.IsEnabled = false;
+                    btnDelete.IsEnabled = false;
+                    btnReset.IsEnabled = false;
+                    btnCtrlAltDel.IsEnabled = false;
+                    btnPause.IsEnabled = false;
+                    btnPause.Content = "Pause";
+                    btnConfigure.IsEnabled = false;
+                }
+                return;
+            }
+
+            btnConfigure.IsEnabled = false;
+            btnStart.IsEnabled = false;
+            btnEdit.IsEnabled = false;
+            btnDelete.IsEnabled = true;
+            btnReset.IsEnabled = false;
+            btnCtrlAltDel.IsEnabled = false;
+            btnPause.IsEnabled = false;
+        }
+
+        // Starts/stops selected VM when enter is pressed
+        private void lstVMs_KeyDown(object o, KeyEventArgs e)
+        {
+            var isEnter = e.Key is Key.Return or Key.Enter;
+            if (isEnter && lstVMs.GetSelItems().Count == 1)
+            {
+                var vm = lstVMs.GetSelItems()[0].Tag;
+                if (vm.Status == VM.STATUS_RUNNING)
+                {
+                    VMCenter.RequestStop(lstVMs.GetSelItems(), this);
+                }
+                else if (vm.Status == VM.STATUS_STOPPED)
+                {
+                    VMCenter.Start();
+                }
+            }
+            var isDelete = e.Key is Key.Delete;
+            if (isDelete && lstVMs.GetSelItems().Count == 1)
+            {
+                VMCenter.Remove(lstVMs.GetSelItems(), this);
+            }
+        }
+
+        // For double clicking an item, do something based on VM status
+        private void lstVMs_MouseDoubleClick(object o, DataGridCellPointerPressedEventArgs args)
+        {
+            var e = args.PointerPressedEventArgs;
+            var point = e.GetCurrentPoint((IVisual)o);
+            if (point.Properties.IsLeftButtonPressed && e.ClickCount == 2)
+            {
+                var item = lstVMs.GetSelItems()[0];
+                if (item != null)
+                {
+                    var vm = lstVMs.GetSelItems()[0].Tag;
+                    if (vm.Status == VM.STATUS_STOPPED)
+                    {
+                        VMCenter.Start();
+                    }
+                    else if (vm.Status == VM.STATUS_RUNNING)
+                    {
+                        VMCenter.RequestStop(lstVMs.GetSelItems(), this);
+                    }
+                    else if (vm.Status == VM.STATUS_PAUSED)
+                    {
+                        VMCenter.Resume(lstVMs.GetSelItems(), this);
+                    }
+                }
+            }
+        }
+
+        private void OnTreeButtonRelease(object sender, PointerReleasedEventArgs args)
+        {
+            var point = args.GetCurrentPoint((IVisual)sender);
+            if (point.Properties.IsRightButtonPressed)
+                return;
+
+            var cancel = new CancelEventArgs();
+            cmsVM_Opening(sender, cancel);
+            if (cancel.Cancel)
+                return;
+        }
+
+        // Enable/disable relevant menu items depending on selected VM's status
+        private void cmsVM_Opening(object sender, CancelEventArgs e)
+        {
+            var selected = lstVMs.GetSelItems();
+
+            // Available menu option differs based on the number of selected VMs
+            if (selected.Count == 0)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            if (selected.Count == 1)
+            {
+                var vm = selected[0].Tag;
+                switch (vm.Status)
+                {
+                    case VM.STATUS_RUNNING:
+                        startToolStripMenuItem.Header = "Stop";
+                        startToolStripMenuItem.IsEnabled = true;
+                        startToolStripMenuItem.SetToolTip("Stop this virtual machine");
+                        editToolStripMenuItem.IsEnabled = false;
+                        deleteToolStripMenuItem.IsEnabled = false;
+                        hardResetToolStripMenuItem.IsEnabled = true;
+                        resetCTRLALTDELETEToolStripMenuItem.IsEnabled = true;
+                        pauseToolStripMenuItem.IsEnabled = true;
+                        pauseToolStripMenuItem.Header = "Pause";
+                        configureToolStripMenuItem.IsEnabled = true;
+                        break;
+                    case VM.STATUS_STOPPED:
+                        startToolStripMenuItem.Header = "Start";
+                        startToolStripMenuItem.IsEnabled = true;
+                        startToolStripMenuItem.SetToolTip("Start this virtual machine");
+                        editToolStripMenuItem.IsEnabled = true;
+                        deleteToolStripMenuItem.IsEnabled = true;
+                        hardResetToolStripMenuItem.IsEnabled = false;
+                        resetCTRLALTDELETEToolStripMenuItem.IsEnabled = false;
+                        pauseToolStripMenuItem.IsEnabled = false;
+                        pauseToolStripMenuItem.Header = "Pause";
+                        configureToolStripMenuItem.IsEnabled = true;
+                        break;
+                    case VM.STATUS_WAITING:
+                        startToolStripMenuItem.IsEnabled = false;
+                        startToolStripMenuItem.Header = "Stop";
+                        startToolStripMenuItem.SetToolTip("Stop this virtual machine");
+                        editToolStripMenuItem.IsEnabled = false;
+                        deleteToolStripMenuItem.IsEnabled = false;
+                        hardResetToolStripMenuItem.IsEnabled = false;
+                        resetCTRLALTDELETEToolStripMenuItem.IsEnabled = false;
+                        pauseToolStripMenuItem.IsEnabled = false;
+                        pauseToolStripMenuItem.Header = "Pause";
+                        pauseToolStripMenuItem.SetToolTip("Pause this virtual machine");
+                        configureToolStripMenuItem.IsEnabled = false;
+                        break;
+                    case VM.STATUS_PAUSED:
+                        startToolStripMenuItem.IsEnabled = true;
+                        startToolStripMenuItem.Header = "Stop";
+                        startToolStripMenuItem.SetToolTip("Stop this virtual machine");
+                        editToolStripMenuItem.IsEnabled = false;
+                        deleteToolStripMenuItem.IsEnabled = false;
+                        hardResetToolStripMenuItem.IsEnabled = true;
+                        resetCTRLALTDELETEToolStripMenuItem.IsEnabled = true;
+                        pauseToolStripMenuItem.IsEnabled = true;
+                        pauseToolStripMenuItem.Header = "Resume";
+                        pauseToolStripMenuItem.SetToolTip("Resume this virtual machine");
+                        configureToolStripMenuItem.IsEnabled = true;
+                        break;
+                }
+                return;
+            }
+
+            // Multiple VMs selected => disable most options
+            startToolStripMenuItem.Header = "Start";
+            startToolStripMenuItem.IsEnabled = false;
+            startToolStripMenuItem.SetToolTip("Start this virtual machine");
+            editToolStripMenuItem.IsEnabled = false;
+            deleteToolStripMenuItem.IsEnabled = true;
+            hardResetToolStripMenuItem.IsEnabled = false;
+            resetCTRLALTDELETEToolStripMenuItem.IsEnabled = false;
+            pauseToolStripMenuItem.IsEnabled = false;
+            pauseToolStripMenuItem.Header = "Pause";
+            killToolStripMenuItem.IsEnabled = true;
+            configureToolStripMenuItem.IsEnabled = false;
+            cloneToolStripMenuItem.IsEnabled = false;
         }
     }
 }
