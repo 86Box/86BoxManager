@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using _86boxManager.Core;
 using _86boxManager.Registry;
+using Avalonia.Media;
 using ButtonsType = MessageBox.Avalonia.Enums.ButtonEnum;
 using MessageType = MessageBox.Avalonia.Enums.Icon;
 using ResponseType = MessageBox.Avalonia.Enums.ButtonResult;
@@ -205,23 +206,23 @@ namespace _86boxManager.Views
                 if (vi.FilePrivatePart >= 3541) //Officially supported builds
                 {
                     var vText = $"{vi.FileMajorPart}.{vi.FileMinorPart}.{vi.FileBuildPart}.{vi.FilePrivatePart} - fully compatible";
-                    lbl86BoxVer1.Content = $@"<span weight=""bold"" foreground=""ForestGreen"">{vText}</span>";
+                    lbl86BoxVer1.SetColorTxt(Brushes.ForestGreen, FontWeight.Bold, vText);
                 }
                 else if (vi.FilePrivatePart >= 3333 && vi.FilePrivatePart < 3541) //Should mostly work...
                 {
                     var vText = $"{vi.FileMajorPart}.{vi.FileMinorPart}.{vi.FileBuildPart}.{vi.FilePrivatePart} - partially compatible";
-                    lbl86BoxVer1.Content = $@"<span weight=""bold"" foreground=""Orange"">{vText}</span>";
+                    lbl86BoxVer1.SetColorTxt(Brushes.Orange, FontWeight.Bold, vText);
                 }
                 else //Completely unsupported, since version info can't be obtained anyway
                 {
                     var vText = "Unknown - may not be compatible";
-                    lbl86BoxVer1.Content = $@"<span weight=""bold"" foreground=""Red"">{vText}</span>";
+                    lbl86BoxVer1.SetColorTxt(Brushes.Red, FontWeight.Bold, vText);
                 }
             }
             catch
             {
                 var vText = "86Box executable not found!";
-                lbl86BoxVer1.Content = $@"<span weight=""bold"" foreground=""Gray"">{vText}</span>";
+                lbl86BoxVer1.SetColorTxt(Brushes.Gray, FontWeight.Bold, vText);
             }
         }
 

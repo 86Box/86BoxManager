@@ -1,5 +1,6 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Media;
 
 namespace _86boxManager.Tools
 {
@@ -24,6 +25,14 @@ namespace _86boxManager.Tools
             view.GridLinesVisibility = value
                 ? DataGridGridLinesVisibility.All
                 : DataGridGridLinesVisibility.None;
+        }
+
+        public static void SetColorTxt(this ContentControl label, ISolidColorBrush color,
+            FontWeight weight, string text)
+        {
+            label.Foreground = color;
+            label.FontWeight = weight;
+            label.Content = text;
         }
     }
 }
