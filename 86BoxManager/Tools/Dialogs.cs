@@ -9,9 +9,7 @@ using MessageBox.Avalonia;
 using MessageBox.Avalonia.Enums;
 using MessageBox.Avalonia.DTO;
 using System.Linq;
-using ButtonsType = MessageBox.Avalonia.Enums.ButtonEnum;
-using MessageType = MessageBox.Avalonia.Enums.Icon;
-using ResponseType = MessageBox.Avalonia.Enums.ButtonResult;
+using StartLoc = Avalonia.Controls.WindowStartupLocation;
 
 namespace _86boxManager.Tools
 {
@@ -20,22 +18,27 @@ namespace _86boxManager.Tools
         public static ButtonResult ShowMessageBox(string msg, Icon icon,
             ButtonEnum buttons = ButtonEnum.Ok, string title = "Attention")
         {
+            var parent = Program.Root;
+            var loc = parent == null ? StartLoc.CenterScreen : StartLoc.CenterOwner;
             var opts = new MessageBoxStandardParams
             {
                 ButtonDefinitions = buttons,
                 ContentTitle = title,
                 ContentMessage = msg,
                 Icon = icon,
-                ShowInCenter = true,
-                CanResize = false
+                CanResize = false,
+                WindowStartupLocation = loc,
+                SizeToContent = SizeToContent.WidthAndHeight
             };
             var window = MessageBoxManager.GetMessageBoxStandardWindow(opts);
-            var raw = window.Show();
+            var raw = parent != null ? window.ShowDialog(parent) : window.Show();
             if (Application.Current is var app)
             {
                 var flags = BindingFlags.NonPublic | BindingFlags.Instance;
                 var windowField = window.GetType().GetField("_window", flags)!;
-                var windowObj = (Window)windowField.GetValue(window);
+                var windowObj = (Window)windowField.GetValue(window)!;
+                if (parent?.Icon is { } wi)
+                    windowObj.Icon = wi;
                 app.Run(windowObj);
             }
             var res = raw.GetAwaiter().GetResult();
@@ -45,6 +48,9 @@ namespace _86boxManager.Tools
         [SuppressMessage("ReSharper", "SuspiciousTypeConversion.Global")]
         public static async Task RunDialog(this Window parent, Window dialog, Action func = null)
         {
+            dialog.WindowStartupLocation = StartLoc.CenterOwner;
+            dialog.Icon = parent.Icon;
+
             var raw = dialog.ShowDialog(parent);
             await raw;
             func?.Invoke();
