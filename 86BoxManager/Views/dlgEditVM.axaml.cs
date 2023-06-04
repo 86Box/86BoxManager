@@ -17,6 +17,7 @@ namespace _86boxManager.Views
         public dlgEditVM()
         {
             InitializeComponent();
+            txtName.OnTextChanged(txtName_TextChanged);
         }
 
         private VM vm = null; //VM to be edited
@@ -68,6 +69,11 @@ namespace _86boxManager.Views
             VMCenter.Edit(txtName.Text, txtDesc.Text);
 
             Close(ResponseType.Ok);
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            Close(ResponseType.Cancel);
         }
     }
 }
