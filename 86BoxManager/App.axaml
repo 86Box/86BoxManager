@@ -1,0 +1,26 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:avalonia="clr-namespace:HyperText.Avalonia;assembly=HyperText.Avalonia"
+             x:Class="_86BoxManager.App">
+
+    <Application.Styles>
+        <avalonia:HyperLinkStyle/>
+        <FluentTheme Mode="Light"/>
+        <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
+	</Application.Styles>
+
+    <TrayIcon.Icons>
+            <TrayIcons>
+				<TrayIcon Icon="/Assets/86Box-gray.ico" ToolTipText="86Box Manager" Clicked="trayIcon_MouseClick">
+                    <TrayIcon.Menu>
+                        <NativeMenu>
+                            <NativeMenuItem Header="Show 86Box Manager" Click="open86BoxManagerToolStripMenuItem_Click" />
+                            <NativeMenuItem Header="Settings" Click="settingsToolStripMenuItem_Click" />
+							<NativeMenuItemSeparator />
+                            <NativeMenuItem Header="Exit" Click="exitToolStripMenuItem_Click" />
+                        </NativeMenu>
+                    </TrayIcon.Menu>
+                </TrayIcon>
+            </TrayIcons>
+    </TrayIcon.Icons>
+</Application>

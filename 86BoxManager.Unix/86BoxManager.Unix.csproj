@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>_86BoxManager.Unix</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Mono.Unix" Version="7.1.0-final.1.21458.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\86BoxManager.Common\86BoxManager.Common.csproj" />
+  </ItemGroup>
+
+</Project>

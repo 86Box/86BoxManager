@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>_86BoxManager</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\86BoxManager.Linux\86BoxManager.Linux.csproj" />
+    <ProjectReference Include="..\86BoxManager.Mac\86BoxManager.Mac.csproj" />
+    <ProjectReference Include="..\86BoxManager.Windows\86BoxManager.Windows.csproj" />
+  </ItemGroup>
+
+</Project>

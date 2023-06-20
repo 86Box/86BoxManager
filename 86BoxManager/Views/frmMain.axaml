@@ -1,0 +1,74 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        xmlns:vm="clr-namespace:_86BoxManager.ViewModels"
+        x:DataType="vm:MainModel"
+        d:DesignWidth="700" d:DesignHeight="450"
+        Width="700" Height="450"
+        x:Class="_86BoxManager.Views.frmMain"
+        Icon="/Assets/86Box-gray.ico"
+        Title="86Box Manager"
+        Opened="Main_OnOpened"
+        Closing="Window_OnClosing">
+	<Design.DataContext>
+		<vm:MainModel/>
+	</Design.DataContext>
+	<DockPanel>
+		<StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="12" Spacing="3">
+			<Button Name="btnAdd" Click="btnAdd_Click">Add</Button>
+			<Button Name="btnEdit" Click="btnEdit_Click">Edit</Button>
+			<Button Name="btnDelete" Click="btnDelete_Click">Remove</Button>
+			<Button Name="btnStart" Click="btnStart_Click" Margin="20,0,0,0">Start</Button>
+			<Button Name="btnConfigure" Click="btnConfigure_Click">Configure</Button>
+			<Button Name="btnPause" Click="btnPause_Click">Pause</Button>
+			<Button Name="btnCtrlAltDel" Click="btnCtrlAltDel_Click">C+A+D</Button>
+			<Button Name="btnReset" Click="btnReset_Click">Reset</Button>
+			<Button Name="btnSettings" Click="btnSettings_Click" Margin="50,0,0,0">Settings</Button>
+		</StackPanel>
+		<StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Background="#f0f0f0">
+			<Label Name="lblVMCount" Margin="10" Content="{Binding Path=VmCount}" />
+		</StackPanel>
+		<StackPanel Margin="10,0,10,0">
+			<DataGrid Name="lstVMs" Items="{Binding Path=Machines}" AutoGenerateColumns="False" 
+                      SelectionChanged="lstVMs_SelectedIndexChanged" KeyDown="lstVMs_KeyDown"
+                      CellPointerPressed="lstVMs_MouseDoubleClick" PointerReleased="OnTreeButtonRelease">
+				<DataGrid.Columns>
+                    <DataGridTemplateColumn Header="">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate DataType="vm:VMRow">
+								<StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding Icon}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Width="2*" Header="Name" Binding="{Binding Name}" />
+                    <DataGridTextColumn Width="2*" Header="Status" Binding="{Binding Status}" />
+					<DataGridTextColumn Width="2*" Header="Description" Binding="{Binding Desc}" />
+					<DataGridTextColumn Width="2*" Header="Path" Binding="{Binding Path}" />
+                </DataGrid.Columns>
+				<DataGrid.ContextMenu>
+                    <ContextMenu Name="lstVMpop">
+                        <MenuItem Name="startToolStripMenuItem" Header="Start" Click="startToolStripMenuItem_Click" IsEnabled="True" />
+						<MenuItem Name="configureToolStripMenuItem" Header="Configure" Click="configureToolStripMenuItem_Click" IsEnabled="True" />
+						<MenuItem Name="pauseToolStripMenuItem" Header="Pause" Click="pauseToolStripMenuItem_Click" IsEnabled="True" />
+						<MenuItem Name="resetCTRLALTDELETEToolStripMenuItem" Header="Send CTRL+ALT+DEL" Click="resetCTRLALTDELETEToolStripMenuItem_Click" IsEnabled="True" />
+						<MenuItem Name="hardResetToolStripMenuItem" Header="Hard reset" Click="hardResetToolStripMenuItem_Click" IsEnabled="True" />
+						<Separator />
+						<MenuItem Name="killToolStripMenuItem" Header="Kill" Click="killToolStripMenuItem_Click" IsEnabled="True" />
+						<MenuItem Name="wipeToolStripMenuItem" Header="Wipe" Click="wipeToolStripMenuItem_Click" IsEnabled="True" />
+						<Separator />
+						<MenuItem Name="editToolStripMenuItem" Header="Edit" Click="editToolStripMenuItem_Click" IsEnabled="True" />
+						<MenuItem Name="cloneToolStripMenuItem" Header="Clone" Click="cloneToolStripMenuItem_Click" IsEnabled="True" />
+						<MenuItem Name="deleteToolStripMenuItem" Header="Remove" Click="deleteToolStripMenuItem_Click" IsEnabled="True" />
+						<MenuItem Name="openFolderToolStripMenuItem" Header="Open folder in Explorer" Click="openFolderToolStripMenuItem_Click" IsEnabled="True" />
+						<MenuItem Name="openConfigFileToolStripMenuItem" Header="Open config file" Click="openConfigFileToolStripMenuItem_Click" IsEnabled="True" />
+						<MenuItem Name="createADesktopShortcutToolStripMenuItem" Header="Create a desktop shortcut" Click="createADesktopShortcutToolStripMenuItem_Click" IsEnabled="True" />
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+			</DataGrid>
+		</StackPanel>
+	</DockPanel>
+</Window>
