@@ -1,29 +1,27 @@
 using System;
-using _86boxManager.Models;
+using _86BoxManager.Models;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using _86BoxManager.API;
-using _86boxManager.Core;
-using _86boxManager.Tools;
-using _86boxManager.ViewModels;
+using _86BoxManager.Core;
+using _86BoxManager.Registry;
+using _86BoxManager.Tools;
+using _86BoxManager.ViewModels;
+using _86BoxManager.Xplat;
 using IOPath = System.IO.Path;
 using RegistryValueKind = _86BoxManager.Registry.ValueKind;
 using ButtonsType = MessageBox.Avalonia.Enums.ButtonEnum;
 using MessageType = MessageBox.Avalonia.Enums.Icon;
 using ResponseType = MessageBox.Avalonia.Enums.ButtonResult;
 using System.Threading;
-using _86BoxManager.Core;
-using _86BoxManager.Model;
-using _86BoxManager.Registry;
-using _86BoxManager.Xplat;
 using Avalonia;
 using Avalonia.Input;
 using Avalonia.VisualTree;
 
-namespace _86boxManager.Views
+namespace _86BoxManager.Views
 {
     public partial class frmMain : Window
     {

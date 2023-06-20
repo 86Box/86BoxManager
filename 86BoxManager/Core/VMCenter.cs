@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using _86boxManager.Models;
-using _86boxManager.Tools;
-using _86boxManager.ViewModels;
-using _86boxManager.Views;
+using _86BoxManager.Models;
+using _86BoxManager.Registry;
+using _86BoxManager.Tools;
+using _86BoxManager.ViewModels;
+using _86BoxManager.Views;
+using _86BoxManager.Xplat;
 using ButtonsType = MessageBox.Avalonia.Enums.ButtonEnum;
 using MessageType = MessageBox.Avalonia.Enums.Icon;
 using ResponseType = MessageBox.Avalonia.Enums.ButtonResult;
@@ -15,13 +17,9 @@ using _86BoxManager.API;
 using _86BoxManager.Common;
 using System.ComponentModel;
 using System.Diagnostics;
-using _86BoxManager.Core;
-using _86BoxManager.Model;
-using _86BoxManager.Registry;
-using _86BoxManager.Xplat;
 
 // ReSharper disable InconsistentNaming
-namespace _86boxManager.Core
+namespace _86BoxManager.Core
 {
     internal static class VMCenter
     {

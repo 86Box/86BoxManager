@@ -4,12 +4,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using _86BoxManager.API;
-using _86boxManager.Core;
 using _86BoxManager.Core;
-using _86boxManager.Model;
 using _86BoxManager.Model;
+using _86BoxManager.Models;
 using _86BoxManager.Registry;
-using _86boxManager.Tools;
+using _86BoxManager.Tools;
 using _86BoxManager.Xplat;
 using Gdk;
 using Gtk;
@@ -19,7 +18,7 @@ using IOPath = System.IO.Path;
 using RegistryValueKind = _86BoxManager.Registry.ValueKind;
 using SortType = Gtk.SortType;
 
-namespace _86boxManager.View
+namespace _86BoxManager.View
 {
     internal sealed partial class frmMain : Window
     {

@@ -1,16 +1,16 @@
 using System;
 using System.IO;
 using System.Linq;
-using _86boxManager.Core;
+using _86BoxManager.Core;
 using _86BoxManager.Registry;
-using _86boxManager.Tools;
+using _86BoxManager.Tools;
 using _86BoxManager.Xplat;
 using Gtk;
 using UI = Gtk.Builder.ObjectAttribute;
 using IOPath = System.IO.Path;
 using RegistryValueKind = _86BoxManager.Registry.ValueKind;
 
-namespace _86boxManager.View
+namespace _86BoxManager.View
 {
     internal sealed partial class dlgSettings : Dialog
     {

@@ -1,4 +1,4 @@
-﻿namespace _86BoxManager.Model
+﻿namespace _86BoxManager.Models
 {
     public enum SortType
     {

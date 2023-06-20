@@ -1,6 +1,6 @@
 ﻿using Avalonia.Controls;
 
-namespace _86boxManager.Tools
+namespace _86BoxManager.Tools
 {
     public static class ToolTips
     {

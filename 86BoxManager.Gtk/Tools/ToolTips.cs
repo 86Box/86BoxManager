@@ -1,6 +1,6 @@
 using Gtk;
 
-namespace _86boxManager.Tools
+namespace _86BoxManager.Tools
 {
     public static class ToolTips
     {

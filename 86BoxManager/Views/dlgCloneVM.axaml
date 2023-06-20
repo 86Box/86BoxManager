@@ -5,7 +5,7 @@
         mc:Ignorable="d" 
         d:DesignWidth="410" d:DesignHeight="310"
         Width="410" Height="310"
-        x:Class="_86boxManager.Views.dlgCloneVM"
+        x:Class="_86BoxManager.Views.dlgCloneVM"
         Title="Clone a virtual machine"
         Opened="dlgCloneVM_Load">
 	<StackPanel Margin="12">

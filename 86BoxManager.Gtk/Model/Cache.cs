@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Gtk;
 using System.Linq;
-using _86BoxManager.Model;
+using _86BoxManager.Models;
 
-namespace _86boxManager.Model
+namespace _86BoxManager.Model
 {
     internal static class Cache
     {

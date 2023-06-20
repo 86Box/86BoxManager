@@ -3,7 +3,7 @@ using _86BoxManager.API;
 
 // ReSharper disable InconsistentNaming
 
-namespace _86BoxManager.Model
+namespace _86BoxManager.Models
 {
     [Serializable] //For serializing VMs so they can be stored in the registry
     public class VM : IVm

@@ -2,14 +2,14 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
-using _86boxManager.Model;
+using _86BoxManager.Models;
 using _86BoxManager.Model;
-using _86boxManager.Tools;
+using _86BoxManager.Tools;
 using Gtk;
 
 // ReSharper disable InconsistentNaming
 
-namespace _86boxManager.Core
+namespace _86BoxManager.Core
 {
     public sealed class VMWatch
     {

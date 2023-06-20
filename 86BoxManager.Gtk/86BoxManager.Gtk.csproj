@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>_86boxManager</RootNamespace>
+    <RootNamespace>_86BoxManager</RootNamespace>
     <AssemblyName>86Manager</AssemblyName>
 
     <TargetFramework>net6.0</TargetFramework>

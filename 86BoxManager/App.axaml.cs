@@ -1,11 +1,11 @@
 using System;
-using _86boxManager.ViewModels;
-using _86boxManager.Views;
+using _86BoxManager.ViewModels;
+using _86BoxManager.Views;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 
-namespace _86boxManager
+namespace _86BoxManager
 {
     public partial class App : Application
     {

@@ -1,14 +1,14 @@
 using System;
 using System.ComponentModel;
-using _86boxManager.Tools;
+using _86BoxManager.Tools;
+using _86BoxManager.Xplat;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using System.IO;
 using System.Linq;
-using _86boxManager.Core;
+using _86BoxManager.Core;
 using _86BoxManager.Registry;
-using _86BoxManager.Xplat;
 using Avalonia.Media;
 using ButtonsType = MessageBox.Avalonia.Enums.ButtonEnum;
 using MessageType = MessageBox.Avalonia.Enums.Icon;
@@ -16,7 +16,7 @@ using ResponseType = MessageBox.Avalonia.Enums.ButtonResult;
 using IOPath = System.IO.Path;
 using RegistryValueKind = _86BoxManager.Registry.ValueKind;
 
-namespace _86boxManager.Views
+namespace _86BoxManager.Views
 {
     public partial class dlgSettings : Window
     {

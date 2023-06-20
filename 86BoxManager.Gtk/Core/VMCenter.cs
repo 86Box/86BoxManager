@@ -6,12 +6,11 @@ using System.IO;
 using System.Linq;
 using _86BoxManager.API;
 using _86BoxManager.Common;
-using _86BoxManager.Core;
-using _86boxManager.Model;
 using _86BoxManager.Model;
+using _86BoxManager.Models;
 using _86BoxManager.Registry;
-using _86boxManager.Tools;
-using _86boxManager.View;
+using _86BoxManager.Tools;
+using _86BoxManager.View;
 using _86BoxManager.Xplat;
 using Gtk;
 using IOPath = System.IO.Path;
@@ -19,7 +18,7 @@ using RegistryValueKind = _86BoxManager.Registry.ValueKind;
 using SortType = Gtk.SortType;
 
 // ReSharper disable InconsistentNaming
-namespace _86boxManager.Core
+namespace _86BoxManager.Core
 {
     internal static class VMCenter
     {

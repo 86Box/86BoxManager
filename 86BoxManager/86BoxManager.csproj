@@ -7,7 +7,7 @@
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
 
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <RootNamespace>_86boxManager</RootNamespace>
+    <RootNamespace>_86BoxManager</RootNamespace>
     <AssemblyName>86Manager</AssemblyName>
   </PropertyGroup>
 

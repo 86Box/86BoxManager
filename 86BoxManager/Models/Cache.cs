@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using _86BoxManager.Model;
-using _86boxManager.ViewModels;
+using _86BoxManager.ViewModels;
 using Avalonia.Controls;
 
-namespace _86boxManager.Models
+namespace _86BoxManager.Models
 {
     internal static class Cache
     {

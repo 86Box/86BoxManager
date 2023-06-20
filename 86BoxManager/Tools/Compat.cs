@@ -5,7 +5,7 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Media;
 
-namespace _86boxManager.Tools
+namespace _86BoxManager.Tools
 {
     public static class Compat
     {

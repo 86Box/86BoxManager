@@ -5,7 +5,7 @@
         mc:Ignorable="d" 
         d:DesignWidth="330" d:DesignHeight="395"
         Width="330" Height="395"
-        x:Class="_86boxManager.Views.dlgAddVM"
+        x:Class="_86BoxManager.Views.dlgAddVM"
         Title="Add a virtual machine"
         Opened="dlgAddVM_Load">
 	<StackPanel Margin="12">

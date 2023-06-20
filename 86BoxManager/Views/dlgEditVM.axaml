@@ -5,7 +5,7 @@
         mc:Ignorable="d" 
         d:DesignWidth="320" d:DesignHeight="245"
         Width="320" Height="245"
-        x:Class="_86boxManager.Views.dlgEditVM"
+        x:Class="_86BoxManager.Views.dlgEditVM"
         Title="Edit a virtual machine"
         Opened="dlgEditVM_Load">
 	<StackPanel Margin="12">

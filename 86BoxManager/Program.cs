@@ -1,6 +1,6 @@
 ﻿using System;
-using _86boxManager.Tools;
-using _86boxManager.Views;
+using _86BoxManager.Tools;
+using _86BoxManager.Views;
 using _86BoxManager.Xplat;
 using Avalonia;
 using Avalonia.ReactiveUI;
@@ -9,7 +9,7 @@ using ButtonsType = MessageBox.Avalonia.Enums.ButtonEnum;
 using MessageType = MessageBox.Avalonia.Enums.Icon;
 using ResponseType = MessageBox.Avalonia.Enums.ButtonResult;
 
-namespace _86boxManager
+namespace _86BoxManager
 {
     internal static class Program
     {

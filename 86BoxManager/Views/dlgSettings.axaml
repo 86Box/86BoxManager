@@ -6,7 +6,7 @@
         mc:Ignorable="d" 
         d:DesignWidth="620" d:DesignHeight="490"
         Width="620" Height="490"
-        x:Class="_86boxManager.Views.dlgSettings"
+        x:Class="_86BoxManager.Views.dlgSettings"
         Title="Settings"
         Opened="dlgSettings_Load"
         Closing="dlgSettings_FormClosing">

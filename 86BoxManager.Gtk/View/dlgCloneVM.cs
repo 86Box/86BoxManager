@@ -1,11 +1,11 @@
 using System;
-using _86boxManager.Core;
-using _86boxManager.Tools;
+using _86BoxManager.Core;
+using _86BoxManager.Tools;
 using Gtk;
 using UI = Gtk.Builder.ObjectAttribute;
 using IOPath = System.IO.Path;
 
-namespace _86boxManager.View
+namespace _86BoxManager.View
 {
     internal sealed partial class dlgCloneVM : Dialog
     {

@@ -3,7 +3,7 @@ using Gtk;
 
 #pragma warning disable CS0612
 
-namespace _86boxManager.Tools
+namespace _86BoxManager.Tools
 {
     public static class Trays
     {

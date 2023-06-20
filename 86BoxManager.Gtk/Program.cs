@@ -1,12 +1,12 @@
 using System;
-using _86boxManager.Tools;
-using _86boxManager.View;
+using _86BoxManager.Tools;
+using _86BoxManager.View;
 using _86BoxManager.Xplat;
 using Gdk;
 using Gtk;
-using static _86boxManager.Tools.Resources;
+using static _86BoxManager.Tools.Resources;
 
-namespace _86boxManager
+namespace _86BoxManager
 {
     internal static class Program
     {

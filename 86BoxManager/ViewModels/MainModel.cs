@@ -1,7 +1,7 @@
 ﻿using ReactiveUI;
 using System.Collections.ObjectModel;
 
-namespace _86boxManager.ViewModels
+namespace _86BoxManager.ViewModels
 {
     internal class MainModel : ReactiveObject
     {

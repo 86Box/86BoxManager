@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using _86BoxManager.Model;
+using _86BoxManager.Models;
 using Gdk;
 using Gtk;
-using static _86boxManager.Tools.Resources;
+using static _86BoxManager.Tools.Resources;
 
 // ReSharper disable InconsistentNaming
 
-namespace _86boxManager.Model
+namespace _86BoxManager.Model
 {
     internal sealed class VMRow
     {

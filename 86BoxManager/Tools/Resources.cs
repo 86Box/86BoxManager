@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Avalonia.Media.Imaging;
 
-namespace _86boxManager.Tools
+namespace _86BoxManager.Tools
 {
     internal static class Resources
     {

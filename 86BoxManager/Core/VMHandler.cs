@@ -1,15 +1,14 @@
 ﻿using System;
 using _86BoxManager.API;
-using _86BoxManager.Model;
-using _86boxManager.Models;
-using _86boxManager.Tools;
+using _86BoxManager.Models;
+using _86BoxManager.Tools;
 using Avalonia.Threading;
 using ButtonsType = MessageBox.Avalonia.Enums.ButtonEnum;
 using MessageType = MessageBox.Avalonia.Enums.Icon;
 using ResponseType = MessageBox.Avalonia.Enums.ButtonResult;
 
 // ReSharper disable InconsistentNaming
-namespace _86boxManager.Core
+namespace _86BoxManager.Core
 {
     internal sealed class VMHandler : IMessageReceiver
     {

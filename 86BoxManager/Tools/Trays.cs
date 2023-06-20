@@ -1,7 +1,7 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 
-namespace _86boxManager.Tools
+namespace _86BoxManager.Tools
 {
     public static class Trays
     {

@@ -11,7 +11,7 @@ using MessageBox.Avalonia.DTO;
 using System.Linq;
 using StartLoc = Avalonia.Controls.WindowStartupLocation;
 
-namespace _86boxManager.Tools
+namespace _86BoxManager.Tools
 {
     internal static class Dialogs
     {

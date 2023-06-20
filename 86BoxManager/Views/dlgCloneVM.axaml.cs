@@ -2,14 +2,14 @@ using System;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using _86boxManager.Core;
-using _86boxManager.Tools;
+using _86BoxManager.Core;
+using _86BoxManager.Tools;
 using IOPath = System.IO.Path;
 using ButtonsType = MessageBox.Avalonia.Enums.ButtonEnum;
 using MessageType = MessageBox.Avalonia.Enums.Icon;
 using ResponseType = MessageBox.Avalonia.Enums.ButtonResult;
 
-namespace _86boxManager.Views
+namespace _86BoxManager.Views
 {
     public partial class dlgCloneVM : Window
     {
