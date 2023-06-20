@@ -1,12 +1,9 @@
 ﻿using System;
 using _86BoxManager.API;
+using _86boxManager.Model;
 using _86BoxManager.Model;
-using _86boxManager.Models;
 using _86boxManager.Tools;
-using Avalonia.Threading;
-using ButtonsType = MessageBox.Avalonia.Enums.ButtonEnum;
-using MessageType = MessageBox.Avalonia.Enums.Icon;
-using ResponseType = MessageBox.Avalonia.Enums.ButtonResult;
+using Gtk;
 
 // ReSharper disable InconsistentNaming
 namespace _86boxManager.Core
@@ -22,13 +19,26 @@ namespace _86boxManager.Core
             foreach (var lvi in items)
             {
                 var vm = lvi.Tag;
-                var id = VMWatch.GetTempId(vm);
+                var id = GetTempId(vm);
                 if (id != vmId)
                     continue;
 
                 vm.hWnd = hWnd;
                 break;
             }
+        }
+
+        private static uint GetTempId(VM vm)
+        {
+            // This can return negative integers, which is a no-no for 86Box,
+            // hence the shift up by int.MaxValue
+            var tempId = vm.Path.GetHashCode();
+            uint id;
+            if (tempId < 0)
+                id = (uint)(tempId + int.MaxValue);
+            else
+                id = (uint)tempId;
+            return id;
         }
 
         public void OnEmulatorShutdown(IntPtr hWnd)
@@ -48,46 +58,46 @@ namespace _86boxManager.Core
                 lvi.SetStatus(vm.GetStatusString());
                 lvi.SetIcon(0);
 
-                ui.btnStart.Content = "Start";
-                ui.startToolStripMenuItem.Header = "Start";
+                ui.btnStart.Label = "Start";
+                ui.startToolStripMenuItem.Text = "Start";
                 ui.startToolStripMenuItem.SetToolTip("Start this virtual machine");
                 ui.btnStart.SetToolTip("Start this virtual machine");
-                ui.btnPause.Content = "Pause";
+                ui.btnPause.Label = "Pause";
                 ui.pauseToolStripMenuItem.SetToolTip("Pause this virtual machine");
-                ui.pauseToolStripMenuItem.Header = "Pause";
+                ui.pauseToolStripMenuItem.Text = "Pause";
                 ui.btnPause.SetToolTip("Pause this virtual machine");
 
                 var selectedItems = lstVMs.GetSelItems();
 
                 if (selectedItems.Count == 1)
                 {
-                    ui.btnEdit.IsEnabled = true;
-                    ui.btnDelete.IsEnabled = true;
-                    ui.btnStart.IsEnabled = true;
-                    ui.btnConfigure.IsEnabled = true;
-                    ui.btnPause.IsEnabled = false;
-                    ui.btnReset.IsEnabled = false;
-                    ui.btnCtrlAltDel.IsEnabled = false;
+                    ui.btnEdit.Sensitive = true;
+                    ui.btnDelete.Sensitive = true;
+                    ui.btnStart.Sensitive = true;
+                    ui.btnConfigure.Sensitive = true;
+                    ui.btnPause.Sensitive = false;
+                    ui.btnReset.Sensitive = false;
+                    ui.btnCtrlAltDel.Sensitive = false;
                 }
                 else if (selectedItems.Count == 0)
                 {
-                    ui.btnEdit.IsEnabled = false;
-                    ui.btnDelete.IsEnabled = false;
-                    ui.btnStart.IsEnabled = false;
-                    ui.btnConfigure.IsEnabled = false;
-                    ui.btnPause.IsEnabled = false;
-                    ui.btnReset.IsEnabled = false;
-                    ui.btnCtrlAltDel.IsEnabled = false;
+                    ui.btnEdit.Sensitive = false;
+                    ui.btnDelete.Sensitive = false;
+                    ui.btnStart.Sensitive = false;
+                    ui.btnConfigure.Sensitive = false;
+                    ui.btnPause.Sensitive = false;
+                    ui.btnReset.Sensitive = false;
+                    ui.btnCtrlAltDel.Sensitive = false;
                 }
                 else
                 {
-                    ui.btnEdit.IsEnabled = false;
-                    ui.btnDelete.IsEnabled = true;
-                    ui.btnStart.IsEnabled = false;
-                    ui.btnConfigure.IsEnabled = false;
-                    ui.btnPause.IsEnabled = false;
-                    ui.btnReset.IsEnabled = false;
-                    ui.btnCtrlAltDel.IsEnabled = false;
+                    ui.btnEdit.Sensitive = false;
+                    ui.btnDelete.Sensitive = true;
+                    ui.btnStart.Sensitive = false;
+                    ui.btnConfigure.Sensitive = false;
+                    ui.btnPause.Sensitive = false;
+                    ui.btnReset.Sensitive = false;
+                    ui.btnCtrlAltDel.Sensitive = false;
                 }
             }
             VMCenter.CountRefresh();
@@ -108,16 +118,16 @@ namespace _86boxManager.Core
                 vm.Status = VM.STATUS_PAUSED;
                 lvi.SetStatus(vm.GetStatusString());
                 lvi.SetIcon(2);
-                ui.pauseToolStripMenuItem.Header = "Resume";
-                ui.btnPause.Content = "Resume";
+                ui.pauseToolStripMenuItem.Text = "Resume";
+                ui.btnPause.Label = "Resume";
                 ui.pauseToolStripMenuItem.SetToolTip("Resume this virtual machine");
                 ui.btnPause.SetToolTip("Resume this virtual machine");
-                ui.btnStart.IsEnabled = true;
-                ui.btnStart.Content = "Stop";
-                ui.startToolStripMenuItem.Header = "Stop";
+                ui.btnStart.Sensitive = true;
+                ui.btnStart.Label = "Stop";
+                ui.startToolStripMenuItem.Text = "Stop";
                 ui.startToolStripMenuItem.SetToolTip("Stop this virtual machine");
                 ui.btnStart.SetToolTip("Stop this virtual machine");
-                ui.btnConfigure.IsEnabled = true;
+                ui.btnConfigure.Sensitive = true;
             }
             VMCenter.CountRefresh();
         }
@@ -137,16 +147,16 @@ namespace _86boxManager.Core
                 vm.Status = VM.STATUS_RUNNING;
                 lvi.SetStatus(vm.GetStatusString());
                 lvi.SetIcon(1);
-                ui.pauseToolStripMenuItem.Header = "Pause";
-                ui.btnPause.Content = "Pause";
+                ui.pauseToolStripMenuItem.Text = "Pause";
+                ui.btnPause.Label = "Pause";
                 ui.btnPause.SetToolTip("Pause this virtual machine");
                 ui.pauseToolStripMenuItem.SetToolTip("Pause this virtual machine");
-                ui.btnStart.IsEnabled = true;
-                ui.btnStart.Content = "Stop";
+                ui.btnStart.Sensitive = true;
+                ui.btnStart.Label = "Stop";
                 ui.btnStart.SetToolTip("Stop this virtual machine");
-                ui.startToolStripMenuItem.Header = "Stop";
+                ui.startToolStripMenuItem.Text = "Stop";
                 ui.startToolStripMenuItem.SetToolTip("Stop this virtual machine");
-                ui.btnConfigure.IsEnabled = true;
+                ui.btnConfigure.Sensitive = true;
             }
             VMCenter.CountRefresh();
         }
@@ -166,17 +176,17 @@ namespace _86boxManager.Core
                 vm.Status = VM.STATUS_WAITING;
                 lvi.SetStatus(vm.GetStatusString());
                 lvi.SetIcon(2);
-                ui.btnStart.IsEnabled = false;
-                ui.btnStart.Content = "Stop";
+                ui.btnStart.Sensitive = false;
+                ui.btnStart.Label = "Stop";
                 ui.btnStart.SetToolTip("Stop this virtual machine");
-                ui.startToolStripMenuItem.Header = "Stop";
+                ui.startToolStripMenuItem.Text = "Stop";
                 ui.startToolStripMenuItem.SetToolTip("Stop this virtual machine");
-                ui.btnEdit.IsEnabled = false;
-                ui.btnDelete.IsEnabled = false;
-                ui.btnConfigure.IsEnabled = false;
-                ui.btnReset.IsEnabled = false;
-                ui.btnPause.IsEnabled = false;
-                ui.btnCtrlAltDel.IsEnabled = false;
+                ui.btnEdit.Sensitive = false;
+                ui.btnDelete.Sensitive = false;
+                ui.btnConfigure.Sensitive = false;
+                ui.btnReset.Sensitive = false;
+                ui.btnPause.Sensitive = false;
+                ui.btnCtrlAltDel.Sensitive = false;
             }
             VMCenter.CountRefresh();
         }
@@ -196,37 +206,31 @@ namespace _86boxManager.Core
                 vm.Status = VM.STATUS_RUNNING;
                 lvi.SetStatus(vm.GetStatusString());
                 lvi.SetIcon(1);
-                ui.btnStart.IsEnabled = true;
-                ui.btnStart.Content = "Stop";
+                ui.btnStart.Sensitive = true;
+                ui.btnStart.Label = "Stop";
                 ui.btnStart.SetToolTip("Stop this virtual machine");
-                ui.startToolStripMenuItem.Header = "Stop";
+                ui.startToolStripMenuItem.Text = "Stop";
                 ui.startToolStripMenuItem.SetToolTip("Stop this virtual machine");
-                ui.btnEdit.IsEnabled = false;
-                ui.btnDelete.IsEnabled = false;
-                ui.btnConfigure.IsEnabled = true;
-                ui.btnReset.IsEnabled = true;
-                ui.btnPause.IsEnabled = true;
-                ui.btnPause.Content = "Pause";
-                ui.pauseToolStripMenuItem.Header = "Pause";
+                ui.btnEdit.Sensitive = false;
+                ui.btnDelete.Sensitive = false;
+                ui.btnConfigure.Sensitive = true;
+                ui.btnReset.Sensitive = true;
+                ui.btnPause.Sensitive = true;
+                ui.btnPause.Label = "Pause";
+                ui.pauseToolStripMenuItem.Text = "Pause";
                 ui.pauseToolStripMenuItem.SetToolTip("Pause this virtual machine");
                 ui.btnPause.SetToolTip("Pause this virtual machine");
-                ui.btnCtrlAltDel.IsEnabled = true;
+                ui.btnCtrlAltDel.Sensitive = true;
             }
             VMCenter.CountRefresh();
         }
 
         public void OnManagerStartVm(string vmName)
         {
-            if (Dispatcher.UIThread.CheckAccess())
-            {
-                OnManagerStartVmInternal(vmName);
-                return;
-            }
-            const DispatcherPriority lvl = DispatcherPriority.Background;
-            Dispatcher.UIThread.Post(() => OnManagerStartVmInternal(vmName), lvl);
+            Application.Invoke(delegate { OnManagerStartVmGtk(vmName); });
         }
 
-        private void OnManagerStartVmInternal(string vmName)
+        private void OnManagerStartVmGtk(string vmName)
         {
             var ui = Program.Root;
             var lstVMs = ui.lstVMs;

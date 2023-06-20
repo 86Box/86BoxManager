@@ -4,7 +4,6 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Media;
-using AvaloniaEdit.Document;
 
 namespace _86boxManager.Tools
 {

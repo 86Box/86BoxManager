@@ -3,7 +3,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 #pragma warning disable SYSLIB0011
 
-namespace _86boxManager.Core
+namespace _86BoxManager.Core
 {
     public static class Serializer
     {

@@ -29,7 +29,6 @@
     <PackageReference Include="HyperText.Avalonia" Version="1.0.0" />
     <PackageReference Include="MessageBox.Avalonia" Version="2.1.0" />
     <PackageReference Include="XamlNameReferenceGenerator" Version="1.6.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,15 +37,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Resources\86Box-gray.svg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <ProjectReference Include="..\86BoxManager.Core\86BoxManager.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\86BoxManager.Linux\86BoxManager.Linux.csproj" />
-    <ProjectReference Include="..\86BoxManager.Windows\86BoxManager.Windows.csproj" />
-    <ProjectReference Include="..\86BoxManager.Mac\86BoxManager.Mac.csproj" />
+    <None Update="Resources\86Box-gray.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-using RegistryValueKind = _86boxManager.Registry.ValueKind;
+using RegistryValueKind = _86BoxManager.Registry.ValueKind;
 
-namespace _86boxManager.Registry
+namespace _86BoxManager.Registry
 {
     public sealed class ConfigKey
     {

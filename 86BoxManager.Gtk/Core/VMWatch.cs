@@ -1,13 +1,11 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
+using _86boxManager.Model;
 using _86BoxManager.Model;
 using _86boxManager.Tools;
-using _86boxManager.Models;
-using ButtonsType = MessageBox.Avalonia.Enums.ButtonEnum;
-using MessageType = MessageBox.Avalonia.Enums.Icon;
-using ResponseType = MessageBox.Avalonia.Enums.ButtonResult;
+using Gtk;
 
 // ReSharper disable InconsistentNaming
 
@@ -80,16 +78,16 @@ namespace _86boxManager.Core
 
                     if (selected.Count > 0 && selected[0].Equals(item))
                     {
-                        ui.btnEdit.IsEnabled = true;
-                        ui.btnDelete.IsEnabled = true;
-                        ui.btnStart.IsEnabled = true;
-                        ui.btnStart.Content = "Start";
+                        ui.btnEdit.Sensitive = true;
+                        ui.btnDelete.Sensitive = true;
+                        ui.btnStart.Sensitive = true;
+                        ui.btnStart.Label = "Start";
                         ui.btnStart.SetToolTip("Start this virtual machine");
-                        ui.btnConfigure.IsEnabled = true;
-                        ui.btnPause.IsEnabled = false;
-                        ui.btnPause.Content = "Pause";
-                        ui.btnCtrlAltDel.IsEnabled = false;
-                        ui.btnReset.IsEnabled = false;
+                        ui.btnConfigure.Sensitive = true;
+                        ui.btnPause.Sensitive = false;
+                        ui.btnPause.Label = "Pause";
+                        ui.btnCtrlAltDel.Sensitive = false;
+                        ui.btnReset.Sensitive = false;
                     }
                 }
             }
@@ -119,7 +117,7 @@ namespace _86boxManager.Core
                  * can be negative, so shift it up by int.MaxValue to ensure it's always positive. */
 
             var tempid = vm.Path.GetHashCode();
-            uint id;
+            uint id = 0;
 
             if (tempid < 0)
                 id = (uint)(tempid + int.MaxValue);

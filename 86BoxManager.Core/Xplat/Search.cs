@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace _86boxManager.Xplat
+namespace _86BoxManager.Xplat
 {
     public static class Search
     {

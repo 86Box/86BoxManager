@@ -1,22 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using _86boxManager.Models;
-using _86boxManager.Registry;
 using _86boxManager.Tools;
 using _86boxManager.ViewModels;
 using _86boxManager.Views;
-using _86boxManager.Xplat;
 using ButtonsType = MessageBox.Avalonia.Enums.ButtonEnum;
 using MessageType = MessageBox.Avalonia.Enums.Icon;
 using ResponseType = MessageBox.Avalonia.Enums.ButtonResult;
 using IOPath = System.IO.Path;
-using RegistryValueKind = _86boxManager.Registry.ValueKind;
+using RegistryValueKind = _86BoxManager.Registry.ValueKind;
 using System.IO;
 using System;
 using _86BoxManager.API;
 using _86BoxManager.Common;
 using System.ComponentModel;
 using System.Diagnostics;
+using _86BoxManager.Core;
+using _86BoxManager.Model;
+using _86BoxManager.Registry;
+using _86BoxManager.Xplat;
 
 // ReSharper disable InconsistentNaming
 namespace _86boxManager.Core

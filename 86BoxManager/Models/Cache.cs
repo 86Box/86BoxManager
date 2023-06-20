@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using _86BoxManager.Model;
 using _86boxManager.ViewModels;
 using Avalonia.Controls;
 

@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using IOPath = System.IO.Path;
 
-namespace _86boxManager.Registry
+namespace _86BoxManager.Registry
 {
     public static class Configs
     {

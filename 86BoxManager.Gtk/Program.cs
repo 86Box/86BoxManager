@@ -1,13 +1,10 @@
-﻿using System;
+using System;
 using _86boxManager.Tools;
-using _86boxManager.Views;
+using _86boxManager.View;
 using _86BoxManager.Xplat;
-using Avalonia;
-using Avalonia.ReactiveUI;
-using JetBrains.Annotations;
-using ButtonsType = MessageBox.Avalonia.Enums.ButtonEnum;
-using MessageType = MessageBox.Avalonia.Enums.Icon;
-using ResponseType = MessageBox.Avalonia.Enums.ButtonResult;
+using Gdk;
+using Gtk;
+using static _86boxManager.Tools.Resources;
 
 namespace _86boxManager
 {
@@ -20,44 +17,40 @@ namespace _86boxManager
         private static readonly string AppId = "86Box.86Box";
 
         internal static frmMain Root;
-
+        
         [STAThread]
-        private static int Main(string[] args)
+        private static void Main(string[] args)
         {
             Args = args;
 
             Platforms.Shell.PrepareAppId(AppId);
-            var (_, startIt) = BuildAvaloniaApp(args);
+            Application.Init();
 
             //Check if it is the very first and only instance running.
             //If it's not, we need to restore and focus the existing window, 
             //as well as pass on any potential command line arguments
             if (CheckRunningManagerAndAbort(args))
-                return -1;
+                return;
 
             //Then check if any instances of 86Box are already running and warn the user
             if (CheckRunningEmulatorAndAbort())
-                return -2;
+                return;
 
-            var code = startIt();
-            return code;
+            var app = new Application("org.86box.manager", GLib.ApplicationFlags.None);
+            app.Register(GLib.Cancellable.Current);
+
+            var win = new frmMain();
+            win.SetPosition(WindowPosition.Center);
+            win.Icon = LoadIcon();
+
+            app.AddWindow(Root = win);
+
+            win.Show();
+            Application.Run();
         }
 
-        /// <summary>
-        /// Used by visual designer
-        /// </summary>
-        [UsedImplicitly]
-        public static AppBuilder BuildAvaloniaApp()
-            => BuildAvaloniaApp(Args, false).builder;
-
-        private static (AppBuilder builder, Func<int> after) BuildAvaloniaApp(string[] args, bool withLife = true)
-        {
-            var bld = AppBuilder.Configure<App>()
-                .UsePlatformDetect()
-                .LogToTrace()
-                .UseReactiveUI();
-            return withLife ? bld.SetupWithClassicDesktopLifetime(args) : (bld, null);
-        }
+        internal static Pixbuf LoadIcon(int? size = null)
+            => LoadImage(FindResource("/86Box-gray.png"), size);
 
         private static bool CheckRunningManagerAndAbort(string[] args)
         {
@@ -100,11 +93,11 @@ namespace _86boxManager
                             Platforms.Manager.IsProcessRunning("86Box");
             if (isRunning)
             {
-                var result = Dialogs.ShowMessageBox("At least one instance of 86Box is already running. It's\n" +
-                                                    "not recommended that you run 86Box directly outside of\n" +
-                                                    "Manager. Do you want to continue at your own risk?",
+                var result = Dialogs.ShowMessageBox("At least one instance of 86Box is already running. " +
+                                                    "It's not recommended that you run 86Box directly " +
+                                                    "outside of Manager. Do you want to continue at your own risk?",
                     MessageType.Warning, ButtonsType.YesNo, "Warning");
-                if (result == ResponseType.No)
+                if (result == (int)ResponseType.No)
                 {
                     return true;
                 }

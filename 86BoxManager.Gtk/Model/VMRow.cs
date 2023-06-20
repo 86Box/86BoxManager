@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using _86BoxManager.Model;
-using Avalonia.Media.Imaging;
-using ReactiveUI;
+using Gdk;
+using Gtk;
 using static _86boxManager.Tools.Resources;
 
 // ReSharper disable InconsistentNaming
 
-namespace _86boxManager.ViewModels
+namespace _86boxManager.Model
 {
-    internal sealed class VMRow : ReactiveObject
+    internal sealed class VMRow
     {
-        private static readonly IDictionary<int, Bitmap> _icons;
+        private static readonly IDictionary<int, Pixbuf> _icons;
 
         static VMRow()
         {
@@ -19,7 +19,7 @@ namespace _86boxManager.ViewModels
             var run = LoadImage(FindResource("/vm-running.png"));
             var stop = LoadImage(FindResource("/vm-stopped.png"));
 
-            _icons = new Dictionary<int, Bitmap>
+            _icons = new Dictionary<int, Pixbuf>
             {
                 { VM.STATUS_PAUSED, pause },
                 { VM.STATUS_WAITING, wait },
@@ -28,12 +28,34 @@ namespace _86boxManager.ViewModels
             };
         }
 
-        public VMRow(VM real)
+        private readonly TreeIter _it;
+        private readonly ListStore _store;
+
+        public VMRow(VM real, TreeIter it, ListStore store)
         {
             Tag = real;
+            _it = it;
+            _store = store;
         }
 
-        internal VM Tag { get; set; }
+        public VM Tag { get; }
+
+        public static Pixbuf GetIcon(int status)
+        {
+            var pix = _icons[status];
+            return pix;
+        }
+
+        public void SetStatus(string text)
+        {
+            _store.SetValue(_it, 2, text);
+        }
+
+        public void SetIcon(int status)
+        {
+            var icon = GetIcon(status);
+            _store.SetValue(_it, 0, icon);
+        }
 
         public bool Focused
         {
@@ -46,29 +68,10 @@ namespace _86boxManager.ViewModels
             {
                 var ui = Program.Root;
                 if (value)
-                    ui.lstVMs.SelectedItems.Add(this);
+                    ui.lstVMs.Selection.SelectIter(_it);
                 else
-                    ui.lstVMs.SelectedItems.Remove(this);
+                    ui.lstVMs.Selection.UnselectIter(_it);
             }
-        }
-
-        public Bitmap Icon => _icons[Tag.Status];
-        public string Name => Tag.Name;
-        public string Status => Tag.GetStatusString();
-        public string Desc => Tag.Desc;
-        public string Path => Tag.Path;
-
-        public void SetStatus(string _)
-        {
-            // NO OP
-        }
-
-        public void SetIcon(int status)
-        {
-            Tag.Status = status;
-            this.RaisePropertyChanged(nameof(Icon));
-            this.RaisePropertyChanged(nameof(Status));
-            this.RaisePropertyChanged(nameof(Tag));
         }
     }
 }

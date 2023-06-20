@@ -1,23 +1,31 @@
 using System;
-using Avalonia.Controls;
-using Avalonia.Input;
-using Avalonia.Interactivity;
-using _86boxManager.Tools;
 using _86boxManager.Core;
+using _86boxManager.Tools;
 using _86BoxManager.Xplat;
+using Gtk;
+using UI = Gtk.Builder.ObjectAttribute;
 using IOPath = System.IO.Path;
-using ButtonsType = MessageBox.Avalonia.Enums.ButtonEnum;
-using MessageType = MessageBox.Avalonia.Enums.Icon;
-using ResponseType = MessageBox.Avalonia.Enums.ButtonResult;
 
-namespace _86boxManager.Views
+namespace _86boxManager.View
 {
-    public partial class dlgAddVM : Window
+    internal sealed partial class dlgAddVM : Dialog
     {
-        public dlgAddVM()
+        public dlgAddVM() : this(new Builder("dlgAddVM.glade"))
         {
             InitializeComponent();
-            txtName.OnTextChanged(txtName_TextChanged);
+        }
+
+        private dlgAddVM(Builder builder) : base(builder.GetRawOwnedObject("dlgAddVM"))
+        {
+            builder.Autoconnect(this);
+            DefaultResponse = ResponseType.Cancel;
+
+            Response += Dialog_Response;
+        }
+
+        private void Dialog_Response(object o, ResponseArgs args)
+        {
+            Hide();
         }
 
         private bool existingVM = false; // Is this importing an existing VM or not
@@ -27,24 +35,24 @@ namespace _86boxManager.Views
             lblPath1.Text = Program.Root.CfgPath;
 
             // Disable on start
-            cbxImport_CheckedChanged(sender, null);
-            txtName_TextChanged(sender, null);
+            cbxImport_CheckedChanged(sender, e);
+            txtName_TextChanged(sender, e);
         }
 
-        private void cbxImport_CheckedChanged(object sender, RoutedEventArgs e)
+        private void cbxImport_CheckedChanged(object sender, EventArgs e)
         {
-            var status = cbxImport.IsActive();
+            var status = cbxImport.Active;
             existingVM = status;
-            txtImportPath.Focusable = txtImportPath.IsEditable(status);
-            btnBrowse.IsEnabled = btnBrowse.Focusable = status;
+            txtImportPath.IsEditable = txtImportPath.CanFocus = status;
+            btnBrowse.Sensitive = btnBrowse.CanFocus = status;
         }
 
-        private async void btnBrowse_Click(object sender, RoutedEventArgs e)
+        private void btnBrowse_Click(object sender, EventArgs e)
         {
             var initDir = Platforms.Env.MyComputer;
             var text = "Select a folder where your virtual machine (configs, nvr folders, etc.) will be located";
 
-            var fileName = await Dialogs.SelectFolder(text, initDir, this);
+            var fileName = Dialogs.SelectFolder(text, initDir, this);
 
             if (!string.IsNullOrWhiteSpace(fileName))
             {
@@ -53,18 +61,18 @@ namespace _86boxManager.Views
             }
         }
 
-        private void txtName_TextChanged(object sender, TextInputEventArgs e)
+        private void txtName_TextChanged(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtName.Text))
             {
-                btnAdd.IsEnabled = false;
+                btnAdd.Sensitive = false;
                 txtName.UnsetToolTip();
                 return;
             }
 
             if (txtName.Text.IndexOfAny(IOPath.GetInvalidFileNameChars()) >= 0)
             {
-                btnAdd.IsEnabled = false;
+                btnAdd.Sensitive = false;
                 lblPath1.Text = "Invalid path";
                 txtName.SetToolTip("You cannot use the following characters" +
                                    " in the name: \\ / : * ? \" < > |");
@@ -72,13 +80,13 @@ namespace _86boxManager.Views
             }
 
             var cfgPath = Program.Root.CfgPath;
-            btnAdd.IsEnabled = true;
+            btnAdd.Sensitive = true;
             lblPath1.Text = cfgPath + txtName.Text;
             lblPath1.SetToolTip(cfgPath + txtName.Text);
         }
 
         // Check if VM with this name already exists, and send the data to the main form for processing if it doesn't
-        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        private void btnAdd_Click(object sender, EventArgs e)
         {
             if (VMCenter.CheckIfExists(txtName.Text))
             {
@@ -97,19 +105,14 @@ namespace _86boxManager.Views
             if (existingVM)
             {
                 VMCenter.Import(txtName.Text, txtDescription.Text, txtImportPath.Text,
-                    cbxOpenCFG.IsActive(), cbxStartVM.IsActive(), Program.Root);
+                    cbxOpenCFG.Active, cbxStartVM.Active, Program.Root);
             }
             else
             {
-                VMCenter.Add(txtName.Text, txtDescription.Text, cbxOpenCFG.IsActive(), cbxStartVM.IsActive());
+                VMCenter.Add(txtName.Text, txtDescription.Text, cbxOpenCFG.Active, cbxStartVM.Active);
             }
 
-            Close(ResponseType.Ok);
-        }
-
-        private void btnCancel_OnClick(object sender, RoutedEventArgs e)
-        {
-            Close(ResponseType.Cancel);
+            Respond(ResponseType.Close);
         }
     }
 }

@@ -1,23 +1,31 @@
 using System;
-using Avalonia.Controls;
-using Avalonia.Input;
-using Avalonia.Interactivity;
 using _86boxManager.Core;
 using _86BoxManager.Model;
 using _86boxManager.Tools;
+using Gtk;
+using UI = Gtk.Builder.ObjectAttribute;
 using IOPath = System.IO.Path;
-using ButtonsType = MessageBox.Avalonia.Enums.ButtonEnum;
-using MessageType = MessageBox.Avalonia.Enums.Icon;
-using ResponseType = MessageBox.Avalonia.Enums.ButtonResult;
 
-namespace _86boxManager.Views
+namespace _86boxManager.View
 {
-    public partial class dlgEditVM : Window
+    internal sealed partial class dlgEditVM : Dialog
     {
-        public dlgEditVM()
+        public dlgEditVM() : this(new Builder("dlgEditVM.glade"))
         {
             InitializeComponent();
-            txtName.OnTextChanged(txtName_TextChanged);
+        }
+
+        private dlgEditVM(Builder builder) : base(builder.GetRawOwnedObject("dlgEditVM"))
+        {
+            builder.Autoconnect(this);
+            DefaultResponse = ResponseType.Cancel;
+
+            Response += Dialog_Response;
+        }
+
+        private void Dialog_Response(object o, ResponseArgs args)
+        {
+            Hide();
         }
 
         private VM vm = null; //VM to be edited
@@ -33,22 +41,7 @@ namespace _86boxManager.Views
             lblPath1.Text = vm.Path;
         }
 
-        private void txtName_TextChanged(object sender, TextInputEventArgs e)
-        {
-            // Check for empty strings etc.
-            if (string.IsNullOrWhiteSpace(txtName.Text))
-            {
-                btnApply.IsEnabled = false;
-                return;
-            }
-
-            var cfgPath = Program.Root.CfgPath;
-            btnApply.IsEnabled = true;
-            lblPath1.Text = cfgPath + txtName.Text;
-            lblPath1.SetToolTip(cfgPath + txtName.Text);
-        }
-
-        private void btnApply_Click(object sender, RoutedEventArgs e)
+        private void btnApply_Click(object sender, EventArgs e)
         {
             // Check if a VM with this name already exists
             if (!originalName.Equals(txtName.Text) && VMCenter.CheckIfExists(txtName.Text))
@@ -68,12 +61,22 @@ namespace _86boxManager.Views
 
             VMCenter.Edit(txtName.Text, txtDesc.Text);
 
-            Close(ResponseType.Ok);
+            Respond(ResponseType.Close);
         }
 
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        private void txtName_TextChanged(object sender, EventArgs e)
         {
-            Close(ResponseType.Cancel);
+            // Check for empty strings etc.
+            if (string.IsNullOrWhiteSpace(txtName.Text))
+            {
+                btnApply.Sensitive = false;
+                return;
+            }
+
+            var cfgPath = Program.Root.CfgPath;
+            btnApply.Sensitive = true;
+            lblPath1.Text = cfgPath + txtName.Text;
+            lblPath1.SetToolTip(cfgPath + txtName.Text);
         }
     }
 }

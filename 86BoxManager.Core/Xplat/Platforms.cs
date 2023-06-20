@@ -5,9 +5,9 @@ using _86BoxManager.Linux;
 using _86BoxManager.Mac;
 using _86BoxManager.Windows;
 
-namespace _86boxManager.Xplat
+namespace _86BoxManager.Xplat
 {
-    internal static class Platforms
+    public static class Platforms
     {
         public static readonly IShell Shell;
         public static readonly IManager Manager;

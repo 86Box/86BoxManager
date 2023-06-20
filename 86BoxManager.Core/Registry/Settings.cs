@@ -1,6 +1,6 @@
-using static _86boxManager.Registry.ValueKind;
+using static _86BoxManager.Registry.ValueKind;
 
-namespace _86boxManager.Registry
+namespace _86BoxManager.Registry
 {
     public static class Settings
     {

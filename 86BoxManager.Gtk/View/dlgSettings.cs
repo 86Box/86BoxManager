@@ -1,33 +1,36 @@
 using System;
-using System.ComponentModel;
-using _86boxManager.Tools;
-using Avalonia.Controls;
-using Avalonia.Input;
-using Avalonia.Interactivity;
 using System.IO;
 using System.Linq;
 using _86boxManager.Core;
 using _86BoxManager.Registry;
+using _86boxManager.Tools;
 using _86BoxManager.Xplat;
-using Avalonia.Media;
-using ButtonsType = MessageBox.Avalonia.Enums.ButtonEnum;
-using MessageType = MessageBox.Avalonia.Enums.Icon;
-using ResponseType = MessageBox.Avalonia.Enums.ButtonResult;
+using Gtk;
+using UI = Gtk.Builder.ObjectAttribute;
 using IOPath = System.IO.Path;
 using RegistryValueKind = _86BoxManager.Registry.ValueKind;
 
-namespace _86boxManager.Views
+namespace _86boxManager.View
 {
-    public partial class dlgSettings : Window
+    internal sealed partial class dlgSettings : Dialog
     {
-        public dlgSettings()
+        public dlgSettings() : this(new Builder("dlgSettings.glade"))
         {
             InitializeComponent();
-            txtEXEdir.OnTextChanged(txt_TextChanged);
-            txtCFGdir.OnTextChanged(txt_TextChanged);
         }
 
-        private bool settingsChanged = false; // Keeps track of unsaved changes
+        private dlgSettings(Builder builder) : base(builder.GetRawOwnedObject("dlgSettings"))
+        {
+            builder.Autoconnect(this);
+            DefaultResponse = ResponseType.Cancel;
+
+            Response += Dialog_Response;
+        }
+
+        private void Dialog_Response(object o, ResponseArgs args)
+        {
+            Hide();
+        }
 
         private void dlgSettings_Load(object sender, EventArgs e)
         {
@@ -42,13 +45,13 @@ namespace _86boxManager.Views
             #endif
         }
 
-        private void dlgSettings_FormClosing(object sender, CancelEventArgs e)
+        private void dlgSettings_FormClosing(object sender, EventArgs e)
         {
             if (!settingsChanged)
                 return;
 
             // Unsaved changes, ask the user to confirm
-            var result = Dialogs.ShowMessageBox(
+            var result = (ResponseType)Dialogs.ShowMessageBox(
                 "Would you like to save the changes you've made to the settings?",
                 MessageType.Question, ButtonsType.YesNo, "Unsaved changes");
             if (result == ResponseType.Yes)
@@ -57,85 +60,12 @@ namespace _86boxManager.Views
             }
         }
 
-        private void btnApply_Click(object sender, RoutedEventArgs e)
-        {
-            var success = SaveSettings();
-            if (!success)
-            {
-                return;
-            }
-            settingsChanged = CheckForChanges();
-            btnApply.IsEnabled = settingsChanged;
-        }
-
-        private void btnOK_Click(object sender, RoutedEventArgs e)
-        {
-            if (settingsChanged)
-            {
-                SaveSettings();
-            }
-            Close(ResponseType.Ok);
-        }
-
-        private async void btnBrowse3_Click(object sender, RoutedEventArgs e)
-        {
-            var dir = Platforms.Env.MyComputer;
-            var title = "Select a file where 86Box logs will be saved";
-            var filter = "Log files (*.log)|*.log";
-
-            var fileName = await Dialogs.SaveFile(title, dir, filter, parent: this, ext: ".log");
-
-            if (!string.IsNullOrWhiteSpace(fileName))
-            {
-                txtLogPath.Text = fileName;
-            }
-        }
-
-        private void btnDefaults_Click(object sender, RoutedEventArgs e)
-        {
-            var result = Dialogs.ShowMessageBox("All settings will be reset to their default values. " +
-                                                "Do you wish to continue?",
-                MessageType.Warning, ButtonsType.YesNo, "Settings will be reset");
-            if (result == ResponseType.Yes)
-            {
-                ResetSettings();
-            }
-        }
-
-        // Resets the settings to their default values
-        private void ResetSettings()
-        {
-            var regkey = Configs.Open86BoxKey(true);
-            if (regkey == null)
-            {
-                Configs.Create86BoxKey();
-                regkey = Configs.Open86BoxKey(true);
-                Configs.Create86BoxVmKey();
-            }
-            regkey.Close();
-
-            var (cfgPath, exePath) = VMCenter.FindPaths();
-            txtCFGdir.Text = cfgPath;
-            txtEXEdir.Text = exePath;
-            cbxMinimize.IsChecked = false;
-            cbxShowConsole.IsChecked = true;
-            cbxMinimizeTray.IsChecked = false;
-            cbxCloseTray.IsChecked = false;
-            cbxLogging.IsChecked = false;
-            txtLogPath.Text = "";
-            cbxGrid.IsChecked = false;
-            txtLogPath.IsEditable(false);
-            btnBrowse3.IsEnabled = false;
-
-            settingsChanged = CheckForChanges();
-        }
-
-        private async void btnBrowse1_Click(object sender, RoutedEventArgs e)
+        private void btnBrowse1_Click(object sender, EventArgs e)
         {
             var initDir = Platforms.Env.MyComputer;
             var text = "Select a folder where 86Box program files and the roms folder are located";
 
-            var fileName = await Dialogs.SelectFolder(initDir, text, parent: this);
+            var fileName = Dialogs.SelectFolder(initDir, text, parent: this);
 
             if (!string.IsNullOrWhiteSpace(fileName))
             {
@@ -147,12 +77,12 @@ namespace _86boxManager.Views
             }
         }
 
-        private async void btnBrowse2_Click(object sender, RoutedEventArgs e)
+        private void btnBrowse2_Click(object sender, EventArgs e)
         {
             var initDir = Platforms.Env.MyComputer;
             var text = "Select a folder where your virtual machines (configs, nvr folders, etc.) will be located";
 
-            var fileName = await Dialogs.SelectFolder(initDir, text, parent: this);
+            var fileName = Dialogs.SelectFolder(initDir, text, parent: this);
 
             if (!string.IsNullOrWhiteSpace(fileName))
             {
@@ -164,31 +94,62 @@ namespace _86boxManager.Views
             }
         }
 
-        private void txt_TextChanged(object sender, TextInputEventArgs e)
+        private void btnBrowse3_Click(object sender, EventArgs e)
+        {
+            var dir = Platforms.Env.MyComputer;
+            var title = "Select a file where 86Box logs will be saved";
+            var filter = "Log files (*.log)|*.log";
+
+            var fileName = Dialogs.SaveFile(title, dir, filter, parent: this);
+
+            if (!string.IsNullOrWhiteSpace(fileName))
+            {
+                txtLogPath.Text = fileName;
+            }
+        }
+
+        private void lnkGithub2_LinkClicked(object sender, EventArgs e)
+        {
+            lnkGithub2.Visited = true;
+        }
+
+        private void lnkGithub_LinkClicked(object sender, EventArgs e)
+        {
+            lnkGithub.Visited = true;
+        }
+
+        private bool settingsChanged = false; // Keeps track of unsaved changes
+
+        private void btnApply_Click(object sender, EventArgs e)
+        {
+            var success = SaveSettings();
+            if (!success)
+            {
+                return;
+            }
+            settingsChanged = CheckForChanges();
+            btnApply.Sensitive = settingsChanged;
+        }
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            if (settingsChanged)
+            {
+                SaveSettings();
+            }
+            Respond(ResponseType.Close);
+        }
+
+        private void txt_TextChanged(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtEXEdir.Text) || string.IsNullOrWhiteSpace(txtCFGdir.Text))
             {
-                btnApply.IsEnabled = false;
+                btnApply.Sensitive = false;
                 return;
             }
 
             settingsChanged = CheckForChanges();
-            btnApply.IsEnabled = settingsChanged;
-        }
-
-        private void cbx_CheckedChanged(object sender, RoutedEventArgs e)
-        {
-            settingsChanged = CheckForChanges();
-        }
-
-        private void cbxLogging_CheckedChanged(object sender, RoutedEventArgs e)
-        {
-            settingsChanged = CheckForChanges();
-            // Needed so the Apply button doesn't get enabled on an empty
-            // logpath textbox. Too lazy to write a duplicated empty check...
-            txt_TextChanged(sender, null);
-            txtLogPath.IsEditable(cbxLogging.IsActive());
-            btnBrowse3.IsEnabled = cbxLogging.IsActive();
+            btnApply.Sensitive = settingsChanged;
         }
 
         // Obtains the 86Box version from 86Box executable
@@ -200,32 +161,32 @@ namespace _86boxManager.Views
                 if (vi.FilePrivatePart >= 3541) //Officially supported builds
                 {
                     var vText = $"{vi.FileMajorPart}.{vi.FileMinorPart}.{vi.FileBuildPart}.{vi.FilePrivatePart} - fully compatible";
-                    lbl86BoxVer1.SetColorTxt(Brushes.ForestGreen, FontWeight.Bold, vText);
+                    lbl86BoxVer1.Markup = $@"<span weight=""bold"" foreground=""ForestGreen"">{vText}</span>";
                 }
                 else if (vi.FilePrivatePart >= 3333 && vi.FilePrivatePart < 3541) //Should mostly work...
                 {
                     var vText = $"{vi.FileMajorPart}.{vi.FileMinorPart}.{vi.FileBuildPart}.{vi.FilePrivatePart} - partially compatible";
-                    lbl86BoxVer1.SetColorTxt(Brushes.Orange, FontWeight.Bold, vText);
+                    lbl86BoxVer1.Markup = $@"<span weight=""bold"" foreground=""Orange"">{vText}</span>";
                 }
                 else //Completely unsupported, since version info can't be obtained anyway
                 {
                     var vText = "Unknown - may not be compatible";
-                    lbl86BoxVer1.SetColorTxt(Brushes.Red, FontWeight.Bold, vText);
+                    lbl86BoxVer1.Markup = $@"<span weight=""bold"" foreground=""Red"">{vText}</span>";
                 }
             }
             catch
             {
                 var vText = "86Box executable not found!";
-                lbl86BoxVer1.SetColorTxt(Brushes.Gray, FontWeight.Bold, vText);
+                lbl86BoxVer1.Markup = $@"<span weight=""bold"" foreground=""Gray"">{vText}</span>";
             }
         }
 
         // Save the settings to the registry
         private bool SaveSettings()
         {
-            if (cbxLogging.IsActive() && string.IsNullOrWhiteSpace(txtLogPath.Text))
+            if (cbxLogging.Active && string.IsNullOrWhiteSpace(txtLogPath.Text))
             {
-                var result = Dialogs.ShowMessageBox(
+                var result = (ResponseType)Dialogs.ShowMessageBox(
                     "Using an empty or whitespace string for the log path will " +
                     "prevent 86Box from logging anything. Are you sure you want to use" +
                     " this path?",
@@ -267,13 +228,13 @@ namespace _86boxManager.Views
                 //Store the new values, close the key, changes are saved
                 regkey.SetValue("EXEdir", txtEXEdir.Text, RegistryValueKind.String);
                 regkey.SetValue("CFGdir", txtCFGdir.Text, RegistryValueKind.String);
-                regkey.SetValue("MinimizeOnVMStart", cbxMinimize.IsActive(), RegistryValueKind.DWord);
-                regkey.SetValue("ShowConsole", cbxShowConsole.IsActive(), RegistryValueKind.DWord);
-                regkey.SetValue("MinimizeToTray", cbxMinimizeTray.IsActive(), RegistryValueKind.DWord);
-                regkey.SetValue("CloseToTray", cbxCloseTray.IsActive(), RegistryValueKind.DWord);
-                regkey.SetValue("EnableLogging", cbxLogging.IsActive(), RegistryValueKind.DWord);
+                regkey.SetValue("MinimizeOnVMStart", cbxMinimize.Active, RegistryValueKind.DWord);
+                regkey.SetValue("ShowConsole", cbxShowConsole.Active, RegistryValueKind.DWord);
+                regkey.SetValue("MinimizeToTray", cbxMinimizeTray.Active, RegistryValueKind.DWord);
+                regkey.SetValue("CloseToTray", cbxCloseTray.Active, RegistryValueKind.DWord);
+                regkey.SetValue("EnableLogging", cbxLogging.Active, RegistryValueKind.DWord);
                 regkey.SetValue("LogPath", txtLogPath.Text, RegistryValueKind.String);
-                regkey.SetValue("EnableGridLines", cbxGrid.IsActive(), RegistryValueKind.DWord);
+                regkey.SetValue("EnableGridLines", cbxGrid.Active, RegistryValueKind.DWord);
                 regkey.Close();
 
                 settingsChanged = CheckForChanges();
@@ -315,15 +276,15 @@ namespace _86boxManager.Views
                     var (cfgPath, exePath) = VMCenter.FindPaths();
                     txtCFGdir.Text = cfgPath;
                     txtEXEdir.Text = exePath;
-                    cbxMinimize.IsChecked = false;
-                    cbxShowConsole.IsChecked = true;
-                    cbxMinimizeTray.IsChecked = false;
-                    cbxCloseTray.IsChecked = false;
-                    cbxLogging.IsChecked = false;
+                    cbxMinimize.Active = false;
+                    cbxShowConsole.Active = true;
+                    cbxMinimizeTray.Active = false;
+                    cbxCloseTray.Active = false;
+                    cbxLogging.Active = false;
                     txtLogPath.Text = "";
-                    cbxGrid.IsChecked = false;
-                    btnBrowse3.IsEnabled = false;
-                    txtLogPath.IsEnabled = false;
+                    cbxGrid.Active = false;
+                    btnBrowse3.Sensitive = false;
+                    txtLogPath.Sensitive = false;
 
                     SaveSettings(); //This will write the default values to the registry
                 }
@@ -332,19 +293,19 @@ namespace _86boxManager.Views
                     txtEXEdir.Text = regkey.GetValue("EXEdir").ToString();
                     txtCFGdir.Text = regkey.GetValue("CFGdir").ToString();
                     txtLogPath.Text = regkey.GetValue("LogPath").ToString();
-                    cbxMinimize.IsChecked = Convert.ToBoolean(regkey.GetValue("MinimizeOnVMStart"));
-                    cbxShowConsole.IsChecked = Convert.ToBoolean(regkey.GetValue("ShowConsole"));
-                    cbxMinimizeTray.IsChecked = Convert.ToBoolean(regkey.GetValue("MinimizeToTray"));
-                    cbxCloseTray.IsChecked = Convert.ToBoolean(regkey.GetValue("CloseToTray"));
-                    cbxLogging.IsChecked = Convert.ToBoolean(regkey.GetValue("EnableLogging"));
-                    cbxGrid.IsChecked = Convert.ToBoolean(regkey.GetValue("EnableGridLines"));
-                    txtLogPath.IsEditable(cbxLogging.IsActive());
-                    btnBrowse3.IsEnabled = cbxLogging.IsActive();
+                    cbxMinimize.Active = Convert.ToBoolean(regkey.GetValue("MinimizeOnVMStart"));
+                    cbxShowConsole.Active = Convert.ToBoolean(regkey.GetValue("ShowConsole"));
+                    cbxMinimizeTray.Active = Convert.ToBoolean(regkey.GetValue("MinimizeToTray"));
+                    cbxCloseTray.Active = Convert.ToBoolean(regkey.GetValue("CloseToTray"));
+                    cbxLogging.Active = Convert.ToBoolean(regkey.GetValue("EnableLogging"));
+                    cbxGrid.Active = Convert.ToBoolean(regkey.GetValue("EnableGridLines"));
+                    txtLogPath.IsEditable = cbxLogging.Active;
+                    btnBrowse3.Sensitive = cbxLogging.Active;
                 }
 
                 regkey.Close();
             }
-            catch
+            catch 
             {
                 Dialogs.ShowMessageBox("86Box Manager settings could not be loaded, because an " +
                                        "error occured trying to load the registry keys and/or values. " +
@@ -355,18 +316,18 @@ namespace _86boxManager.Views
                 var (_, exePath) = VMCenter.FindPaths();
                 txtCFGdir.Text = IOPath.Combine(Platforms.Env.MyDocuments, "86Box VMs");
                 txtEXEdir.Text = exePath;
-                cbxMinimize.IsChecked = false;
-                cbxShowConsole.IsChecked = true;
-                cbxMinimizeTray.IsChecked = false;
-                cbxCloseTray.IsChecked = false;
-                cbxLogging.IsChecked = false;
+                cbxMinimize.Active = false;
+                cbxShowConsole.Active = true;
+                cbxMinimizeTray.Active = false;
+                cbxCloseTray.Active = false;
+                cbxLogging.Active = false;
                 txtLogPath.Text = "";
-                cbxGrid.IsChecked = false;
-                txtLogPath.IsEditable(false);
-                btnBrowse3.IsEnabled = false;
+                cbxGrid.Active = false;
+                txtLogPath.IsEditable = false;
+                btnBrowse3.Sensitive = false;
             }
         }
-
+        
         // Checks if all controls match the currently saved settings to determine if any changes were made
         private bool CheckForChanges()
         {
@@ -374,18 +335,18 @@ namespace _86boxManager.Views
 
             try
             {
-                btnApply.IsEnabled = (
+                btnApply.Sensitive = (
                     txtEXEdir.Text != regkey.GetValue("EXEdir").ToString() ||
                     txtCFGdir.Text != regkey.GetValue("CFGdir").ToString() ||
                     txtLogPath.Text != regkey.GetValue("LogPath").ToString() ||
-                    cbxMinimize.IsActive() != Convert.ToBoolean(regkey.GetValue("MinimizeOnVMStart")) ||
-                    cbxShowConsole.IsActive() != Convert.ToBoolean(regkey.GetValue("ShowConsole")) ||
-                    cbxMinimizeTray.IsActive() != Convert.ToBoolean(regkey.GetValue("MinimizeToTray")) ||
-                    cbxCloseTray.IsActive() != Convert.ToBoolean(regkey.GetValue("CloseToTray")) ||
-                    cbxLogging.IsActive() != Convert.ToBoolean(regkey.GetValue("EnableLogging")) ||
-                    cbxGrid.IsActive() != Convert.ToBoolean(regkey.GetValue("EnableGridLines")));
+                    cbxMinimize.Active != Convert.ToBoolean(regkey.GetValue("MinimizeOnVMStart")) ||
+                    cbxShowConsole.Active != Convert.ToBoolean(regkey.GetValue("ShowConsole")) ||
+                    cbxMinimizeTray.Active != Convert.ToBoolean(regkey.GetValue("MinimizeToTray")) ||
+                    cbxCloseTray.Active != Convert.ToBoolean(regkey.GetValue("CloseToTray")) || 
+                    cbxLogging.Active != Convert.ToBoolean(regkey.GetValue("EnableLogging")) ||
+                    cbxGrid.Active != Convert.ToBoolean(regkey.GetValue("EnableGridLines")));
 
-                return btnApply.IsEnabled;
+                return btnApply.Sensitive;
             }
             catch (Exception ex)
             {
@@ -397,10 +358,59 @@ namespace _86boxManager.Views
                 regkey.Close();
             }
         }
-
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        
+        private void cbx_CheckedChanged(object sender, EventArgs e)
         {
-            Close(ResponseType.Cancel);
+            settingsChanged = CheckForChanges();
+        }
+        
+        private void cbxLogging_CheckedChanged(object sender, EventArgs e)
+        {
+            settingsChanged = CheckForChanges();
+            // Needed so the Apply button doesn't get enabled on an empty
+            // logpath textbox. Too lazy to write a duplicated empty check...
+            txt_TextChanged(sender, e); 
+            txtLogPath.IsEditable = cbxLogging.Active;
+            btnBrowse3.Sensitive = cbxLogging.Active;
+        }
+        
+        private void btnDefaults_Click(object sender, EventArgs e)
+        {
+            var result = Dialogs.ShowMessageBox("All settings will be reset to their default values. " +
+                                                "Do you wish to continue?",
+                MessageType.Warning, ButtonsType.YesNo, "Settings will be reset");
+            if (result == (int)ResponseType.Yes)
+            {
+                ResetSettings();
+            }
+        }
+        
+        // Resets the settings to their default values
+        private void ResetSettings()
+        {
+            var regkey = Configs.Open86BoxKey(true);
+            if (regkey == null)
+            {
+                Configs.Create86BoxKey();
+                regkey = Configs.Open86BoxKey(true);
+                Configs.Create86BoxVmKey();
+            }
+            regkey.Close();
+
+            var (cfgPath, exePath) = VMCenter.FindPaths();
+            txtCFGdir.Text = cfgPath;
+            txtEXEdir.Text = exePath;
+            cbxMinimize.Active = false;
+            cbxShowConsole.Active = true;
+            cbxMinimizeTray.Active = false;
+            cbxCloseTray.Active = false;
+            cbxLogging.Active = false;
+            txtLogPath.Text = "";
+            cbxGrid.Active = false;
+            txtLogPath.IsEditable = false;
+            btnBrowse3.Sensitive = false;
+
+            settingsChanged = CheckForChanges();
         }
     }
 }

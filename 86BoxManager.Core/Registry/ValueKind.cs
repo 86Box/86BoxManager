@@ -1,4 +1,4 @@
-namespace _86boxManager.Registry
+namespace _86BoxManager.Registry
 {
     public enum ValueKind
     {
