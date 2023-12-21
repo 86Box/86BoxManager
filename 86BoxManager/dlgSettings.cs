@@ -153,6 +153,7 @@ namespace _86boxManager
                 regkey.SetValue("EnableLogging", cbxLogging.Checked, RegistryValueKind.DWord);
                 regkey.SetValue("LogPath", txtLogPath.Text, RegistryValueKind.String);
                 regkey.SetValue("EnableGridLines", cbxGrid.Checked, RegistryValueKind.DWord);
+                regkey.SetValue("StartVMFullscreen", cbxStartVMFullscreen.Checked, RegistryValueKind.DWord);
                 regkey.Close();
 
                 settingsChanged = CheckForChanges();
@@ -198,6 +199,7 @@ namespace _86boxManager
                     cbxGrid.Checked = false;
                     btnBrowse3.Enabled = false;
                     txtLogPath.Enabled = false;
+                    cbxStartVMFullscreen.Checked = false;
 
                     SaveSettings(); //This will write the default values to the registry
                 }
@@ -212,6 +214,7 @@ namespace _86boxManager
                     cbxCloseTray.Checked = Convert.ToBoolean(regkey.GetValue("CloseToTray"));
                     cbxLogging.Checked = Convert.ToBoolean(regkey.GetValue("EnableLogging"));
                     cbxGrid.Checked = Convert.ToBoolean(regkey.GetValue("EnableGridLines"));
+                    cbxStartVMFullscreen.Checked = Convert.ToBoolean(regkey.GetValue("StartVMFullscreen"));
                     txtLogPath.Enabled = cbxLogging.Checked;
                     btnBrowse3.Enabled = cbxLogging.Checked;
                 }
@@ -233,6 +236,7 @@ namespace _86boxManager
                 cbxGrid.Checked = false;
                 txtLogPath.Enabled = false;
                 btnBrowse3.Enabled = false;
+                cbxStartVMFullscreen.Checked = false;
             }
         }
 
@@ -304,6 +308,7 @@ namespace _86boxManager
             cbxGrid.Checked = false;
             txtLogPath.Enabled = false;
             btnBrowse3.Enabled = false;
+            cbxStartVMFullscreen.Checked = false;
 
             settingsChanged = CheckForChanges();
         }
@@ -324,7 +329,8 @@ namespace _86boxManager
                     cbxMinimizeTray.Checked != Convert.ToBoolean(regkey.GetValue("MinimizeToTray")) ||
                     cbxCloseTray.Checked != Convert.ToBoolean(regkey.GetValue("CloseToTray")) || 
                     cbxLogging.Checked != Convert.ToBoolean(regkey.GetValue("EnableLogging")) ||
-                    cbxGrid.Checked != Convert.ToBoolean(regkey.GetValue("EnableGridLines")));
+                    cbxGrid.Checked != Convert.ToBoolean(regkey.GetValue("EnableGridLines")) ||
+                    cbxStartVMFullscreen.Checked != Convert.ToBoolean(regkey.GetValue("StartVMFullscreen")));
 
                 return btnApply.Enabled;
             }
