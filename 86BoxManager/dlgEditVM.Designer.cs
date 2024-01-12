@@ -41,9 +41,9 @@
             this.pnlBottom = new System.Windows.Forms.Panel();
             this.pnlBottom.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // btnCancel
-            // 
+            //
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.System;
@@ -55,9 +55,9 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
+            //
             // btnApply
-            // 
+            //
             this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnApply.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnApply.Enabled = false;
@@ -70,9 +70,9 @@
             this.btnApply.Text = "Apply";
             this.btnApply.UseVisualStyleBackColor = true;
             this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
-            // 
+            //
             // lblName
-            // 
+            //
             this.lblName.AutoSize = true;
             this.lblName.Location = new System.Drawing.Point(11, 14);
             this.lblName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
@@ -80,9 +80,9 @@
             this.lblName.Size = new System.Drawing.Size(48, 19);
             this.lblName.TabIndex = 2;
             this.lblName.Text = "Name:";
-            // 
+            //
             // lblDesc
-            // 
+            //
             this.lblDesc.AutoSize = true;
             this.lblDesc.Location = new System.Drawing.Point(11, 48);
             this.lblDesc.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
@@ -90,10 +90,10 @@
             this.lblDesc.Size = new System.Drawing.Size(81, 19);
             this.lblDesc.TabIndex = 4;
             this.lblDesc.Text = "Description:";
-            // 
+            //
             // txtName
-            // 
-            this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtName.Location = new System.Drawing.Point(63, 11);
             this.txtName.Margin = new System.Windows.Forms.Padding(2);
@@ -101,19 +101,19 @@
             this.txtName.Size = new System.Drawing.Size(510, 25);
             this.txtName.TabIndex = 0;
             this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
-            // 
+            //
             // txtDesc
-            // 
-            this.txtDesc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.txtDesc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtDesc.Location = new System.Drawing.Point(96, 45);
             this.txtDesc.Margin = new System.Windows.Forms.Padding(2);
             this.txtDesc.Name = "txtDesc";
             this.txtDesc.Size = new System.Drawing.Size(477, 25);
             this.txtDesc.TabIndex = 1;
-            // 
+            //
             // lblPath
-            // 
+            //
             this.lblPath.AutoSize = true;
             this.lblPath.Location = new System.Drawing.Point(11, 81);
             this.lblPath.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
@@ -121,9 +121,9 @@
             this.lblPath.Size = new System.Drawing.Size(40, 19);
             this.lblPath.TabIndex = 9;
             this.lblPath.Text = "Path:";
-            // 
+            //
             // lblPath1
-            // 
+            //
             this.lblPath1.AutoEllipsis = true;
             this.lblPath1.Location = new System.Drawing.Point(55, 81);
             this.lblPath1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
@@ -132,9 +132,9 @@
             this.lblPath1.Size = new System.Drawing.Size(429, 17);
             this.lblPath1.TabIndex = 10;
             this.lblPath1.Text = "<path goes here>";
-            // 
+            //
             // pnlBottom
-            // 
+            //
             this.pnlBottom.BackColor = System.Drawing.SystemColors.Control;
             this.pnlBottom.Controls.Add(this.btnCancel);
             this.pnlBottom.Controls.Add(this.btnApply);
@@ -144,13 +144,13 @@
             this.pnlBottom.Name = "pnlBottom";
             this.pnlBottom.Size = new System.Drawing.Size(584, 52);
             this.pnlBottom.TabIndex = 16;
-            // 
+            //
             // dlgEditVM
-            // 
+            //
             this.AcceptButton = this.btnApply;
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.BackColor = System.Drawing.Color.White;
+            this.BackColor = System.Drawing.SystemColors.Window;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(584, 171);
             this.Controls.Add(this.pnlBottom);
