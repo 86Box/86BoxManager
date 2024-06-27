@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("David Simunič and others")]
 [assembly: AssemblyProduct("86Box Manager")]
-[assembly: AssemblyCopyright("Copyright © 2018-2023 David Simunič and others")]
+[assembly: AssemblyCopyright("Copyright © 2018-2024 David Simunič and others")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

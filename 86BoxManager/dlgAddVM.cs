@@ -36,7 +36,8 @@ namespace _86boxManager
             }
             else
             {
-                main.VMAdd(txtName.Text, txtDescription.Text, cbxOpenCFG.Checked, cbxStartVM.Checked);
+                //TrimEnd() needed to trim the trailing spaces, because they can cause problems with the VM folder in Windows...
+                main.VMAdd(txtName.Text.TrimEnd(), txtDescription.Text, cbxOpenCFG.Checked, cbxStartVM.Checked);
             }
             Close();
         }
