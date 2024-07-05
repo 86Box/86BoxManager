@@ -44,6 +44,7 @@ namespace _86boxManager
         private bool logging = false; //Logging enabled for 86Box.exe (-L parameter)?
         private string logpath = ""; //Path to log file
         private bool gridlines = false; //Are grid lines enabled for VM list?
+        private bool startVMFullscreen = false; //Start VM in fullscreen mode
 
         public frmMain()
         {
@@ -241,6 +242,7 @@ namespace _86boxManager
                     gridlines = false;
                     sortColumn = 0;
                     sortOrder = SortOrder.Ascending;
+                    startVMFullscreen = false;
 
                     lstVMs.GridLines = false;
                     VMSort(sortColumn, sortOrder);
@@ -258,6 +260,7 @@ namespace _86boxManager
                     regkey.SetValue("EnableGridLines", gridlines, RegistryValueKind.DWord);
                     regkey.SetValue("SortColumn", sortColumn, RegistryValueKind.DWord);
                     regkey.SetValue("SortOrder", sortOrder, RegistryValueKind.DWord);
+                    regkey.SetValue("StartVMFullscreen", startVMFullscreen, RegistryValueKind.DWord);
                 }
                 else
                 {
@@ -272,6 +275,7 @@ namespace _86boxManager
                     gridlines = Convert.ToBoolean(regkey.GetValue("EnableGridLines"));
                     sortColumn = (int)regkey.GetValue("SortColumn");
                     sortOrder = (SortOrder)regkey.GetValue("SortOrder");
+                    startVMFullscreen = Convert.ToBoolean(regkey.GetValue("StartVMFullscreen"));
 
                     lstVMs.GridLines = gridlines;
                     VMSort(sortColumn, sortOrder);
@@ -636,6 +640,10 @@ namespace _86boxManager
                     Process p = new Process();
                     p.StartInfo.FileName = exepath + "86Box.exe";
                     p.StartInfo.Arguments = "--vmpath \"" + lstVMs.SelectedItems[0].SubItems[3].Text + "\" --hwnd " + idString + "," + hWndHex;
+                    if (startVMFullscreen)
+                    {
+                        p.StartInfo.Arguments += " -f";
+                    }
 
                     if (logging)
                     {
